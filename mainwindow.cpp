@@ -10,7 +10,64 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QtCharts::QSplineSeries *series1 = new QtCharts::QSplineSeries();
+    QtCharts::QSplineSeries *series2 = new QtCharts::QSplineSeries();
+
+    QtCharts::QCategoryAxis *axisX = new QtCharts::QCategoryAxis();
+    QtCharts::QCategoryAxis *axisY = new QtCharts::QCategoryAxis();
+
+    //Axis colors
+    QPen axisYPen(QBrush(QRgb(0x5E5E6F)), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen axisXPen(QBrush(QRgb(0x303046)), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+    //Axis Labels
+    QFont axisLabelFont("Open Sans ExtraBold", 14);
+    QBrush axisLabelPen(QRgb(0xA3A3AD));
+
+    axisY->setLabelsFont(axisLabelFont);
+    axisY->setLabelsBrush(axisLabelPen);
+    axisY->setLinePen(axisYPen);
+    axisY->setGridLinePen(axisXPen);
+
+    //axisX->setLinePen(axisXPen);
+    axisX->setGridLineVisible(false);
+
+    //Axis data
+    axisY->append("-1.00 ", -1.00);
+    axisY->append("0 ", 0);
+    axisY->append("1.00 ", 1.00);
+    axisY->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+    axisY->setRange(-1.1, 1.1);
+
+    axisX->setRange(0.7, 14.3);
+
+
+
+    //Line colors
+    QLinearGradient lightPinkBruise_Gradient;
+    lightPinkBruise_Gradient.setStart(QPointF(0, 0));
+    lightPinkBruise_Gradient.setFinalStop(QPointF(1, 0));
+    lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
+    lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
+    lightPinkBruise_Gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    QPen pen1(lightPinkBruise_Gradient, 10, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+    QLinearGradient darkUltramarine_Gradient;
+    lightPinkBruise_Gradient.setStart(QPointF(0, 0));
+    lightPinkBruise_Gradient.setFinalStop(QPointF(1, 0));
+    lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0x7517F8));
+    lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
+    lightPinkBruise_Gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    QPen pen2(lightPinkBruise_Gradient, 10, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+
+    series1->setPen(pen1);
     series1->setName("spline");
+
+    series2->setPen(pen2);
+    series2->setName("spline");
+
+    //TODO generate and append data dynamically
+
+    //Series 2
     series1->append(1, -0.71);
     series1->append(2, -0.3);
     series1->append(3, 0.18);
@@ -25,10 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     series1->append(12, -0.98);
     series1->append(13, -0.95);
     series1->append(14, -0.71);
-
-    ui->setupUi(this);
-    QtCharts::QSplineSeries *series2 = new QtCharts::QSplineSeries();
-    series2->setName("spline");
+    //Series 1
     series2->append(1, 0.71);
     series2->append(2, 0.95);
     series2->append(3, 0.98);
@@ -44,11 +98,20 @@ MainWindow::MainWindow(QWidget *parent)
     series2->append(13, 0.3);
     series2->append(14, 0.71);
 
+
     QtCharts::QChart *chart = new QtCharts::QChart();
     chart->legend()->hide();
     chart->addSeries(series1);
     chart->addSeries(series2);
-    chart->createDefaultAxes();
+    chart->addAxis(axisY, Qt::AlignLeft);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series1->attachAxis(axisX);
+    series1->attachAxis(axisY);
+    series2->attachAxis(axisX);
+    series2->attachAxis(axisY);
+    chart->setBackgroundVisible(false);
+    chart->setMargins(QMargins(0, 0, 0, 0));
+    chart->setBackgroundRoundness(0);
 
     ui->kinematicsGraphView->setChart(chart);
     ui->kinematicsGraphView->setRenderHint(QPainter::Antialiasing);
