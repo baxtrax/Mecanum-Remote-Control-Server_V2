@@ -771,18 +771,25 @@ QSlider::sub-page:vertical {
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="kinematicsGraph" native="true">
+   <widget class="QChartView" name="kinematicsGraphView">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>140</y>
-      <width>451</width>
-      <height>301</height>
+      <x>630</x>
+      <y>130</y>
+      <width>501</width>
+      <height>291</height>
      </rect>
     </property>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtCharts</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
