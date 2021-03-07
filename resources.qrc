@@ -3,4 +3,10 @@
         <file>OpenSans-ExtraBold.ttf</file>
         <file>OpenSans-Regular.ttf</file>
     </qresource>
+    <qresource prefix="/img">
+        <file>placeholder.png</file>
+    </qresource>
+    <qresource prefix="/svg">
+        <file>Refresh.svg</file>
+    </qresource>
 </RCC>

@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     QtCharts::QSplineSeries *series1 = new QtCharts::QSplineSeries();
     QtCharts::QSplineSeries *series2 = new QtCharts::QSplineSeries();
 
@@ -20,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPen axisXPen(QBrush(QRgb(0x303046)), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     //Axis Labels
-    QFont axisLabelFont("Open Sans ExtraBold", 14);
+    QFont axisLabelFont("Open Sans", 12);
     QBrush axisLabelPen(QRgb(0xA3A3AD));
 
     axisY->setLabelsFont(axisLabelFont);
@@ -105,17 +106,23 @@ MainWindow::MainWindow(QWidget *parent)
     chart->addSeries(series2);
     chart->addAxis(axisY, Qt::AlignLeft);
     chart->addAxis(axisX, Qt::AlignBottom);
+
+    // Attach data to axis after they have been configured and added
     series1->attachAxis(axisX);
     series1->attachAxis(axisY);
     series2->attachAxis(axisX);
     series2->attachAxis(axisY);
+
     chart->setBackgroundVisible(false);
-    chart->setMargins(QMargins(0, 0, 0, 0));
+
+    // Removing unneeded space around chart
+    chart->setMargins(QMargins(0, 0, 0, -20)); //-20 removes unnessary x-axis
     chart->setBackgroundRoundness(0);
 
     ui->kinematicsGraphView->setChart(chart);
+    // Removes placeholder image
+    ui->kinematicsGraphView->setStyleSheet(NULL);
     ui->kinematicsGraphView->setRenderHint(QPainter::Antialiasing);
-
 }
 
 //MainWindow deconstructor
