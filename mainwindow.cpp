@@ -3,6 +3,7 @@
 
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QChartView>
+#include <QtDataVisualization/Q3DSurface>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -123,6 +124,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Removes placeholder image
     ui->kinematicsGraphView->setStyleSheet(NULL);
     ui->kinematicsGraphView->setRenderHint(QPainter::Antialiasing);
+
 }
 
 //MainWindow deconstructor

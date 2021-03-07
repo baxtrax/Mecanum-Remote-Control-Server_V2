@@ -29,6 +29,16 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgb(5, 5, 15);</string>
    </property>
+   <widget class="QWidget" name="simulationWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>30</y>
+      <width>951</width>
+      <height>1021</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
