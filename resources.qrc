@@ -1,12 +1,18 @@
 <RCC>
     <qresource prefix="/fonts">
-        <file>OpenSans-ExtraBold.ttf</file>
-        <file>OpenSans-Regular.ttf</file>
+        <file>resources/OpenSans-ExtraBold.ttf</file>
+        <file>resources/OpenSans-Regular.ttf</file>
     </qresource>
     <qresource prefix="/img">
-        <file>placeholder.png</file>
+        <file>resources/placeholder.png</file>
     </qresource>
     <qresource prefix="/svg">
-        <file>Refresh.svg</file>
+        <file>resources/Refresh.svg</file>
+        <file>resources/Home-Unactive.svg</file>
+        <file>resources/Info-Unactive.svg</file>
+        <file>resources/Cog-Active.svg</file>
+        <file>resources/Cog-Unactive.svg</file>
+        <file>resources/Info-Active.svg</file>
+        <file>resources/Home-Active.svg</file>
     </qresource>
 </RCC>

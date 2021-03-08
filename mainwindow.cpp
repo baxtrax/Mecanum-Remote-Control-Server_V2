@@ -135,8 +135,9 @@ MainWindow::MainWindow(QWidget *parent)
     chart->setBackgroundRoundness(0);
 
     ui->kinematicsGraphView->setChart(chart);
-    // Removes placeholder image
+    // Removes placeholder images
     ui->kinematicsGraphView->setStyleSheet(NULL);
+    ui->simulationWidgetPlaceHolder->setStyleSheet(NULL);
     ui->kinematicsGraphView->setRenderHint(QPainter::Antialiasing);
 
     //3D Stuffs
@@ -173,6 +174,7 @@ MainWindow::MainWindow(QWidget *parent)
     cameraController->setCamera(camera);
 
     view->setRootEntity(scene);
+    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x191932)));
 
     QWidget *container = QWidget::createWindowContainer(view);
 
