@@ -1836,7 +1836,8 @@ font: 12pt  'Open Sans'; }</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(25, 25, 50);
+         <string notr="true">/*background-color: rgb(25, 25, 50);*/
+background-color: none;
 border-radius: 16px;</string>
         </property>
         <property name="frameShape">

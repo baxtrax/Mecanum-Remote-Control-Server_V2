@@ -174,7 +174,8 @@ MainWindow::MainWindow(QWidget *parent)
     cameraController->setCamera(camera);
 
     view->setRootEntity(scene);
-    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x191932)));
+    //view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x191932)));
+    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
 
     QWidget *container = QWidget::createWindowContainer(view);
 
