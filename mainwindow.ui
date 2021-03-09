@@ -79,7 +79,7 @@
         <number>0</number>
        </property>
        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QToolButton" name="toolButton_2">
+        <widget class="QToolButton" name="home_toolButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -114,7 +114,7 @@ QToolButton:pressed {
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QToolButton" name="toolButton_3">
+        <widget class="QToolButton" name="settings_toolButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -149,7 +149,7 @@ QToolButton:pressed {
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QToolButton" name="toolButton_4">
+        <widget class="QToolButton" name="info_toolButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>

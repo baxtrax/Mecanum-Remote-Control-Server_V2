@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //Initially start on home page.
+    ui->home_toolButton->setCheckable(true);
+    ui->home_toolButton->setDown(true);
 
     QtCharts::QSplineSeries *series1 = new QtCharts::QSplineSeries();
     QtCharts::QSplineSeries *series2 = new QtCharts::QSplineSeries();
