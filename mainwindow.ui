@@ -964,7 +964,7 @@ font: 12pt  'Open Sans'; }</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="verticalSlider_3">
+                       <widget class="QSlider" name="axisX_topVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1023,7 +1023,7 @@ QSlider::add-page:vertical {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="verticalSlider">
+                       <widget class="QSlider" name="axisX_botVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1138,7 +1138,7 @@ font: 12pt  'Open Sans'; }</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="verticalSlider_4">
+                       <widget class="QSlider" name="axisY_topVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1191,7 +1191,7 @@ QSlider::add-page:vertical {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="verticalSlider_5">
+                       <widget class="QSlider" name="axisY_botVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1303,7 +1303,7 @@ font: 12pt  'Open Sans'; }</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QSlider" name="verticalSlider_6">
+                       <widget class="QSlider" name="axisZ_topVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1356,7 +1356,7 @@ QSlider::add-page:vertical {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="verticalSlider_7">
+                       <widget class="QSlider" name="axisZ_botVSlider">
                         <property name="minimumSize">
                          <size>
                           <width>16</width>

@@ -19,15 +19,27 @@
 #include <Qt3DExtras/Qt3DWindow>
 #include <Qt3DExtras/QOrbitCameraController>
 
+#include "gamepadhandler.h"
+
+GamepadHandler *gamepadHandler;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    gamepadHandler = new GamepadHandler();
+    qDebug() << gamepadHandler->getCurrentGamepad();
+
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
     ui->home_toolButton->setDown(true);
 
+
+
+
+    // Styling and example code------------------------------------
     QtCharts::QSplineSeries *series1 = new QtCharts::QSplineSeries();
     QtCharts::QSplineSeries *series2 = new QtCharts::QSplineSeries();
 
