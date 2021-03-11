@@ -46,7 +46,6 @@ signals:
     void gamepad_buttonLeftChanged(bool);
     void gamepad_buttonRightChanged(bool);
 
-
 private:
     QGamepad *currentGamepad;
     QGamepadManager *gamepadManager;
