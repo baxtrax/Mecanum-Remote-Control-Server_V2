@@ -2,9 +2,9 @@
 #define GAMEPADHANDLER_H
 
 #include <QObject>
+#include <QtDebug>
 #include <QGamepad>
 #include <QGamepadManager>
-#include <QtDebug>
 
 class GamepadHandler : public QObject
 {
