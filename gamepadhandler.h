@@ -11,9 +11,13 @@ class GamepadHandler : public QObject
     Q_OBJECT
 public:
     GamepadHandler();
+
+    //Setters
+    bool setCurrentGamepad(int deviceIDPos);
+
+    //Getters
     QGamepad *getCurrentGamepad();
     int getTotalConnected();
-    bool setCurrentGamepad(int deviceIDPos);
 
 public slots:
     bool refreshGamepad();
