@@ -15,6 +15,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void keyboard_WChanged(bool);
+    void keyboard_SChanged(bool);
+    void keyboard_AChanged(bool);
+    void keyboard_DChanged(bool);
+    void keyboard_QChanged(bool);
+    void keyboard_EChanged(bool);
+
+protected:
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
+
 private:
     Ui::MainWindow *ui;
 };

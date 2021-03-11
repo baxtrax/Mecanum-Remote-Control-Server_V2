@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gamepadHandler = new GamepadHandler();
-    qDebug() << gamepadHandler->getCurrentGamepad();
 
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
@@ -196,6 +195,84 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Get rid of unnessary horizontal layout
     ui->simulationWidgetPlaceHolder->parentWidget()->layout()->replaceWidget(ui->simulationWidgetPlaceHolder, container);
+}
+
+
+/**
+ * @brief Is called when any key is pressed down and emits signals for each
+ * key pressed.
+ * @param A key pressed event
+ */
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->isAutoRepeat() == false)
+    {
+        switch(event->key())
+        {
+        case Qt::Key_W:
+            emit keyboard_WChanged(true);
+            qDebug() << "Keyboard W" << true;
+            break;
+        case Qt::Key_S:
+            emit keyboard_SChanged(true);
+            qDebug() << "Keyboard S" << true;
+            break;
+        case Qt::Key_A:
+            emit keyboard_AChanged(true);
+            qDebug() << "Keyboard A" << true;
+            break;
+        case Qt::Key_D:
+            emit keyboard_DChanged(true);
+            qDebug() << "Keyboard D" << true;
+            break;
+        case Qt::Key_Q:
+            emit keyboard_QChanged(true);
+            qDebug() << "Keyboard Q" << true;
+            break;
+        case Qt::Key_E:
+            emit keyboard_EChanged(true);
+            qDebug() << "Keyboard E" << true;
+            break;
+        }
+    }
+}
+
+
+/**
+ * @brief Is called when any key is released and emits signals for each
+ * key pressed.
+ * @param A key release event
+ */
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (event->isAutoRepeat() == false)
+    {
+        switch(event->key())
+        {
+        case Qt::Key_W:
+            emit keyboard_WChanged(false);
+            qDebug() << "Keyboard W" << false;
+            break;
+        case Qt::Key_S:
+            emit keyboard_SChanged(false);
+            qDebug() << "Keyboard S" << false;
+            break;
+        case Qt::Key_A:
+            emit keyboard_AChanged(false);
+            qDebug() << "Keyboard A" << false;
+            break;
+        case Qt::Key_D:
+            emit keyboard_DChanged(false);
+            qDebug() << "Keyboard D" << false;
+            break;
+        case Qt::Key_Q:
+            emit keyboard_QChanged(false);
+            qDebug() << "Keyboard Q" << false;
+            break;
+        case Qt::Key_E:
+            emit keyboard_EChanged(false);
+            qDebug() << "Keyboard E" << true;
+            break;
+        }
+    }
 }
 
 //MainWindow deconstructor
