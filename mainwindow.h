@@ -30,5 +30,6 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    void configureConnections();
 };
 #endif // MAINWINDOW_H

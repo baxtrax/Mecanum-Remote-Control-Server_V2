@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QSlider>
 
 #include "constants.h"
 
@@ -10,7 +11,12 @@ class InputHandler : public QObject
 {
     Q_OBJECT
 public:
-    InputHandler();
+    InputHandler(QSlider *x_topSliderRef,
+                 QSlider *x_botSliderRef,
+                 QSlider *y_topSliderRef,
+                 QSlider *y_botSliderRef,
+                 QSlider *z_topSliderRef,
+                 QSlider *z_botSliderRef);
 
     //Setters
     void setX(double value);
@@ -37,7 +43,17 @@ signals:
     void inputsChanged(double, double, double);
 
 private:
+    QSlider *x_topSlider;
+    QSlider *x_botSlider;
+    QSlider *y_topSlider;
+    QSlider *y_botSlider;
+    QSlider *z_topSlider;
+    QSlider *z_botSlider;
+
     void updateSliders();
+    void setXSlider(double value);
+    void setYSlider(double value);
+    void setZSlider(double value);
 
     double x;
     double y;

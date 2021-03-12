@@ -968,6 +968,9 @@ font: 12pt  'Open Sans'; }</string>
                       </property>
                       <item>
                        <widget class="QSlider" name="axisX_topVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1027,6 +1030,9 @@ QSlider::add-page:vertical {
                       </item>
                       <item>
                        <widget class="QSlider" name="axisX_botVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1142,6 +1148,9 @@ font: 12pt  'Open Sans'; }</string>
                       </property>
                       <item>
                        <widget class="QSlider" name="axisY_topVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1195,6 +1204,9 @@ QSlider::add-page:vertical {
                       </item>
                       <item>
                        <widget class="QSlider" name="axisY_botVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1307,6 +1319,9 @@ font: 12pt  'Open Sans'; }</string>
                       </property>
                       <item>
                        <widget class="QSlider" name="axisZ_topVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -1360,6 +1375,9 @@ QSlider::add-page:vertical {
                       </item>
                       <item>
                        <widget class="QSlider" name="axisZ_botVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>

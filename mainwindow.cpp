@@ -32,18 +32,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gamepadHandler = new GamepadHandler();
-    inputHandler = new InputHandler();
+    inputHandler = new InputHandler(ui->axisX_topVSlider,
+                                    ui->axisX_botVSlider,
+                                    ui->axisY_topVSlider,
+                                    ui->axisY_botVSlider,
+                                    ui->axisZ_topVSlider,
+                                    ui->axisZ_botVSlider);
 
-
-    connect(gamepadHandler, SIGNAL(gamepad_axisLeftXChanged(double)), inputHandler, SLOT(gamepad_axisLeftXSetter(double)));
-    connect(gamepadHandler, SIGNAL(gamepad_axisLeftYChanged(double)), inputHandler, SLOT(gamepad_axisLeftYSetter(double)));
-    connect(gamepadHandler, SIGNAL(gamepad_axisRightXChanged(double)), inputHandler, SLOT(gamepad_axisRightXSetter(double)));
-    connect(this, SIGNAL(keyboard_WChanged(bool)), inputHandler, SLOT(keyboard_WSetter(bool)));
-    connect(this, SIGNAL(keyboard_SChanged(bool)), inputHandler, SLOT(keyboard_SSetter(bool)));
-    connect(this, SIGNAL(keyboard_AChanged(bool)), inputHandler, SLOT(keyboard_ASetter(bool)));
-    connect(this, SIGNAL(keyboard_DChanged(bool)), inputHandler, SLOT(keyboard_DSetter(bool)));
-    connect(this, SIGNAL(keyboard_QChanged(bool)), inputHandler, SLOT(keyboard_QSetter(bool)));
-    connect(this, SIGNAL(keyboard_EChanged(bool)), inputHandler, SLOT(keyboard_ESetter(bool)));
+    configureConnections();
 
     //Signals to be attached to inputHandler
 //    gamepad_axisLeftXChanged(double);
@@ -296,6 +292,32 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
             break;
         }
     }
+}
+
+
+/**
+ * @brief Configures connections of slots and signals of a MainWindow object
+ */
+void MainWindow::configureConnections()
+{
+    connect(gamepadHandler, SIGNAL(gamepad_axisLeftXChanged(double)),
+            inputHandler, SLOT(gamepad_axisLeftXSetter(double)));
+    connect(gamepadHandler, SIGNAL(gamepad_axisLeftYChanged(double)),
+            inputHandler, SLOT(gamepad_axisLeftYSetter(double)));
+    connect(gamepadHandler, SIGNAL(gamepad_axisRightXChanged(double)),
+            inputHandler, SLOT(gamepad_axisRightXSetter(double)));
+    connect(this, SIGNAL(keyboard_WChanged(bool)),
+            inputHandler, SLOT(keyboard_WSetter(bool)));
+    connect(this, SIGNAL(keyboard_SChanged(bool)),
+            inputHandler, SLOT(keyboard_SSetter(bool)));
+    connect(this, SIGNAL(keyboard_AChanged(bool)),
+            inputHandler, SLOT(keyboard_ASetter(bool)));
+    connect(this, SIGNAL(keyboard_DChanged(bool)),
+            inputHandler, SLOT(keyboard_DSetter(bool)));
+    connect(this, SIGNAL(keyboard_QChanged(bool)),
+            inputHandler, SLOT(keyboard_QSetter(bool)));
+    connect(this, SIGNAL(keyboard_EChanged(bool)),
+            inputHandler, SLOT(keyboard_ESetter(bool)));
 }
 
 //MainWindow deconstructor
