@@ -20,8 +20,10 @@
 #include <Qt3DExtras/QOrbitCameraController>
 
 #include "gamepadhandler.h"
+#include "inputhandler.h"
 
 GamepadHandler *gamepadHandler;
+InputHandler *inputHandler;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -30,6 +32,30 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gamepadHandler = new GamepadHandler();
+    inputHandler = new InputHandler();
+
+
+    connect(gamepadHandler, SIGNAL(gamepad_axisLeftXChanged(double)), inputHandler, SLOT(gamepad_axisLeftXSetter(double)));
+    connect(gamepadHandler, SIGNAL(gamepad_axisLeftYChanged(double)), inputHandler, SLOT(gamepad_axisLeftYSetter(double)));
+    connect(gamepadHandler, SIGNAL(gamepad_axisRightXChanged(double)), inputHandler, SLOT(gamepad_axisRightXSetter(double)));
+    connect(this, SIGNAL(keyboard_WChanged(bool)), inputHandler, SLOT(keyboard_WSetter(bool)));
+    connect(this, SIGNAL(keyboard_SChanged(bool)), inputHandler, SLOT(keyboard_SSetter(bool)));
+    connect(this, SIGNAL(keyboard_AChanged(bool)), inputHandler, SLOT(keyboard_ASetter(bool)));
+    connect(this, SIGNAL(keyboard_DChanged(bool)), inputHandler, SLOT(keyboard_DSetter(bool)));
+    connect(this, SIGNAL(keyboard_QChanged(bool)), inputHandler, SLOT(keyboard_QSetter(bool)));
+    connect(this, SIGNAL(keyboard_EChanged(bool)), inputHandler, SLOT(keyboard_ESetter(bool)));
+
+    //Signals to be attached to inputHandler
+//    gamepad_axisLeftXChanged(double);
+//    gamepad_axisLeftYChanged(double);
+//    gamepad_axisRightXChanged(double);
+//    keyboard_WChanged(bool);
+//    keyboard_SChanged(bool);
+//    keyboard_AChanged(bool);
+//    keyboard_DChanged(bool);
+//    keyboard_QChanged(bool);
+//    keyboard_EChanged(bool);
+
 
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
@@ -151,7 +177,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->kinematicsGraphView->setChart(chart);
     // Removes placeholder images
     ui->kinematicsGraphView->setStyleSheet(NULL);
-    ui->simulationWidgetPlaceHolder->setStyleSheet(NULL);
     ui->kinematicsGraphView->setRenderHint(QPainter::Antialiasing);
 
     //3D Stuffs
@@ -192,9 +217,7 @@ MainWindow::MainWindow(QWidget *parent)
     view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
 
     QWidget *container = QWidget::createWindowContainer(view);
-
-    //Get rid of unnessary horizontal layout
-    ui->simulationWidgetPlaceHolder->parentWidget()->layout()->replaceWidget(ui->simulationWidgetPlaceHolder, container);
+    ui->simulation_Frame->layout()->addWidget(container);
 }
 
 

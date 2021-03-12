@@ -2,7 +2,7 @@ QT += core gui charts datavisualization 3dcore 3drender 3dinput 3dlogic 3dextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,11 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     gamepadhandler.cpp \
+    inputhandler.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    constants.h \
     gamepadhandler.h \
+    inputhandler.h \
     mainwindow.h
 
 FORMS += \

@@ -16,6 +16,9 @@
     <bold>false</bold>
    </font>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -187,7 +190,7 @@ QToolButton:pressed {
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="Main_Layout">
       <property name="spacing">
        <number>16</number>
       </property>
@@ -204,7 +207,7 @@ QToolButton:pressed {
        <number>10</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_12">
+       <layout class="QVBoxLayout" name="Left_Frame">
         <property name="spacing">
          <number>16</number>
         </property>
@@ -1578,6 +1581,9 @@ font: 16pt  'Open Sans'; }</string>
                   <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarAlwaysOff</enum>
                   </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
                   <property name="html">
                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1822,7 +1828,10 @@ font: 12pt  'Open Sans'; }</string>
        </layout>
       </item>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="simulation_Frame">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>1</horstretch>
@@ -1862,26 +1871,6 @@ border-radius: 16px;</string>
          <property name="bottomMargin">
           <number>10</number>
          </property>
-         <item>
-          <widget class="QWidget" name="simulationWidgetPlaceHolder" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>900</width>
-             <height>900</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-image: url(:/img/resources/placeholder.png) 50 50 50 50 fixed fixed;
-border-radius:0px;</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
