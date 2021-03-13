@@ -41,16 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     configureConnections();
 
-    //Signals to be attached to inputHandler
-//    gamepad_axisLeftXChanged(double);
-//    gamepad_axisLeftYChanged(double);
-//    gamepad_axisRightXChanged(double);
-//    keyboard_WChanged(bool);
-//    keyboard_SChanged(bool);
-//    keyboard_AChanged(bool);
-//    keyboard_DChanged(bool);
-//    keyboard_QChanged(bool);
-//    keyboard_EChanged(bool);
+    //TODO connect inputHandler inputsChanged tp kinematicsHandler updateSpeed
+    //update speeds emit speedsChanged(fl/br, fr/bl)
+
 
 
     //Initially start on home page.

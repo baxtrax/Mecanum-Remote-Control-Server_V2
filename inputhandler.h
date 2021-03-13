@@ -18,16 +18,10 @@ public:
                  QSlider *z_topSliderRef,
                  QSlider *z_botSliderRef);
 
-    //Setters
-    void setX(double value);
-    void setY(double value);
-    void setZ(double value);
-
     //Getters
     double getX();
     double getY();
     double getZ();
-
 public slots:
     void gamepad_axisLeftXSetter(double);
     void gamepad_axisLeftYSetter(double);
@@ -49,6 +43,11 @@ private:
     QSlider *y_botSlider;
     QSlider *z_topSlider;
     QSlider *z_botSlider;
+
+    //Setters
+    void setX(double value);
+    void setY(double value);
+    void setZ(double value);
 
     void updateSliders();
     void setXSlider(double value);

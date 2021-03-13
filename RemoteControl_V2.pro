@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     gamepadhandler.cpp \
     inputhandler.cpp \
+    kinematicshandler.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -18,6 +19,7 @@ HEADERS += \
     constants.h \
     gamepadhandler.h \
     inputhandler.h \
+    kinematicshandler.h \
     mainwindow.h
 
 FORMS += \
