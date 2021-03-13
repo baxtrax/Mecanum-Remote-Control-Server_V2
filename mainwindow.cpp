@@ -21,9 +21,11 @@
 
 #include "gamepadhandler.h"
 #include "inputhandler.h"
+#include "kinematicshandler.h"
 
 GamepadHandler *gamepadHandler;
 InputHandler *inputHandler;
+KinematicsHandler *kinematicsHandler;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,11 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
                                     ui->axisY_botVSlider,
                                     ui->axisZ_topVSlider,
                                     ui->axisZ_botVSlider);
+    kinematicsHandler = new KinematicsHandler();
 
     configureConnections();
-
-    //TODO connect inputHandler inputsChanged tp kinematicsHandler updateSpeed
-    //update speeds emit speedsChanged(fl/br, fr/bl)
 
 
 
@@ -287,6 +287,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     }
 }
 
+//TODO connect inputHandler inputsChanged tp kinematicsHandler updateSpeed
+//update speeds emit speedsChanged(fl/br, fr/bl)
 
 /**
  * @brief Configures connections of slots and signals of a MainWindow object
@@ -311,6 +313,8 @@ void MainWindow::configureConnections()
             inputHandler, SLOT(keyboard_QSetter(bool)));
     connect(this, SIGNAL(keyboard_EChanged(bool)),
             inputHandler, SLOT(keyboard_ESetter(bool)));
+    connect(inputHandler, SIGNAL(inputsChanged(double, double, double)),
+            kinematicsHandler, SLOT(updateSpeeds(double, double, double)));
 }
 
 //MainWindow deconstructor

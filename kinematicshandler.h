@@ -2,6 +2,7 @@
 #define KINEMATICSHANDLER_H
 
 #include <QObject>
+#include <QDebug>
 #include <math.h>
 #include "constants.h"
 
@@ -17,7 +18,7 @@ public slots:
     void updateSpeeds(double, double, double);
 signals:
     void speedsChanged(double, double);
-    void functionChanged(double, double, double);
+    void functionChanged(double, double, double, double, double);
 private:
     double FRBLSpeed;
     double FLBRSpeed;
