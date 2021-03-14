@@ -435,7 +435,10 @@ font: 12pt  'Open Sans'; }</string>
                        <number>0</number>
                       </property>
                       <item alignment="Qt::AlignHCenter">
-                       <widget class="QSlider" name="verticalSlider_12">
+                       <widget class="QSlider" name="FRBL_topVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                           <horstretch>0</horstretch>
@@ -500,7 +503,10 @@ QSlider::add-page:vertical {
                        </widget>
                       </item>
                       <item alignment="Qt::AlignHCenter">
-                       <widget class="QSlider" name="verticalSlider_13">
+                       <widget class="QSlider" name="FRBL_botVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -615,7 +621,10 @@ font: 12pt  'Open Sans'; }</string>
                        <number>0</number>
                       </property>
                       <item alignment="Qt::AlignHCenter">
-                       <widget class="QSlider" name="verticalSlider_14">
+                       <widget class="QSlider" name="FLBR_topVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>
@@ -668,7 +677,10 @@ QSlider::add-page:vertical {
                        </widget>
                       </item>
                       <item alignment="Qt::AlignHCenter">
-                       <widget class="QSlider" name="verticalSlider_15">
+                       <widget class="QSlider" name="FLBR_botVSlider">
+                        <property name="enabled">
+                         <bool>false</bool>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>16</width>

@@ -13,14 +13,16 @@ SOURCES += \
     inputhandler.cpp \
     kinematicshandler.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    outputhandler.cpp
 
 HEADERS += \
     constants.h \
     gamepadhandler.h \
     inputhandler.h \
     kinematicshandler.h \
-    mainwindow.h
+    mainwindow.h \
+    outputhandler.h
 
 FORMS += \
     mainwindow.ui
