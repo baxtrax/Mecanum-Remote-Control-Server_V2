@@ -36,8 +36,8 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
         if (!(FLBRSpeed == 0.0)) { FLBRSpeed = FLBRSpeed/abs(FLBRSpeed); }
     }
 
-    //qDebug() << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
-    //         << "Dir:" << dir << "Mag:" << mag;
+    qDebug() << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
+             << "Dir:" << dir << "Mag:" << mag;
 
     emit speedsChanged(FRBLSpeed, FLBRSpeed);
     emit functionChanged(dir, mag, z, FRBLSpeed, FLBRSpeed);
@@ -70,9 +70,7 @@ double KinematicsHandler::calculateMagnitude(double x, double y)
  */
 double KinematicsHandler::calculateDirection(double x, double y)
 {
-    double value = atan2(y, x);
-    if (value < 0) { value = value + (2*PI); }
-    return value;
+    return atan2(y, x);;
 }
 
 
