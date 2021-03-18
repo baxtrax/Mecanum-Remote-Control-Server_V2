@@ -169,6 +169,59 @@ void OutputHandler::updateChart(double dir,
     dirSeries->append(dir, IOConstants::MIN-.02);
 
     if (isDetailedChart()) {
+        //Setup x and y.
+        double x, y = -99.99;
+        double scale = 0.0;
+        if (FRBLscaleFactor > FLBRscaleFactor) {
+            scale = FRBLscaleFactor;
+        } else if (FRBLscaleFactor < FLBRscaleFactor) {
+            scale = FLBRscaleFactor;
+        } else {
+            scale = FRBLscaleFactor;
+        }
+        double** FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, (-(MathConstants::PI/4)), mag, z, scale);
+        FRBLSeries->clear();
+        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for (int j=0; j<2; j++) {
+                if (j == 0) {
+                    x = FRBLarrPtr[i][j];
+                } else {
+                    y = FRBLarrPtr[i][j];
+                }
+                //qDebug() << arrPtr[i][j] << " ";
+            }
+            qDebug() << "FRBL" << x << y;
+            FRBLSeries->append(x, y);
+        }
+        //Clean up memory used by array
+        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            delete[] FRBLarrPtr[i];
+        }
+        delete[] FRBLarrPtr;
+        //TODO Potentially switch over to using vectors? Statically allocated,
+        //seems fine in this case as the array size does not change.
+
+        //Reset x and y
+        x = -99.99;
+        y = -99.99;
+
+        double** FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, ((MathConstants::PI/4)), mag, z, scale);
+        FLBRSeries->clear();
+        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for (int j=0; j<2; j++) {
+                if (j == 0) {x = FLBRarrPtr[i][j];} else {y = FLBRarrPtr[i][j];}
+                //qDebug() << arrPtr[i][j] << " ";
+            }
+            qDebug() << "FRBL" << x << y;
+            FLBRSeries->append(x, y);
+        }
+        //Clean up memory used by array
+        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            delete[] FLBRarrPtr[i];
+        }
+        delete[] FLBRarrPtr;
+        //TODO Potentially switch over to using vectors? Statically allocated,
+        //seems fine in this case as the array size does not change.
         // Draw chart with mag, z, and scale
 
         // Generate data of wave with mag, z, and scale
@@ -178,57 +231,52 @@ void OutputHandler::updateChart(double dir,
         // Generate series showing vertical line at dir
         // Show line at dir
     } else {
-        double** arrPtr;
-        arrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, (MathConstants::PI/4), mag);
+        //Setup x and y.
+        double x, y = -99.99;
+
+        double** FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, (-(MathConstants::PI/4)), mag);
+        FRBLSeries->clear();
         for (int i=0; i<IOConstants::MAX_XCHART; i++) {
             for (int j=0; j<2; j++) {
-                qDebug() << arrPtr[i][j] << " ";
+                if (j == 0) {
+                    x = FRBLarrPtr[i][j];
+                } else {
+                    y = FRBLarrPtr[i][j];
+                }
+                //qDebug() << arrPtr[i][j] << " ";
             }
+            qDebug() << "FRBL" << x << y;
+            FRBLSeries->append(x, y);
         }
+        //Clean up memory used by array
+        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            delete[] FRBLarrPtr[i];
+        }
+        delete[] FRBLarrPtr;
+        //TODO Potentially switch over to using vectors? Statically allocated,
+        //seems fine in this case as the array size does not change.
 
-        // Draw chart with mag
-        //Series 2
-        //dir = dir * -1.0;
+        //Reset x and y
+        x = -99.99;
+        y = -99.99;
 
-        FRBLSeries->clear();
-        FRBLSeries->append(1, -0.71);
-        FRBLSeries->append(2, -0.3);
-        FRBLSeries->append(3, 0.18);
-        FRBLSeries->append(4, 0.62);
-        FRBLSeries->append(5, 0.91);
-        FRBLSeries->append(6, 1);
-        FRBLSeries->append(7, 0.86);
-        FRBLSeries->append(8, 0.52);
-        FRBLSeries->append(9, 0.06);
-        FRBLSeries->append(10, -0.41);
-        FRBLSeries->append(11, -0.79);
-        FRBLSeries->append(12, -0.98);
-        FRBLSeries->append(13, -0.95);
-        FRBLSeries->append(14, -0.71);
-
-        //Series 1
+        double** FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, ((MathConstants::PI/4)), mag);
         FLBRSeries->clear();
-        FLBRSeries->append(1, 0.71);
-        FLBRSeries->append(2, 0.95);
-        FLBRSeries->append(3, 0.98);
-        FLBRSeries->append(4, 0.79);
-        FLBRSeries->append(5, 0.41);
-        FLBRSeries->append(6, -0.06);
-        FLBRSeries->append(7, -0.52);
-        FLBRSeries->append(8, -0.86);
-        FLBRSeries->append(9, -1);
-        FLBRSeries->append(10, -0.91);
-        FLBRSeries->append(11, -0.62);
-        FLBRSeries->append(12, -0.18);
-        FLBRSeries->append(13, 0.3);
-        FLBRSeries->append(14, 0.71);
-
-        // Generate data of wave with mag
-        // Erase current series
-        // Add new generated data
-
-        // Generate series showing vertical line at dir
-        // Show line at dir
+        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for (int j=0; j<2; j++) {
+                if (j == 0) {x = FLBRarrPtr[i][j];} else {y = FLBRarrPtr[i][j];}
+                //qDebug() << arrPtr[i][j] << " ";
+            }
+            qDebug() << "FRBL" << x << y;
+            FLBRSeries->append(x, y);
+        }
+        //Clean up memory used by array
+        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            delete[] FLBRarrPtr[i];
+        }
+        delete[] FLBRarrPtr;
+        //TODO Potentially switch over to using vectors? Statically allocated,
+        //seems fine in this case as the array size does not change.
     }
 }
 
@@ -300,4 +348,3 @@ void OutputHandler::setFLBRSlider(double value)
         FLBR_topSlider->setValue(0.0);
     }
 }
-

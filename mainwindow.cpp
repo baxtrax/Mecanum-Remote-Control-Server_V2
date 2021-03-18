@@ -111,27 +111,27 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         {
         case Qt::Key_W:
             emit keyboard_WChanged(true);
-            qDebug() << "Keyboard W" << true;
+            //qDebug() << "Keyboard W" << true;
             break;
         case Qt::Key_S:
             emit keyboard_SChanged(true);
-            qDebug() << "Keyboard S" << true;
+            //qDebug() << "Keyboard S" << true;
             break;
         case Qt::Key_A:
             emit keyboard_AChanged(true);
-            qDebug() << "Keyboard A" << true;
+            //qDebug() << "Keyboard A" << true;
             break;
         case Qt::Key_D:
             emit keyboard_DChanged(true);
-            qDebug() << "Keyboard D" << true;
+            //qDebug() << "Keyboard D" << true;
             break;
         case Qt::Key_Q:
             emit keyboard_QChanged(true);
-            qDebug() << "Keyboard Q" << true;
+            //qDebug() << "Keyboard Q" << true;
             break;
         case Qt::Key_E:
             emit keyboard_EChanged(true);
-            qDebug() << "Keyboard E" << true;
+            //qDebug() << "Keyboard E" << true;
             break;
         }
     }
@@ -150,27 +150,27 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
         {
         case Qt::Key_W:
             emit keyboard_WChanged(false);
-            qDebug() << "Keyboard W" << false;
+            //qDebug() << "Keyboard W" << false;
             break;
         case Qt::Key_S:
             emit keyboard_SChanged(false);
-            qDebug() << "Keyboard S" << false;
+            //qDebug() << "Keyboard S" << false;
             break;
         case Qt::Key_A:
             emit keyboard_AChanged(false);
-            qDebug() << "Keyboard A" << false;
+            //qDebug() << "Keyboard A" << false;
             break;
         case Qt::Key_D:
             emit keyboard_DChanged(false);
-            qDebug() << "Keyboard D" << false;
+            //qDebug() << "Keyboard D" << false;
             break;
         case Qt::Key_Q:
             emit keyboard_QChanged(false);
-            qDebug() << "Keyboard Q" << false;
+            //qDebug() << "Keyboard Q" << false;
             break;
         case Qt::Key_E:
             emit keyboard_EChanged(false);
-            qDebug() << "Keyboard E" << true;
+            //qDebug() << "Keyboard E" << true;
             break;
         }
     }
