@@ -20,27 +20,32 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
     double mag = calculateMagnitude(x, y);
     // Truncate floating points to get rid of unessary points of uncertainty
     // This is done because they are compared later in the program.
+    // TODO fix turning, seems to be inaccurate or just straight up wrong.
     FRBLSpeed = (double)
         ((int)(calculateFRBLSpeed(dir, mag, z)*100000)/100000.0);
     FLBRSpeed = (double)
         ((int)(calculateFLBRSpeed(dir, mag, z)*100000)/100000.0);
 
-    if(abs(FRBLSpeed) > abs(FLBRSpeed)) {
-        FRBLSpeed = FRBLSpeed/abs(FRBLSpeed);
-        FLBRSpeed = FLBRSpeed/abs(FRBLSpeed);
+    double FRBLscaleFactor = 0;
+    double FLBRscaleFactor = 0;
+    if((abs(FRBLSpeed) >= abs(FLBRSpeed)) &&
+       (!(FRBLSpeed == 0 && FLBRSpeed == 0))) {
+        FRBLscaleFactor = abs(FRBLSpeed);
+        FLBRscaleFactor = abs(FRBLSpeed);
+        FRBLSpeed = FRBLSpeed/FRBLscaleFactor;
+        FLBRSpeed = FLBRSpeed/FLBRscaleFactor;
     } else if (abs(FRBLSpeed) < abs(FLBRSpeed)) {
-        FRBLSpeed = FRBLSpeed/abs(FLBRSpeed);
-        FLBRSpeed = FLBRSpeed/abs(FLBRSpeed);
-    } else {
-        if (!(FRBLSpeed == 0.0)) { FRBLSpeed = FRBLSpeed/abs(FRBLSpeed); }
-        if (!(FLBRSpeed == 0.0)) { FLBRSpeed = FLBRSpeed/abs(FLBRSpeed); }
+        FRBLscaleFactor = abs(FLBRSpeed);
+        FLBRscaleFactor = abs(FLBRSpeed);
+        FRBLSpeed = FRBLSpeed/FRBLscaleFactor;
+        FLBRSpeed = FLBRSpeed/FLBRscaleFactor;
     }
 
     qDebug() << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
              << "Dir:" << dir << "Mag:" << mag;
 
     emit speedsChanged(FRBLSpeed, FLBRSpeed);
-    emit functionChanged(dir, mag, z, FRBLSpeed, FLBRSpeed);
+    emit functionChanged(dir, mag, z, FRBLscaleFactor, FLBRscaleFactor);
 }
 
 
@@ -86,7 +91,10 @@ double KinematicsHandler::calculateFRBLSpeed(double direction,
                                              double magnitude,
                                              double z)
 {
-    return((((double)sin(direction - (1.0/4.0*PI))) * magnitude) + z);
+    return(
+        (((double)sin(direction - (1.0/4.0*MathConstants::PI)))
+        * magnitude)
+        + z);
 }
 
 
@@ -102,5 +110,8 @@ double KinematicsHandler::calculateFLBRSpeed(double direction,
                                              double magnitude,
                                              double z)
 {
-    return((((double)sin(direction + (1.0/4.0*PI))) * magnitude) + z);
+    return(
+        (((double)sin(direction + (1.0/4.0*MathConstants::PI)))
+        * magnitude)
+        + z);
 }

@@ -115,7 +115,8 @@ void GamepadHandler::configureConnections()
     connect(currentGamepad, &QGamepad::axisLeftYChanged,
             this, [this](double value){
         //qDebug() << "Left Y" << value;
-        emit gamepad_axisLeftYChanged(value);
+        //TODO add invert y to settings
+        emit gamepad_axisLeftYChanged(-value);
     });
     connect(currentGamepad, &QGamepad::axisRightXChanged,
             this, [this](double value){

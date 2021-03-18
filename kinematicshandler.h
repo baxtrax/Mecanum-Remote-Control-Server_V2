@@ -6,8 +6,6 @@
 #include <math.h>
 #include "constants.h"
 
-#define PI 3.14159265
-
 class KinematicsHandler :  public QObject
 {
     Q_OBJECT
