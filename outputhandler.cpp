@@ -11,25 +11,29 @@ OutputHandler::OutputHandler(QSlider *FRBL_topSliderRef,
     FRBL_botSlider = FRBL_botSliderRef;
     FLBR_topSlider = FLBR_topSliderRef;
     FLBR_botSlider = FLBR_botSliderRef;
-    isDetailed = false;
+    detailLevel = SettingsConstants::DETAILED_INFO;
     axisX = new QtCharts::QCategoryAxis();
     axisY = new QtCharts::QCategoryAxis();
-    FRBLSeries = new QtCharts::QSplineSeries();
-    FLBRSeries = new QtCharts::QSplineSeries();
+    FRBLSeries = new QtCharts::QLineSeries();
+    FLBRSeries = new QtCharts::QLineSeries();
     dirSeries = new QtCharts::QLineSeries();
     chart = new QtCharts::QChart();
     configurePenBrushFont();
     configureAxis();
     configureSeries();
     configureChart();
+    updateChart(0,0,0,0);
 }
 
 
+/**
+ * @brief Configures all brushes used to style the chart.
+ */
 void OutputHandler::configurePenBrushFont()
 {
-    axisYPen = new QPen(QBrush(QRgb(0x5E5E6F)), 2,
+    axisYPen = new QPen(QBrush(QRgb(0x5E5E6F)), 1,
                         Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    axisXPen = new QPen(QBrush(QRgb(0x303046)), 2,
+    axisXPen = new QPen(QBrush(QRgb(0x303046)), 1,
                         Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     axisLabelFont = new QFont("Open Sans", 12);
     axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
@@ -39,26 +43,31 @@ void OutputHandler::configurePenBrushFont()
     lightPinkBruise_Gradient.setFinalStop(QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
     lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
-    lightPinkBruise_Gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    lightPinkBruise_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
 
     QLinearGradient darkUltramarine_Gradient;
     darkUltramarine_Gradient.setStart(QPointF(0, 0));
     darkUltramarine_Gradient.setFinalStop(QPointF(1, 0));
     darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
     darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
-    darkUltramarine_Gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    darkUltramarine_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
 
-    FRBLPen = new QPen(lightPinkBruise_Gradient, 10,
+    FRBLPen = new QPen(lightPinkBruise_Gradient, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    FLBRPen = new QPen(darkUltramarine_Gradient, 10,
+    FLBRPen = new QPen(darkUltramarine_Gradient, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-    QBrush dirPenBrush = QBrush(QRgb(0xFFFFFF/*0x6EFE74*/));
-    dirPen = new QPen(dirPenBrush, 5,
+    QBrush dirPenBrush = QBrush(QRgb(0xFFFFFF));
+    dirPen = new QPen(dirPenBrush, 3,
                       Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
 }
 
+
+/**
+ * @brief Configures all needed axis with all the needed styling
+ * and settings.
+ */
 void OutputHandler::configureAxis()
 {
     axisY->setLabelsFont(*axisLabelFont);
@@ -79,7 +88,10 @@ void OutputHandler::configureAxis()
 }
 
 
-
+/**
+ * @brief Configures all needed series with all the needed styling
+ * and settings.
+ */
 void OutputHandler::configureSeries()
 {
     FRBLSeries->setPen(*FRBLPen);
@@ -87,6 +99,11 @@ void OutputHandler::configureSeries()
     dirSeries->setPen(*dirPen);
 }
 
+
+/**
+ * @brief Configures the specified chart with all the needed styling
+ * and settings.
+ */
 void OutputHandler::configureChart()
 {
     configureAxis();
@@ -112,13 +129,37 @@ void OutputHandler::configureChart()
     dirSeries->attachAxis(axisY);
 }
 
+
+/**
+ * @brief Maps one output range to another range and returns the number if it
+ * where on that scale.
+ * @param double input value
+ * @param double min range of source
+ * @param double max range of source
+ * @param double min range of desired
+ * @param double max range of desired
+ * @return double number maped to new range.
+ */
 double OutputHandler::linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax)
 {
     return (((input-srcMin) / (srcMax-srcMin)) * (dstMax-dstMin) + dstMin);
 }
 
 
-
+/**
+ * @brief Generates a set number of data points of a modified sine function. The
+ * modified sine function is the basis of the kinematics for a mechanum drive
+ * system.
+ * @param int number of data points in array generated.
+ * @param double cycles from start to finsh.
+ * @param double amplitude of sine.
+ * @param double up and down offset.
+ * @param double left and right offset.
+ * @param double magnitude of force (how fast).
+ * @param double z coordinate of input.
+ * @param double value that is used for normalization.
+ * @return double array of pointers pointing to data points.
+ */
 double** generateSinePointsKinematics(int numberOfPoints, double cycles, double amp, double yOffset, double xOffset, double mag, double z, double scale) {
     double y = 0.0;
     double f = cycles/double(numberOfPoints-1);
@@ -128,16 +169,12 @@ double** generateSinePointsKinematics(int numberOfPoints, double cycles, double 
     }
 
     for (int t=0; t<(numberOfPoints); t++) {
-        y = roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset) + yOffset) * mag) + z)/scale) * 100000) / 100000.0;
+        //y = (roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset) + yOffset) * mag) + z)/scale) * 100000) / 100000.0);
+        y = std::clamp((roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset) + yOffset) * mag) + z)/scale) * 100000) / 100000.0), IOConstants::MIN, IOConstants::MAX);
         arr[(t)][0] = t+1;
         arr[(t)][1] = y;
     }
     return arr;
-}
-
-
-double** generateSinePointsKinematics(int numberOfPoints, double cycles, double amp, double yOffset, double xOffset, double mag) {
-    return generateSinePointsKinematics(numberOfPoints, cycles, amp, yOffset, xOffset, mag, 0.0, 1.0);
 }
 
 
@@ -152,12 +189,24 @@ void OutputHandler::updateSliders(double FRBLSpeed, double FLBRSpeed)
 }
 
 
+//TODO this function needs heavy performance fixes
+//TODO add option in settings to adjust detail level and ammount of data points
+/**
+ * @brief Main update function that calls all he needs functions for updating
+ * the graph to new data that has been sent. Performance is directly connected
+ * connected to how many points per update need to be generated.
+ * @param double direction of force.
+ * @param double magnitude of force (how fast).
+ * @param double z coordinate of input.
+ * @param double value that is used for normalization.
+ */
 void OutputHandler::updateChart(double dir,
                                 double mag,
                                 double z,
-                                double FRBLscaleFactor,
-                                double FLBRscaleFactor)
+                                double scaleFactor)
 {
+    // Generate series showing vertical line where speeds are currently getting
+    // fetched from.
     if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
     dir = linearMap(dir,
                     0,
@@ -168,135 +217,159 @@ void OutputHandler::updateChart(double dir,
     dirSeries->append(dir, IOConstants::MAX+.02);
     dirSeries->append(dir, IOConstants::MIN-.02);
 
-    if (isDetailedChart()) {
-        //Setup x and y.
-        double x, y = -99.99;
-        double scale = 0.0;
-        if (FRBLscaleFactor > FLBRscaleFactor) {
-            scale = FRBLscaleFactor;
-        } else if (FRBLscaleFactor < FLBRscaleFactor) {
-            scale = FLBRscaleFactor;
-        } else {
-            scale = FRBLscaleFactor;
-        }
-        double** FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, (-(MathConstants::PI/4)), mag, z, scale);
-        FRBLSeries->clear();
-        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-            for (int j=0; j<2; j++) {
-                if (j == 0) {
-                    x = FRBLarrPtr[i][j];
-                } else {
-                    y = FRBLarrPtr[i][j];
+    if (scaleFactor == 0) { scaleFactor = 1.0; }
+
+    double x, y = -9.9;
+    // TODO Potentially switch over to using vectors? Statically allocated
+    // arrays seems fine in this case as the array size does not change after
+    // compile timer.
+    double** FRBLarrPtr;
+    double** FLBRarrPtr;
+
+    // Show line at dir
+    switch (getCurrentDetailLevel()) {
+        case SettingsConstants::BASIC_INFO:
+            // Generate data of wave with mag, and scale for FRBL
+            FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                      1.0,
+                                                      1.0,
+                                                      0.0,
+                                                      (-(MathConstants::PI/4)),
+                                                      mag,
+                                                      0.0,
+                                                      scaleFactor);
+            FRBLSeries->clear();
+            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+                for (int j=0; j<2; j++) {
+                    if (j == 0) {
+                        x = FRBLarrPtr[i][j];
+                    } else {
+                        y = FRBLarrPtr[i][j];
+                    }
                 }
-                //qDebug() << arrPtr[i][j] << " ";
+                //qDebug() << "FRBL" << x << y;
+                // Add new generated data
+                FRBLSeries->append(x, y);
             }
-            qDebug() << "FRBL" << x << y;
-            FRBLSeries->append(x, y);
-        }
-        //Clean up memory used by array
-        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-            delete[] FRBLarrPtr[i];
-        }
-        delete[] FRBLarrPtr;
-        //TODO Potentially switch over to using vectors? Statically allocated,
-        //seems fine in this case as the array size does not change.
-
-        //Reset x and y
-        x = -99.99;
-        y = -99.99;
-
-        double** FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, ((MathConstants::PI/4)), mag, z, scale);
-        FLBRSeries->clear();
-        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-            for (int j=0; j<2; j++) {
-                if (j == 0) {x = FLBRarrPtr[i][j];} else {y = FLBRarrPtr[i][j];}
-                //qDebug() << arrPtr[i][j] << " ";
+            // Clean up memory used by array
+            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+                delete[] FRBLarrPtr[i];
             }
-            qDebug() << "FRBL" << x << y;
-            FLBRSeries->append(x, y);
-        }
-        //Clean up memory used by array
-        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-            delete[] FLBRarrPtr[i];
-        }
-        delete[] FLBRarrPtr;
-        //TODO Potentially switch over to using vectors? Statically allocated,
-        //seems fine in this case as the array size does not change.
-        // Draw chart with mag, z, and scale
+            delete[] FRBLarrPtr;
 
-        // Generate data of wave with mag, z, and scale
-        // Erase current series
-        // Add new generated data
-
-        // Generate series showing vertical line at dir
-        // Show line at dir
-    } else {
-        //Setup x and y.
-        double x, y = -99.99;
-
-        double** FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, (-(MathConstants::PI/4)), mag);
-        FRBLSeries->clear();
-        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-            for (int j=0; j<2; j++) {
-                if (j == 0) {
-                    x = FRBLarrPtr[i][j];
-                } else {
-                    y = FRBLarrPtr[i][j];
+            // Generate data of wave with mag, and scale for FLBR
+            FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                      1.0,
+                                                      1.0,
+                                                      0.0,
+                                                      ((MathConstants::PI/4)),
+                                                      mag,
+                                                      0.0,
+                                                      scaleFactor);
+            FLBRSeries->clear();
+            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+                for (int j=0; j<2; j++) {
+                    if (j == 0) {
+                        x = FLBRarrPtr[i][j];
+                    } else {
+                        y = FLBRarrPtr[i][j];
+                    }
                 }
-                //qDebug() << arrPtr[i][j] << " ";
+                //qDebug() << "FRBL" << x << y;
+                FLBRSeries->append(x, y);
             }
-            qDebug() << "FRBL" << x << y;
-            FRBLSeries->append(x, y);
-        }
-        //Clean up memory used by array
-        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-            delete[] FRBLarrPtr[i];
-        }
-        delete[] FRBLarrPtr;
-        //TODO Potentially switch over to using vectors? Statically allocated,
-        //seems fine in this case as the array size does not change.
-
-        //Reset x and y
-        x = -99.99;
-        y = -99.99;
-
-        double** FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART, 1.0, 1.0, 0.0, ((MathConstants::PI/4)), mag);
-        FLBRSeries->clear();
-        for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-            for (int j=0; j<2; j++) {
-                if (j == 0) {x = FLBRarrPtr[i][j];} else {y = FLBRarrPtr[i][j];}
-                //qDebug() << arrPtr[i][j] << " ";
+            // Clean up memory used by array
+            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+                delete[] FLBRarrPtr[i];
             }
-            qDebug() << "FRBL" << x << y;
-            FLBRSeries->append(x, y);
-        }
-        //Clean up memory used by array
-        for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-            delete[] FLBRarrPtr[i];
-        }
-        delete[] FLBRarrPtr;
-        //TODO Potentially switch over to using vectors? Statically allocated,
-        //seems fine in this case as the array size does not change.
+            delete[] FLBRarrPtr;
+            break;
+        case SettingsConstants::DETAILED_INFO:
+            // Generate data of wave with mag, z, and scale for FRBL
+            FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                      1.0,
+                                                      1.0,
+                                                      0.0,
+                                                      (-(MathConstants::PI/4)),
+                                                      mag,
+                                                      z,
+                                                      scaleFactor);
+            FRBLSeries->clear();
+            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+                for (int j=0; j<2; j++) {
+                    if (j == 0) {
+                        x = FRBLarrPtr[i][j];
+                    } else {
+                        y = FRBLarrPtr[i][j];
+                    }
+                }
+                //qDebug() << "FRBL" << x << y;
+                FRBLSeries->append(x, y);
+            }
+            // Clean up memory used by array
+            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+                delete[] FRBLarrPtr[i];
+            }
+            delete[] FRBLarrPtr;
+            // Generate data of wave with mag, z, and scale for FLBR
+            FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                      1.0,
+                                                      1.0,
+                                                      0.0,
+                                                      ((MathConstants::PI/4)),
+                                                      mag,
+                                                      z,
+                                                      scaleFactor);
+            FLBRSeries->clear();
+            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+                for (int j=0; j<2; j++) {
+                    if (j == 0) {
+                        x = FLBRarrPtr[i][j];
+                    } else {
+                        y = FLBRarrPtr[i][j];
+                    }
+                }
+                //qDebug() << "FRBL" << x << y;
+                FLBRSeries->append(x, y);
+            }
+            // Clean up memory used by array
+            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+                delete[] FLBRarrPtr[i];
+            }
+            delete[] FLBRarrPtr;
+            break;
     }
 }
 
 
-bool OutputHandler::isDetailedChart()
+// Getters
+
+/**
+ * @brief Gets current detail level that the graphing is set at.
+ * @return int value of enum that detail is set at.
+ */
+int OutputHandler::getCurrentDetailLevel()
 {
-    return (isDetailed);
+    return detailLevel;
 }
 
 
-void OutputHandler::setIsDetailedChart(bool value)
+// Setters
+
+// TODO Add wrong input checking
+/**
+ * @brief Sets level of detail for graphing points of the kinematics.
+ * @param int level as a constant from SettingsConstants choices.
+ */
+void OutputHandler::setDetailLevel(int level)
 {
-    isDetailed = value;
+    detailLevel = level;
 }
 
 
-//Setters
 /**
  * @brief Sets value of FRBL slider scaled to fit.
- * @param double value between IOConstants::MIN and IOConstants::MAX
+ * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
 void OutputHandler::setFRBLSlider(double value)
 {
@@ -324,7 +397,7 @@ void OutputHandler::setFRBLSlider(double value)
 
 /**
  * @brief Sets value of FLBR slider scaled to fit.
- * @param double value between IOConstants::MIN and IOConstants::MAX
+ * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
 void OutputHandler::setFLBRSlider(double value)
 {

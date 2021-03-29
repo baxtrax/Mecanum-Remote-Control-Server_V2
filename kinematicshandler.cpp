@@ -26,26 +26,25 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
     FLBRSpeed = (double)
         ((int)(calculateFLBRSpeed(dir, mag, z)*100000)/100000.0);
 
-    double FRBLscaleFactor = 0;
-    double FLBRscaleFactor = 0;
+    double scaleFactor = 0;
     if((abs(FRBLSpeed) >= abs(FLBRSpeed)) &&
        (!(FRBLSpeed == 0 && FLBRSpeed == 0))) {
-        FRBLscaleFactor = abs(FRBLSpeed);
-        FLBRscaleFactor = abs(FRBLSpeed);
-        FRBLSpeed = FRBLSpeed/FRBLscaleFactor;
-        FLBRSpeed = FLBRSpeed/FLBRscaleFactor;
+        scaleFactor = abs(FRBLSpeed);
+        scaleFactor = abs(FRBLSpeed);
+        FRBLSpeed = FRBLSpeed/scaleFactor;
+        FLBRSpeed = FLBRSpeed/scaleFactor;
     } else if (abs(FRBLSpeed) < abs(FLBRSpeed)) {
-        FRBLscaleFactor = abs(FLBRSpeed);
-        FLBRscaleFactor = abs(FLBRSpeed);
-        FRBLSpeed = FRBLSpeed/FRBLscaleFactor;
-        FLBRSpeed = FLBRSpeed/FLBRscaleFactor;
+        scaleFactor = abs(FLBRSpeed);
+        scaleFactor = abs(FLBRSpeed);
+        FRBLSpeed = FRBLSpeed/scaleFactor;
+        FLBRSpeed = FLBRSpeed/scaleFactor;
     }
 
-    qDebug() << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
-             << "Dir:" << dir << "Mag:" << mag;
+//    qDebug() << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
+//             << "Dir:" << dir << "Mag:" << mag;
 
     emit speedsChanged(FRBLSpeed, FLBRSpeed);
-    emit functionChanged(dir, mag, z, FRBLscaleFactor, FLBRscaleFactor);
+    emit functionChanged(dir, mag, z, scaleFactor);
 }
 
 

@@ -229,9 +229,9 @@ void MainWindow::configureConnections()
             outputHandler,
             SLOT(updateSliders(double, double)));
     connect(kinematicsHandler,
-            SIGNAL(functionChanged(double, double, double, double, double)),
+            SIGNAL(functionChanged(double, double, double, double)),
             outputHandler,
-            SLOT(updateChart(double, double, double, double, double)));
+            SLOT(updateChart(double, double, double, double)));
 }
 
 //MainWindow deconstructor

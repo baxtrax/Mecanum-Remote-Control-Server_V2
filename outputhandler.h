@@ -20,11 +20,11 @@ public:
                   QSlider *FLBR_topSliderRef,
                   QSlider *FLBR_botSliderRef,
                   QtCharts::QChartView *chartViewRef);
-    void setIsDetailedChart(bool value);
-    bool isDetailedChart();
+    void setDetailLevel(int level);
+    int getCurrentDetailLevel();
 public slots:
     void updateSliders(double, double);
-    void updateChart(double, double, double, double, double);
+    void updateChart(double, double, double, double);
 private:
     QtCharts::QChartView *chartView;
     QSlider *FRBL_topSlider;
@@ -33,8 +33,8 @@ private:
     QSlider *FLBR_botSlider;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
-    QtCharts::QSplineSeries *FRBLSeries;
-    QtCharts::QSplineSeries *FLBRSeries;
+    QtCharts::QLineSeries *FRBLSeries;
+    QtCharts::QLineSeries *FLBRSeries;
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
 
@@ -47,7 +47,7 @@ private:
     QFont *axisLabelFont;
     QBrush *axisLabelPenBrush;
 
-    bool isDetailed;
+    int detailLevel;
 
     void setFRBLSlider(double value);
     void setFLBRSlider(double value);
