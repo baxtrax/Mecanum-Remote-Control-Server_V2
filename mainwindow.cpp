@@ -56,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
     ui->home_toolButton->setDown(true);
+    //TODO scroll bar a little too thicc, fix its size alittle
+    ui->loggerTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->loggerTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);
 
     //3D Stuffs
     Qt3DCore::QEntity *scene = new Qt3DCore::QEntity();

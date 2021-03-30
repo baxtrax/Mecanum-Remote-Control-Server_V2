@@ -1597,7 +1597,7 @@ font: 16pt  'Open Sans'; }</string>
                  <number>2</number>
                 </property>
                 <item>
-                 <widget class="QTextEdit" name="textEdit">
+                 <widget class="QTextEdit" name="loggerTextEdit">
                   <property name="styleSheet">
                    <string notr="true">QTextEdit {
 	border: 0px;
@@ -1624,7 +1624,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item>
-                 <widget class="QScrollBar" name="verticalScrollBar">
+                 <widget class="QScrollBar" name="loggerVerticalScrollbar">
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
