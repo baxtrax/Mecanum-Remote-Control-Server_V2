@@ -23,11 +23,13 @@
 #include "inputhandler.h"
 #include "kinematicshandler.h"
 #include "outputhandler.h"
+#include "loggerhandler.h"
 
 GamepadHandler *gamepadHandler;
 InputHandler *inputHandler;
 KinematicsHandler *kinematicsHandler;
 OutputHandler *outputHandler;
+LoggerHandler *loggerHandler;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -35,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    loggerHandler = new LoggerHandler(ui->loggerTextEdit);
     gamepadHandler = new GamepadHandler();
     inputHandler = new InputHandler(ui->axisX_topVSlider,
                                     ui->axisX_botVSlider,
@@ -50,12 +53,18 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->kinematicsGraphView);
 
     configureConnections();
-
-
+    loggerHandler->clear();
+    loggerHandler->write(LoggerConstants::DEBUG, "test");
+    loggerHandler->write(LoggerConstants::INFO, "test");
+    loggerHandler->write(LoggerConstants::WARNING, "test");
+    loggerHandler->write(LoggerConstants::ERR, "test");
+    loggerHandler->write(LoggerConstants::FATAL, "test");
+    loggerHandler->write("test");
 
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
     ui->home_toolButton->setDown(true);
+    //ui->home_toolButton->setDisabled(true);
     //TODO scroll bar a little too thicc, fix its size alittle
     ui->loggerTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->loggerTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);

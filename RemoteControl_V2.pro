@@ -12,6 +12,7 @@ SOURCES += \
     gamepadhandler.cpp \
     inputhandler.cpp \
     kinematicshandler.cpp \
+    loggerhandler.cpp \
     main.cpp \
     mainwindow.cpp \
     outputhandler.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     gamepadhandler.h \
     inputhandler.h \
     kinematicshandler.h \
+    loggerhandler.h \
     mainwindow.h \
     outputhandler.h
 
