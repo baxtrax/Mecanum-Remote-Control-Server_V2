@@ -16,13 +16,13 @@ public:
     void write(QString text);
 
     void setLevel(int level);
-    int getLevel();
-
-    void enableShowTime(bool status);
-    bool isShowTime();
-
     void enableColorify(bool status);
+    void enableShowTime(bool status);
+
+    int getLevel();
+    bool isShowTime();
     bool isColorify();
+
 private:
     QTextEdit *logTextEdit;
     int currentLevel;

@@ -8,6 +8,11 @@ LoggerHandler::LoggerHandler(QTextEdit *logTextEditRef)
 }
 
 
+/**
+ * @brief Will write the the specified message text to the logger output, with
+ * the currently set default level of information.
+ * @param string text to be sent.
+ */
 void LoggerHandler::write(QString text)
 {
     QString time = "";
@@ -69,6 +74,13 @@ void LoggerHandler::write(QString text)
     }
 }
 
+
+/**
+ * @brief Will write the the specified message text to the logger output, with
+ * the desired level of information.
+ * @param int level as a constant from LoggerConstants choices.
+ * @param string text to be sent.
+ */
 void LoggerHandler::write(int level, QString text)
 {
     int prevLevel = getLevel();
@@ -77,26 +89,43 @@ void LoggerHandler::write(int level, QString text)
     setLevel(prevLevel);
 }
 
+
+/**
+ * @brief Clears the logger output.
+ */
 void LoggerHandler::clear()
 {
     logTextEdit->clear();
 }
 
+
 // Setters
 
 // TODO add input validation
+/**
+ * @brief Sets level of logging for sending messages to logger output.
+ * @param int level as a constant from LoggerConstants choices.
+ */
 void LoggerHandler::setLevel(int level)
 {
     currentLevel = level;
 }
 
 
+/**
+ * @brief Sets if time should be displayed next to the logger inputs or not.
+ * @param boolean status of time being shown.
+ */
 void LoggerHandler::enableShowTime(bool status)
 {
     showTime = status;
 }
 
 
+/**
+ * @brief Sets if text on the logger output should be colored or not.
+ * @param boolean status of colored text.
+ */
 void LoggerHandler::enableColorify(bool status)
 {
     colorify = status;
@@ -105,18 +134,31 @@ void LoggerHandler::enableColorify(bool status)
 
 // Getters
 
+/**
+ * @brief Gets the current level for messages that are sent without a level
+ * descriptor.
+ * @return int level as a constant from LoggerConstants choices.
+ */
 int LoggerHandler::getLevel()
 {
     return currentLevel;
 }
 
 
+/**
+ * @brief Gets if time should be displayed next to the logger inputs or not.
+ * @return boolean current status.
+ */
 bool LoggerHandler::isShowTime()
 {
     return showTime;
 }
 
 
+/**
+ * @brief Gets if text on the logger output should be colored or not.
+ * @return boolean current status.
+ */
 bool LoggerHandler::isColorify()
 {
     return colorify;

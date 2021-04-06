@@ -55,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent)
     configureConnections();
     loggerHandler->clear();
     loggerHandler->write(LoggerConstants::DEBUG, "test");
+    for (int i=0; i<20; i++) {
+        loggerHandler->write(LoggerConstants::INFO, "test");
+    }
     loggerHandler->write(LoggerConstants::INFO, "test");
     loggerHandler->write(LoggerConstants::WARNING, "test");
     loggerHandler->write(LoggerConstants::ERR, "test");
