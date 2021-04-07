@@ -53,16 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->kinematicsGraphView);
 
     configureConnections();
-    loggerHandler->clear();
-    loggerHandler->write(LoggerConstants::DEBUG, "test");
-    for (int i=0; i<20; i++) {
+    loggerHandler->clear();;
+    for (int i=0; i<30; i++) {
         loggerHandler->write(LoggerConstants::INFO, "test");
     }
-    loggerHandler->write(LoggerConstants::INFO, "test");
-    loggerHandler->write(LoggerConstants::WARNING, "test");
-    loggerHandler->write(LoggerConstants::ERR, "test");
-    loggerHandler->write(LoggerConstants::FATAL, "test");
-    loggerHandler->write("test");
 
     //Initially start on home page.
     ui->home_toolButton->setCheckable(true);
