@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     loggerHandler = new LoggerHandler(ui->loggerTextEdit);
-    gamepadHandler = new GamepadHandler();
+    gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(ui->axisX_topVSlider,
                                     ui->axisX_botVSlider,
                                     ui->axisY_topVSlider,
@@ -50,10 +50,11 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->FRBL_botVSlider,
                                       ui->FLBR_topVSlider,
                                       ui->FLBR_botVSlider,
-                                      ui->kinematicsGraphView);
+                                      ui->kinematicsGraphView,
+                                      loggerHandler);
 
     configureConnections();
-//    loggerHandler->clear();;
+    loggerHandler->clear();;
 //    for (int i=0; i<30; i++) {
 //        loggerHandler->write(LoggerConstants::INFO, "test");
 //    }
@@ -105,6 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QWidget *container = QWidget::createWindowContainer(view);
     ui->simulation_Frame->layout()->addWidget(container);
+    loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
 }
 
 

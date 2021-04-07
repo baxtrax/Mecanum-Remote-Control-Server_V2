@@ -2,8 +2,9 @@
 
 
 // Constructor
-GamepadHandler::GamepadHandler()
+GamepadHandler::GamepadHandler(LoggerHandler *loggerRef)
 {
+    logger = loggerRef;
     gamepadManager = QGamepadManager::instance();
     gamepadList = new QList<int>;
     // Set gamepad as first gamepad in the list at startup (if it exists)
@@ -26,16 +27,23 @@ GamepadHandler::GamepadHandler()
  */
 bool GamepadHandler::setCurrentGamepad(int deviceIDPos)
 {
-    qDebug() << "Attemping to set gamepad to device #:" << deviceIDPos << "...";
     if (!(gamepadList->isEmpty()) && (getTotalConnected() == deviceIDPos + 1)) {
         currentGamepad = new QGamepad(gamepadList->at(deviceIDPos));
         currentGamepadIDPos = deviceIDPos;
-        qDebug() << "Successfully set gamepad to device #:" << deviceIDPos << "!";
-        qDebug() << "Current gamepad ID position:" << currentGamepadIDPos;
+        logger->write(LoggerConstants::INFO,
+                      "Successfully set gamepad to device ID: " +
+                          QString::number(deviceIDPos));
+        logger->write(LoggerConstants::INFO,
+                      "Current gamepad is " +
+                          QString::number(currentGamepadIDPos + 1) +
+                          " with device ID: " +
+                          QString::number(currentGamepadIDPos));
         return true;
     } else {
-        qDebug() << "Failed to set gamepad to device #:" << deviceIDPos << "!";
-        qDebug() << "Current gamepad ID positon:" << currentGamepadIDPos;
+        logger->write(LoggerConstants::WARNING,
+                      "Failed to set gamepad to device ID: " +
+                          QString::number(deviceIDPos));
+
         return false;
     }
 }
@@ -68,17 +76,11 @@ int GamepadHandler::getTotalConnected()
  */
 bool GamepadHandler::updateGamepadList()
 {
-    qDebug() << "Updating gamepad list...";
     // Grab connected gamepads
+    logger->write(LoggerConstants::INFO, "Fetching gamepads ...");
     *gamepadList = gamepadManager->connectedGamepads();
-    qDebug() << getTotalConnected() << "IDs:";
-    if (!(gamepadList->isEmpty())) {
-        for (QList<int>::Iterator i = gamepadList->begin();
-                                  i != gamepadList->end(); ++i) {
-            qDebug() << *i << "-" << gamepadManager->gamepadName(*i);
-        }
-    }
-
+    logger->write(LoggerConstants::INFO,
+                  "Gamepads found: " + QString::number(getTotalConnected()));
     // Return if true if there are gamepads
     if (gamepadList->isEmpty()){ return false; } else { return true; }
 }
@@ -106,7 +108,6 @@ bool GamepadHandler::refreshGamepad()
  */
 void GamepadHandler::configureConnections()
 {
-    qDebug() << "Configuring all signals and slots for gamepad ...";
     connect(currentGamepad, &QGamepad::axisLeftXChanged,
             this, [this](double value){
         //qDebug() << "Left X" << value;
@@ -218,7 +219,6 @@ void GamepadHandler::configureConnections()
         //qDebug() << "Button Right" << pressed;
         emit gamepad_buttonRightChanged(pressed);
     });
-    qDebug() << "Successfully configured all signals and slots for gamepad!";
 }
 
 

@@ -30,11 +30,9 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
     if((abs(FRBLSpeed) >= abs(FLBRSpeed)) &&
        (!(FRBLSpeed == 0 && FLBRSpeed == 0))) {
         scaleFactor = abs(FRBLSpeed);
-        scaleFactor = abs(FRBLSpeed);
         FRBLSpeed = FRBLSpeed/scaleFactor;
         FLBRSpeed = FLBRSpeed/scaleFactor;
     } else if (abs(FRBLSpeed) < abs(FLBRSpeed)) {
-        scaleFactor = abs(FLBRSpeed);
         scaleFactor = abs(FLBRSpeed);
         FRBLSpeed = FRBLSpeed/scaleFactor;
         FLBRSpeed = FLBRSpeed/scaleFactor;

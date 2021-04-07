@@ -10,6 +10,7 @@
 
 #include <math.h>
 #include "constants.h"
+#include "loggerhandler.h"
 
 class OutputHandler : public QObject
 {
@@ -19,7 +20,8 @@ public:
                   QSlider *FRBL_botSliderRef,
                   QSlider *FLBR_topSliderRef,
                   QSlider *FLBR_botSliderRef,
-                  QtCharts::QChartView *chartViewRef);
+                  QtCharts::QChartView *chartViewRef,
+                  LoggerHandler *loggerRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
 public slots:
@@ -37,6 +39,7 @@ private:
     QtCharts::QLineSeries *FLBRSeries;
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
+    LoggerHandler *logger;
 
     QPen *axisYPen;
     QPen *axisXPen;

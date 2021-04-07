@@ -5,12 +5,13 @@
 #include <QtDebug>
 #include <QGamepad>
 #include <QGamepadManager>
+#include "loggerhandler.h"
 
 class GamepadHandler : public QObject
 {
     Q_OBJECT
 public:
-    GamepadHandler();
+    GamepadHandler(LoggerHandler *loggerRef);
 
     //Setters
     bool setCurrentGamepad(int deviceIDPos);
@@ -49,6 +50,7 @@ signals:
 private:
     QGamepad *currentGamepad;
     QGamepadManager *gamepadManager;
+    LoggerHandler *logger;
     QList<int> *gamepadList;
     int currentGamepadIDPos;
 

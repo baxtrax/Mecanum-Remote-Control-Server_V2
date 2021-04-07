@@ -4,9 +4,11 @@ OutputHandler::OutputHandler(QSlider *FRBL_topSliderRef,
                              QSlider *FRBL_botSliderRef,
                              QSlider *FLBR_topSliderRef,
                              QSlider *FLBR_botSliderRef,
-                             QtCharts::QChartView *chartViewRef)
+                             QtCharts::QChartView *chartViewRef,
+                             LoggerHandler *loggerRef)
 {
     chartView = chartViewRef;
+    logger = loggerRef;
     FRBL_topSlider = FRBL_topSliderRef;
     FRBL_botSlider = FRBL_botSliderRef;
     FLBR_topSlider = FLBR_topSliderRef;
@@ -205,6 +207,7 @@ void OutputHandler::updateChart(double dir,
                                 double z,
                                 double scaleFactor)
 {
+    logger->write(LoggerConstants::DEBUG, "Updating kinematics chart ...");
     // Generate series showing vertical line where speeds are currently getting
     // fetched from.
     if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
