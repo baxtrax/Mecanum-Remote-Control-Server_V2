@@ -5,6 +5,10 @@
     </qresource>
     <qresource prefix="/img">
         <file>resources/placeholder.png</file>
+        <file>resources/p1010075-fix.png</file>
+        <file>resources/p1010075-zoom.png</file>
+        <file>resources/P1010092-fix.png</file>
+        <file>resources/Main v56.png</file>
     </qresource>
     <qresource prefix="/svg">
         <file>resources/Refresh.svg</file>

@@ -28,6 +28,13 @@ protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
+private slots:
+    void on_home_toolButton_clicked();
+
+    void on_settings_toolButton_clicked();
+
+    void on_info_toolButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void configureConnections();

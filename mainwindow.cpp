@@ -54,15 +54,13 @@ MainWindow::MainWindow(QWidget *parent)
                                       loggerHandler);
 
     configureConnections();
-    loggerHandler->clear();;
+    loggerHandler->clear();
+    ui->Application_Stack->setCurrentIndex(0);
+    ui->home_toolButton->setChecked(true);
 //    for (int i=0; i<30; i++) {
 //        loggerHandler->write(LoggerConstants::INFO, "test");
 //    }
 
-    //Initially start on home page.
-    ui->home_toolButton->setCheckable(true);
-    ui->home_toolButton->setDown(true);
-    //ui->home_toolButton->setDisabled(true);
     //TODO scroll bar a little too thicc, fix its size alittle
     ui->loggerTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     ui->loggerTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);
@@ -232,17 +230,17 @@ void MainWindow::configureConnections()
             inputHandler,
             SLOT(keyboard_ESetter(bool)));
     connect(inputHandler,
-            SIGNAL(inputsChanged(double, double, double)),
+            SIGNAL(inputsChanged(double,double,double)),
             kinematicsHandler,
-            SLOT(updateSpeeds(double, double, double)));
+            SLOT(updateSpeeds(double,double,double)));
     connect(kinematicsHandler,
-            SIGNAL(speedsChanged(double, double)),
+            SIGNAL(speedsChanged(double,double)),
             outputHandler,
-            SLOT(updateSliders(double, double)));
+            SLOT(updateSliders(double,double)));
     connect(kinematicsHandler,
-            SIGNAL(functionChanged(double, double, double, double)),
+            SIGNAL(functionChanged(double,double,double,double)),
             outputHandler,
-            SLOT(updateChart(double, double, double, double)));
+            SLOT(updateChart(double,double,double,double)));
 }
 
 //MainWindow deconstructor
@@ -251,3 +249,31 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::on_home_toolButton_clicked()
+{
+    ui->Application_Stack->setCurrentIndex(0);
+    ui->home_toolButton->setChecked(true);
+    ui->settings_toolButton->setChecked(false);
+    ui->info_toolButton->setChecked(false);
+    //Disable focus on other pages by setting focus and also disabling
+    //input handler
+    //this->setFocus(ui->)
+
+}
+
+void MainWindow::on_settings_toolButton_clicked()
+{
+    ui->Application_Stack->setCurrentIndex(1);
+    ui->home_toolButton->setChecked(false);
+    ui->settings_toolButton->setChecked(true);
+    ui->info_toolButton->setChecked(false);
+}
+
+void MainWindow::on_info_toolButton_clicked()
+{
+    ui->Application_Stack->setCurrentIndex(2);
+    ui->home_toolButton->setChecked(false);
+    ui->settings_toolButton->setChecked(false);
+    ui->info_toolButton->setChecked(true);
+}

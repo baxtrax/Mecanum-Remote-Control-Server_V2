@@ -2,7 +2,8 @@ QT += core gui charts datavisualization 3dcore 3drender 3dinput 3dlogic 3dextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+# TODO, get rid of resources_big and handle big images as external
+CONFIG += c++17 resources_big
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
