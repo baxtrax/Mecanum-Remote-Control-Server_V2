@@ -16,7 +16,8 @@ SOURCES += \
     loggerhandler.cpp \
     main.cpp \
     mainwindow.cpp \
-    outputhandler.cpp
+    outputhandler.cpp \
+    simulationhandler.cpp
 
 HEADERS += \
     constants.h \
@@ -25,7 +26,8 @@ HEADERS += \
     kinematicshandler.h \
     loggerhandler.h \
     mainwindow.h \
-    outputhandler.h
+    outputhandler.h \
+    simulationhandler.h
 
 FORMS += \
     mainwindow.ui
