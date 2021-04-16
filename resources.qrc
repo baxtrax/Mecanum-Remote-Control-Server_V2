@@ -18,5 +18,6 @@
         <file>resources/Cog-Unactive.svg</file>
         <file>resources/Info-Active.svg</file>
         <file>resources/Home-Active.svg</file>
+        <file>resources/Arrow-Down.svg</file>
     </qresource>
 </RCC>

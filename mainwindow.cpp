@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     loggerHandler->clear();
     ui->Application_Stack->setCurrentIndex(0);
     ui->home_toolButton->setChecked(true);
+    ui->s_kine_perf_QualityCB->view()->window()->setWindowFlag(Qt::NoDropShadowWindowHint);
 //    for (int i=0; i<30; i++) {
 //        loggerHandler->write(LoggerConstants::INFO, "test");
 //    }
@@ -241,6 +242,7 @@ void MainWindow::configureConnections()
             SIGNAL(functionChanged(double,double,double,double)),
             outputHandler,
             SLOT(updateChart(double,double,double,double)));
+
 }
 
 //MainWindow deconstructor
@@ -276,4 +278,21 @@ void MainWindow::on_info_toolButton_clicked()
     ui->home_toolButton->setChecked(false);
     ui->settings_toolButton->setChecked(false);
     ui->info_toolButton->setChecked(true);
+}
+
+void MainWindow::on_s_kine_perf_FPSSlider_valueChanged(int value)
+{
+    qDebug() << "test";
+    switch(value) {
+        case 0:
+            ui->s_kine_perf_FPSLabel->setNum(15);
+            break;
+        case 1:
+            ui->s_kine_perf_FPSLabel->setNum(30);
+            break;
+        case 2:
+            ui->s_kine_perf_FPSLabel->setNum(60);
+            break;
+    }
+
 }
