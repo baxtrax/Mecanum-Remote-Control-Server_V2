@@ -14,8 +14,16 @@
 
 #include <Qt3DRender/QRenderAspect>
 #include <Qt3DExtras/QForwardRenderer>
-#include <Qt3DExtras/QPhongMaterial>
+
+#include <Qt3DExtras/QDiffuseSpecularMaterial>
+
 #include <Qt3DExtras/QCylinderMesh>
+#include <Qt3DExtras/QPlaneMesh>
+
+#include <Qt3DRender/QSpotLight>
+
+#include <QtDataVisualization/Q3DScatter>
+
 #include <Qt3DExtras/Qt3DWindow>
 #include <Qt3DExtras/QOrbitCameraController>
 
