@@ -9,6 +9,7 @@
 #include <QtDataVisualization/QScatter3DSeries>
 #include <QtDataVisualization/QScatterDataProxy>
 #include <QtDataVisualization/QScatterDataItem>
+#include <QtDataVisualization/QCustom3DItem>
 
 #include "constants.h"
 
@@ -21,10 +22,8 @@ public:
     QWidget* getWidget();
 private:
     QWidget *simulationWidget;
-    QScatter3DSeries *FLSeries;
-    QScatter3DSeries *BRSeries;
-    QScatter3DSeries *FRSeries;
-    QScatter3DSeries *BLSeries;
+    QScatter3DSeries *FLBRSeries;
+    QScatter3DSeries *FRBLSeries;
     QScatterDataArray *wheelDataArray;
 };
 

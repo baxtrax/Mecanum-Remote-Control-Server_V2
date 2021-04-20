@@ -25,9 +25,11 @@ SimulationHandler::SimulationHandler()
     graph->activeTheme()->setLightColor(QColor(QRgb(0xffffff)));
     graph->activeTheme()->setLightStrength(6.0f);
     graph->activeTheme()->setGridLineColor(QColor(QRgb(0xffffff)));
+    graph->activeTheme()->setColorStyle(Q3DTheme::ColorStyleObjectGradient);
     graph->axisX()->setSegmentCount(2);
     graph->axisY()->setSegmentCount(2);
     graph->axisZ()->setSegmentCount(2);
+    graph->setSelectionMode(QAbstract3DGraph::SelectionNone);
 
     graph->axisX()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisX()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
@@ -36,61 +38,52 @@ SimulationHandler::SimulationHandler()
     graph->axisZ()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisZ()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
 
-    //FR
-    QScatterDataProxy *FRDataProxy = new QScatterDataProxy();
-    FRDataProxy->addItem(QScatterDataItem(QVector3D(
+    QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
+    lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
+    lightPinkBruise_Gradient.setColorAt(1, QRgb(0xFF6F7A));
+    lightPinkBruise_Gradient.setCoordinateMode(QGradient::LogicalMode);
+
+    QLinearGradient darkUltramarine_Gradient(QPointF(0, 0),QPointF(1, 0));
+    darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
+    darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
+    darkUltramarine_Gradient.setCoordinateMode(QGradient::LogicalMode);
+
+    QScatterDataProxy *FRBLDataProxy = new QScatterDataProxy();
+    FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //FR
         SimulationConstants::BASE_WIDTH/2.0,
         SimulationConstants::WHEEL_HEIGHT/2.0,
         SimulationConstants::BASE_LENGTH/2.0)));
-    FRSeries = new QScatter3DSeries(FRDataProxy);
-    FRSeries->setItemLabelFormat(QStringLiteral("FR - 1.0"));
-    FRSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    FRSeries->setItemSize(0.15f);
-    FRSeries->setMeshSmooth(true);
-
-    //BL
-    QScatterDataProxy *BLDataProxy = new QScatterDataProxy();
-    BLDataProxy->addItem(QScatterDataItem(QVector3D(
+    FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //BL
         -SimulationConstants::BASE_WIDTH/2.0,
         SimulationConstants::WHEEL_HEIGHT/2.0,
         -SimulationConstants::BASE_LENGTH/2.0)));
-    BLSeries = new QScatter3DSeries(BLDataProxy);
-    BLSeries->setItemLabelFormat(QStringLiteral("BL - 1.0"));
-    BLSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    BLSeries->setItemSize(0.15f);
-    BLSeries->setMeshSmooth(true);
+    FRBLSeries = new QScatter3DSeries(FRBLDataProxy);
+    FRBLSeries->setItemLabelVisible(false);
+    FRBLSeries->setMesh(QAbstract3DSeries::MeshSphere);
+    FRBLSeries->setItemSize(0.15f);
+    FRBLSeries->setMeshSmooth(true);
+    FRBLSeries->setBaseGradient(lightPinkBruise_Gradient);
 
-    //FL
-    QScatterDataProxy *FLDataProxy = new QScatterDataProxy();
-    FLDataProxy->addItem(QScatterDataItem(QVector3D(
+    QScatterDataProxy *FLBRDataProxy = new QScatterDataProxy();
+    FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //FL
         -SimulationConstants::BASE_WIDTH/2.0,
         SimulationConstants::WHEEL_HEIGHT/2.0,
         SimulationConstants::BASE_LENGTH/2.0)));
-
-    FLSeries = new QScatter3DSeries(FLDataProxy);
-    FLSeries->setItemLabelFormat(QStringLiteral("FL - 1.0"));
-    FLSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    FLSeries->setItemSize(0.15f);
-    FLSeries->setMeshSmooth(true);
-
-    //BR
-    QScatterDataProxy *BRDataProxy = new QScatterDataProxy();
-    BRDataProxy->addItem(QScatterDataItem(QVector3D(
+    FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //BR
         SimulationConstants::BASE_WIDTH/2.0,
         SimulationConstants::WHEEL_HEIGHT/2.0,
         -SimulationConstants::BASE_LENGTH/2.0)));
-    BRSeries = new QScatter3DSeries(BRDataProxy);
-    BRSeries->setItemLabelFormat(QStringLiteral("BR - 1.0"));
-    BRSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    BRSeries->setItemSize(0.15f);
-    BRSeries->setMeshSmooth(true);
+
+    FLBRSeries = new QScatter3DSeries(FLBRDataProxy);
+    FLBRSeries->setMesh(QAbstract3DSeries::MeshSphere);
+    FLBRSeries->setItemSize(0.15f);
+    FLBRSeries->setMeshSmooth(true);
+    FLBRSeries->setBaseGradient(darkUltramarine_Gradient);
+    FLBRSeries->setItemLabelVisible(true);
 
 
-
-    graph->addSeries(FLSeries);
-    graph->addSeries(BRSeries);
-    graph->addSeries(FRSeries);
-    graph->addSeries(BLSeries);
+    graph->addSeries(FRBLSeries);
+    graph->addSeries(FLBRSeries);
 
 
     simulationWidget = QWidget::createWindowContainer(graph);

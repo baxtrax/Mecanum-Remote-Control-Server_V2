@@ -40,6 +40,8 @@ void OutputHandler::configurePenBrushFont()
     axisLabelFont = new QFont("Open Sans", 12);
     axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
 
+    // TODO setup a way to grab gradient from somwhere without having to
+    // generate a new one every time
     QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
     lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
