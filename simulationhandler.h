@@ -4,28 +4,15 @@
 #include <QObject>
 #include <QDebug>
 #include <QWidget>
-#include <Qt3DCore/QEntity>
-#include <Qt3DRender/QCamera>
-#include <Qt3DRender/QCameraLens>
-#include <Qt3DCore/QTransform>
-#include <Qt3DCore/QAspectEngine>
-
-#include <Qt3DInput/QInputAspect>
-
-#include <Qt3DRender/QRenderAspect>
-#include <Qt3DExtras/QForwardRenderer>
-
-#include <Qt3DExtras/QDiffuseSpecularMaterial>
-
-#include <Qt3DExtras/QCylinderMesh>
-#include <Qt3DExtras/QPlaneMesh>
-
-#include <Qt3DRender/QSpotLight>
 
 #include <QtDataVisualization/Q3DScatter>
+#include <QtDataVisualization/QScatter3DSeries>
+#include <QtDataVisualization/QScatterDataProxy>
+#include <QtDataVisualization/QScatterDataItem>
 
-#include <Qt3DExtras/Qt3DWindow>
-#include <Qt3DExtras/QOrbitCameraController>
+#include "constants.h"
+
+using namespace QtDataVisualization;
 
 class SimulationHandler
 {
@@ -34,6 +21,11 @@ public:
     QWidget* getWidget();
 private:
     QWidget *simulationWidget;
+    QScatter3DSeries *FLSeries;
+    QScatter3DSeries *BRSeries;
+    QScatter3DSeries *FRSeries;
+    QScatter3DSeries *BLSeries;
+    QScatterDataArray *wheelDataArray;
 };
 
 #endif // SIMULATIONHANDLER_H
