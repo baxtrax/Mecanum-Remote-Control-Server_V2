@@ -40,16 +40,12 @@ void OutputHandler::configurePenBrushFont()
     axisLabelFont = new QFont("Open Sans", 12);
     axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
 
-    QLinearGradient lightPinkBruise_Gradient;
-    lightPinkBruise_Gradient.setStart(QPointF(0, 0));
-    lightPinkBruise_Gradient.setFinalStop(QPointF(1, 0));
+    QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
     lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
     lightPinkBruise_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
 
-    QLinearGradient darkUltramarine_Gradient;
-    darkUltramarine_Gradient.setStart(QPointF(0, 0));
-    darkUltramarine_Gradient.setFinalStop(QPointF(1, 0));
+    QLinearGradient darkUltramarine_Gradient(QPointF(0, 0),QPointF(1, 0));
     darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
     darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
     darkUltramarine_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
