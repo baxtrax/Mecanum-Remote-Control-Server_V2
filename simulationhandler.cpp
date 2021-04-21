@@ -81,9 +81,9 @@ SimulationHandler::SimulationHandler()
     FLBRSeries->setBaseGradient(darkUltramarine_Gradient);
     FLBRSeries->setItemLabelVisible(true);
 
-
     graph->addSeries(FRBLSeries);
     graph->addSeries(FLBRSeries);
+
 
 
     simulationWidget = QWidget::createWindowContainer(graph);
