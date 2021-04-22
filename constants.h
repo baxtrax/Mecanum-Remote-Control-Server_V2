@@ -33,6 +33,7 @@ namespace SimulationConstants {
 const static double BASE_WIDTH = 0.5;
 const static double BASE_LENGTH = 0.75;
 const static double WHEEL_HEIGHT = 0.5;
+const static double FRAME_THICKNESS = 0.025;
 const static double MAX_GRAPH_SIZE = 1.0;
 }
 

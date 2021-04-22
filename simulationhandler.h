@@ -25,6 +25,11 @@ private:
     QScatter3DSeries *FLBRSeries;
     QScatter3DSeries *FRBLSeries;
     QScatterDataArray *wheelDataArray;
+    QCustom3DItem *FRWheelMesh;
+    QCustom3DItem *BLWheelMesh;
+    QCustom3DItem *FLWheelMesh;
+    QCustom3DItem *BRWheelMesh;
+
 };
 
 #endif // SIMULATIONHANDLER_H
