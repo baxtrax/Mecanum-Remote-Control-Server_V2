@@ -29,6 +29,10 @@ private:
     QCustom3DItem *BLWheelMesh;
     QCustom3DItem *FLWheelMesh;
     QCustom3DItem *BRWheelMesh;
+    Q3DScatter *graph;
+
+    void setup3DOjects();
+    void setupGraph();
 
 };
 
