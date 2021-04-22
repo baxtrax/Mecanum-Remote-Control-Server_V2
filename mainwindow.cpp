@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
     configureConnections();
     loggerHandler->clear();
 
+    ui->loggerTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->loggerTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);
+
     ui->Application_Stack->setCurrentIndex(0);
     ui->home_toolButton->setChecked(true);
     ui->s_kine_perf_QualityCB->view()
