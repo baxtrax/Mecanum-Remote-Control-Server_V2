@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QWidget>
+#include <QVariantAnimation>
 
 #include <QtDataVisualization/Q3DScatter>
 #include <QtDataVisualization/QScatter3DSeries>
@@ -15,11 +16,16 @@
 
 using namespace QtDataVisualization;
 
-class SimulationHandler
+class SimulationHandler : public QObject
 {
+    Q_OBJECT
 public:
     SimulationHandler();
     QWidget* getWidget();
+
+public slots:
+    void updateAnimators(double, double);
+
 private:
     QWidget *simulationWidget;
     QScatter3DSeries *FLBRSeries;
@@ -30,6 +36,8 @@ private:
     QCustom3DItem *FLWheelMesh;
     QCustom3DItem *BRWheelMesh;
     Q3DScatter *graph;
+    QVariantAnimation *FLBRAnimation;
+    QVariantAnimation *FRBLAnimation;
 
     void setup3DOjects();
     void setupGraph();

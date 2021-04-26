@@ -12,11 +12,59 @@
 SimulationHandler::SimulationHandler()
 {
     setupGraph();
+    //map end value to rotation() * a scaled value
+    FLBRAnimation = new QVariantAnimation();
+    FLBRAnimation->setStartValue(QVariant(0.0));
+    FLBRAnimation->setEndValue(QVariant(360.0));
+    FLBRAnimation->setDuration(2000);
+    FLBRAnimation->setLoopCount(-1);
+    FLBRAnimation->start();
+    //map end value to rotation() * a scaled value
+    FRBLAnimation = new QVariantAnimation();
+    FRBLAnimation->setStartValue(QVariant(0.0));
+    FRBLAnimation->setEndValue(QVariant(360.0));
+    FRBLAnimation->setDuration(2000);
+    FRBLAnimation->setLoopCount(-1);
+    FRBLAnimation->start();
+
+    connect(FLBRAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
+        FLWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f) * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, -value.toFloat()));
+        BRWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, -value.toFloat()));
+    });
+
+
+
+    connect(FRBLAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
+        FRWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f) * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, value.toFloat()));
+        BLWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, value.toFloat()));
+    });
+
+    FLBRAnimation->setLoopCount(0);
+    FRBLAnimation->setLoopCount(0);
 }
 
 QWidget* SimulationHandler::getWidget()
 {
     return simulationWidget;
+}
+
+void SimulationHandler::updateAnimators(double FLBRSpeed, double FRBLSpeed)
+{
+    if (FLBRSpeed == 0.0)
+    {
+        //Capture current rotation and set it as reset
+        FLBRAnimation->setLoopCount(0);
+    } else {
+        FLBRAnimation->setLoopCount(-1);
+    }
+
+    if (FRBLSpeed == 0.0)
+    {
+        //Capture current rotation and set it as reset
+        FRBLAnimation->setLoopCount(0);
+    } else {
+        FRBLAnimation->setLoopCount(-1);
+    }
 }
 
 void SimulationHandler::setupGraph()
@@ -59,82 +107,74 @@ void SimulationHandler::setup3DOjects()
 
     FRWheelMesh = new
         QCustom3DItem(":/obj/resources/RightMech.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                SimulationConstants::BASE_LENGTH/2.0),
-                      QVector3D(0.05,0.05,0.05),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,180.0),
-                      color);
+                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                SimulationConstants::BASE_LENGTH/2.0f),
+                      QVector3D(0.05f,0.05f,0.05f),
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f), color);
 
     BLWheelMesh = new
         QCustom3DItem(":/obj/resources/RightMech.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                -SimulationConstants::BASE_LENGTH/2.0),
-                      QVector3D(0.05,0.05,0.05),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,0.0),
-                      color);
+                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                -SimulationConstants::BASE_LENGTH/2.0f),
+                      QVector3D(0.05f,0.05f,0.05f),
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
 
     FLWheelMesh = new
         QCustom3DItem(":/obj/resources/LeftMech.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                SimulationConstants::BASE_LENGTH/2.0),
-                      QVector3D(0.05,0.05,0.05),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,180.0),
-                      color);
+                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                SimulationConstants::BASE_LENGTH/2.0f),
+                      QVector3D(0.05f,0.05f,0.05f),
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f), color);
 
     BRWheelMesh = new
         QCustom3DItem(":/obj/resources/LeftMech.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                -SimulationConstants::BASE_LENGTH/2.0),
-                      QVector3D(0.05,0.05,0.05),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,0.0),
-                      color);
+                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                -SimulationConstants::BASE_LENGTH/2.0f),
+                      QVector3D(0.05f,0.05f,0.05f),
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
 
     QCustom3DItem *BCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
                       QVector3D(0.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                -SimulationConstants::BASE_LENGTH/2.0),
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                -SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,90.0),
-                      color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f), color);
 
     QCustom3DItem *FCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
                       QVector3D(0.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
-                                SimulationConstants::BASE_LENGTH/2.0),
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
+                                SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,90.0),
-                      color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f), color);
 
     QCustom3DItem *LCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
+                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 0.0),
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,0.0),
-                      color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
     QCustom3DItem *RCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0,
+                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
+                                SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 0.0),
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0,1.0,0.0,0.0),
-                      color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
 
     QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
@@ -148,13 +188,13 @@ void SimulationHandler::setup3DOjects()
 
     QScatterDataProxy *FRBLDataProxy = new QScatterDataProxy();
     FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //FR
-        SimulationConstants::BASE_WIDTH/2.0,
-        SimulationConstants::WHEEL_HEIGHT/2.0,
-        SimulationConstants::BASE_LENGTH/2.0)));
+        SimulationConstants::BASE_WIDTH/2.0f,
+        SimulationConstants::WHEEL_HEIGHT/2.0f,
+        SimulationConstants::BASE_LENGTH/2.0f)));
     FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //BL
-        -SimulationConstants::BASE_WIDTH/2.0,
-        SimulationConstants::WHEEL_HEIGHT/2.0,
-        -SimulationConstants::BASE_LENGTH/2.0)));
+        -SimulationConstants::BASE_WIDTH/2.0f,
+        SimulationConstants::WHEEL_HEIGHT/2.0f,
+        -SimulationConstants::BASE_LENGTH/2.0f)));
     FRBLSeries = new QScatter3DSeries(FRBLDataProxy);
     FRBLSeries->setItemLabelVisible(false);
     FRBLSeries->setMesh(QAbstract3DSeries::MeshSphere);
@@ -164,13 +204,13 @@ void SimulationHandler::setup3DOjects()
 
     QScatterDataProxy *FLBRDataProxy = new QScatterDataProxy();
     FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //FL
-        -SimulationConstants::BASE_WIDTH/2.0,
-        SimulationConstants::WHEEL_HEIGHT/2.0,
-        SimulationConstants::BASE_LENGTH/2.0)));
+        -SimulationConstants::BASE_WIDTH/2.0f,
+        SimulationConstants::WHEEL_HEIGHT/2.0f,
+        SimulationConstants::BASE_LENGTH/2.0f)));
     FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //BR
-        SimulationConstants::BASE_WIDTH/2.0,
-        SimulationConstants::WHEEL_HEIGHT/2.0,
-        -SimulationConstants::BASE_LENGTH/2.0)));
+        SimulationConstants::BASE_WIDTH/2.0f,
+        SimulationConstants::WHEEL_HEIGHT/2.0f,
+        -SimulationConstants::BASE_LENGTH/2.0f)));
 
     FLBRSeries = new QScatter3DSeries(FLBRDataProxy);
     FLBRSeries->setMesh(QAbstract3DSeries::MeshSphere);

@@ -190,6 +190,10 @@ void MainWindow::configureConnections()
             SIGNAL(functionChanged(double,double,double,double)),
             outputHandler,
             SLOT(updateChart(double,double,double,double)));
+    connect(kinematicsHandler,
+            SIGNAL(speedsChanged(double,double)),
+            simulationHandler,
+            SLOT(updateAnimators(double,double)));
 
 }
 
