@@ -38,6 +38,10 @@ private:
     Q3DScatter *graph;
     QVariantAnimation *FLBRAnimation;
     QVariantAnimation *FRBLAnimation;
+    QQuaternion FLcurrentRotation;
+    QQuaternion BRcurrentRotation;
+    QQuaternion FRcurrentRotation;
+    QQuaternion BLcurrentRotation;
 
     void setup3DOjects();
     void setupGraph();

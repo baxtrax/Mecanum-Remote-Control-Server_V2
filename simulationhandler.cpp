@@ -12,6 +12,11 @@
 SimulationHandler::SimulationHandler()
 {
     setupGraph();
+
+    FLcurrentRotation = FLWheelMesh->rotation();
+    BRcurrentRotation = BRWheelMesh->rotation();
+    FRcurrentRotation = FRWheelMesh->rotation();
+    BLcurrentRotation = BLWheelMesh->rotation();
     //map end value to rotation() * a scaled value
     FLBRAnimation = new QVariantAnimation();
     FLBRAnimation->setStartValue(QVariant(0.0));
@@ -28,15 +33,15 @@ SimulationHandler::SimulationHandler()
     FRBLAnimation->start();
 
     connect(FLBRAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
-        FLWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f) * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, -value.toFloat()));
-        BRWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, -value.toFloat()));
+        FLWheelMesh->setRotation(FLcurrentRotation * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, -value.toFloat()));
+        BRWheelMesh->setRotation(BRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, -value.toFloat()));
     });
 
 
 
     connect(FRBLAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
-        FRWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f) * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, value.toFloat()));
-        BLWheelMesh->setRotation(QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, value.toFloat()));
+        FRWheelMesh->setRotation(FRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, value.toFloat()));
+        BLWheelMesh->setRotation(BLcurrentRotation * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, value.toFloat()));
     });
 
     FLBRAnimation->setLoopCount(0);
@@ -53,6 +58,8 @@ void SimulationHandler::updateAnimators(double FLBRSpeed, double FRBLSpeed)
     if (FLBRSpeed == 0.0)
     {
         //Capture current rotation and set it as reset
+        FLcurrentRotation = FLWheelMesh->rotation();
+        BRcurrentRotation = BRWheelMesh->rotation();
         FLBRAnimation->setLoopCount(0);
     } else {
         FLBRAnimation->setLoopCount(-1);
@@ -61,6 +68,8 @@ void SimulationHandler::updateAnimators(double FLBRSpeed, double FRBLSpeed)
     if (FRBLSpeed == 0.0)
     {
         //Capture current rotation and set it as reset
+        FRcurrentRotation = FRWheelMesh->rotation();
+        BLcurrentRotation = BLWheelMesh->rotation();
         FRBLAnimation->setLoopCount(0);
     } else {
         FRBLAnimation->setLoopCount(-1);
