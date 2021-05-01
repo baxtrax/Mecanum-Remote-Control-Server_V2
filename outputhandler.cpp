@@ -131,22 +131,6 @@ void OutputHandler::configureChart()
 
 
 /**
- * @brief Maps one output range to another range and returns the number if it
- * where on that scale.
- * @param double input value
- * @param double min range of source
- * @param double max range of source
- * @param double min range of desired
- * @param double max range of desired
- * @return double number maped to new range.
- */
-double OutputHandler::linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax)
-{
-    return (((input-srcMin) / (srcMax-srcMin)) * (dstMax-dstMin) + dstMin);
-}
-
-
-/**
  * @brief Generates a set number of data points of a modified sine function. The
  * modified sine function is the basis of the kinematics for a mechanum drive
  * system.

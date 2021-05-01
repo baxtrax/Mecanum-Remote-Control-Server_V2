@@ -11,6 +11,7 @@
 #include <math.h>
 #include "constants.h"
 #include "loggerhandler.h"
+#include "helper.h"
 
 class OutputHandler : public QObject
 {
@@ -60,7 +61,7 @@ private:
     void configureSeries();
     void configureChart();
 
-    double linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax);
+    //double linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax);
 };
 
 #endif // OUTPUTHANDLER_H
