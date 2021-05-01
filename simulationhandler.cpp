@@ -21,14 +21,14 @@ SimulationHandler::SimulationHandler()
     FLBRAnimation = new QVariantAnimation();
     FLBRAnimation->setStartValue(QVariant(0.0));
     FLBRAnimation->setEndValue(QVariant(360.0));
-    FLBRAnimation->setDuration(2000);
+    FLBRAnimation->setDuration(100000);
     FLBRAnimation->setLoopCount(-1);
     FLBRAnimation->start();
     //map end value to rotation() * a scaled value
     FRBLAnimation = new QVariantAnimation();
     FRBLAnimation->setStartValue(QVariant(0.0));
     FRBLAnimation->setEndValue(QVariant(360.0));
-    FRBLAnimation->setDuration(2000);
+    FRBLAnimation->setDuration(100000);
     FRBLAnimation->setLoopCount(-1);
     FRBLAnimation->start();
 
@@ -36,8 +36,6 @@ SimulationHandler::SimulationHandler()
         FLWheelMesh->setRotation(FLcurrentRotation * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, -value.toFloat()));
         BRWheelMesh->setRotation(BRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, -value.toFloat()));
     });
-
-
 
     connect(FRBLAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
         FRWheelMesh->setRotation(FRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, value.toFloat()));
@@ -55,24 +53,49 @@ QWidget* SimulationHandler::getWidget()
 
 void SimulationHandler::updateAnimators(double FLBRSpeed, double FRBLSpeed)
 {
+    //100000 for slow, 1000 for fast
+    int FLBRDuration =  linearMap(abs(FLBRSpeed), 0.0, 1.0, 80000, 2000);
+    int FRBLDuration =  linearMap(abs(FRBLSpeed), 0.0, 1.0, 80000, 2000);
+
+    qDebug() << "FLBR" << FLBRDuration;
+    qDebug() << "FRBL" << FRBLDuration;
+
+    //FLBR
     if (FLBRSpeed == 0.0)
     {
         //Capture current rotation and set it as reset
         FLcurrentRotation = FLWheelMesh->rotation();
         BRcurrentRotation = BRWheelMesh->rotation();
         FLBRAnimation->setLoopCount(0);
-    } else {
+    } else if (FLBRSpeed > 0.0) { //Positive
+        FLBRAnimation->setDuration(FLBRDuration);
+        FLBRAnimation->setEndValue(QVariant(360.0)); // Forward
         FLBRAnimation->setLoopCount(-1);
+    } else if (FLBRSpeed < 0.0) { //Negative
+        FLBRAnimation->setDuration(FLBRDuration);
+        FLBRAnimation->setEndValue(QVariant(-360.0)); // Forward
+        FLBRAnimation->setLoopCount(-1);
+    } else {
+        FLBRAnimation->setLoopCount(0);
     }
 
+    //FRBL
     if (FRBLSpeed == 0.0)
     {
         //Capture current rotation and set it as reset
         FRcurrentRotation = FRWheelMesh->rotation();
         BLcurrentRotation = BLWheelMesh->rotation();
         FRBLAnimation->setLoopCount(0);
-    } else {
+    } else if (FRBLSpeed > 0.0) { //Positive
+        FRBLAnimation->setDuration(FRBLDuration);
+        FRBLAnimation->setEndValue(QVariant(360.0)); // Forward
         FRBLAnimation->setLoopCount(-1);
+    } else if (FRBLSpeed < 0.0) {
+        FRBLAnimation->setDuration(FRBLDuration);
+        FRBLAnimation->setEndValue(QVariant(-360.0)); // Forward
+        FRBLAnimation->setLoopCount(-1);
+    } else {
+        FRBLAnimation->setLoopCount(0);
     }
 }
 

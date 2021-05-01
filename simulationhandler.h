@@ -13,6 +13,7 @@
 #include <QtDataVisualization/QCustom3DItem>
 
 #include "constants.h"
+#include "helper.h"
 
 using namespace QtDataVisualization;
 

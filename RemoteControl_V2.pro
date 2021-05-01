@@ -11,6 +11,7 @@ CONFIG += c++17 resources_big
 
 SOURCES += \
     gamepadhandler.cpp \
+    helper.cpp \
     inputhandler.cpp \
     kinematicshandler.cpp \
     loggerhandler.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 HEADERS += \
     constants.h \
     gamepadhandler.h \
+    helper.h \
     inputhandler.h \
     kinematicshandler.h \
     loggerhandler.h \
