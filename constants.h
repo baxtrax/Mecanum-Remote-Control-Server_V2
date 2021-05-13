@@ -35,6 +35,8 @@ const static double BASE_LENGTH = 0.75f;
 const static double WHEEL_HEIGHT = 0.5f;
 const static double FRAME_THICKNESS = 0.025f;
 const static double MAX_GRAPH_SIZE = 1.0f;
+const static double MIN_WHEEL_ROT_DURATION = 25000;
+const static double MAX_WHEEL_ROT_DURATION = 2000;
 }
 
 #endif // CONSTANTS_H

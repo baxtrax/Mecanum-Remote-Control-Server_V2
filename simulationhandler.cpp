@@ -51,14 +51,11 @@ QWidget* SimulationHandler::getWidget()
     return simulationWidget;
 }
 
-void SimulationHandler::updateAnimators(double FLBRSpeed, double FRBLSpeed)
+void SimulationHandler::updateAnimators(double FRBLSpeed, double FLBRSpeed)
 {
     //100000 for slow, 1000 for fast
-    int FLBRDuration =  linearMap(abs(FLBRSpeed), 0.0, 1.0, 80000, 2000);
-    int FRBLDuration =  linearMap(abs(FRBLSpeed), 0.0, 1.0, 80000, 2000);
-
-    qDebug() << "FLBR" << FLBRDuration;
-    qDebug() << "FRBL" << FRBLDuration;
+    int FLBRDuration =  linearMap(abs(FLBRSpeed), 0.0, 1.0, SimulationConstants::MIN_WHEEL_ROT_DURATION, SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    int FRBLDuration =  linearMap(abs(FRBLSpeed), 0.0, 1.0, SimulationConstants::MIN_WHEEL_ROT_DURATION, SimulationConstants::MAX_WHEEL_ROT_DURATION);
 
     //FLBR
     if (FLBRSpeed == 0.0)
