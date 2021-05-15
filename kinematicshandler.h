@@ -15,15 +15,16 @@ public:
 public slots:
     void updateSpeeds(double, double, double);
 signals:
-    void speedsChanged(double, double);
+    void speedsChanged(double, double, double, double);
     void functionChanged(double, double, double, double);
 private:
-    double FRBLSpeed;
-    double FLBRSpeed;
+    double speeds[4];
     double calculateMagnitude(double x, double y);
     double calculateDirection(double x, double y);
-    double calculateFRBLSpeed(double direction, double magnitude, double z);
-    double calculateFLBRSpeed(double direction, double magnitude, double z);
+    double calculateFRSpeed(double direction, double magnitude, double z);
+    double calculateBLSpeed(double direction, double magnitude, double z);
+    double calculateFLSpeed(double direction, double magnitude, double z);
+    double calculateBRSpeed(double direction, double magnitude, double z);
 };
 
 #endif // KINEMATICSHANDLER_H

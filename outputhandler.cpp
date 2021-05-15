@@ -1,18 +1,27 @@
 #include "outputhandler.h"
 
-OutputHandler::OutputHandler(QSlider *FRBL_topSliderRef,
-                             QSlider *FRBL_botSliderRef,
-                             QSlider *FLBR_topSliderRef,
-                             QSlider *FLBR_botSliderRef,
+OutputHandler::OutputHandler(QSlider *FR_topSliderRef,
+                             QSlider *FR_botSliderRef,
+                             QSlider *BL_topSliderRef,
+                             QSlider *BL_botSliderRef,
+                             QSlider *FL_topSliderRef,
+                             QSlider *FL_botSliderRef,
+                             QSlider *BR_topSliderRef,
+                             QSlider *BR_botSliderRef,
                              QtCharts::QChartView *chartViewRef,
                              LoggerHandler *loggerRef)
 {
     chartView = chartViewRef;
     logger = loggerRef;
-    FRBL_topSlider = FRBL_topSliderRef;
-    FRBL_botSlider = FRBL_botSliderRef;
-    FLBR_topSlider = FLBR_topSliderRef;
-    FLBR_botSlider = FLBR_botSliderRef;
+    FR_topSlider = FR_topSliderRef;
+    FR_botSlider = FR_botSliderRef;
+    BL_topSlider = BL_topSliderRef;
+    BL_botSlider = BL_botSliderRef;
+
+    FL_topSlider = FL_topSliderRef;
+    FL_botSlider = FL_botSliderRef;
+    BR_topSlider = BR_topSliderRef;
+    BR_botSlider = BR_botSliderRef;
     detailLevel = SettingsConstants::DETAILED_INFO;
     axisX = new QtCharts::QCategoryAxis();
     axisY = new QtCharts::QCategoryAxis();
@@ -166,10 +175,12 @@ double** generateSinePointsKinematics(int numberOfPoints, double cycles, double 
  * @brief Updates sliders on GUI to repersent FR/BL and FL/BR values. Function
  * is called any time a kinematics value is updated or changed.
  */
-void OutputHandler::updateSliders(double FRBLSpeed, double FLBRSpeed)
+void OutputHandler::updateSliders(double FRSpeed, double BLSpeed, double FLSpeed, double BRSpeed)
 {
-    setFRBLSlider(FRBLSpeed);
-    setFLBRSlider(FLBRSpeed);
+    setFRSlider(FRSpeed);
+    setBLSlider(BLSpeed);
+    setFLSlider(FLSpeed);
+    setBRSlider(BRSpeed);
 }
 
 
@@ -356,26 +367,54 @@ void OutputHandler::setDetailLevel(int level)
  * @brief Sets value of FRBL slider scaled to fit.
  * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
-void OutputHandler::setFRBLSlider(double value)
+void OutputHandler::setFRSlider(double value)
 {
-    double amplifiedFRBL = value * 100.0;
-    if (amplifiedFRBL > 0.0) { // positive
-        FRBL_botSlider->setValue(0.0);
-        if (amplifiedFRBL <= IOConstants::MIN_SLIDER) {
-            FRBL_topSlider->setValue(IOConstants::MIN_SLIDER);
+    double amplifiedFR = value * 100.0;
+    if (amplifiedFR > 0.0) { // positive
+        FR_botSlider->setValue(0.0);
+        if (amplifiedFR <= IOConstants::MIN_SLIDER) {
+            FR_topSlider->setValue(IOConstants::MIN_SLIDER);
         }  else {
-            FRBL_topSlider->setValue(amplifiedFRBL);
+            FR_topSlider->setValue(amplifiedFR);
         }
-    } else if (amplifiedFRBL < 0.0) { // negative
-        FRBL_topSlider->setValue(0.0);
-        if (amplifiedFRBL >= -IOConstants::MIN_SLIDER) {
-            FRBL_botSlider->setValue(-IOConstants::MIN_SLIDER);
+    } else if (amplifiedFR < 0.0) { // negative
+        FR_topSlider->setValue(0.0);
+        if (amplifiedFR >= -IOConstants::MIN_SLIDER) {
+            FR_botSlider->setValue(-IOConstants::MIN_SLIDER);
         }  else {
-            FRBL_botSlider->setValue(amplifiedFRBL);
+            FR_botSlider->setValue(amplifiedFR);
         }
     } else { // zero
-        FRBL_botSlider->setValue(0.0);
-        FRBL_topSlider->setValue(0.0);
+        FR_botSlider->setValue(0.0);
+        FR_topSlider->setValue(0.0);
+    }
+}
+
+
+/**
+ * @brief Sets value of FRBL slider scaled to fit.
+ * @param double value between IOConstants::MIN and IOConstants::MAX.
+ */
+void OutputHandler::setBLSlider(double value)
+{
+    double amplifiedBL = value * 100.0;
+    if (amplifiedBL > 0.0) { // positive
+        BL_botSlider->setValue(0.0);
+        if (amplifiedBL <= IOConstants::MIN_SLIDER) {
+            BL_topSlider->setValue(IOConstants::MIN_SLIDER);
+        }  else {
+            BL_topSlider->setValue(amplifiedBL);
+        }
+    } else if (amplifiedBL < 0.0) { // negative
+        BL_topSlider->setValue(0.0);
+        if (amplifiedBL >= -IOConstants::MIN_SLIDER) {
+            BL_botSlider->setValue(-IOConstants::MIN_SLIDER);
+        }  else {
+            BL_botSlider->setValue(amplifiedBL);
+        }
+    } else { // zero
+        BL_botSlider->setValue(0.0);
+        BL_topSlider->setValue(0.0);
     }
 }
 
@@ -384,25 +423,53 @@ void OutputHandler::setFRBLSlider(double value)
  * @brief Sets value of FLBR slider scaled to fit.
  * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
-void OutputHandler::setFLBRSlider(double value)
+void OutputHandler::setFLSlider(double value)
 {
-    double amplifiedFLBR = value * 100.0;
-    if (amplifiedFLBR > 0.0) { // positive
-        FLBR_botSlider->setValue(0.0);
-        if (amplifiedFLBR <= IOConstants::MIN_SLIDER) {
-            FLBR_topSlider->setValue(IOConstants::MIN_SLIDER);
+    double amplifiedFL = value * 100.0;
+    if (amplifiedFL > 0.0) { // positive
+        FL_botSlider->setValue(0.0);
+        if (amplifiedFL <= IOConstants::MIN_SLIDER) {
+            FL_topSlider->setValue(IOConstants::MIN_SLIDER);
         }  else {
-            FLBR_topSlider->setValue(amplifiedFLBR);
+            FL_topSlider->setValue(amplifiedFL);
         }
-    } else if (amplifiedFLBR < 0.0) { // negative
-        FLBR_topSlider->setValue(0.0);
-        if (amplifiedFLBR >= -IOConstants::MIN_SLIDER) {
-            FLBR_botSlider->setValue(-IOConstants::MIN_SLIDER);
+    } else if (amplifiedFL < 0.0) { // negative
+        FL_topSlider->setValue(0.0);
+        if (amplifiedFL >= -IOConstants::MIN_SLIDER) {
+            FL_botSlider->setValue(-IOConstants::MIN_SLIDER);
         }  else {
-            FLBR_botSlider->setValue(amplifiedFLBR);
+            FL_botSlider->setValue(amplifiedFL);
         }
     } else { // zero
-        FLBR_botSlider->setValue(0.0);
-        FLBR_topSlider->setValue(0.0);
+        FL_botSlider->setValue(0.0);
+        FL_topSlider->setValue(0.0);
+    }
+}
+
+
+/**
+ * @brief Sets value of FLBR slider scaled to fit.
+ * @param double value between IOConstants::MIN and IOConstants::MAX.
+ */
+void OutputHandler::setBRSlider(double value)
+{
+    double amplifiedBR = value * 100.0;
+    if (amplifiedBR > 0.0) { // positive
+        BR_botSlider->setValue(0.0);
+        if (amplifiedBR <= IOConstants::MIN_SLIDER) {
+            BR_topSlider->setValue(IOConstants::MIN_SLIDER);
+        }  else {
+            BR_topSlider->setValue(amplifiedBR);
+        }
+    } else if (amplifiedBR < 0.0) { // negative
+        BR_topSlider->setValue(0.0);
+        if (amplifiedBR >= -IOConstants::MIN_SLIDER) {
+            BR_botSlider->setValue(-IOConstants::MIN_SLIDER);
+        }  else {
+            BR_botSlider->setValue(amplifiedBR);
+        }
+    } else { // zero
+        BR_botSlider->setValue(0.0);
+        BR_topSlider->setValue(0.0);
     }
 }

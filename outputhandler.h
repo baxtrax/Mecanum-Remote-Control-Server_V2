@@ -17,23 +17,32 @@ class OutputHandler : public QObject
 {
     Q_OBJECT
 public:
-    OutputHandler(QSlider *FRBL_topSliderRef,
-                  QSlider *FRBL_botSliderRef,
-                  QSlider *FLBR_topSliderRef,
-                  QSlider *FLBR_botSliderRef,
+    OutputHandler(QSlider *FR_topSliderRef,
+                  QSlider *FR_botSliderRef,
+                  QSlider *BL_topSliderRef,
+                  QSlider *BL_botSliderRef,
+                  QSlider *FL_topSliderRef,
+                  QSlider *FL_botSliderRef,
+                  QSlider *BR_topSliderRef,
+                  QSlider *BR_botSliderRef,
                   QtCharts::QChartView *chartViewRef,
                   LoggerHandler *loggerRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
 public slots:
-    void updateSliders(double, double);
+    void updateSliders(double, double, double, double);
     void updateChart(double, double, double, double);
 private:
     QtCharts::QChartView *chartView;
-    QSlider *FRBL_topSlider;
-    QSlider *FRBL_botSlider;
-    QSlider *FLBR_topSlider;
-    QSlider *FLBR_botSlider;
+    QSlider *FR_topSlider;
+    QSlider *FR_botSlider;
+    QSlider *BL_topSlider;
+    QSlider *BL_botSlider;
+
+    QSlider *FL_topSlider;
+    QSlider *FL_botSlider;
+    QSlider *BR_topSlider;
+    QSlider *BR_botSlider;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
     QtCharts::QLineSeries *FRBLSeries;
@@ -53,8 +62,10 @@ private:
 
     int detailLevel;
 
-    void setFRBLSlider(double value);
-    void setFLBRSlider(double value);
+    void setFRSlider(double value);
+    void setBLSlider(double value);
+    void setFLSlider(double value);
+    void setBRSlider(double value);
 
     void configurePenBrushFont();
     void configureAxis();

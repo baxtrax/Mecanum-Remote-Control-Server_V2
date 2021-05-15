@@ -33,10 +33,14 @@ MainWindow::MainWindow(QWidget *parent)
                                     ui->axisZ_topVSlider,
                                     ui->axisZ_botVSlider);
     kinematicsHandler = new KinematicsHandler();
-    outputHandler = new OutputHandler(ui->FRBL_topVSlider,
-                                      ui->FRBL_botVSlider,
-                                      ui->FLBR_topVSlider,
-                                      ui->FLBR_botVSlider,
+    outputHandler = new OutputHandler(ui->FR_topVSlider,
+                                      ui->FR_botVSlider,
+                                      ui->BL_topVSlider,
+                                      ui->BL_botVSlider,
+                                      ui->FL_topVSlider,
+                                      ui->FL_botVSlider,
+                                      ui->BR_topVSlider,
+                                      ui->BR_botVSlider,
                                       ui->kinematicsGraphView,
                                       loggerHandler);
     simulationHandler = new SimulationHandler();
@@ -183,15 +187,15 @@ void MainWindow::configureConnections()
             kinematicsHandler,
             SLOT(updateSpeeds(double,double,double)));
     connect(kinematicsHandler,
-            SIGNAL(speedsChanged(double,double)),
+            SIGNAL(speedsChanged(double,double,double,double)), ////////////////
             outputHandler,
-            SLOT(updateSliders(double,double)));
+            SLOT(updateSliders(double,double,double,double)));
     connect(kinematicsHandler,
             SIGNAL(functionChanged(double,double,double,double)),
             outputHandler,
             SLOT(updateChart(double,double,double,double)));
     connect(kinematicsHandler,
-            SIGNAL(speedsChanged(double,double)),
+            SIGNAL(speedsChanged(double,double,double,double)), //////////////
             simulationHandler,
             SLOT(updateAnimators(double,double)));
 

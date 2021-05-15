@@ -300,22 +300,7 @@ QToolButton:checked {
                 <string notr="true">background-color: rgb(25, 25, 50);
 border-radius: 16px;</string>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_15">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>10</number>
-                </property>
-                <property name="topMargin">
-                 <number>10</number>
-                </property>
-                <property name="rightMargin">
-                 <number>10</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>10</number>
-                </property>
+               <layout class="QVBoxLayout" name="verticalLayout_43">
                 <item>
                  <widget class="QLabel" name="label_10">
                   <property name="sizePolicy">
@@ -338,174 +323,175 @@ font: 16pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <property name="spacing">
                    <number>0</number>
                   </property>
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
                     <property name="spacing">
-                     <number>55</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>21</number>
-                    </property>
-                    <item>
-                     <widget class="QLabel" name="label_11">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>8</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Open Sans</family>
-                        <pointsize>12</pointsize>
-                        <weight>50</weight>
-                        <italic>false</italic>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QLabel { 
-color: rgba(255, 255, 255, 153); 
-font: 12pt  'Open Sans'; }</string>
-                      </property>
-                      <property name="text">
-                       <string>+</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_12">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Open Sans</family>
-                        <pointsize>14</pointsize>
-                        <weight>50</weight>
-                        <italic>false</italic>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QLabel { 
-color: rgba(255, 255, 255, 153); 
-font: 14pt  'Open Sans'; }</string>
-                      </property>
-                      <property name="text">
-                       <string>-</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_5">
-                    <property name="spacing">
-                     <number>21</number>
-                    </property>
-                    <property name="sizeConstraint">
-                     <enum>QLayout::SetDefaultConstraint</enum>
-                    </property>
-                    <property name="rightMargin">
                      <number>0</number>
                     </property>
                     <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_18">
-                      <property name="spacing">
-                       <number>2</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_25">
                       <item>
-                       <widget class="QLabel" name="label_13">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QLabel { 
-color: white; 
-font: 12pt  'Open Sans'; }</string>
-                        </property>
-                        <property name="text">
-                         <string>FR/BL</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <layout class="QVBoxLayout" name="verticalLayout_19">
+                       <layout class="QVBoxLayout" name="verticalLayout_17">
                         <property name="spacing">
-                         <number>6</number>
+                         <number>55</number>
                         </property>
-                        <property name="bottomMargin">
-                         <number>0</number>
+                        <property name="topMargin">
+                         <number>21</number>
                         </property>
-                        <item alignment="Qt::AlignHCenter">
-                         <widget class="QSlider" name="FRBL_topVSlider">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
+                        <item>
+                         <widget class="QLabel" name="label_11">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
                           </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16</height>
-                           </size>
-                          </property>
                           <property name="maximumSize">
                            <size>
-                            <width>16</width>
+                            <width>8</width>
                             <height>16777215</height>
                            </size>
                           </property>
-                          <property name="baseSize">
-                           <size>
-                            <width>0</width>
-                            <height>0</height>
-                           </size>
-                          </property>
-                          <property name="cursor">
-                           <cursorShape>PointingHandCursor</cursorShape>
+                          <property name="font">
+                           <font>
+                            <family>Open Sans</family>
+                            <pointsize>12</pointsize>
+                            <weight>50</weight>
+                            <italic>false</italic>
+                            <bold>false</bold>
+                           </font>
                           </property>
                           <property name="styleSheet">
-                           <string notr="true">QSlider::groove:vertical {
+                           <string notr="true">QLabel { 
+color: rgba(255, 255, 255, 153); 
+font: 12pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>+</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_12">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Open Sans</family>
+                            <pointsize>14</pointsize>
+                            <weight>50</weight>
+                            <italic>false</italic>
+                            <bold>false</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QLabel { 
+color: rgba(255, 255, 255, 153); 
+font: 14pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>-</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_4">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_18">
+                          <property name="spacing">
+                           <number>2</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="label_13">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                            </property>
+                            <property name="text">
+                             <string>FL</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <layout class="QVBoxLayout" name="verticalLayout_19">
+                            <property name="spacing">
+                             <number>6</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="FL_topVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="baseSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
 	background:  rgb(5, 5, 15);
 	border-radius: 7px;
 	position: absolute;
@@ -525,43 +511,43 @@ QSlider::add-page:vertical {
 	border-radius: 7px;
     background: rgb(5, 5, 15);
 }*/</string>
-                          </property>
-                          <property name="maximum">
-                           <number>100</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="tracking">
-                           <bool>false</bool>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item alignment="Qt::AlignHCenter">
-                         <widget class="QSlider" name="FRBL_botVSlider">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="cursor">
-                           <cursorShape>PointingHandCursor</cursorShape>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QSlider::groove:vertical {
+                              </property>
+                              <property name="maximum">
+                               <number>100</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                             </widget>
+                            </item>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="FL_botVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
 	background:  rgb(5, 5, 15);
 	border-radius: 7px;
 	margin-bottom: 2px;
@@ -587,99 +573,99 @@ QSlider::sub-page:vertical {
 		stop:0 rgba(255, 111, 122, 255),
 		stop:1 rgba(221, 60, 253, 255));
 }</string>
-                          </property>
-                          <property name="minimum">
-                           <number>-100</number>
-                          </property>
-                          <property name="maximum">
-                           <number>0</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="tracking">
-                           <bool>false</bool>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                          <property name="invertedAppearance">
-                           <bool>false</bool>
-                          </property>
-                          <property name="invertedControls">
-                           <bool>false</bool>
-                          </property>
-                         </widget>
+                              </property>
+                              <property name="minimum">
+                               <number>-100</number>
+                              </property>
+                              <property name="maximum">
+                               <number>0</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                              <property name="invertedAppearance">
+                               <bool>false</bool>
+                              </property>
+                              <property name="invertedControls">
+                               <bool>false</bool>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
                         </item>
-                       </layout>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_20">
-                      <property name="spacing">
-                       <number>2</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QLabel" name="label_14">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QLabel { 
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_20">
+                          <property name="spacing">
+                           <number>2</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="label_14">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QLabel { 
 color: white; 
 font: 12pt  'Open Sans'; }</string>
-                        </property>
-                        <property name="text">
-                         <string>FL/BR</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <layout class="QVBoxLayout" name="verticalLayout_21" stretch="0,0">
-                        <property name="spacing">
-                         <number>6</number>
-                        </property>
-                        <property name="bottomMargin">
-                         <number>0</number>
-                        </property>
-                        <item alignment="Qt::AlignHCenter">
-                         <widget class="QSlider" name="FLBR_topVSlider">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="cursor">
-                           <cursorShape>PointingHandCursor</cursorShape>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QSlider::groove:vertical {
+                            </property>
+                            <property name="text">
+                             <string>FR</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <layout class="QVBoxLayout" name="verticalLayout_21" stretch="0,0">
+                            <property name="spacing">
+                             <number>6</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="FR_topVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
 	background:  rgb(5, 5, 15);
 	border-radius: 7px;
 	position: absolute;
@@ -699,43 +685,43 @@ QSlider::add-page:vertical {
 	border-radius: 7px;
     background: rgb(5, 5, 15);
 }*/</string>
-                          </property>
-                          <property name="maximum">
-                           <number>100</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="tracking">
-                           <bool>false</bool>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item alignment="Qt::AlignHCenter">
-                         <widget class="QSlider" name="FLBR_botVSlider">
-                          <property name="enabled">
-                           <bool>false</bool>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>16</width>
-                            <height>16777215</height>
-                           </size>
-                          </property>
-                          <property name="cursor">
-                           <cursorShape>PointingHandCursor</cursorShape>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QSlider::groove:vertical {
+                              </property>
+                              <property name="maximum">
+                               <number>100</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                             </widget>
+                            </item>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="FR_botVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
 	background:  rgb(5, 5, 15);
 	border-radius: 7px;
 	margin-bottom: 2px;
@@ -761,59 +747,507 @@ QSlider::sub-page:vertical {
 		stop:0 rgba(2, 164, 255, 255),
 		stop:1 rgba(117, 23, 248, 255));
 }</string>
-                          </property>
-                          <property name="minimum">
-                           <number>-100</number>
-                          </property>
-                          <property name="maximum">
-                           <number>0</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="tracking">
-                           <bool>false</bool>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Vertical</enum>
-                          </property>
-                          <property name="invertedAppearance">
-                           <bool>false</bool>
-                          </property>
-                         </widget>
+                              </property>
+                              <property name="minimum">
+                               <number>-100</number>
+                              </property>
+                              <property name="maximum">
+                               <number>0</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                              <property name="invertedAppearance">
+                               <bool>false</bool>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
                         </item>
                        </layout>
                       </item>
                      </layout>
                     </item>
                     <item>
-                     <widget class="QChartView" name="kinematicsGraphView">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>501</width>
-                        <height>306</height>
-                       </size>
-                      </property>
-                      <property name="baseSize">
-                       <size>
-                        <width>501</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">/*background-image: url(:/img/placeholder.png);*/
-border-image: url(:/img/resources/placeholder.png) 50 50 50 50 fixed fixed;
-border-radius:0px;</string>
-                      </property>
-                     </widget>
+                     <layout class="QHBoxLayout" name="horizontalLayout_27">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_48">
+                        <property name="spacing">
+                         <number>55</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>21</number>
+                        </property>
+                        <item>
+                         <widget class="QLabel" name="label_51">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>8</width>
+                            <height>16777215</height>
+                           </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Open Sans</family>
+                            <pointsize>12</pointsize>
+                            <weight>50</weight>
+                            <italic>false</italic>
+                            <bold>false</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QLabel { 
+color: rgba(255, 255, 255, 153); 
+font: 12pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>+</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_52">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Open Sans</family>
+                            <pointsize>14</pointsize>
+                            <weight>50</weight>
+                            <italic>false</italic>
+                            <bold>false</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QLabel { 
+color: rgba(255, 255, 255, 153); 
+font: 14pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>-</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_28">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_53">
+                          <property name="spacing">
+                           <number>2</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="label_55">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                            </property>
+                            <property name="text">
+                             <string>BL</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <layout class="QVBoxLayout" name="verticalLayout_54">
+                            <property name="spacing">
+                             <number>6</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="BL_topVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="baseSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
+	background:  rgb(5, 5, 15);
+	border-radius: 7px;
+	position: absolute;
+	left:1; right: 1;
+}
+
+QSlider::add-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    background: qlineargradient(
+		spread:pad, x1:1, y1:1, x2:1, y2:0, 
+		stop:0 rgba(221, 60, 253, 255),
+		stop:1 rgba(255, 111, 122, 255));
+}
+
+/*QSlider::sub-page:vertical {
+	border-radius: 7px;
+    background: rgb(5, 5, 15);
+}*/</string>
+                              </property>
+                              <property name="maximum">
+                               <number>100</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                             </widget>
+                            </item>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="BL_botVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
+	background:  rgb(5, 5, 15);
+	border-radius: 7px;
+	margin-bottom: 2px;
+	position: absolute;
+	left:1px; right: 1px;
+}
+
+/*QSlider::add-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    background: qlineargradient(
+		spread:pad, x1:0, y1:1, x2:0, y2:0,
+		stop:0 rgba(117, 23, 248, 255), 
+		stop:1 rgba(227, 35, 255, 255));
+}*/
+
+QSlider::sub-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    margin-top: 1px;
+    background: qlineargradient(
+		spread:pad, x1:1, y1:1, x2:1, y2:0, 
+		stop:0 rgba(255, 111, 122, 255),
+		stop:1 rgba(221, 60, 253, 255));
+}</string>
+                              </property>
+                              <property name="minimum">
+                               <number>-100</number>
+                              </property>
+                              <property name="maximum">
+                               <number>0</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                              <property name="invertedAppearance">
+                               <bool>false</bool>
+                              </property>
+                              <property name="invertedControls">
+                               <bool>false</bool>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
+                        </item>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_55">
+                          <property name="spacing">
+                           <number>2</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>10</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="label_56">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                            </property>
+                            <property name="text">
+                             <string>BR</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <layout class="QVBoxLayout" name="verticalLayout_56" stretch="0,0">
+                            <property name="spacing">
+                             <number>6</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="BR_topVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
+	background:  rgb(5, 5, 15);
+	border-radius: 7px;
+	position: absolute;
+	left:1; right: 1;
+}
+
+QSlider::add-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    background: qlineargradient(
+		spread:pad, x1:1, y1:1, x2:1, y2:0, 
+		stop:0 rgba(117, 23, 248, 255),
+		stop:1 rgba(2, 164, 255, 255));
+}
+
+/*QSlider::sub-page:vertical {
+	border-radius: 7px;
+    background: rgb(5, 5, 15);
+}*/</string>
+                              </property>
+                              <property name="maximum">
+                               <number>100</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                             </widget>
+                            </item>
+                            <item alignment="Qt::AlignHCenter">
+                             <widget class="QSlider" name="BR_botVSlider">
+                              <property name="enabled">
+                               <bool>false</bool>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="cursor">
+                               <cursorShape>PointingHandCursor</cursorShape>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QSlider::groove:vertical {
+	background:  rgb(5, 5, 15);
+	border-radius: 7px;
+	margin-bottom: 2px;
+	position: absolute;
+	left:1px; right: 1px;
+}
+
+/*QSlider::add-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    background: qlineargradient(
+		spread:pad, x1:0, y1:1, x2:0, y2:0,
+		stop:0 rgba(117, 23, 248, 255), 
+		stop:1 rgba(227, 35, 255, 255));
+}*/
+
+QSlider::sub-page:vertical {
+	border-radius: 7px;
+	margin: 0 -1px;
+    margin-top: 1px;
+    background: qlineargradient(
+		spread:pad, x1:1, y1:1, x2:1, y2:0, 
+		stop:0 rgba(2, 164, 255, 255),
+		stop:1 rgba(117, 23, 248, 255));
+}</string>
+                              </property>
+                              <property name="minimum">
+                               <number>-100</number>
+                              </property>
+                              <property name="maximum">
+                               <number>0</number>
+                              </property>
+                              <property name="value">
+                               <number>0</number>
+                              </property>
+                              <property name="tracking">
+                               <bool>false</bool>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Vertical</enum>
+                              </property>
+                              <property name="invertedAppearance">
+                               <bool>false</bool>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
                     </item>
                    </layout>
+                  </item>
+                  <item>
+                   <widget class="QChartView" name="kinematicsGraphView">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>501</width>
+                      <height>306</height>
+                     </size>
+                    </property>
+                    <property name="baseSize">
+                     <size>
+                      <width>501</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">/*background-image: url(:/img/placeholder.png);*/
+border-image: url(:/img/resources/placeholder.png) 50 50 50 50 fixed fixed;
+border-radius:0px;</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -830,7 +1264,7 @@ border-radius:0px;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>180</width>
+                 <width>0</width>
                  <height>190</height>
                 </size>
                </property>
@@ -965,7 +1399,7 @@ font: 14pt  'Open Sans'; }</string>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_22">
                     <property name="spacing">
-                     <number>21</number>
+                     <number>0</number>
                     </property>
                     <property name="sizeConstraint">
                      <enum>QLayout::SetDefaultConstraint</enum>
@@ -1957,7 +2391,7 @@ border-radius: 16px;</string>
        </layout>
       </widget>
       <widget class="QWidget" name="Settings_Page">
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>9</x>
@@ -2646,7 +3080,7 @@ QRadioButton::indicator::checked {
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -3418,7 +3852,7 @@ QComboBox QAbstractItemView {
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
