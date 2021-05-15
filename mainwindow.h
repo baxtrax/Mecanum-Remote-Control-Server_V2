@@ -30,11 +30,8 @@ protected:
 
 private slots:
     void on_home_toolButton_clicked();
-
     void on_settings_toolButton_clicked();
-
     void on_info_toolButton_clicked();
-
     void on_s_kine_perf_FPSSlider_valueChanged(int value);
 
 private:

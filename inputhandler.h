@@ -22,6 +22,7 @@ public:
     double getX();
     double getY();
     double getZ();
+
 public slots:
     void gamepad_axisLeftXSetter(double);
     void gamepad_axisLeftYSetter(double);

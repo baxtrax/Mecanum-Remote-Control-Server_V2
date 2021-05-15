@@ -29,9 +29,11 @@ public:
                   LoggerHandler *loggerRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
+
 public slots:
     void updateSliders(double, double, double, double);
     void updateChart(double, double, double, double);
+
 private:
     QtCharts::QChartView *chartView;
     QSlider *FR_topSlider;
@@ -71,8 +73,6 @@ private:
     void configureAxis();
     void configureSeries();
     void configureChart();
-
-    //double linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax);
 };
 
 #endif // OUTPUTHANDLER_H

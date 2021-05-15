@@ -14,9 +14,11 @@ public:
 
 public slots:
     void updateSpeeds(double, double, double);
+
 signals:
     void speedsChanged(double, double, double, double);
     void functionChanged(double, double, double, double);
+
 private:
     double speeds[4];
     double calculateMagnitude(double x, double y);
