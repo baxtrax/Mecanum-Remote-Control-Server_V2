@@ -25,7 +25,8 @@ public:
     QWidget* getWidget();
 
 public slots:
-    void updateAnimators(double, double);
+    void updateAnimators(double, double, double, double);
+
 
 private:
     QWidget *simulationWidget;
@@ -37,15 +38,32 @@ private:
     QCustom3DItem *FLWheelMesh;
     QCustom3DItem *BRWheelMesh;
     Q3DScatter *graph;
-    QVariantAnimation *FLBRAnimation;
-    QVariantAnimation *FRBLAnimation;
+    QVariantAnimation *FRAnimation;
+    QVariantAnimation *BLAnimation;
+    QVariantAnimation *FLAnimation;
+    QVariantAnimation *BRAnimation;
     QQuaternion FLcurrentRotation;
     QQuaternion BRcurrentRotation;
     QQuaternion FRcurrentRotation;
     QQuaternion BLcurrentRotation;
 
+    int FRmappedDuration;
+    int BLmappedDuration;
+    int FLmappedDuration;
+    int BRmappedDuration;
+
+    void setupFRAnimation();
+    void setupBLAnimation();
+    void setupFLAnimation();
+    void setupBRAnimation();
+
     void setup3DOjects();
     void setupGraph();
+
+    void updateFRAnimation(double FRSpeed);
+    void updateBLAnimation(double BLSpeed);
+    void updateFLAnimation(double FLSpeed);
+    void updateBRAnimation(double BRSpeed);
 
 };
 

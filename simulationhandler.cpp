@@ -17,33 +17,48 @@ SimulationHandler::SimulationHandler()
     BRcurrentRotation = BRWheelMesh->rotation();
     FRcurrentRotation = FRWheelMesh->rotation();
     BLcurrentRotation = BLWheelMesh->rotation();
-    //map end value to rotation() * a scaled value
-    FLBRAnimation = new QVariantAnimation();
-    FLBRAnimation->setStartValue(QVariant(0.0));
-    FLBRAnimation->setEndValue(QVariant(360.0));
-    FLBRAnimation->setDuration(100000);
-    FLBRAnimation->setLoopCount(-1);
-    FLBRAnimation->start();
-    //map end value to rotation() * a scaled value
-    FRBLAnimation = new QVariantAnimation();
-    FRBLAnimation->setStartValue(QVariant(0.0));
-    FRBLAnimation->setEndValue(QVariant(360.0));
-    FRBLAnimation->setDuration(100000);
-    FRBLAnimation->setLoopCount(-1);
-    FRBLAnimation->start();
 
-    connect(FLBRAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
-        FLWheelMesh->setRotation(FLcurrentRotation * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, -value.toFloat()));
-        BRWheelMesh->setRotation(BRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, -value.toFloat()));
+    setupFRAnimation();
+    setupBLAnimation();
+    setupFLAnimation();
+    setupBRAnimation();
+
+    connect(FRAnimation, &QVariantAnimation::valueChanged, // FR
+            this, [this](const QVariant value) {
+        FRWheelMesh->setRotation(
+                    FRcurrentRotation *
+                    QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f,
+                                                  value.toFloat()));
     });
 
-    connect(FRBLAnimation, &QVariantAnimation::valueChanged, this, [this](const QVariant value) {
-        FRWheelMesh->setRotation(FRcurrentRotation * QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f, value.toFloat()));
-        BLWheelMesh->setRotation(BLcurrentRotation * QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f, value.toFloat()));
+    connect(BLAnimation, &QVariantAnimation::valueChanged, // BL
+            this, [this](const QVariant value) {
+        BLWheelMesh->setRotation(
+                    BLcurrentRotation *
+                    QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f,
+                                                  value.toFloat()));
     });
 
-    FLBRAnimation->setLoopCount(0);
-    FRBLAnimation->setLoopCount(0);
+    connect(FLAnimation, &QVariantAnimation::valueChanged, // FL
+            this, [this](const QVariant value) {
+        FLWheelMesh->setRotation(
+                    FLcurrentRotation *
+                    QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f,
+                                                  -value.toFloat()));
+    });
+
+    connect(BRAnimation, &QVariantAnimation::valueChanged, // BR
+            this, [this](const QVariant value) {
+        BRWheelMesh->setRotation(
+                    BRcurrentRotation *
+                    QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f,
+                                                  -value.toFloat()));
+    });
+
+    FRAnimation->setLoopCount(0);
+    BLAnimation->setLoopCount(0);
+    FLAnimation->setLoopCount(0);
+    BRAnimation->setLoopCount(0);
 }
 
 QWidget* SimulationHandler::getWidget()
@@ -51,48 +66,90 @@ QWidget* SimulationHandler::getWidget()
     return simulationWidget;
 }
 
-void SimulationHandler::updateAnimators(double FRBLSpeed, double FLBRSpeed)
+void SimulationHandler::updateAnimators(double FRSpeed,
+                                        double BLSpeed,
+                                        double FLSpeed,
+                                        double BRSpeed)
 {
     //100000 for slow, 1000 for fast
-    int FLBRDuration =  linearMap(abs(FLBRSpeed), 0.0, 1.0, SimulationConstants::MIN_WHEEL_ROT_DURATION, SimulationConstants::MAX_WHEEL_ROT_DURATION);
-    int FRBLDuration =  linearMap(abs(FRBLSpeed), 0.0, 1.0, SimulationConstants::MIN_WHEEL_ROT_DURATION, SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    FRmappedDuration =  linearMap(abs(FRSpeed), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    BLmappedDuration =  linearMap(abs(BLSpeed), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    FLmappedDuration =  linearMap(abs(FLSpeed), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    BRmappedDuration =  linearMap(abs(BRSpeed), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
 
-    //FLBR
-    if (FLBRSpeed == 0.0)
-    {
-        //Capture current rotation and set it as reset
-        FLcurrentRotation = FLWheelMesh->rotation();
-        BRcurrentRotation = BRWheelMesh->rotation();
-        FLBRAnimation->setLoopCount(0);
-    } else if (FLBRSpeed > 0.0) { //Positive
-        FLBRAnimation->setDuration(FLBRDuration);
-        FLBRAnimation->setEndValue(QVariant(360.0)); // Forward
-        FLBRAnimation->setLoopCount(-1);
-    } else if (FLBRSpeed < 0.0) { //Negative
-        FLBRAnimation->setDuration(FLBRDuration);
-        FLBRAnimation->setEndValue(QVariant(-360.0)); // Forward
-        FLBRAnimation->setLoopCount(-1);
-    } else {
-        FLBRAnimation->setLoopCount(0);
-    }
+    updateFRAnimation(FRSpeed);
+    updateBLAnimation(BLSpeed);
+    updateFLAnimation(FLSpeed);
+    updateBRAnimation(BRSpeed);
+}
 
-    //FRBL
-    if (FRBLSpeed == 0.0)
-    {
+void SimulationHandler::updateFRAnimation(double FRSpeed) {
+    if(FRSpeed == 0.0) {
         //Capture current rotation and set it as reset
         FRcurrentRotation = FRWheelMesh->rotation();
+        FRAnimation->setLoopCount(0);
+    } else if (FRSpeed > 0.0) {
+        FRAnimation->setDuration(FRmappedDuration);
+        FRAnimation->setEndValue(QVariant(360.0)); // Forward
+        FRAnimation->setLoopCount(-1);
+    } else if (FRSpeed < 0.0) {
+        FRAnimation->setDuration(FRmappedDuration);
+        FRAnimation->setEndValue(QVariant(-360.0)); // Backward
+        FRAnimation->setLoopCount(-1);
+    }
+}
+
+void SimulationHandler::updateBLAnimation(double BLSpeed) {
+    if(BLSpeed == 0.0) {
+        //Capture current rotation and set it as reset
         BLcurrentRotation = BLWheelMesh->rotation();
-        FRBLAnimation->setLoopCount(0);
-    } else if (FRBLSpeed > 0.0) { //Positive
-        FRBLAnimation->setDuration(FRBLDuration);
-        FRBLAnimation->setEndValue(QVariant(360.0)); // Forward
-        FRBLAnimation->setLoopCount(-1);
-    } else if (FRBLSpeed < 0.0) {
-        FRBLAnimation->setDuration(FRBLDuration);
-        FRBLAnimation->setEndValue(QVariant(-360.0)); // Forward
-        FRBLAnimation->setLoopCount(-1);
-    } else {
-        FRBLAnimation->setLoopCount(0);
+        BLAnimation->setLoopCount(0);
+    } else if (BLSpeed > 0.0) {
+        BLAnimation->setDuration(BLmappedDuration);
+        BLAnimation->setEndValue(QVariant(360.0)); // Forward
+        BLAnimation->setLoopCount(-1);
+    } else if (BLSpeed < 0.0) {
+        BLAnimation->setDuration(BLmappedDuration);
+        BLAnimation->setEndValue(QVariant(-360.0)); // Backward
+        BLAnimation->setLoopCount(-1);
+    }
+}
+void SimulationHandler::updateFLAnimation(double FLSpeed) {
+    if(FLSpeed == 0.0) {
+        //Capture current rotation and set it as reset
+        FLcurrentRotation = FLWheelMesh->rotation();
+        FLAnimation->setLoopCount(0);
+    } else if (FLSpeed > 0.0) {
+        FLAnimation->setDuration(FLmappedDuration);
+        FLAnimation->setEndValue(QVariant(360.0)); // Forward
+        FLAnimation->setLoopCount(-1);
+    } else if (FLSpeed < 0.0) {
+        FLAnimation->setDuration(FLmappedDuration);
+        FLAnimation->setEndValue(QVariant(-360.0)); // Backward
+        FLAnimation->setLoopCount(-1);
+    }
+}
+void SimulationHandler::updateBRAnimation(double BRSpeed) {
+    if(BRSpeed == 0.0) {
+        //Capture current rotation and set it as reset
+        BRcurrentRotation = BRWheelMesh->rotation();
+        BRAnimation->setLoopCount(0);
+    } else if (BRSpeed > 0.0) {
+        BRAnimation->setDuration(BRmappedDuration);
+        BRAnimation->setEndValue(QVariant(360.0)); // Forward
+        BRAnimation->setLoopCount(-1);
+    } else if (BRSpeed < 0.0) {
+        BRAnimation->setDuration(BRmappedDuration);
+        BRAnimation->setEndValue(QVariant(-360.0)); // Backward
+        BRAnimation->setLoopCount(-1);
     }
 }
 
@@ -102,6 +159,7 @@ void SimulationHandler::setupGraph()
     graph->setShadowQuality(QAbstract3DGraph::ShadowQualityNone);
     graph->scene()->activeCamera()->setCameraPosition(-135,22.5,160);
     graph->scene()->activeCamera()->setTarget(QVector3D(0,0,0));
+
     graph->activeTheme()->setType(Q3DTheme::ThemeUserDefined);
     graph->activeTheme()->setBackgroundEnabled(false);
     graph->activeTheme()->setWindowColor(QColor(5, 5, 15));
@@ -112,17 +170,18 @@ void SimulationHandler::setupGraph()
     graph->activeTheme()->setLightStrength(6.0f);
     graph->activeTheme()->setGridLineColor(QColor(QRgb(0xffffff)));
     graph->activeTheme()->setColorStyle(Q3DTheme::ColorStyleObjectGradient);
+
     graph->axisX()->setSegmentCount(2);
     graph->axisY()->setSegmentCount(2);
     graph->axisZ()->setSegmentCount(2);
-    graph->setSelectionMode(QAbstract3DGraph::SelectionNone);
-
     graph->axisX()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisX()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisY()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisY()->setMin(0.0);
     graph->axisZ()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisZ()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
+
+    graph->setSelectionMode(QAbstract3DGraph::SelectionNone);
 
     setup3DOjects();
 
@@ -261,4 +320,41 @@ void SimulationHandler::setup3DOjects()
     graph->addCustomItem(LCyl);
     graph->addCustomItem(RCyl);
 }
+
+void SimulationHandler::setupFRAnimation() {
+    FRAnimation = new QVariantAnimation();
+    FRAnimation->setStartValue(QVariant(0.0));
+    FRAnimation->setEndValue(QVariant(360.0));
+    FRAnimation->setDuration(100000);
+    FRAnimation->setLoopCount(-1);
+    FRAnimation->start();
+}
+
+void SimulationHandler::setupBLAnimation() {
+    BLAnimation = new QVariantAnimation();
+    BLAnimation->setStartValue(QVariant(0.0));
+    BLAnimation->setEndValue(QVariant(360.0));
+    BLAnimation->setDuration(100000);
+    BLAnimation->setLoopCount(-1);
+    BLAnimation->start();
+}
+
+void SimulationHandler::setupFLAnimation() {
+    FLAnimation = new QVariantAnimation();
+    FLAnimation->setStartValue(QVariant(0.0));
+    FLAnimation->setEndValue(QVariant(360.0));
+    FLAnimation->setDuration(100000);
+    FLAnimation->setLoopCount(-1);
+    FLAnimation->start();
+}
+
+void SimulationHandler::setupBRAnimation() {
+    BRAnimation = new QVariantAnimation();
+    BRAnimation->setStartValue(QVariant(0.0));
+    BRAnimation->setEndValue(QVariant(360.0));
+    BRAnimation->setDuration(100000);
+    BRAnimation->setLoopCount(-1);
+    BRAnimation->start();
+}
+
 

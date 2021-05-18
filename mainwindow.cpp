@@ -187,7 +187,7 @@ void MainWindow::configureConnections()
             kinematicsHandler,
             SLOT(updateSpeeds(double,double,double)));
     connect(kinematicsHandler,
-            SIGNAL(speedsChanged(double,double,double,double)), ////////////////
+            SIGNAL(speedsChanged(double,double,double,double)),
             outputHandler,
             SLOT(updateSliders(double,double,double,double)));
     connect(kinematicsHandler,
@@ -197,7 +197,7 @@ void MainWindow::configureConnections()
     connect(kinematicsHandler,
             SIGNAL(speedsChanged(double,double,double,double)), //////////////
             simulationHandler,
-            SLOT(updateAnimators(double,double)));
+            SLOT(updateAnimators(double,double,double,double)));
 
 }
 

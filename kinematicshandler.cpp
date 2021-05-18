@@ -30,9 +30,9 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
     speeds[3] = (double) // BR
         ((int)(calculateBRSpeed(dir, mag, z)*100000)/100000.0);
 
-    qDebug() << "B" << "FR:" << speeds[0] << "BL:" << speeds[1]
-             << "FL:" << speeds[2] << "BR:" << speeds[3]
-             << "Dir:" << dir << "Mag:" << mag << "Z:" << z;
+//    qDebug() << "B" << "FR:" << speeds[0] << "BL:" << speeds[1]
+//             << "FL:" << speeds[2] << "BR:" << speeds[3]
+//             << "Dir:" << dir << "Mag:" << mag << "Z:" << z;
 
     double scaleFactor = 0.0;
 
