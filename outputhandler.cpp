@@ -22,11 +22,13 @@ OutputHandler::OutputHandler(QSlider *FR_topSliderRef,
     FL_botSlider = FL_botSliderRef;
     BR_topSlider = BR_topSliderRef;
     BR_botSlider = BR_botSliderRef;
-    detailLevel = SettingsConstants::DETAILED_INFO;
+    detailLevel = SettingsConstants::ADVANCED_INFO;
     axisX = new QtCharts::QCategoryAxis();
     axisY = new QtCharts::QCategoryAxis();
-    FRBLSeries = new QtCharts::QLineSeries();
-    FLBRSeries = new QtCharts::QLineSeries();
+    FRSeries = new QtCharts::QLineSeries();
+    BLSeries = new QtCharts::QLineSeries();
+    FLSeries = new QtCharts::QLineSeries();
+    BRSeries = new QtCharts::QLineSeries();
     dirSeries = new QtCharts::QLineSeries();
     chart = new QtCharts::QChart();
     configurePenBrushFont();
@@ -103,8 +105,10 @@ void OutputHandler::configureAxis()
  */
 void OutputHandler::configureSeries()
 {
-    FRBLSeries->setPen(*FRBLPen);
-    FLBRSeries->setPen(*FLBRPen);
+    FRSeries->setPen(*FRBLPen);
+    BLSeries->setPen(*FRBLPen);
+    FLSeries->setPen(*FLBRPen);
+    BRSeries->setPen(*FLBRPen);
     dirSeries->setPen(*dirPen);
 }
 
@@ -127,13 +131,19 @@ void OutputHandler::configureChart()
     chartView->setChart(chart);
     chartView->setStyleSheet(NULL);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->chart()->addSeries(FRBLSeries);
-    chartView->chart()->addSeries(FLBRSeries);
+    chartView->chart()->addSeries(FRSeries);
+    chartView->chart()->addSeries(BLSeries);
+    chartView->chart()->addSeries(FLSeries);
+    chartView->chart()->addSeries(BRSeries);
     chartView->chart()->addSeries(dirSeries);
-    FRBLSeries->attachAxis(axisX);
-    FRBLSeries->attachAxis(axisY);
-    FLBRSeries->attachAxis(axisX);
-    FLBRSeries->attachAxis(axisY);
+    FRSeries->attachAxis(axisX);
+    FRSeries->attachAxis(axisY);
+    BLSeries->attachAxis(axisX);
+    BLSeries->attachAxis(axisY);
+    FLSeries->attachAxis(axisX);
+    FLSeries->attachAxis(axisY);
+    BRSeries->attachAxis(axisX);
+    BRSeries->attachAxis(axisY);
     dirSeries->attachAxis(axisX);
     dirSeries->attachAxis(axisY);
 }
@@ -153,7 +163,7 @@ void OutputHandler::configureChart()
  * @param double value that is used for normalization.
  * @return double array of pointers pointing to data points.
  */
-double** generateSinePointsKinematics(int numberOfPoints, double cycles, double amp, double yOffset, double xOffset, double mag, double z, double scale) {
+double** OutputHandler::generateSinePointsKinematics(int numberOfPoints, double cycles, double amp, double yOffset, double xOffset, double mag, double z, double scale) {
     double y = 0.0;
     double f = cycles/double(numberOfPoints-1);
     double** arr = new double*[numberOfPoints];
@@ -215,18 +225,16 @@ void OutputHandler::updateChart(double dir,
 
     if (scaleFactor == 0) { scaleFactor = 1.0; }
 
-    double x, y = -9.9;
     // TODO Potentially switch over to using vectors? Statically allocated
     // arrays seems fine in this case as the array size does not change after
     // compile timer.
-    double** FRBLarrPtr;
-    double** FLBRarrPtr;
-
     // Show line at dir
     switch (getCurrentDetailLevel()) {
+        case SettingsConstants::DISABLED_INFO:
+            break;
         case SettingsConstants::BASIC_INFO:
             // Generate data of wave with mag, and scale for FRBL
-            FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
                                                       1.0,
                                                       1.0,
                                                       0.0,
@@ -234,55 +242,35 @@ void OutputHandler::updateChart(double dir,
                                                       mag,
                                                       0.0,
                                                       scaleFactor);
-            FRBLSeries->clear();
-            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-                for (int j=0; j<2; j++) {
-                    if (j == 0) {
-                        x = FRBLarrPtr[i][j];
-                    } else {
-                        y = FRBLarrPtr[i][j];
-                    }
-                }
-                //qDebug() << "FRBL" << x << y;
-                // Add new generated data
-                FRBLSeries->append(x, y);
-            }
-            // Clean up memory used by array
-            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-                delete[] FRBLarrPtr[i];
-            }
-            delete[] FRBLarrPtr;
 
-            // Generate data of wave with mag, and scale for FLBR
-            FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
-                                                      1.0,
-                                                      1.0,
-                                                      0.0,
-                                                      ((MathConstants::PI/4)),
-                                                      mag,
-                                                      0.0,
-                                                      scaleFactor);
-            FLBRSeries->clear();
-            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-                for (int j=0; j<2; j++) {
-                    if (j == 0) {
-                        x = FLBRarrPtr[i][j];
-                    } else {
-                        y = FLBRarrPtr[i][j];
-                    }
-                }
-                //qDebug() << "FRBL" << x << y;
-                FLBRSeries->append(x, y);
-            }
+            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    1.0,
+                                                    0.0,
+                                                    ((MathConstants::PI/4)),
+                                                    mag,
+                                                    0.0,
+                                                    scaleFactor);
+
+            FRSeries->clear();
+            FLSeries->clear();
+
+            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+
             // Clean up memory used by array
             for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-                delete[] FLBRarrPtr[i];
+                delete[] FRarrPtr[i];
+                delete[] FLarrPtr[i];
             }
-            delete[] FLBRarrPtr;
+            delete[] FRarrPtr;
+            delete[] FLarrPtr;
+
             break;
+
         case SettingsConstants::DETAILED_INFO:
             // Generate data of wave with mag, z, and scale for FRBL
-            FRBLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
                                                       1.0,
                                                       1.0,
                                                       0.0,
@@ -290,50 +278,116 @@ void OutputHandler::updateChart(double dir,
                                                       mag,
                                                       z,
                                                       scaleFactor);
-            FRBLSeries->clear();
-            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-                for (int j=0; j<2; j++) {
-                    if (j == 0) {
-                        x = FRBLarrPtr[i][j];
-                    } else {
-                        y = FRBLarrPtr[i][j];
-                    }
-                }
-                //qDebug() << "FRBL" << x << y;
-                FRBLSeries->append(x, y);
-            }
+
+            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    1.0,
+                                                    0.0,
+                                                    ((MathConstants::PI/4)),
+                                                    mag,
+                                                    z,
+                                                    scaleFactor);
+            FRSeries->clear();
+            FLSeries->clear();
+
+            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+
             // Clean up memory used by array
             for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-                delete[] FRBLarrPtr[i];
+                delete[] FRarrPtr[i];
+                delete[] FLarrPtr[i];
             }
-            delete[] FRBLarrPtr;
-            // Generate data of wave with mag, z, and scale for FLBR
-            FLBRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
-                                                      1.0,
-                                                      1.0,
-                                                      0.0,
-                                                      ((MathConstants::PI/4)),
-                                                      mag,
-                                                      z,
-                                                      scaleFactor);
-            FLBRSeries->clear();
-            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
-                for (int j=0; j<2; j++) {
-                    if (j == 0) {
-                        x = FLBRarrPtr[i][j];
-                    } else {
-                        y = FLBRarrPtr[i][j];
-                    }
-                }
-                //qDebug() << "FRBL" << x << y;
-                FLBRSeries->append(x, y);
-            }
-            // Clean up memory used by array
-            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
-                delete[] FLBRarrPtr[i];
-            }
-            delete[] FLBRarrPtr;
+            delete[] FRarrPtr;
+            delete[] FLarrPtr;
+
             break;
+
+        case SettingsConstants::ADVANCED_INFO:
+            // Generate data of wave with mag, z, and scale for FRBL
+            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    1.0,
+                                                    0.0,
+                                                    (-(MathConstants::PI/4)),
+                                                    mag,
+                                                    z,
+                                                    scaleFactor);
+
+            BLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    -1.0,
+                                                    0.0,
+                                                    (-(MathConstants::PI/4)),
+                                                    mag,
+                                                    z,
+                                                    scaleFactor);
+
+            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    -1.0,
+                                                    0.0,
+                                                    (MathConstants::PI/4),
+                                                    mag,
+                                                    z,
+                                                    scaleFactor);
+
+            BRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+                                                    1.0,
+                                                    1.0,
+                                                    0.0,
+                                                    (MathConstants::PI/4),
+                                                    mag,
+                                                    z,
+                                                    scaleFactor);
+            FRSeries->clear();
+            BLSeries->clear();
+            FLSeries->clear();
+            BRSeries->clear();
+
+            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+                BLarrPtr[i][1] = -BLarrPtr[i][1];
+                FLarrPtr[i][1] = -FLarrPtr[i][1];
+            }
+
+            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+            plotArray(BLarrPtr, IOConstants::BL_GRAPH);
+            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+            plotArray(BRarrPtr, IOConstants::BR_GRAPH);
+
+            // Clean up memory used by array
+            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+                delete[] FRarrPtr[i];
+                delete[] BLarrPtr[i];
+                delete[] FLarrPtr[i];
+                delete[] BRarrPtr[i];
+            }
+            delete[] FRarrPtr;
+            delete[] BLarrPtr;
+            delete[] FLarrPtr;
+            delete[] BRarrPtr;
+
+            break;
+    }
+}
+
+void OutputHandler::plotArray(double** arr, int graphNum) {
+    double x, y;
+    for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+        for (int j=0; j<2; j++) {
+            if (j == 0) {
+                x = arr[i][j];
+            } else {
+                y = arr[i][j];
+            }
+        }
+        //qDebug() << x << y << graphNum;
+        switch(graphNum) {
+            case 0: FRSeries->append(x, y); break;
+            case 1: BLSeries->append(x, y); break;
+            case 2: FLSeries->append(x, y); break;
+            case 3: BRSeries->append(x, y); break;
+        }
     }
 }
 
@@ -473,3 +527,5 @@ void OutputHandler::setBRSlider(double value)
         BR_topSlider->setValue(0.0);
     }
 }
+
+

@@ -38,8 +38,8 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
 
     // Find highest
     for (int i=0; i < 4; i++) {
-        if (scaleFactor < speeds[i]) {
-            scaleFactor = speeds[i];
+        if (scaleFactor < abs(speeds[i])) {
+            scaleFactor = abs(speeds[i]);
         }
     }
 
@@ -49,18 +49,6 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
             speeds[i] = speeds[i]/scaleFactor;
         }
     }
-
-
-//    if((abs(FRBLSpeed) >= abs(FLBRSpeed)) &&
-//       (!(FRBLSpeed == 0 && FLBRSpeed == 0))) {
-//        scaleFactor = abs(FRBLSpeed);
-//        FRBLSpeed = FRBLSpeed/scaleFactor;
-//        FLBRSpeed = FLBRSpeed/scaleFactor;
-//    } else if (abs(FRBLSpeed) < abs(FLBRSpeed)) {
-//        scaleFactor = abs(FLBRSpeed);
-//        FRBLSpeed = FRBLSpeed/scaleFactor;
-//        FLBRSpeed = FLBRSpeed/scaleFactor;
-//    }
 
 //    qDebug() << "A" << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
 //             << "Dir:" << dir << "Mag:" << mag << "Z:" << z;

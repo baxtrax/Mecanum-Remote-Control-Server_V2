@@ -47,8 +47,17 @@ private:
     QSlider *BR_botSlider;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
-    QtCharts::QLineSeries *FRBLSeries;
-    QtCharts::QLineSeries *FLBRSeries;
+
+    QtCharts::QLineSeries *FRSeries;
+    QtCharts::QLineSeries *BLSeries;
+    QtCharts::QLineSeries *FLSeries;
+    QtCharts::QLineSeries *BRSeries;
+
+    double** FRarrPtr;
+    double** BLarrPtr;
+    double** FLarrPtr;
+    double** BRarrPtr;
+
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
     LoggerHandler *logger;
@@ -68,7 +77,15 @@ private:
     void setBLSlider(double value);
     void setFLSlider(double value);
     void setBRSlider(double value);
-
+    double** generateSinePointsKinematics(int numberOfPoints,
+                                                         double cycles,
+                                                         double amp,
+                                                         double yOffset,
+                                                         double xOffset,
+                                                         double mag,
+                                                         double z,
+                                                         double scale);
+    void plotArray(double** arr, int graphNum);
     void configurePenBrushFont();
     void configureAxis();
     void configureSeries();

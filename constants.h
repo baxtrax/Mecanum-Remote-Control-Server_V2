@@ -13,11 +13,17 @@ namespace IOConstants {
     inline constexpr double MIN_SLIDER = 12.0;
     inline constexpr double MIN_XCHART = 1;
     inline constexpr double MAX_XCHART = 25;
+    inline constexpr int FR_GRAPH = 0;
+    inline constexpr int BL_GRAPH = 1;
+    inline constexpr int FL_GRAPH = 2;
+    inline constexpr int BR_GRAPH = 3;
 }
 
 namespace SettingsConstants {
-    inline constexpr int BASIC_INFO = 0;
-    inline constexpr int DETAILED_INFO = 1;
+    inline constexpr int DISABLED_INFO = 0; // Generates a straight line
+    inline constexpr int BASIC_INFO = 1;    // Mag and scale - 2 speed lines
+    inline constexpr int DETAILED_INFO = 2; // Mag scale and z - 2 speed lines
+    inline constexpr int ADVANCED_INFO = 3; // Mag scale and z - 4 speed lines
 
 }
 

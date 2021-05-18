@@ -503,8 +503,8 @@ QSlider::add-page:vertical {
 	margin: 0 -1px;
     background: qlineargradient(
 		spread:pad, x1:1, y1:1, x2:1, y2:0, 
-		stop:0 rgba(221, 60, 253, 255),
-		stop:1 rgba(255, 111, 122, 255));
+		stop:0 rgba(117, 23, 248, 255),
+		stop:1 rgba(2, 164, 255, 255));
 }
 
 /*QSlider::sub-page:vertical {
@@ -570,8 +570,8 @@ QSlider::sub-page:vertical {
     margin-top: 1px;
     background: qlineargradient(
 		spread:pad, x1:1, y1:1, x2:1, y2:0, 
-		stop:0 rgba(255, 111, 122, 255),
-		stop:1 rgba(221, 60, 253, 255));
+		stop:0 rgba(2, 164, 255, 255),
+		stop:1 rgba(117, 23, 248, 255));
 }</string>
                               </property>
                               <property name="minimum">
@@ -677,8 +677,8 @@ QSlider::add-page:vertical {
 	margin: 0 -1px;
     background: qlineargradient(
 		spread:pad, x1:1, y1:1, x2:1, y2:0, 
-		stop:0 rgba(117, 23, 248, 255),
-		stop:1 rgba(2, 164, 255, 255));
+		stop:0 rgba(221, 60, 253, 255),
+		stop:1 rgba(255, 111, 122, 255));
 }
 
 /*QSlider::sub-page:vertical {
@@ -744,8 +744,8 @@ QSlider::sub-page:vertical {
     margin-top: 1px;
     background: qlineargradient(
 		spread:pad, x1:1, y1:1, x2:1, y2:0, 
-		stop:0 rgba(2, 164, 255, 255),
-		stop:1 rgba(117, 23, 248, 255));
+		stop:0 rgba(255, 111, 122, 255),
+		stop:1 rgba(221, 60, 253, 255));
 }</string>
                               </property>
                               <property name="minimum">
