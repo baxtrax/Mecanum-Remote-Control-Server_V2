@@ -2124,7 +2124,7 @@ p, li { white-space: pre-wrap; }
 		spread:pad, x1:0, y1:1, x2:0, y2:0,
 		stop:0 rgba(117, 23, 248, 255), 
 		stop:1 rgba(227, 35, 255, 255));
-	min-height: 16px;
+	min-height: 14px;
 	margin: 0 -1 0 -1
   }
   QScrollBar::add-line:vertical {

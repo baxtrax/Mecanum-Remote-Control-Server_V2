@@ -59,8 +59,8 @@ void InputHandler::setXSlider(double value)
         }
     } else if (amplifiedX < 0.0) { // negative
         x_topSlider->setValue(0.0);
-        if (amplifiedX >= -IOConstants::MIN_SLIDER) {
-            x_botSlider->setValue(-IOConstants::MIN_SLIDER);
+        if (amplifiedX >= -IOConstants::MIN_SLIDER+1) {
+            x_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
         }  else {
             x_botSlider->setValue(amplifiedX);
         }
@@ -87,8 +87,8 @@ void InputHandler::setYSlider(double value)
         }
     } else if (amplifiedY < 0.0) { // negative
         y_topSlider->setValue(0.0);
-        if (amplifiedY >= -IOConstants::MIN_SLIDER) {
-            y_botSlider->setValue(-IOConstants::MIN_SLIDER);
+        if (amplifiedY >= -IOConstants::MIN_SLIDER+1) {
+            y_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
         }  else {
             y_botSlider->setValue(amplifiedY);
         }
@@ -115,8 +115,8 @@ void InputHandler::setZSlider(double value)
         }
     } else if (amplifiedZ < 0.0) { // negative
         z_topSlider->setValue(0.0);
-        if (amplifiedZ >= -IOConstants::MIN_SLIDER) {
-            z_botSlider->setValue(-IOConstants::MIN_SLIDER);
+        if (amplifiedZ >= -IOConstants::MIN_SLIDER+1) {
+            z_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
         }  else {
             z_botSlider->setValue(amplifiedZ);
         }

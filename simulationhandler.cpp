@@ -188,6 +188,7 @@ void SimulationHandler::setupGraph()
     simulationWidget = QWidget::createWindowContainer(graph);
 }
 
+
 void SimulationHandler::setup3DOjects()
 {
     QImage color = QImage(2.0, 2.0, QImage::Format_RGB32);
@@ -199,7 +200,8 @@ void SimulationHandler::setup3DOjects()
                                 SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f),
+                      color);
 
     BLWheelMesh = new
         QCustom3DItem(":/obj/resources/RightMech.obj",
@@ -207,7 +209,8 @@ void SimulationHandler::setup3DOjects()
                                 SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 -SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
+                      color);
 
     FLWheelMesh = new
         QCustom3DItem(":/obj/resources/LeftMech.obj",
@@ -215,7 +218,8 @@ void SimulationHandler::setup3DOjects()
                                 SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f),
+                      color);
 
     BRWheelMesh = new
         QCustom3DItem(":/obj/resources/LeftMech.obj",
@@ -223,7 +227,8 @@ void SimulationHandler::setup3DOjects()
                                 SimulationConstants::WHEEL_HEIGHT/2.0f,
                                 -SimulationConstants::BASE_LENGTH/2.0f),
                       QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
+                      color);
 
     QCustom3DItem *BCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
@@ -233,7 +238,8 @@ void SimulationHandler::setup3DOjects()
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f),
+                      color);
 
     QCustom3DItem *FCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
@@ -243,7 +249,8 @@ void SimulationHandler::setup3DOjects()
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f),
+                      color);
 
     QCustom3DItem *LCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
@@ -253,7 +260,8 @@ void SimulationHandler::setup3DOjects()
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
+                      color);
     QCustom3DItem *RCyl = new
         QCustom3DItem(":/obj/resources/Cylinder.obj",
                       QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
@@ -262,7 +270,8 @@ void SimulationHandler::setup3DOjects()
                       QVector3D(SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::FRAME_THICKNESS,
                                 SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f), color);
+                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
+                      color);
 
     QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
