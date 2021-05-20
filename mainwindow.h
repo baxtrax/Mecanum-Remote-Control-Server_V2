@@ -38,4 +38,4 @@ private:
     Ui::MainWindow *ui;
     void configureConnections();
 };
-#endif // MAINWINDOW_H
+#endif // MAINWINDOW_H NICWOLE CUTEST
