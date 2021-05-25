@@ -18,6 +18,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     outputhandler.cpp \
+    settingshandler.cpp \
     simulationhandler.cpp
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     loggerhandler.h \
     mainwindow.h \
     outputhandler.h \
+    settingshandler.h \
     simulationhandler.h
 
 FORMS += \

@@ -10,6 +10,7 @@
 #include "outputhandler.h"
 #include "loggerhandler.h"
 #include "simulationhandler.h"
+#include "settingshandler.h"
 
 GamepadHandler *gamepadHandler;
 InputHandler *inputHandler;
@@ -17,6 +18,7 @@ KinematicsHandler *kinematicsHandler;
 OutputHandler *outputHandler;
 LoggerHandler *loggerHandler;
 SimulationHandler *simulationHandler;
+SettingsHandler *settingsHandler;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -44,6 +46,12 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->kinematicsGraphView,
                                       loggerHandler);
     simulationHandler = new SimulationHandler();
+    settingsHandler = new SettingsHandler(ui->conn_CamAddressText,
+                                          ui->conn_CamPortText,
+                                          ui->conn_CamEnButton,
+                                          ui->conn_CommAddressText,
+                                          ui->conn_CommPortText,
+                                          ui->conn_CommEnButton);
 
     configureConnections();
     loggerHandler->clear();
@@ -195,10 +203,22 @@ void MainWindow::configureConnections()
             outputHandler,
             SLOT(updateChart(double,double,double,double)));
     connect(kinematicsHandler,
-            SIGNAL(speedsChanged(double,double,double,double)), //////////////
+            SIGNAL(speedsChanged(double,double,double,double)),
             simulationHandler,
             SLOT(updateAnimators(double,double,double,double)));
 
+    connect(ui->settings_ResetButton,
+            SIGNAL(clicked()),
+            settingsHandler,
+            SLOT(resetSettings()));
+    connect(ui->settings_ApplyButton,
+            SIGNAL(clicked()),
+            settingsHandler,
+            SLOT(applySettings()));
+    connect(ui->settings_CancelButton,
+            SIGNAL(clicked()),
+            settingsHandler,
+            SLOT(displaySettings()));
 }
 
 //MainWindow deconstructor
@@ -238,7 +258,6 @@ void MainWindow::on_info_toolButton_clicked()
 
 void MainWindow::on_s_kine_perf_FPSSlider_valueChanged(int value)
 {
-    qDebug() << "test";
     switch(value) {
         case 0:
             ui->s_kine_perf_FPSLabel->setNum(15);
