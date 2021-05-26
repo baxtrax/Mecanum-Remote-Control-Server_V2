@@ -51,7 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
                                           ui->conn_CamEnButton,
                                           ui->conn_CommAddressText,
                                           ui->conn_CommPortText,
-                                          ui->conn_CommEnButton);
+                                          ui->conn_CommEnButton,
+                                          ui->graph_PerformEnButton,
+                                          ui->graph_PerformQualCombo);
 
     configureConnections();
     loggerHandler->clear();
@@ -219,6 +221,11 @@ void MainWindow::configureConnections()
             SIGNAL(clicked()),
             settingsHandler,
             SLOT(displaySettings()));
+    //TODO check captured pointers (possible memory leak?) Could be entirely wrong.
+    connect(ui->graph_PerformPointsSlider,
+            &QSlider::valueChanged,
+            this,
+            [this](int value) { ui->graph_PerformPointsText->setNum(value); });
 }
 
 //MainWindow deconstructor

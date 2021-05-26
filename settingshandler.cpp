@@ -5,7 +5,9 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
                                  QRadioButton *conn_CamEnButtonRef,
                                  QLineEdit *conn_CommAddressTextRef,
                                  QLineEdit *conn_CommPortTextRef,
-                                 QRadioButton *conn_CommEnButtonRef)
+                                 QRadioButton *conn_CommEnButtonRef,
+                                 QRadioButton *graph_PerformEnButtonRef,
+                                 QComboBox *graph_PerformQualComboRef)
 {
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
@@ -18,6 +20,8 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
     conn_CommAddressText = conn_CommAddressTextRef;
     conn_CommPortText = conn_CommPortTextRef;
     conn_CommEnButton = conn_CommEnButtonRef;
+    graph_PerformEnButton = graph_PerformEnButtonRef;
+    graph_PerformQualCombo = graph_PerformQualComboRef;
 
     initSettings();
 }
@@ -44,12 +48,15 @@ void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
     conn_CamAddressText->setText(settings->value("connection/camera/address", "123.123.123.123").toString());
-    conn_CamPortText->setText(settings->value("connection/camera/port", "12345").toString());
+    conn_CamPortText->setText(settings->value("connection/camera/port", 12345).toString());
     conn_CamEnButton->setChecked(settings->value("connection/camera/en", false).toBool());
 
     conn_CommAddressText->setText(settings->value("connection/socket/address", "123.123.123.123").toString());
-    conn_CommPortText->setText(settings->value("connection/socket/port", "12345").toString());
+    conn_CommPortText->setText(settings->value("connection/socket/port", 12345).toString());
     conn_CommEnButton->setChecked(settings->value("connection/socket/en", false).toBool());
+
+    graph_PerformEnButton->setChecked(settings->value("graph/performance/en", false).toBool());
+    graph_PerformQualCombo->setCurrentIndex(settings->value("graph/performance/qual", 0).toInt());
 }
 
 void SettingsHandler::saveSettings()

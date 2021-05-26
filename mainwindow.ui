@@ -4154,7 +4154,7 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_11">
+                 <widget class="QRadioButton" name="graph_PerformEnButton">
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
@@ -4237,7 +4237,7 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="s_kine_perf_QualityCB_2">
+                 <widget class="QComboBox" name="graph_PerformQualCombo">
                   <property name="minimumSize">
                    <size>
                     <width>150</width>
@@ -4341,9 +4341,25 @@ QComboBox QAbstractItemView {
                    <number>12</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="s_kine_perf_FPSLabel_2">
+                   <spacer name="horizontalSpacer_8">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Expanding</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="graph_PerformPointsText">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -4364,7 +4380,7 @@ font: 12pt  'Open Sans'; }</string>
                   <item>
                    <widget class="QLabel" name="label_60">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -4378,6 +4394,22 @@ font: 12pt  'Open Sans'; }</string>
                      <string>Data Points</string>
                     </property>
                    </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_10">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Expanding</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
@@ -4405,7 +4437,7 @@ font: 12pt  'Open Sans'; }</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSlider" name="s_kine_perf_FPSSlider_2">
+                   <widget class="QSlider" name="graph_PerformPointsSlider">
                     <property name="maximumSize">
                      <size>
                       <width>16777215</width>
@@ -4436,10 +4468,10 @@ QSlider::handle:horizontal {
 }*/</string>
                     </property>
                     <property name="minimum">
-                     <number>0</number>
+                     <number>15</number>
                     </property>
                     <property name="maximum">
-                     <number>2</number>
+                     <number>60</number>
                     </property>
                     <property name="singleStep">
                      <number>1</number>
@@ -4448,7 +4480,7 @@ QSlider::handle:horizontal {
                      <number>1</number>
                     </property>
                     <property name="value">
-                     <number>0</number>
+                     <number>15</number>
                     </property>
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>

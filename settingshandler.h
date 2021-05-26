@@ -7,6 +7,7 @@
 
 #include <QLineEdit>
 #include <QRadioButton>
+#include <QComboBox>
 
 class SettingsHandler : public QObject
 {
@@ -17,7 +18,9 @@ public:
                     QRadioButton *conn_CamEnButtonRef,
                     QLineEdit *conn_CommAddressTextRef,
                     QLineEdit *conn_CommPortTextRef,
-                    QRadioButton *conn_CommEnButtonRef);
+                    QRadioButton *conn_CommEnButtonRef,
+                    QRadioButton *graph_PerformEnButtonRef,
+                    QComboBox *graph_PerformQualComboRef);
 
 public slots:
     void resetSettings();
@@ -33,6 +36,8 @@ private:
     QLineEdit *conn_CommAddressText;
     QLineEdit *conn_CommPortText;
     QRadioButton *conn_CommEnButton;
+    QRadioButton *graph_PerformEnButton;
+    QComboBox *graph_PerformQualCombo;
 
     void initSettings();
     void saveSettings();
