@@ -53,7 +53,15 @@ MainWindow::MainWindow(QWidget *parent)
                                           ui->conn_CommPortText,
                                           ui->conn_CommEnButton,
                                           ui->graph_PerformEnButton,
-                                          ui->graph_PerformQualCombo);
+                                          ui->graph_PerformQualCombo,
+                                          ui->graph_PerformPointsSlider,
+                                          ui->render_PerformFPSLimEnButton,
+                                          ui->render_PerformQualCombo,
+                                          ui->render_PerformFPSSlider,
+                                          ui->render_ViewEnButton,
+                                          ui->render_ViewCountEnButton,
+                                          ui->render_ViewDebugEnButton,
+                                          ui->appear_ThemeDarkEnButton);
 
     configureConnections();
     loggerHandler->clear();
@@ -63,8 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->Application_Stack->setCurrentIndex(0);
     ui->home_toolButton->setChecked(true);
-    ui->s_kine_perf_QualityCB->view()
-        ->window()->setWindowFlag(Qt::NoDropShadowWindowHint);
+
+    window()->setWindowFlag(Qt::NoDropShadowWindowHint);
 
     ui->simulation_Frame->layout()->addWidget(simulationHandler->getWidget());
     loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
@@ -226,6 +234,24 @@ void MainWindow::configureConnections()
             &QSlider::valueChanged,
             this,
             [this](int value) { ui->graph_PerformPointsText->setNum(value); });
+
+    connect(ui->render_PerformFPSSlider,
+            &QSlider::valueChanged,
+            this,
+            [this](int value)
+            {
+                switch(value) {
+                case 0:
+                    ui->render_PerformFPSText->setNum(15);
+                    break;
+                case 1:
+                    ui->render_PerformFPSText->setNum(30);
+                    break;
+                case 2:
+                    ui->render_PerformFPSText->setNum(60);
+                    break;
+                }
+            });
 }
 
 //MainWindow deconstructor
@@ -261,20 +287,4 @@ void MainWindow::on_info_toolButton_clicked()
     ui->home_toolButton->setChecked(false);
     ui->settings_toolButton->setChecked(false);
     ui->info_toolButton->setChecked(true);
-}
-
-void MainWindow::on_s_kine_perf_FPSSlider_valueChanged(int value)
-{
-    switch(value) {
-        case 0:
-            ui->s_kine_perf_FPSLabel->setNum(15);
-            break;
-        case 1:
-            ui->s_kine_perf_FPSLabel->setNum(30);
-            break;
-        case 2:
-            ui->s_kine_perf_FPSLabel->setNum(60);
-            break;
-    }
-
 }

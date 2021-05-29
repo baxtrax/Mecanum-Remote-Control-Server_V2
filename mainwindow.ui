@@ -3197,7 +3197,7 @@ font: 12pt  'Open Sans'; }</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QRadioButton" name="radioButton_9">
+                   <widget class="QRadioButton" name="render_PerformFPSLimEnButton">
                     <property name="maximumSize">
                      <size>
                       <width>30</width>
@@ -3267,7 +3267,7 @@ QRadioButton::indicator::checked {
                      <number>12</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="s_kine_perf_FPSLabel">
+                     <widget class="QLabel" name="render_PerformFPSText">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                         <horstretch>0</horstretch>
@@ -3331,7 +3331,7 @@ font: 12pt  'Open Sans'; }</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSlider" name="s_kine_perf_FPSSlider">
+                     <widget class="QSlider" name="render_PerformFPSSlider">
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
@@ -3436,7 +3436,7 @@ font: 12pt  'Open Sans'; }</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="s_kine_perf_QualityCB">
+                   <widget class="QComboBox" name="render_PerformQualCombo">
                     <property name="minimumSize">
                      <size>
                       <width>150</width>
@@ -3496,7 +3496,7 @@ QComboBox QAbstractItemView {
                     </property>
                     <item>
                      <property name="text">
-                      <string>High</string>
+                      <string>Low</string>
                      </property>
                     </item>
                     <item>
@@ -3506,7 +3506,7 @@ QComboBox QAbstractItemView {
                     </item>
                     <item>
                      <property name="text">
-                      <string>Low</string>
+                      <string>High</string>
                      </property>
                     </item>
                    </widget>
@@ -3610,7 +3610,7 @@ color: white;
 font: 12pt  'Open Sans'; }</string>
                     </property>
                     <property name="text">
-                     <string>Render View Enabled</string>
+                     <string>Render View</string>
                     </property>
                    </widget>
                   </item>
@@ -3628,7 +3628,7 @@ font: 12pt  'Open Sans'; }</string>
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QRadioButton" name="radioButton_4">
+                   <widget class="QRadioButton" name="render_ViewEnButton">
                     <property name="maximumSize">
                      <size>
                       <width>30</width>
@@ -3714,7 +3714,7 @@ font: 12pt  'Open Sans'; }</string>
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QRadioButton" name="radioButton_5">
+                   <widget class="QRadioButton" name="render_ViewCountEnButton">
                     <property name="maximumSize">
                      <size>
                       <width>30</width>
@@ -3800,7 +3800,7 @@ font: 12pt  'Open Sans'; }</string>
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QRadioButton" name="radioButton_6">
+                   <widget class="QRadioButton" name="render_ViewDebugEnButton">
                     <property name="maximumSize">
                      <size>
                       <width>30</width>
@@ -3976,7 +3976,7 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_3">
+                 <widget class="QRadioButton" name="appear_ThemeDarkEnButton">
                   <property name="maximumSize">
                    <size>
                     <width>30</width>

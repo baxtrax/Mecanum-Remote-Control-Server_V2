@@ -20,7 +20,15 @@ public:
                     QLineEdit *conn_CommPortTextRef,
                     QRadioButton *conn_CommEnButtonRef,
                     QRadioButton *graph_PerformEnButtonRef,
-                    QComboBox *graph_PerformQualComboRef);
+                    QComboBox *graph_PerformQualComboRef,
+                    QSlider *graph_PerformPointsSlider,
+                    QRadioButton *render_PerformFPSLimEnButtonRef,
+                    QComboBox *render_PerformQualComboRef,
+                    QSlider *render_PerformFPSSliderRef,
+                    QRadioButton *render_ViewEnButtonRef,
+                    QRadioButton *render_ViewCountEnButtonRef,
+                    QRadioButton *render_ViewDebugEnButtonRef,
+                    QRadioButton *appear_ThemeDarkEnButtonRef);
 
 public slots:
     void resetSettings();
@@ -38,6 +46,14 @@ private:
     QRadioButton *conn_CommEnButton;
     QRadioButton *graph_PerformEnButton;
     QComboBox *graph_PerformQualCombo;
+    QSlider *graph_PerformPointsSlider;
+    QRadioButton *render_PerformFPSLimEnButton;
+    QComboBox *render_PerformQualCombo;
+    QSlider *render_PerformFPSSlider;
+    QRadioButton *render_ViewEnButton;
+    QRadioButton *render_ViewCountEnButton;
+    QRadioButton *render_ViewDebugEnButton;
+    QRadioButton *appear_ThemeDarkEnButton;
 
     void initSettings();
     void saveSettings();
