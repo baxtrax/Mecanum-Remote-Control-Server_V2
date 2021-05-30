@@ -74,7 +74,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     window()->setWindowFlag(Qt::NoDropShadowWindowHint);
 
+//    QLabel *testLabel = new QLabel();
+//    testLabel->setText("Test");
     ui->simulation_Frame->layout()->addWidget(simulationHandler->getWidget());
+//    ui->simulation_Frame->layout()->addWidget(testLabel);
+
+    qDebug()<< ui->simulation_Frame->layout();
     loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
 }
 

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QGridLayout>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

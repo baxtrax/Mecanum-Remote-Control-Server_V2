@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QWidget>
 #include <QVariantAnimation>
+#include <QLabel>
 
 #include <QtDataVisualization/Q3DScatter>
 #include <QtDataVisualization/QScatter3DSeries>
