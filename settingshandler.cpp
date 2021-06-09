@@ -41,7 +41,9 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
 
     initSettings();
 }
-
+/**
+ * @brief Used to initilize settings
+ */
 void SettingsHandler::initSettings()
 {
     displaySettings();
