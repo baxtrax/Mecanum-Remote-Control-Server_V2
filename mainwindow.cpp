@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    //Possible just pass in Ui instead of each ui element indiv
     loggerHandler = new LoggerHandler(ui->loggerTextEdit);
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(ui->axisX_topVSlider,
@@ -74,10 +75,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     window()->setWindowFlag(Qt::NoDropShadowWindowHint);
 
-//    QLabel *testLabel = new QLabel();
-//    testLabel->setText("Test");
-    ui->simulation_Frame->layout()->addWidget(simulationHandler->getWidget());
-//    ui->simulation_Frame->layout()->addWidget(testLabel);
+    //Add 3D widget
+    ui->render_placeholder->setStyleSheet(NULL);
+    ui->simulation_Frame->layout()->replaceWidget(ui->render_placeholder, simulationHandler->getWidget());
+    ui->render_placeholder->deleteLater();
+    ui->DebugInfoFrame->setVisible(false);
 
     qDebug()<< ui->simulation_Frame->layout();
     loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
