@@ -33,3 +33,7 @@ Settings:
 ## Authors
 
 * **Bradley G** - *Original Creator* - [Baxtrax](https://github.com/baxtrax)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
