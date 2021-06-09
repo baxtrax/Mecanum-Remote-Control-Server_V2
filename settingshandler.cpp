@@ -38,7 +38,6 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
     render_ViewCountEnButton = render_ViewCountEnButtonRef;
     render_ViewDebugEnButton = render_ViewDebugEnButtonRef;
     appear_ThemeDarkEnButton = appear_ThemeDarkEnButtonRef;
-
     initSettings();
 }
 
