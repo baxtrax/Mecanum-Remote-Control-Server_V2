@@ -10,9 +10,13 @@ This section will show current features of the GUI and up to date pictures of th
 Main GUI:
 
 ![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/RemoteControlV2.PNG)
-Settings:
+Settings GUI:
 
 ![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/RemoteControlV2_2.PNG)
+
+Info GUI:
+
+![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/RemoteControlV2_3.PNG)
 
 ### Features
 * Has retainable settings between launches.
