@@ -1,6 +1,8 @@
 #ifndef SETTINGSHANDLER_H
 #define SETTINGSHANDLER_H
 
+
+#include "constants.h"
 #include <QObject>
 #include <QDebug>
 #include <QSettings>
@@ -29,6 +31,7 @@ public:
                     QRadioButton *render_ViewCountEnButtonRef,
                     QRadioButton *render_ViewDebugEnButtonRef,
                     QRadioButton *appear_ThemeDarkEnButtonRef);
+    QSettings* getSettings();
 
 public slots:
     void resetSettings();

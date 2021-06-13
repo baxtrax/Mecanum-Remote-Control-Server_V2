@@ -9,8 +9,9 @@
 //        / z+
 //
 
-SimulationHandler::SimulationHandler()
+SimulationHandler::SimulationHandler(QSettings *settingsRef)
 {
+    settings = settingsRef;
     setupGraph();
 
     FLcurrentRotation = FLWheelMesh->rotation();
@@ -372,6 +373,11 @@ void SimulationHandler::setupBRAnimation() {
     BRAnimation->setDuration(100000);
     BRAnimation->setLoopCount(-1);
     BRAnimation->start();
+}
+
+void SimulationHandler::updateWithSettings()
+{
+    settings->
 }
 
 

@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QVariantAnimation>
 #include <QLabel>
+#include <QSettings>
 
 #include <QtDataVisualization/Q3DScatter>
 #include <QtDataVisualization/QScatter3DSeries>
@@ -22,14 +23,16 @@ class SimulationHandler : public QObject
 {
     Q_OBJECT
 public:
-    SimulationHandler();
+    SimulationHandler(QSettings *settingsRef);
     QWidget* getWidget();
 
 public slots:
     void updateAnimators(double, double, double, double);
+    void updateWithSettings();
 
 
 private:
+    QSettings *settings;
     QWidget *simulationWidget;
     QScatter3DSeries *FLBRSeries;
     QScatter3DSeries *FRBLSeries;

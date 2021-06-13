@@ -28,6 +28,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Possible just pass in Ui instead of each ui element indiv
     loggerHandler = new LoggerHandler(ui->loggerTextEdit);
+    settingsHandler = new SettingsHandler(ui->conn_CamAddressText,
+                                          ui->conn_CamPortText,
+                                          ui->conn_CamEnButton,
+                                          ui->conn_CommAddressText,
+                                          ui->conn_CommPortText,
+                                          ui->conn_CommEnButton,
+                                          ui->graph_PerformEnButton,
+                                          ui->graph_PerformQualCombo,
+                                          ui->graph_PerformPointsSlider,
+                                          ui->render_PerformFPSLimEnButton,
+                                          ui->render_PerformQualCombo,
+                                          ui->render_PerformFPSSlider,
+                                          ui->render_ViewEnButton,
+                                          ui->render_ViewCountEnButton,
+                                          ui->render_ViewDebugEnButton,
+                                          ui->appear_ThemeDarkEnButton);
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(ui->axisX_topVSlider,
                                     ui->axisX_botVSlider,
@@ -46,23 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->BR_botVSlider,
                                       ui->kinematicsGraphView,
                                       loggerHandler);
-    simulationHandler = new SimulationHandler();
-    settingsHandler = new SettingsHandler(ui->conn_CamAddressText,
-                                          ui->conn_CamPortText,
-                                          ui->conn_CamEnButton,
-                                          ui->conn_CommAddressText,
-                                          ui->conn_CommPortText,
-                                          ui->conn_CommEnButton,
-                                          ui->graph_PerformEnButton,
-                                          ui->graph_PerformQualCombo,
-                                          ui->graph_PerformPointsSlider,
-                                          ui->render_PerformFPSLimEnButton,
-                                          ui->render_PerformQualCombo,
-                                          ui->render_PerformFPSSlider,
-                                          ui->render_ViewEnButton,
-                                          ui->render_ViewCountEnButton,
-                                          ui->render_ViewDebugEnButton,
-                                          ui->appear_ThemeDarkEnButton);
+    simulationHandler = new SimulationHandler(settingsHandler->getSettings());
 
     configureConnections();
     loggerHandler->clear();
