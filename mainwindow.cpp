@@ -46,12 +46,14 @@ MainWindow::MainWindow(QWidget *parent)
                                           ui->render_ViewDebugEnButton,
                                           ui->appear_ThemeDarkEnButton);
     gamepadHandler = new GamepadHandler(loggerHandler);
+    qDebug() << ui;
     inputHandler = new InputHandler(ui->axisX_topVSlider,
                                     ui->axisX_botVSlider,
                                     ui->axisY_topVSlider,
                                     ui->axisY_botVSlider,
                                     ui->axisZ_topVSlider,
-                                    ui->axisZ_botVSlider);
+                                    ui->axisZ_botVSlider,
+                                    ui);
     kinematicsHandler = new KinematicsHandler();
     outputHandler = new OutputHandler(ui->FR_topVSlider,
                                       ui->FR_botVSlider,

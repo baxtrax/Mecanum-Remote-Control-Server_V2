@@ -7,6 +7,10 @@
 
 #include "constants.h"
 
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
 class InputHandler : public QObject
 {
     Q_OBJECT
@@ -38,6 +42,7 @@ signals:
     void inputsChanged(double, double, double);
 
 private:
+    Ui::MainWindow *ui;
     QSlider *x_topSlider;
     QSlider *x_botSlider;
     QSlider *y_topSlider;
