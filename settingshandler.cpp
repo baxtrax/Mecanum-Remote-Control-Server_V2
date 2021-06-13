@@ -49,7 +49,8 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
 
 
 /**
- * @brief Used to initilize settings
+ * @brief Will read current settings from file and set them up in the program,
+ * initilizing them.
  */
 void SettingsHandler::initSettings()
 {
@@ -58,34 +59,41 @@ void SettingsHandler::initSettings()
 }
 
 
+/**
+ * @brief Resets the settings to defaults values and
+ */
 void SettingsHandler::resetSettings()
 {
     qDebug() << "Reset Settings";
-    settings->value(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123");
-    settings->value(SettingsConstants::CONN_CAM_PORT, "12345");
-    settings->value(SettingsConstants::CONN_CAM_EN, false);
+    settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123");
+    settings->setValue(SettingsConstants::CONN_CAM_PORT, "12345");
+    settings->setValue(SettingsConstants::CONN_CAM_EN, false);
 
-    settings->value(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123");
-    settings->value(SettingsConstants::CONN_SOCK_PORT, "12345");
-    settings->value(SettingsConstants::CONN_SOCK_EN, false);
+    settings->setValue(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123");
+    settings->setValue(SettingsConstants::CONN_SOCK_PORT, "12345");
+    settings->setValue(SettingsConstants::CONN_SOCK_EN, false);
 
-    settings->value(SettingsConstants::GRAPH_PERF_EN, false);
-    settings->value(SettingsConstants::GRAPH_PERF_QUAL, 0);
-    settings->value(SettingsConstants::GRAPH_PERF_POINTS, 15);
+    settings->setValue(SettingsConstants::GRAPH_PERF_EN, false);
+    settings->setValue(SettingsConstants::GRAPH_PERF_QUAL, 0);
+    settings->setValue(SettingsConstants::GRAPH_PERF_POINTS, 15);
 
-    settings->value(SettingsConstants::RENDER_PERF_FPS_EN, false);
-    settings->value(SettingsConstants::RENDER_PERF_QUAL, 0);
-    settings->value(SettingsConstants::RENDER_PERF_FPS_LIM, 0);
+    settings->setValue(SettingsConstants::RENDER_PERF_FPS_EN, false);
+    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, 0);
+    settings->setValue(SettingsConstants::RENDER_PERF_FPS_LIM, 0);
 
-    settings->value(SettingsConstants::RENDER_VIEW_EN, false);
-    settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false);
-    settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false);
-    settings->value(SettingsConstants::APPEAR_THEME_DARK_EN, false);
+    settings->setValue(SettingsConstants::RENDER_VIEW_EN, false);
+    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, false);
+    settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, false);
+    settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, false);
     displaySettings();
 
 }
 
 
+/**
+ * @brief Apply current settings to file, will also proprogate changes
+ * throughout the program.
+ */
 void SettingsHandler::applySettings()
 {
     qDebug() << "Apply Settings";
@@ -94,6 +102,9 @@ void SettingsHandler::applySettings()
 }
 
 
+/**
+ * @brief Reads settings file and display them in GUI
+ */
 void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
@@ -168,6 +179,9 @@ void SettingsHandler::displaySettings()
 }
 
 
+/**
+ * @brief Grabs current user entered settings and saves them to file.
+ */
 void SettingsHandler::saveSettings()
 {
     qDebug() << "Save Settings";
@@ -228,6 +242,10 @@ void SettingsHandler::saveSettings()
 }
 
 
+/**
+ * @brief Gets the current instance of settings for other programs to grab from.
+ * @return Qsettings pointer
+ */
 QSettings* SettingsHandler::getSettings()
 {
     return settings;
