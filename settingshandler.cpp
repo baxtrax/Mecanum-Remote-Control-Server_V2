@@ -171,29 +171,62 @@ void SettingsHandler::displaySettings()
 void SettingsHandler::saveSettings()
 {
     qDebug() << "Save Settings";
-    settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText->text());
+    settings->setValue(
+        SettingsConstants::CONN_CAM_ADDRESS,
+        conn_CamAddressText->text());
 
-    settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText->text());
-    settings->setValue(SettingsConstants::CONN_CAM_EN, conn_CamEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::CONN_CAM_PORT,
+        conn_CamPortText->text());
+    settings->setValue(
+        SettingsConstants::CONN_CAM_EN,
+        conn_CamEnButton->isChecked());
 
-    settings->setValue(SettingsConstants::CONN_SOCK_ADDRESS, conn_CommAddressText->text());
-    settings->setValue(SettingsConstants::CONN_SOCK_PORT, conn_CommPortText->text());
-    settings->setValue(SettingsConstants::CONN_SOCK_EN, conn_CommEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::CONN_SOCK_ADDRESS,
+        conn_CommAddressText->text());
+    settings->setValue(
+        SettingsConstants::CONN_SOCK_PORT,
+        conn_CommPortText->text());
+    settings->setValue(
+        SettingsConstants::CONN_SOCK_EN,
+        conn_CommEnButton->isChecked());
 
-    settings->setValue(SettingsConstants::GRAPH_PERF_EN, graph_PerformEnButton->isChecked());
-    settings->setValue(SettingsConstants::GRAPH_PERF_QUAL, graph_PerformQualCombo->currentIndex());
-    settings->setValue(SettingsConstants::GRAPH_PERF_POINTS, graph_PerformPointsSlider->value());
+    settings->setValue(
+        SettingsConstants::GRAPH_PERF_EN,
+        graph_PerformEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::GRAPH_PERF_QUAL,
+        graph_PerformQualCombo->currentIndex());
+    settings->setValue(
+        SettingsConstants::GRAPH_PERF_POINTS,
+        graph_PerformPointsSlider->value());
 
-    settings->setValue(SettingsConstants::RENDER_PERF_FPS_EN, render_PerformFPSLimEnButton->isChecked());
-    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, render_PerformQualCombo->currentIndex());
-    settings->setValue(SettingsConstants::RENDER_PERF_FPS_LIM, render_PerformFPSSlider->value());
+    settings->setValue(
+        SettingsConstants::RENDER_PERF_FPS_EN,
+        render_PerformFPSLimEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::RENDER_PERF_QUAL,
+        render_PerformQualCombo->currentIndex());
+    settings->setValue(
+        SettingsConstants::RENDER_PERF_FPS_LIM,
+        render_PerformFPSSlider->value());
 
-    settings->setValue(SettingsConstants::RENDER_VIEW_EN, render_ViewEnButton->isChecked());
-    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, render_ViewCountEnButton->isChecked());
-    settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, render_ViewDebugEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::RENDER_VIEW_EN,
+        render_ViewEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::RENDER_VIEW_COUNT_EN,
+        render_ViewCountEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::RENDER_VIEW_DEBUG_EN,
+        render_ViewDebugEnButton->isChecked());
 
-    settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, appear_ThemeDarkEnButton->isChecked());
+    settings->setValue(
+        SettingsConstants::APPEAR_THEME_DARK_EN,
+        appear_ThemeDarkEnButton->isChecked());
 }
+
 
 QSettings* SettingsHandler::getSettings()
 {
