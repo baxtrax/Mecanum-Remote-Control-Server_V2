@@ -54,25 +54,25 @@ void SettingsHandler::resetSettings()
 {
     qDebug() << "Reset Settings";
     settings->value(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123");
-    settings->value("connection/camera/port", "12345");
-    settings->value("connection/camera/en", false);
+    settings->value(SettingsConstants::CONN_CAM_PORT, "12345");
+    settings->value(SettingsConstants::CONN_CAM_EN, false);
 
-    settings->value("connection/socket/address", "123.123.123.123");
-    settings->value("connection/socket/port", "12345");
-    settings->value("connection/socket/en", false);
+    settings->value(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123");
+    settings->value(SettingsConstants::CONN_SOCK_PORT, "12345");
+    settings->value(SettingsConstants::CONN_SOCK_EN, false);
 
-    settings->value("graph/performance/en", false);
-    settings->value("graph/performance/qual", 0);
-    settings->value("graph/performance/points", 15);
+    settings->value(SettingsConstants::GRAPH_PERF_EN, false);
+    settings->value(SettingsConstants::GRAPH_PERF_QUAL, 0);
+    settings->value(SettingsConstants::GRAPH_PERF_POINTS, 15);
 
-    settings->value("render/performance/FPS_en", false);
-    settings->value("render/performance/qual", 0);
-    settings->value("render/performance/FPS_lim", 0);
+    settings->value(SettingsConstants::RENDER_PERF_FPS_EN, false);
+    settings->value(SettingsConstants::RENDER_PERF_QUAL, 0);
+    settings->value(SettingsConstants::RENDER_PERF_FPS_LIM, 0);
 
-    settings->value("render/view/en", false);
-    settings->value("render/view/count_en", false);
-    settings->value("render/view/debug_en", false);
-    settings->value("appear/theme/dark_en", false);
+    settings->value(SettingsConstants::RENDER_VIEW_EN, false);
+    settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false);
+    settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false);
+    settings->value(SettingsConstants::APPEAR_THEME_DARK_EN, false);
     displaySettings();
 
 }
@@ -88,25 +88,25 @@ void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
     conn_CamAddressText->setText(settings->value(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123").toString());
-    conn_CamPortText->setText(settings->value("connection/camera/port", "12345").toString());
-    conn_CamEnButton->setChecked(settings->value("connection/camera/en", false).toBool());
+    conn_CamPortText->setText(settings->value(SettingsConstants::CONN_CAM_PORT, "12345").toString());
+    conn_CamEnButton->setChecked(settings->value(SettingsConstants::CONN_CAM_EN, false).toBool());
 
-    conn_CommAddressText->setText(settings->value("connection/socket/address", "123.123.123.123").toString());
-    conn_CommPortText->setText(settings->value("connection/socket/port", "12345").toString());
-    conn_CommEnButton->setChecked(settings->value("connection/socket/en", false).toBool());
+    conn_CommAddressText->setText(settings->value(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123").toString());
+    conn_CommPortText->setText(settings->value(SettingsConstants::CONN_SOCK_PORT, "12345").toString());
+    conn_CommEnButton->setChecked(settings->value(SettingsConstants::CONN_SOCK_EN, false).toBool());
 
-    graph_PerformEnButton->setChecked(settings->value("graph/performance/en", false).toBool());
-    graph_PerformQualCombo->setCurrentIndex(settings->value("graph/performance/qual", 0).toInt());
-    graph_PerformPointsSlider->setValue(settings->value("graph/performance/points", 15).toInt());
+    graph_PerformEnButton->setChecked(settings->value(SettingsConstants::GRAPH_PERF_EN, false).toBool());
+    graph_PerformQualCombo->setCurrentIndex(settings->value(SettingsConstants::GRAPH_PERF_QUAL, 0).toInt());
+    graph_PerformPointsSlider->setValue(settings->value(SettingsConstants::GRAPH_PERF_POINTS, 15).toInt());
 
-    render_PerformFPSLimEnButton->setChecked(settings->value("render/performance/FPS_en", false).toBool());
-    render_PerformQualCombo->setCurrentIndex(settings->value("render/performance/qual", 0).toInt());
-    render_PerformFPSSlider->setValue(settings->value("render/performance/FPS_lim", 0).toInt());
+    render_PerformFPSLimEnButton->setChecked(settings->value(SettingsConstants::RENDER_PERF_FPS_EN, false).toBool());
+    render_PerformQualCombo->setCurrentIndex(settings->value(SettingsConstants::RENDER_PERF_QUAL, 0).toInt());
+    render_PerformFPSSlider->setValue(settings->value(SettingsConstants::RENDER_PERF_FPS_LIM, 0).toInt());
 
-    render_ViewEnButton->setChecked(settings->value("render/view/en", false).toBool());
-    render_ViewCountEnButton->setChecked(settings->value("render/view/count_en", false).toBool());
-    render_ViewDebugEnButton->setChecked(settings->value("render/view/debug_en", false).toBool());
-    appear_ThemeDarkEnButton->setChecked(settings->value("appear/theme/dark_en", false).toBool());
+    render_ViewEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_EN, false).toBool());
+    render_ViewCountEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false).toBool());
+    render_ViewDebugEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool());
+    appear_ThemeDarkEnButton->setChecked(settings->value(SettingsConstants::APPEAR_THEME_DARK_EN, false).toBool());
 }
 
 void SettingsHandler::saveSettings()
@@ -114,26 +114,26 @@ void SettingsHandler::saveSettings()
     qDebug() << "Save Settings";
     settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText->text());
 
-    settings->setValue("connection/camera/port", conn_CamPortText->text());
-    settings->setValue("connection/camera/en", conn_CamEnButton->isChecked());
+    settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText->text());
+    settings->setValue(SettingsConstants::CONN_CAM_EN, conn_CamEnButton->isChecked());
 
-    settings->setValue("connection/socket/address", conn_CommAddressText->text());
-    settings->setValue("connection/socket/port", conn_CommPortText->text());
-    settings->setValue("connection/socket/en", conn_CommEnButton->isChecked());
+    settings->setValue(SettingsConstants::CONN_SOCK_ADDRESS, conn_CommAddressText->text());
+    settings->setValue(SettingsConstants::CONN_SOCK_PORT, conn_CommPortText->text());
+    settings->setValue(SettingsConstants::CONN_SOCK_EN, conn_CommEnButton->isChecked());
 
-    settings->setValue("graph/performance/en", graph_PerformEnButton->isChecked());
-    settings->setValue("graph/performance/qual", graph_PerformQualCombo->currentIndex());
-    settings->setValue("graph/performance/points", graph_PerformPointsSlider->value());
+    settings->setValue(SettingsConstants::GRAPH_PERF_EN, graph_PerformEnButton->isChecked());
+    settings->setValue(SettingsConstants::GRAPH_PERF_QUAL, graph_PerformQualCombo->currentIndex());
+    settings->setValue(SettingsConstants::GRAPH_PERF_POINTS, graph_PerformPointsSlider->value());
 
-    settings->setValue("render/performance/FPS_en", render_PerformFPSLimEnButton->isChecked());
-    settings->setValue("render/performance/qual", render_PerformQualCombo->currentIndex());
-    settings->setValue("render/performance/FPS_lim", render_PerformFPSSlider->value());
+    settings->setValue(SettingsConstants::RENDER_PERF_FPS_EN, render_PerformFPSLimEnButton->isChecked());
+    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, render_PerformQualCombo->currentIndex());
+    settings->setValue(SettingsConstants::RENDER_PERF_FPS_LIM, render_PerformFPSSlider->value());
 
-    settings->setValue("render/view/en", render_ViewEnButton->isChecked());
-    settings->setValue("render/view/count_en", render_ViewCountEnButton->isChecked());
-    settings->setValue("render/view/debug_en", render_ViewDebugEnButton->isChecked());
+    settings->setValue(SettingsConstants::RENDER_VIEW_EN, render_ViewEnButton->isChecked());
+    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, render_ViewCountEnButton->isChecked());
+    settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, render_ViewDebugEnButton->isChecked());
 
-    settings->setValue("appear/theme/dark_en", appear_ThemeDarkEnButton->isChecked());
+    settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, appear_ThemeDarkEnButton->isChecked());
 }
 
 QSettings* SettingsHandler::getSettings()

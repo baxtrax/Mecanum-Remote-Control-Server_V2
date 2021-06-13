@@ -47,13 +47,6 @@ namespace SettingsConstants {
     inline constexpr auto RENDER_VIEW_DEBUG_EN = "render/view/debug_en";
 
     inline constexpr auto APPEAR_THEME_DARK_EN = "appear/theme/dark_en";
-
-
-
-
-
-
-
 }
 
 namespace LoggerConstants {
