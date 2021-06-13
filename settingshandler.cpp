@@ -25,18 +25,23 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
     conn_CamAddressText = conn_CamAddressTextRef;
     conn_CamPortText = conn_CamPortTextRef;
     conn_CamEnButton = conn_CamEnButtonRef;
+
     conn_CommAddressText = conn_CommAddressTextRef;
     conn_CommPortText = conn_CommPortTextRef;
     conn_CommEnButton = conn_CommEnButtonRef;
+
     graph_PerformEnButton = graph_PerformEnButtonRef;
     graph_PerformQualCombo = graph_PerformQualComboRef;
     graph_PerformPointsSlider = graph_PerformPointsSliderRef;
+
     render_PerformFPSLimEnButton = render_PerformFPSLimEnButtonRef;
     render_PerformQualCombo = render_PerformQualComboRef;
     render_PerformFPSSlider = render_PerformFPSSliderRef;
+
     render_ViewEnButton = render_ViewEnButtonRef;
     render_ViewCountEnButton = render_ViewCountEnButtonRef;
     render_ViewDebugEnButton = render_ViewDebugEnButtonRef;
+
     appear_ThemeDarkEnButton = appear_ThemeDarkEnButtonRef;
 
     initSettings();
