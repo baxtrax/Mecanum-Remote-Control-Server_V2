@@ -20,6 +20,7 @@ LoggerHandler *loggerHandler;
 SimulationHandler *simulationHandler;
 SettingsHandler *settingsHandler;
 
+// Constructor
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -77,7 +78,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Add 3D widget
     ui->render_placeholder->setStyleSheet(NULL);
-    ui->simulation_Frame->layout()->replaceWidget(ui->render_placeholder, simulationHandler->getWidget());
+    ui->simulation_Frame->layout()
+        ->replaceWidget(ui->render_placeholder,
+                        simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
     ui->DebugInfoFrame->setVisible(false);
 
@@ -98,27 +101,21 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         {
         case Qt::Key_W:
             emit keyboard_WChanged(true);
-            //qDebug() << "Keyboard W" << true;
             break;
         case Qt::Key_S:
             emit keyboard_SChanged(true);
-            //qDebug() << "Keyboard S" << true;
             break;
         case Qt::Key_A:
             emit keyboard_AChanged(true);
-            //qDebug() << "Keyboard A" << true;
             break;
         case Qt::Key_D:
             emit keyboard_DChanged(true);
-            //qDebug() << "Keyboard D" << true;
             break;
         case Qt::Key_Q:
             emit keyboard_QChanged(true);
-            //qDebug() << "Keyboard Q" << true;
             break;
         case Qt::Key_E:
             emit keyboard_EChanged(true);
-            //qDebug() << "Keyboard E" << true;
             break;
         }
     }
@@ -137,34 +134,26 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
         {
         case Qt::Key_W:
             emit keyboard_WChanged(false);
-            //qDebug() << "Keyboard W" << false;
             break;
         case Qt::Key_S:
             emit keyboard_SChanged(false);
-            //qDebug() << "Keyboard S" << false;
             break;
         case Qt::Key_A:
             emit keyboard_AChanged(false);
-            //qDebug() << "Keyboard A" << false;
             break;
         case Qt::Key_D:
             emit keyboard_DChanged(false);
-            //qDebug() << "Keyboard D" << false;
             break;
         case Qt::Key_Q:
             emit keyboard_QChanged(false);
-            //qDebug() << "Keyboard Q" << false;
             break;
         case Qt::Key_E:
             emit keyboard_EChanged(false);
-            //qDebug() << "Keyboard E" << true;
             break;
         }
     }
 }
 
-//TODO connect inputHandler inputsChanged tp kinematicsHandler updateSpeed
-//update speeds emit speedsChanged(fl/br, fr/bl)
 
 /**
  * @brief Configures connections of slots and signals of a MainWindow object
@@ -224,6 +213,8 @@ void MainWindow::configureConnections()
             simulationHandler,
             SLOT(updateAnimators(double,double,double,double)));
 
+    // Quick settings connections
+    // TODO move these into the settings handler
     connect(ui->settings_ResetButton,
             SIGNAL(clicked()),
             settingsHandler,
@@ -236,12 +227,10 @@ void MainWindow::configureConnections()
             SIGNAL(clicked()),
             settingsHandler,
             SLOT(displaySettings()));
-    //TODO check captured pointers (possible memory leak?) Could be entirely wrong.
     connect(ui->graph_PerformPointsSlider,
             &QSlider::valueChanged,
             this,
             [this](int value) { ui->graph_PerformPointsText->setNum(value); });
-
     connect(ui->render_PerformFPSSlider,
             &QSlider::valueChanged,
             this,
@@ -267,17 +256,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
+// TODO deal with focus and disabling input to robot while other pages
+// are open
 void MainWindow::on_home_toolButton_clicked()
 {
     ui->Application_Stack->setCurrentIndex(0);
     ui->home_toolButton->setChecked(true);
     ui->settings_toolButton->setChecked(false);
     ui->info_toolButton->setChecked(false);
-    //Disable focus on other pages by setting focus and also disabling
-    //input handler
-    //this->setFocus(ui->)
-
 }
 
 void MainWindow::on_settings_toolButton_clicked()

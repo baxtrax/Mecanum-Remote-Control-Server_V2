@@ -46,6 +46,8 @@ SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
 
     initSettings();
 }
+
+
 /**
  * @brief Used to initilize settings
  */
@@ -54,6 +56,7 @@ void SettingsHandler::initSettings()
     displaySettings();
     emit settingsUpdated();
 }
+
 
 void SettingsHandler::resetSettings()
 {
@@ -82,6 +85,7 @@ void SettingsHandler::resetSettings()
 
 }
 
+
 void SettingsHandler::applySettings()
 {
     qDebug() << "Apply Settings";
@@ -89,30 +93,80 @@ void SettingsHandler::applySettings()
     emit settingsUpdated();
 }
 
+
 void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
-    conn_CamAddressText->setText(settings->value(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123").toString());
-    conn_CamPortText->setText(settings->value(SettingsConstants::CONN_CAM_PORT, "12345").toString());
-    conn_CamEnButton->setChecked(settings->value(SettingsConstants::CONN_CAM_EN, false).toBool());
+    conn_CamAddressText->setText(
+        settings->value(
+                    SettingsConstants::CONN_CAM_ADDRESS,
+                    "123.123.123.123").toString());
+    conn_CamPortText->setText(
+        settings->value(
+                    SettingsConstants::CONN_CAM_PORT,
+                    "12345").toString());
+    conn_CamEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::CONN_CAM_EN,
+                    false).toBool());
 
-    conn_CommAddressText->setText(settings->value(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123").toString());
-    conn_CommPortText->setText(settings->value(SettingsConstants::CONN_SOCK_PORT, "12345").toString());
-    conn_CommEnButton->setChecked(settings->value(SettingsConstants::CONN_SOCK_EN, false).toBool());
+    conn_CommAddressText->setText(
+        settings->value(
+                    SettingsConstants::CONN_SOCK_ADDRESS,
+                    "123.123.123.123").toString());
+    conn_CommPortText->setText(
+        settings->value(
+                    SettingsConstants::CONN_SOCK_PORT,
+                    "12345").toString());
+    conn_CommEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::CONN_SOCK_EN,
+                    false).toBool());
 
-    graph_PerformEnButton->setChecked(settings->value(SettingsConstants::GRAPH_PERF_EN, false).toBool());
-    graph_PerformQualCombo->setCurrentIndex(settings->value(SettingsConstants::GRAPH_PERF_QUAL, 0).toInt());
-    graph_PerformPointsSlider->setValue(settings->value(SettingsConstants::GRAPH_PERF_POINTS, 15).toInt());
+    graph_PerformEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::GRAPH_PERF_EN,
+                    false).toBool());
+    graph_PerformQualCombo->setCurrentIndex(
+        settings->value(
+                    SettingsConstants::GRAPH_PERF_QUAL,
+                    0).toInt());
+    graph_PerformPointsSlider->setValue(
+        settings->value(
+                    SettingsConstants::GRAPH_PERF_POINTS,
+                    15).toInt());
 
-    render_PerformFPSLimEnButton->setChecked(settings->value(SettingsConstants::RENDER_PERF_FPS_EN, false).toBool());
-    render_PerformQualCombo->setCurrentIndex(settings->value(SettingsConstants::RENDER_PERF_QUAL, 0).toInt());
-    render_PerformFPSSlider->setValue(settings->value(SettingsConstants::RENDER_PERF_FPS_LIM, 0).toInt());
+    render_PerformFPSLimEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::RENDER_PERF_FPS_EN,
+                    false).toBool());
+    render_PerformQualCombo->setCurrentIndex(
+        settings->value(
+                    SettingsConstants::RENDER_PERF_QUAL,
+                    0).toInt());
+    render_PerformFPSSlider->setValue(
+        settings->value(
+                    SettingsConstants::RENDER_PERF_FPS_LIM,
+                    0).toInt());
 
-    render_ViewEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_EN, false).toBool());
-    render_ViewCountEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false).toBool());
-    render_ViewDebugEnButton->setChecked(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool());
-    appear_ThemeDarkEnButton->setChecked(settings->value(SettingsConstants::APPEAR_THEME_DARK_EN, false).toBool());
+    render_ViewEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::RENDER_VIEW_EN,
+                    false).toBool());
+    render_ViewCountEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::RENDER_VIEW_COUNT_EN,
+                    false).toBool());
+    render_ViewDebugEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                    false).toBool());
+    appear_ThemeDarkEnButton->setChecked(
+        settings->value(
+                    SettingsConstants::APPEAR_THEME_DARK_EN,
+                    false).toBool());
 }
+
 
 void SettingsHandler::saveSettings()
 {

@@ -1,5 +1,6 @@
 #include "loggerhandler.h"
 
+// Constructor
 LoggerHandler::LoggerHandler(QTextEdit *logTextEditRef)
 {
     logTextEdit = logTextEditRef;
@@ -100,8 +101,6 @@ void LoggerHandler::clear()
 
 
 // Setters
-
-// TODO add input validation
 /**
  * @brief Sets level of logging for sending messages to logger output.
  * @param int level as a constant from LoggerConstants choices.
@@ -133,7 +132,6 @@ void LoggerHandler::enableColorify(bool status)
 
 
 // Getters
-
 /**
  * @brief Gets the current level for messages that are sent without a level
  * descriptor.

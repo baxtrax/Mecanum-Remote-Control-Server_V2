@@ -1,5 +1,6 @@
 #include "inputhandler.h"
 
+// Constructor
 InputHandler::InputHandler(QSlider *x_topSliderRef,
                            QSlider *x_botSliderRef,
                            QSlider *y_topSliderRef,
@@ -34,7 +35,6 @@ InputHandler::InputHandler(QSlider *x_topSliderRef,
  */
 void InputHandler::updateSliders()
 {
-    //qDebug() << "Inputs changed" << x << y << z;
     emit inputsChanged(x, y, z);
     setXSlider(x);
     setYSlider(y);
@@ -42,7 +42,7 @@ void InputHandler::updateSliders()
 }
 
 
-//Setters
+// Setters
 /**
  * @brief Sets value of x slider scaled to fit.
  * @param double value between IOConstants::MIN and IOConstants::MAX
@@ -245,6 +245,7 @@ void InputHandler::setX(double value)
     updateSliders();
 }
 
+
 /**
  * @brief Sets current y value and clamps x between min and max
  * @return double y value
@@ -254,6 +255,7 @@ void InputHandler::setY(double value)
     y = std::clamp((value), IOConstants::MIN, IOConstants::MAX);
     updateSliders();
 }
+
 
 /**
  * @brief Sets current z value and clamps x between min and max
@@ -266,7 +268,7 @@ void InputHandler::setZ(double value)
 }
 
 
-//Getters
+// Getters
 /**
  * @brief Gets current x value
  * @return double x value

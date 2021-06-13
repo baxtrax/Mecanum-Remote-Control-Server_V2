@@ -1,5 +1,6 @@
 #include "kinematicshandler.h"
 
+// Constructor
 KinematicsHandler::KinematicsHandler()
 {
     for (int i=0; i < 4; i++) {
@@ -19,8 +20,10 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
 {
     double dir = calculateDirection(x, y);
     double mag = calculateMagnitude(x, y);
+
     // Truncate floating points to get rid of unessary points of uncertainty
-    // This is done because they are compared later in the program.
+    // This is done because they are compared later in the program, and helps
+    // avoid floating point rounding errors by dropping them.
     speeds[0] = (double) // FR
         ((int)(calculateFRSpeed(dir, mag, z)*100000)/100000.0);
     speeds[1] = (double) // BL
@@ -29,10 +32,6 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
         ((int)(-calculateFLSpeed(dir, mag, z)*100000)/100000.0);
     speeds[3] = (double) // BR
         ((int)(calculateBRSpeed(dir, mag, z)*100000)/100000.0);
-
-//    qDebug() << "B" << "FR:" << speeds[0] << "BL:" << speeds[1]
-//             << "FL:" << speeds[2] << "BR:" << speeds[3]
-//             << "Dir:" << dir << "Mag:" << mag << "Z:" << z;
 
     double scaleFactor = 0.0;
 
@@ -50,9 +49,6 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
         }
     }
 
-//    qDebug() << "A" << "FRBL:" << FRBLSpeed << "FLBR:" << FLBRSpeed
-//             << "Dir:" << dir << "Mag:" << mag << "Z:" << z;
-
     emit speedsChanged(speeds[0], speeds[1], speeds[2], speeds[3]);
     emit functionChanged(dir, mag, z, scaleFactor);
 }
@@ -68,8 +64,7 @@ void KinematicsHandler::updateSpeeds(double x, double y, double z)
 double KinematicsHandler::calculateMagnitude(double x, double y)
 {
     return (std::clamp(
-        ((double)sqrt(
-            pow(y, 2) +pow(x, 2))),
+        ((double)sqrt(pow(y, 2) + pow(x, 2))),
         IOConstants::MIN,
         IOConstants::MAX));
 }
@@ -88,59 +83,70 @@ double KinematicsHandler::calculateDirection(double x, double y)
 }
 
 
+// Below are the core equations of the kinematics, understanding the math
+// behind them can greatly help anyone understand how speeds values are
+// calculated in a mechanum based system. Implementing z is a little confusing
+// and might be hard to understand when first being looked at.
+
 /**
- * @brief Calculates the moving speed of the Front Right speeds and Back Left
- * speeds. Turns out the kinematics of the FR and BL speeds are the same.
+ * @brief Calculates the moving speed of the Front Right.
  * @param double direction of force.
  * @param double magnitude of force (how fast).
- * @param double z coordinate of input.
- * @return double speed of Front Right and Back Left.
+ * @param double z coordinate of input (rotation around the center).
+ * @return double speed of Front Right
  */
 double KinematicsHandler::calculateFRSpeed(double direction,
-                                             double magnitude,
-                                             double z)
+                                           double magnitude,
+                                           double z)
 {
-    return(
-        (((double)sin(direction - (1.0/4.0*MathConstants::PI)))
-        * magnitude)
-        + z);
-}
-
-double KinematicsHandler::calculateBLSpeed(double direction,
-                                             double magnitude,
-                                             double z)
-{
-    return(
-        (((double)-sin(direction - (1.0/4.0*MathConstants::PI)))
-         * magnitude)
-        + z);
+    return((((double)sin(direction - (1.0/4.0*MathConstants::PI)))
+             * magnitude) + z);
 }
 
 
 /**
- * @brief Calculates the moving speed of the Front Left speeds and Back Right
- * speeds. Turns out the kinematics of the FL and BR speeds are the same.
+ * @brief Calculates the moving speed of the Back Left.
  * @param double direction of force.
  * @param double magnitude of force (how fast).
  * @param double z coordinate of input.
- * @return double speed of Front Left and Back Right.
+ * @return double speed of Back Left.
+ */
+double KinematicsHandler::calculateBLSpeed(double direction,
+                                           double magnitude,
+                                           double z)
+{
+    return((((double)-sin(direction - (1.0/4.0*MathConstants::PI)))
+             * magnitude) + z);
+}
+
+
+/**
+ * @brief Calculates the moving speed of the Front Left.
+ * @param double direction of force.
+ * @param double magnitude of force (how fast).
+ * @param double z coordinate of input.
+ * @return double speed of Front Left
  */
 double KinematicsHandler::calculateFLSpeed(double direction,
                                              double magnitude,
                                              double z)
 {
-    return(
-        (((double)-sin(direction + (1.0/4.0*MathConstants::PI)))
-        * magnitude)
-        + z);
+    return((((double)-sin(direction + (1.0/4.0*MathConstants::PI)))
+             * magnitude) + z);
 }
 
+
+/**
+ * @brief Calculates the moving speed of the Back Right.
+ * @param double direction of force.
+ * @param double magnitude of force (how fast).
+ * @param double z coordinate of input.
+ * @return double speed of Back Right.
+ */
 double KinematicsHandler::calculateBRSpeed(double direction,
                                              double magnitude,
                                              double z)
 {
-    return(
-        (((double)sin(direction + (1.0/4.0*MathConstants::PI)))
-         * magnitude)
-        + z);
+    return((((double)sin(direction + (1.0/4.0*MathConstants::PI)))
+             * magnitude) + z);
 }

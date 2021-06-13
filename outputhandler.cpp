@@ -1,5 +1,7 @@
 #include "outputhandler.h"
 
+
+// Constructor
 OutputHandler::OutputHandler(QSlider *FR_topSliderRef,
                              QSlider *FR_botSliderRef,
                              QSlider *BL_topSliderRef,
@@ -22,19 +24,25 @@ OutputHandler::OutputHandler(QSlider *FR_topSliderRef,
     FL_botSlider = FL_botSliderRef;
     BR_topSlider = BR_topSliderRef;
     BR_botSlider = BR_botSliderRef;
+
     detailLevel = SettingsConstants::ADVANCED_INFO;
+
     axisX = new QtCharts::QCategoryAxis();
     axisY = new QtCharts::QCategoryAxis();
+
     FRSeries = new QtCharts::QLineSeries();
     BLSeries = new QtCharts::QLineSeries();
     FLSeries = new QtCharts::QLineSeries();
     BRSeries = new QtCharts::QLineSeries();
     dirSeries = new QtCharts::QLineSeries();
+
     chart = new QtCharts::QChart();
+
     configurePenBrushFont();
     configureAxis();
     configureSeries();
     configureChart();
+
     updateChart(0,0,0,0);
 }
 
@@ -52,7 +60,7 @@ void OutputHandler::configurePenBrushFont()
     axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
 
     // TODO setup a way to grab gradient from somwhere without having to
-    // generate a new one every time
+    // generate a new one every time (may happen during light mode rewrite)
     QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
     lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
@@ -93,6 +101,8 @@ void OutputHandler::configureAxis()
     axisY->append("1.00 ", IOConstants::MAX);
     axisY->setLabelsPosition(QtCharts::
                                  QCategoryAxis::AxisLabelsPositionOnValue);
+
+    // TODO get rid of magic numbers
     // + and - are padding around max numbers shown
     axisY->setRange(IOConstants::MIN-0.1, IOConstants::MAX+0.1);
     axisX->setRange(IOConstants::MIN_XCHART-0.3, IOConstants::MAX_XCHART+0.3);
@@ -120,14 +130,17 @@ void OutputHandler::configureSeries()
 void OutputHandler::configureChart()
 {
     configureAxis();
+
     // Adding details
     chart->legend()->hide();
     chart->addAxis(axisY, Qt::AlignLeft);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->setBackgroundVisible(false);
+
     // Removing unneeded space around chart
     chart->setMargins(QMargins(0, 0, 0, -20)); //-20 removes unnessary x-axis
     chart->setBackgroundRoundness(0);
+
     chartView->setChart(chart);
     chartView->setStyleSheet(NULL);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -149,6 +162,8 @@ void OutputHandler::configureChart()
 }
 
 
+// TODO revamp algorithm to grab critical points instead of set points. Will
+// give a better looking graph with less points
 /**
  * @brief Generates a set number of data points of a modified sine function. The
  * modified sine function is the basis of the kinematics for a mechanum drive
@@ -163,7 +178,14 @@ void OutputHandler::configureChart()
  * @param double value that is used for normalization.
  * @return double array of pointers pointing to data points.
  */
-double** OutputHandler::generateSinePointsKinematics(int numberOfPoints, double cycles, double amp, double yOffset, double xOffset, double mag, double z, double scale) {
+double** OutputHandler::generateSinePointsKinematics(int numberOfPoints,
+                                                     double cycles,
+                                                     double amp,
+                                                     double yOffset,
+                                                     double xOffset,
+                                                     double mag,
+                                                     double z,
+                                                     double scale) {
     double y = 0.0;
     double f = cycles/double(numberOfPoints-1);
     double** arr = new double*[numberOfPoints];
@@ -171,11 +193,14 @@ double** OutputHandler::generateSinePointsKinematics(int numberOfPoints, double 
         arr[i] = new double[2];
     }
 
-    for (int t=0; t<(numberOfPoints); t++) {
-        //y = (roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset) + yOffset) * mag) + z)/scale) * 100000) / 100000.0);
-        y = std::clamp((roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset) + yOffset) * mag) + z)/scale) * 100000) / 100000.0), IOConstants::MIN, IOConstants::MAX);
-        arr[(t)][0] = t+1;
-        arr[(t)][1] = y;
+    for (int t = 0; t < (numberOfPoints); t++) {
+        y = std::clamp((roundf(((((amp * sin (2 * 3.14159 * f * t + xOffset)
+                                   + yOffset) * mag) + z)/scale) * 100000)
+                                   / 100000.0),
+                       IOConstants::MIN,
+                       IOConstants::MAX);
+        arr[t][0] = t + 1;
+        arr[t][1] = y;
     }
     return arr;
 }
@@ -185,7 +210,10 @@ double** OutputHandler::generateSinePointsKinematics(int numberOfPoints, double 
  * @brief Updates sliders on GUI to repersent FR/BL and FL/BR values. Function
  * is called any time a kinematics value is updated or changed.
  */
-void OutputHandler::updateSliders(double FRSpeed, double BLSpeed, double FLSpeed, double BRSpeed)
+void OutputHandler::updateSliders(double FRSpeed,
+                                  double BLSpeed,
+                                  double FLSpeed,
+                                  double BRSpeed)
 {
     setFRSlider(FRSpeed);
     setBLSlider(BLSpeed);
@@ -371,6 +399,12 @@ void OutputHandler::updateChart(double dir,
     }
 }
 
+
+/**
+ * @brief Adds speed points to their respective series
+ * @param double array of speeds
+ * @param int ammount of data points
+ */
 void OutputHandler::plotArray(double** arr, int graphNum) {
     double x, y;
     for (int i=0; i<IOConstants::MAX_XCHART; i++) {
@@ -381,7 +415,6 @@ void OutputHandler::plotArray(double** arr, int graphNum) {
                 y = arr[i][j];
             }
         }
-        //qDebug() << x << y << graphNum;
         switch(graphNum) {
             case 0: FRSeries->append(x, y); break;
             case 1: BLSeries->append(x, y); break;
@@ -405,8 +438,6 @@ int OutputHandler::getCurrentDetailLevel()
 
 
 // Setters
-
-// TODO Add wrong input checking
 /**
  * @brief Sets level of detail for graphing points of the kinematics.
  * @param int level as a constant from SettingsConstants choices.
@@ -418,7 +449,7 @@ void OutputHandler::setDetailLevel(int level)
 
 
 /**
- * @brief Sets value of FRBL slider scaled to fit.
+ * @brief Sets value of FR slider scaled to fit.
  * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
 void OutputHandler::setFRSlider(double value)
@@ -446,7 +477,7 @@ void OutputHandler::setFRSlider(double value)
 
 
 /**
- * @brief Sets value of FRBL slider scaled to fit.
+ * @brief Sets value of BL slider scaled to fit.
  * @param double value between IOConstants::MIN and IOConstants::MAX.
  */
 void OutputHandler::setBLSlider(double value)
