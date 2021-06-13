@@ -21,28 +21,28 @@ namespace IOConstants {
 
 namespace SettingsConstants {
     inline constexpr int DISABLED_INFO = 0; // Generates a straight line
-    inline constexpr int BASIC_INFO = 1;    // Mag and scale - 2 speed lines
+    inline constexpr int BASIC_INFO    = 1; // Mag and scale - 2 speed lines
     inline constexpr int DETAILED_INFO = 2; // Mag scale and z - 2 speed lines
     inline constexpr int ADVANCED_INFO = 3; // Mag scale and z - 4 speed lines
 
     //strings are not literal types so need to use char array
     inline constexpr auto CONN_CAM_ADDRESS = "connection/camera/address";
-    inline constexpr auto CONN_CAM_PORT = "connection/camera/port";
-    inline constexpr auto CONN_CAM_EN = "connection/camera/en";
+    inline constexpr auto CONN_CAM_PORT    = "connection/camera/port";
+    inline constexpr auto CONN_CAM_EN      = "connection/camera/en";
 
     inline constexpr auto CONN_SOCK_ADDRESS = "connection/socket/address";
-    inline constexpr auto CONN_SOCK_PORT = "connection/socket/port";
-    inline constexpr auto CONN_SOCK_EN = "connection/socket/en";
+    inline constexpr auto CONN_SOCK_PORT    = "connection/socket/port";
+    inline constexpr auto CONN_SOCK_EN      = "connection/socket/en";
 
-    inline constexpr auto GRAPH_PERF_EN = "graph/performance/en";
-    inline constexpr auto GRAPH_PERF_QUAL = "graph/performance/qual";
+    inline constexpr auto GRAPH_PERF_EN     = "graph/performance/en";
+    inline constexpr auto GRAPH_PERF_QUAL   = "graph/performance/qual";
     inline constexpr auto GRAPH_PERF_POINTS = "graph/performance/points";
 
-    inline constexpr auto RENDER_PERF_FPS_EN = "render/performance/FPS_en";
-    inline constexpr auto RENDER_PERF_QUAL = "render/performance/qual";
+    inline constexpr auto RENDER_PERF_FPS_EN  = "render/performance/FPS_en";
+    inline constexpr auto RENDER_PERF_QUAL    = "render/performance/qual";
     inline constexpr auto RENDER_PERF_FPS_LIM = "render/performance/FPS_lim";
 
-    inline constexpr auto RENDER_VIEW_EN = "render/view/en";
+    inline constexpr auto RENDER_VIEW_EN       = "render/view/en";
     inline constexpr auto RENDER_VIEW_COUNT_EN = "render/view/count_en";
     inline constexpr auto RENDER_VIEW_DEBUG_EN = "render/view/debug_en";
 
@@ -50,11 +50,11 @@ namespace SettingsConstants {
 }
 
 namespace LoggerConstants {
-    inline constexpr int DEBUG = 0;
-    inline constexpr int INFO = 1;
+    inline constexpr int DEBUG   = 0;
+    inline constexpr int INFO    = 1;
     inline constexpr int WARNING = 2;
-    inline constexpr int ERR = 3;
-    inline constexpr int FATAL = 4;
+    inline constexpr int ERR     = 3;
+    inline constexpr int FATAL   = 4;
 }
 
 namespace SimulationConstants {
