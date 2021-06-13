@@ -63,7 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
                                       ui->BR_botVSlider,
                                       ui->kinematicsGraphView,
                                       loggerHandler);
-    simulationHandler = new SimulationHandler(settingsHandler->getSettings());
+    simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
+                                              ui->DebugInfoFrame);
 
     configureConnections();
     loggerHandler->clear();
@@ -248,6 +249,10 @@ void MainWindow::configureConnections()
                     break;
                 }
             });
+    connect(settingsHandler,
+            SIGNAL(settingsUpdated()),
+            simulationHandler,
+            SLOT(updateWithSettings()));
 }
 
 //MainWindow deconstructor

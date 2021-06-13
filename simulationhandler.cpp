@@ -1,5 +1,6 @@
 #include "simulationhandler.h"
 
+// Coordinate system
 //           | y+
 //           |
 //  x+       |
@@ -9,9 +10,12 @@
 //        / z+
 //
 
-SimulationHandler::SimulationHandler(QSettings *settingsRef)
+// Constructor
+SimulationHandler::SimulationHandler(QSettings *settingsRef,
+                                     QFrame *debugInfoFrameRef)
 {
     settings = settingsRef;
+    debugInfoFrame = debugInfoFrameRef;
     setupGraph();
 
     FLcurrentRotation = FLWheelMesh->rotation();
@@ -62,16 +66,21 @@ SimulationHandler::SimulationHandler(QSettings *settingsRef)
     BRAnimation->setLoopCount(0);
 }
 
-QWidget* SimulationHandler::getWidget()
-{
-    return simulationWidget;
-}
-
+/**
+ * @brief Sends updates to all animations and to update the physical rotation
+ * speed.
+ * @param double FRSpeed
+ * @param double BLSpeed
+ * @param double FLSpeed
+ * @param double BRSpeed
+ */
 void SimulationHandler::updateAnimators(double FRSpeed,
                                         double BLSpeed,
                                         double FLSpeed,
                                         double BRSpeed)
 {
+    // TODO  fix small jitter when swapping inputs very quickly. Easy to see
+    // when using joystick.
     //100000 for slow, 1000 for fast
     FRmappedDuration =  linearMap(abs(FRSpeed), 0.0, 1.0,
                                  SimulationConstants::MIN_WHEEL_ROT_DURATION,
@@ -92,6 +101,11 @@ void SimulationHandler::updateAnimators(double FRSpeed,
     updateBRAnimation(BRSpeed);
 }
 
+
+/**
+ * @brief Updates the FR animator for the FR wheel
+ * @param double FRSpeed
+ */
 void SimulationHandler::updateFRAnimation(double FRSpeed) {
     if(FRSpeed == 0.0) {
         //Capture current rotation and set it as reset
@@ -108,6 +122,11 @@ void SimulationHandler::updateFRAnimation(double FRSpeed) {
     }
 }
 
+
+/**
+ * @brief Updates the BL animator for the BL wheel
+ * @param double BLSpeed
+ */
 void SimulationHandler::updateBLAnimation(double BLSpeed) {
     if(BLSpeed == 0.0) {
         //Capture current rotation and set it as reset
@@ -123,6 +142,12 @@ void SimulationHandler::updateBLAnimation(double BLSpeed) {
         BLAnimation->setLoopCount(-1);
     }
 }
+
+
+/**
+ * @brief Updates the FL animator for the FL wheel
+ * @param double FLSpeed
+ */
 void SimulationHandler::updateFLAnimation(double FLSpeed) {
     if(FLSpeed == 0.0) {
         //Capture current rotation and set it as reset
@@ -138,6 +163,12 @@ void SimulationHandler::updateFLAnimation(double FLSpeed) {
         FLAnimation->setLoopCount(-1);
     }
 }
+
+
+/**
+ * @brief Updates the BR animator for the BR wheel
+ * @param double BRSpeed
+ */
 void SimulationHandler::updateBRAnimation(double BRSpeed) {
     if(BRSpeed == 0.0) {
         //Capture current rotation and set it as reset
@@ -154,6 +185,10 @@ void SimulationHandler::updateBRAnimation(double BRSpeed) {
     }
 }
 
+
+/**
+ * @brief Sets up graph and customizes it.
+ */
 void SimulationHandler::setupGraph()
 {
     graph = new Q3DScatter();
@@ -193,11 +228,15 @@ void SimulationHandler::setupGraph()
             [](double value) { qDebug() << value; });
 
     simulationWidget = QWidget::createWindowContainer(graph);
-    simulationWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    simulationWidget->setSizePolicy(QSizePolicy::Expanding,
+                                    QSizePolicy::Expanding);
 
 }
 
 
+/**
+ * @brief Sets up 3D objects and meshes show in scene and customizes theme.
+ */
 void SimulationHandler::setup3DOjects()
 {
     QImage color = QImage(2.0, 2.0, QImage::Format_RGB32);
@@ -339,6 +378,10 @@ void SimulationHandler::setup3DOjects()
     graph->addCustomItem(RCyl);
 }
 
+
+/**
+ * @brief Sets up the FR animator for the FR wheel
+ */
 void SimulationHandler::setupFRAnimation() {
     FRAnimation = new QVariantAnimation();
     FRAnimation->setStartValue(QVariant(0.0));
@@ -348,6 +391,10 @@ void SimulationHandler::setupFRAnimation() {
     FRAnimation->start();
 }
 
+
+/**
+ * @brief Sets up the BL animator for the BL wheel
+ */
 void SimulationHandler::setupBLAnimation() {
     BLAnimation = new QVariantAnimation();
     BLAnimation->setStartValue(QVariant(0.0));
@@ -357,6 +404,10 @@ void SimulationHandler::setupBLAnimation() {
     BLAnimation->start();
 }
 
+
+/**
+ * @brief Sets up the FL animator for the FL wheel
+ */
 void SimulationHandler::setupFLAnimation() {
     FLAnimation = new QVariantAnimation();
     FLAnimation->setStartValue(QVariant(0.0));
@@ -366,6 +417,10 @@ void SimulationHandler::setupFLAnimation() {
     FLAnimation->start();
 }
 
+
+/**
+ * @brief Sets up the BR animator for the BR wheel
+ */
 void SimulationHandler::setupBRAnimation() {
     BRAnimation = new QVariantAnimation();
     BRAnimation->setStartValue(QVariant(0.0));
@@ -377,7 +432,15 @@ void SimulationHandler::setupBRAnimation() {
 
 void SimulationHandler::updateWithSettings()
 {
-    settings->
+    debugInfoFrame->setVisible(
+        settings->value(
+                    SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                    false).toBool());
+
 }
 
-
+// Getters
+QWidget* SimulationHandler::getWidget()
+{
+    return simulationWidget;
+}

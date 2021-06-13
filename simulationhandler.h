@@ -23,7 +23,7 @@ class SimulationHandler : public QObject
 {
     Q_OBJECT
 public:
-    SimulationHandler(QSettings *settingsRef);
+    SimulationHandler(QSettings *settingsRef, QFrame *debugInfoFrameRef);
     QWidget* getWidget();
 
 public slots:
@@ -33,6 +33,7 @@ public slots:
 
 private:
     QSettings *settings;
+    QFrame *debugInfoFrame;
     QWidget *simulationWidget;
     QScatter3DSeries *FLBRSeries;
     QScatter3DSeries *FRBLSeries;
