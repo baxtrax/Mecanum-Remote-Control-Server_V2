@@ -2,28 +2,11 @@
 
 
 // Constructor
-OutputHandler::OutputHandler(QSlider *FR_topSliderRef,
-                             QSlider *FR_botSliderRef,
-                             QSlider *BL_topSliderRef,
-                             QSlider *BL_botSliderRef,
-                             QSlider *FL_topSliderRef,
-                             QSlider *FL_botSliderRef,
-                             QSlider *BR_topSliderRef,
-                             QSlider *BR_botSliderRef,
-                             QtCharts::QChartView *chartViewRef,
+OutputHandler::OutputHandler(QtCharts::QChartView *chartViewRef,
                              LoggerHandler *loggerRef)
 {
     chartView = chartViewRef;
     logger = loggerRef;
-    FR_topSlider = FR_topSliderRef;
-    FR_botSlider = FR_botSliderRef;
-    BL_topSlider = BL_topSliderRef;
-    BL_botSlider = BL_botSliderRef;
-
-    FL_topSlider = FL_topSliderRef;
-    FL_botSlider = FL_botSliderRef;
-    BR_topSlider = BR_topSliderRef;
-    BR_botSlider = BR_botSliderRef;
 
     detailLevel = SettingsConstants::ADVANCED_INFO;
 
@@ -456,22 +439,22 @@ void OutputHandler::setFRSlider(double value)
 {
     double amplifiedFR = value * 100.0;
     if (amplifiedFR > 0.0) { // positive
-        FR_botSlider->setValue(0.0);
+        emit FR_botSlider_ValChanged(0.0);
         if (amplifiedFR <= IOConstants::MIN_SLIDER+13.0) {
-            FR_topSlider->setValue(IOConstants::MIN_SLIDER+13.0);
+            emit FR_topSlider_ValChanged(IOConstants::MIN_SLIDER+13.0);
         }  else {
-            FR_topSlider->setValue(amplifiedFR);
+            emit FR_topSlider_ValChanged(amplifiedFR);
         }
     } else if (amplifiedFR < 0.0) { // negative
-        FR_topSlider->setValue(0.0);
+        emit FR_topSlider_ValChanged(0.0);
         if (amplifiedFR >= -IOConstants::MIN_SLIDER-11.0) {
-            FR_botSlider->setValue(-IOConstants::MIN_SLIDER-11.0);
-        }  else {
-            FR_botSlider->setValue(amplifiedFR);
+            emit FR_botSlider_ValChanged(-IOConstants::MIN_SLIDER-11.0);
+        } else {
+            emit FR_botSlider_ValChanged(amplifiedFR);
         }
     } else { // zero
-        FR_botSlider->setValue(0.0);
-        FR_topSlider->setValue(0.0);
+        emit FR_botSlider_ValChanged(0.0);
+        emit FR_topSlider_ValChanged(0.0);
     }
 }
 
@@ -484,22 +467,22 @@ void OutputHandler::setBLSlider(double value)
 {
     double amplifiedBL = value * 100.0;
     if (amplifiedBL > 0.0) { // positive
-        BL_botSlider->setValue(0.0);
+        emit BL_botSlider_ValChanged(0.0);
         if (amplifiedBL <= IOConstants::MIN_SLIDER+13.0) {
-            BL_topSlider->setValue(IOConstants::MIN_SLIDER+13.0);
+            emit BL_topSlider_ValChanged(IOConstants::MIN_SLIDER+13.0);
         }  else {
-            BL_topSlider->setValue(amplifiedBL);
+            emit BL_topSlider_ValChanged(amplifiedBL);
         }
     } else if (amplifiedBL < 0.0) { // negative
-        BL_topSlider->setValue(0.0);
+        emit BL_topSlider_ValChanged(0.0);
         if (amplifiedBL >= -IOConstants::MIN_SLIDER-11.0) {
-            BL_botSlider->setValue(-IOConstants::MIN_SLIDER-11.0);
+            emit BL_botSlider_ValChanged(-IOConstants::MIN_SLIDER-11.0);
         }  else {
-            BL_botSlider->setValue(amplifiedBL);
+            emit BL_botSlider_ValChanged(amplifiedBL);
         }
     } else { // zero
-        BL_botSlider->setValue(0.0);
-        BL_topSlider->setValue(0.0);
+        emit BL_botSlider_ValChanged(0.0);
+        emit BL_topSlider_ValChanged(0.0);
     }
 }
 
@@ -512,22 +495,22 @@ void OutputHandler::setFLSlider(double value)
 {
     double amplifiedFL = value * 100.0;
     if (amplifiedFL > 0.0) { // positive
-        FL_botSlider->setValue(0.0);
+        emit FL_botSlider_ValChanged(0.0);
         if (amplifiedFL <= IOConstants::MIN_SLIDER+13.0) {
-            FL_topSlider->setValue(IOConstants::MIN_SLIDER+13.0);
+            emit FL_topSlider_ValChanged(IOConstants::MIN_SLIDER+13.0);
         }  else {
-            FL_topSlider->setValue(amplifiedFL);
+            emit FL_topSlider_ValChanged(amplifiedFL);
         }
     } else if (amplifiedFL < 0.0) { // negative
-        FL_topSlider->setValue(0.0);
+        emit FL_topSlider_ValChanged(0.0);
         if (amplifiedFL >= -IOConstants::MIN_SLIDER-11.0) {
-            FL_botSlider->setValue(-IOConstants::MIN_SLIDER-11.0);
+            emit FL_botSlider_ValChanged(-IOConstants::MIN_SLIDER-11.0);
         }  else {
-            FL_botSlider->setValue(amplifiedFL);
+            emit FL_botSlider_ValChanged(amplifiedFL);
         }
     } else { // zero
-        FL_botSlider->setValue(0.0);
-        FL_topSlider->setValue(0.0);
+        emit FL_botSlider_ValChanged(0.0);
+        emit FL_topSlider_ValChanged(0.0);
     }
 }
 
@@ -540,22 +523,22 @@ void OutputHandler::setBRSlider(double value)
 {
     double amplifiedBR = value * 100.0;
     if (amplifiedBR > 0.0) { // positive
-        BR_botSlider->setValue(0.0);
+        emit BR_botSlider_ValChanged(0.0);
         if (amplifiedBR <= IOConstants::MIN_SLIDER+13.0) {
-            BR_topSlider->setValue(IOConstants::MIN_SLIDER+13.0);
+            emit BR_topSlider_ValChanged(IOConstants::MIN_SLIDER+13.0);
         }  else {
-            BR_topSlider->setValue(amplifiedBR);
+            emit BR_topSlider_ValChanged(amplifiedBR);
         }
     } else if (amplifiedBR < 0.0) { // negative
-        BR_topSlider->setValue(0.0);
+        emit BR_topSlider_ValChanged(0.0);
         if (amplifiedBR >= -IOConstants::MIN_SLIDER-11.0) {
-            BR_botSlider->setValue(-IOConstants::MIN_SLIDER-11.0);
+            emit BR_botSlider_ValChanged(-IOConstants::MIN_SLIDER-11.0);
         }  else {
-            BR_botSlider->setValue(amplifiedBR);
+            emit BR_botSlider_ValChanged(amplifiedBR);
         }
     } else { // zero
-        BR_botSlider->setValue(0.0);
-        BR_topSlider->setValue(0.0);
+        emit BR_botSlider_ValChanged(0.0);
+        emit BR_topSlider_ValChanged(0.0);
     }
 }
 

@@ -7,20 +7,11 @@
 
 #include "constants.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
 class InputHandler : public QObject
 {
     Q_OBJECT
 public:
-    InputHandler(QSlider *x_topSliderRef,
-                 QSlider *x_botSliderRef,
-                 QSlider *y_topSliderRef,
-                 QSlider *y_botSliderRef,
-                 QSlider *z_topSliderRef,
-                 QSlider *z_botSliderRef);
+    InputHandler();
 
     //Getters
     double getX();
@@ -41,14 +32,14 @@ public slots:
 signals:
     void inputsChanged(double, double, double);
 
+    void x_topSlider_ValChanged(double);
+    void x_botSlider_ValChanged(double);
+    void y_topSlider_ValChanged(double);
+    void y_botSlider_ValChanged(double);
+    void z_topSlider_ValChanged(double);
+    void z_botSlider_ValChanged(double);
+
 private:
-    Ui::MainWindow *ui;
-    QSlider *x_topSlider;
-    QSlider *x_botSlider;
-    QSlider *y_topSlider;
-    QSlider *y_botSlider;
-    QSlider *z_topSlider;
-    QSlider *z_botSlider;
 
     //Setters
     void setX(double value);

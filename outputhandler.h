@@ -17,15 +17,7 @@ class OutputHandler : public QObject
 {
     Q_OBJECT
 public:
-    OutputHandler(QSlider *FR_topSliderRef,
-                  QSlider *FR_botSliderRef,
-                  QSlider *BL_topSliderRef,
-                  QSlider *BL_botSliderRef,
-                  QSlider *FL_topSliderRef,
-                  QSlider *FL_botSliderRef,
-                  QSlider *BR_topSliderRef,
-                  QSlider *BR_botSliderRef,
-                  QtCharts::QChartView *chartViewRef,
+    OutputHandler(QtCharts::QChartView *chartViewRef,
                   LoggerHandler *loggerRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
@@ -34,17 +26,20 @@ public slots:
     void updateSliders(double, double, double, double);
     void updateChart(double, double, double, double);
 
+signals:
+    void FR_topSlider_ValChanged(double);
+    void FR_botSlider_ValChanged(double);
+    void BL_topSlider_ValChanged(double);
+    void BL_botSlider_ValChanged(double);
+
+    void FL_topSlider_ValChanged(double);
+    void FL_botSlider_ValChanged(double);
+    void BR_topSlider_ValChanged(double);
+    void BR_botSlider_ValChanged(double);
+
 private:
     QtCharts::QChartView *chartView;
-    QSlider *FR_topSlider;
-    QSlider *FR_botSlider;
-    QSlider *BL_topSlider;
-    QSlider *BL_botSlider;
 
-    QSlider *FL_topSlider;
-    QSlider *FL_botSlider;
-    QSlider *BR_topSlider;
-    QSlider *BR_botSlider;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
 

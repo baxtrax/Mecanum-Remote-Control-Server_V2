@@ -46,24 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
                                           ui->render_ViewDebugEnButton,
                                           ui->appear_ThemeDarkEnButton);
     gamepadHandler = new GamepadHandler(loggerHandler);
-    qDebug() << ui;
-    inputHandler = new InputHandler(ui->axisX_topVSlider,
-                                    ui->axisX_botVSlider,
-                                    ui->axisY_topVSlider,
-                                    ui->axisY_botVSlider,
-                                    ui->axisZ_topVSlider,
-                                    ui->axisZ_botVSlider,
-                                    ui);
+    inputHandler = new InputHandler();
     kinematicsHandler = new KinematicsHandler();
-    outputHandler = new OutputHandler(ui->FR_topVSlider,
-                                      ui->FR_botVSlider,
-                                      ui->BL_topVSlider,
-                                      ui->BL_botVSlider,
-                                      ui->FL_topVSlider,
-                                      ui->FL_botVSlider,
-                                      ui->BR_topVSlider,
-                                      ui->BR_botVSlider,
-                                      ui->kinematicsGraphView,
+    outputHandler = new OutputHandler(ui->kinematicsGraphView,
                                       loggerHandler);
     simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
                                               ui->DebugInfoFrame);
@@ -203,6 +188,65 @@ void MainWindow::configureConnections()
             SIGNAL(inputsChanged(double,double,double)),
             kinematicsHandler,
             SLOT(updateSpeeds(double,double,double)));
+
+    connect(inputHandler,
+            &InputHandler::x_topSlider_ValChanged,
+            ui->axisX_topVSlider,
+            &QSlider::setValue);
+    connect(inputHandler,
+            &InputHandler::x_botSlider_ValChanged,
+            ui->axisX_botVSlider,
+            &QSlider::setValue);
+    connect(inputHandler,
+            &InputHandler::y_topSlider_ValChanged,
+            ui->axisY_topVSlider,
+            &QSlider::setValue);
+    connect(inputHandler,
+            &InputHandler::y_botSlider_ValChanged,
+            ui->axisY_botVSlider,
+            &QSlider::setValue);
+    connect(inputHandler,
+            &InputHandler::z_topSlider_ValChanged,
+            ui->axisZ_topVSlider,
+            &QSlider::setValue);
+    connect(inputHandler,
+            &InputHandler::z_botSlider_ValChanged,
+            ui->axisZ_botVSlider,
+            &QSlider::setValue);
+
+    connect(outputHandler,
+            &OutputHandler::FR_topSlider_ValChanged,
+            ui->FR_topVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::FR_botSlider_ValChanged,
+            ui->FR_botVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::BL_topSlider_ValChanged,
+            ui->BL_topVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::BL_botSlider_ValChanged,
+            ui->BL_botVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::FL_topSlider_ValChanged,
+            ui->FL_topVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::FL_botSlider_ValChanged,
+            ui->FL_botVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::BR_topSlider_ValChanged,
+            ui->BR_topVSlider,
+            &QSlider::setValue);
+    connect(outputHandler,
+            &OutputHandler::BR_botSlider_ValChanged,
+            ui->BR_botVSlider,
+            &QSlider::setValue);
+
     connect(kinematicsHandler,
             SIGNAL(speedsChanged(double,double,double,double)),
             outputHandler,

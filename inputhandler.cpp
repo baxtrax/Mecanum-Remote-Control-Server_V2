@@ -1,12 +1,7 @@
 #include "inputhandler.h"
 
 // Constructor
-InputHandler::InputHandler(QSlider *x_topSliderRef,
-                           QSlider *x_botSliderRef,
-                           QSlider *y_topSliderRef,
-                           QSlider *y_botSliderRef,
-                           QSlider *z_topSliderRef,
-                           QSlider *z_botSliderRef)
+InputHandler::InputHandler()
 {
     x = 0.0;
     y = 0.0;
@@ -20,13 +15,6 @@ InputHandler::InputHandler(QSlider *x_topSliderRef,
     jx = 0.0;
     jy = 0.0;
     jz = 0.0;
-
-    x_topSlider = x_topSliderRef;
-    x_botSlider = x_botSliderRef;
-    y_topSlider = y_topSliderRef;
-    y_botSlider = y_botSliderRef;
-    z_topSlider = z_topSliderRef;
-    z_botSlider = z_botSliderRef;
 }
 
 /**
@@ -51,22 +39,22 @@ void InputHandler::setXSlider(double value)
 {
     double amplifiedX = value * 100.0;
     if (amplifiedX > 0.0) { // positive
-        x_botSlider->setValue(0.0);
+        emit x_botSlider_ValChanged(0.0);
         if (amplifiedX <= IOConstants::MIN_SLIDER) {
-            x_topSlider->setValue(IOConstants::MIN_SLIDER);
-        }  else {
-            x_topSlider->setValue(amplifiedX);
+            emit x_topSlider_ValChanged(IOConstants::MIN_SLIDER);
+        } else {
+            emit x_topSlider_ValChanged(amplifiedX);
         }
     } else if (amplifiedX < 0.0) { // negative
-        x_topSlider->setValue(0.0);
+        emit x_topSlider_ValChanged(0.0);
         if (amplifiedX >= -IOConstants::MIN_SLIDER+1) {
-            x_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
-        }  else {
-            x_botSlider->setValue(amplifiedX);
+            emit x_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
+        } else {
+            emit x_botSlider_ValChanged(amplifiedX);
         }
     } else { // zero
-        x_botSlider->setValue(0.0);
-        x_topSlider->setValue(0.0);
+        emit x_botSlider_ValChanged(0.0);
+        emit x_topSlider_ValChanged(0.0);
     }
 }
 
@@ -79,22 +67,22 @@ void InputHandler::setYSlider(double value)
 {
     double amplifiedY = value * 100.0;
     if (amplifiedY > 0.0) { // positive
-        y_botSlider->setValue(0.0);
+        emit y_botSlider_ValChanged(0.0);
         if (amplifiedY <= IOConstants::MIN_SLIDER) {
-            y_topSlider->setValue(IOConstants::MIN_SLIDER);
+            emit y_topSlider_ValChanged(IOConstants::MIN_SLIDER);
         }  else {
-            y_topSlider->setValue(amplifiedY);
+            emit y_topSlider_ValChanged(amplifiedY);
         }
     } else if (amplifiedY < 0.0) { // negative
-        y_topSlider->setValue(0.0);
+        emit y_topSlider_ValChanged(0.0);
         if (amplifiedY >= -IOConstants::MIN_SLIDER+1) {
-            y_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
+            emit y_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
         }  else {
-            y_botSlider->setValue(amplifiedY);
+            emit y_botSlider_ValChanged(amplifiedY);
         }
     } else { // zero
-        y_botSlider->setValue(0.0);
-        y_topSlider->setValue(0.0);
+        emit y_botSlider_ValChanged(0.0);
+        emit y_topSlider_ValChanged(0.0);
     }
 }
 
@@ -107,22 +95,22 @@ void InputHandler::setZSlider(double value)
 {
     double amplifiedZ = value * 100.0;
     if (amplifiedZ > 0.0) { // positive
-        z_botSlider->setValue(0.0);
+        emit z_botSlider_ValChanged(0.0);
         if (amplifiedZ <= IOConstants::MIN_SLIDER) {
-            z_topSlider->setValue(IOConstants::MIN_SLIDER);
+            emit z_topSlider_ValChanged(IOConstants::MIN_SLIDER);
         }  else {
-            z_topSlider->setValue(amplifiedZ);
+            emit z_topSlider_ValChanged(amplifiedZ);
         }
     } else if (amplifiedZ < 0.0) { // negative
-        z_topSlider->setValue(0.0);
+        emit z_topSlider_ValChanged(0.0);
         if (amplifiedZ >= -IOConstants::MIN_SLIDER+1) {
-            z_botSlider->setValue(-IOConstants::MIN_SLIDER+1);
+            emit z_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
         }  else {
-            z_botSlider->setValue(amplifiedZ);
+            emit z_botSlider_ValChanged(amplifiedZ);
         }
     } else { // zero
-        z_botSlider->setValue(0.0);
-        z_topSlider->setValue(0.0);
+        emit z_botSlider_ValChanged(0.0);
+        emit z_topSlider_ValChanged(0.0);
     }
 }
 
