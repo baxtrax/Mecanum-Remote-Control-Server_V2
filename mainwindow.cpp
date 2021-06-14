@@ -27,8 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Possible just pass in Ui instead of each ui element indiv
-    loggerHandler = new LoggerHandler(ui->loggerTextEdit);
+    loggerHandler = new LoggerHandler();
     settingsHandler = new SettingsHandler();
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler();
@@ -134,6 +133,19 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
  */
 void MainWindow::configureConnections()
 {
+    connect(loggerHandler,
+            &LoggerHandler::changingColor,
+            ui->loggerTextEdit,
+            &QTextEdit::setTextColor);
+    connect(loggerHandler,
+            &LoggerHandler::appendingText,
+            ui->loggerTextEdit,
+            &QTextEdit::append);
+    connect(loggerHandler,
+            &LoggerHandler::clearingText,
+            ui->loggerTextEdit,
+            &QTextEdit::clear);
+
     connect(gamepadHandler,
             SIGNAL(gamepad_axisLeftXChanged(double)),
             inputHandler,

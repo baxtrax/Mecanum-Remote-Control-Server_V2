@@ -1,9 +1,8 @@
 #include "loggerhandler.h"
 
 // Constructor
-LoggerHandler::LoggerHandler(QTextEdit *logTextEditRef)
+LoggerHandler::LoggerHandler()
 {
-    logTextEdit = logTextEditRef;
     currentLevel = LoggerConstants::DEBUG;
     showTime = true;
 }
@@ -25,51 +24,51 @@ void LoggerHandler::write(QString text)
         switch (getLevel()) {
         case LoggerConstants::DEBUG:
             text = time + " [D]: " + text;
-            logTextEdit->setTextColor(QColor(QRgb(0x9F9F9F)));
-            logTextEdit->append(text);
+            emit changingColor(QColor(QRgb(0x9F9F9F)));
+            emit appendingText(text);
             break;
         case LoggerConstants::INFO:
             text = time + " [I]: " + text;
-            logTextEdit->setTextColor(QColor(QRgb(0xFFFFFF)));
-            logTextEdit->append(text);
+            emit changingColor(QColor(QRgb(0xFFFFFF)));
+            emit appendingText(text);
             break;
         case LoggerConstants::WARNING:
             text = time + " [W]: " + text;
-            logTextEdit->setTextColor(QColor(QRgb(0xFFEA95)));
-            logTextEdit->append(text);
+            emit changingColor(QColor(QRgb(0xFFEA95)));
+            emit appendingText(text);
             break;
         case LoggerConstants::ERR:
             text = time + " [E]: " + text;
-            logTextEdit->setTextColor(QColor(QRgb(0xFE6E7C)));
-            logTextEdit->append(text);
+            emit changingColor(QColor(QRgb(0xFE6E7C)));
+            emit appendingText(text);
             break;
         case LoggerConstants::FATAL:
             text = time + " [F]: " + text;
-            logTextEdit->setTextColor(QColor(QRgb(0xFF0505)));
-            logTextEdit->append(text);
+            emit changingColor(QColor(QRgb(0xFF0505)));
+            emit appendingText(text);
             break;
         }
     } else {
         switch (getLevel()) {
         case LoggerConstants::DEBUG:
             text = time + " [D]: " + text;
-            logTextEdit->append(text);
+            emit appendingText(text);
             break;
         case LoggerConstants::INFO:
             text = time + " [I:] " + text;
-            logTextEdit->append(text);
+            emit appendingText(text);
             break;
         case LoggerConstants::WARNING:
             text = time + " [W]: " + text;
-            logTextEdit->append(text);
+            emit appendingText(text);
             break;
         case LoggerConstants::ERR:
             text = time + " [E]: " + text;
-            logTextEdit->append(text);
+            emit appendingText(text);
             break;
         case LoggerConstants::FATAL:
             text = time + " [F]: " + text;
-            logTextEdit->append(text);
+            emit appendingText(text);
             break;
         }
     }
@@ -96,7 +95,7 @@ void LoggerHandler::write(int level, QString text)
  */
 void LoggerHandler::clear()
 {
-    logTextEdit->clear();
+    emit clearingText();
 }
 
 

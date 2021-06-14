@@ -7,11 +7,11 @@
 #include "constants.h"
 
 
-class LoggerHandler
+class LoggerHandler : public QObject
 {
+    Q_OBJECT
 public:
-    LoggerHandler(QTextEdit *logTextEditRef);
-    void clear();
+    LoggerHandler();
     void write(int level, QString text);
     void write(QString text);
 
@@ -23,8 +23,15 @@ public:
     bool isShowTime();
     bool isColorify();
 
+public slots:
+    void clear();
+
+signals:
+    void changingColor(QColor);
+    void appendingText(QString);
+    void clearingText();
+
 private:
-    QTextEdit *logTextEdit;
     int currentLevel;
     bool showTime;
     bool colorify;
