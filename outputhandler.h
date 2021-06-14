@@ -17,10 +17,10 @@ class OutputHandler : public QObject
 {
     Q_OBJECT
 public:
-    OutputHandler(QtCharts::QChartView *chartViewRef,
-                  LoggerHandler *loggerRef);
+    OutputHandler(LoggerHandler *loggerRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
+    void configureChartView(QtCharts::QChartView *chartView);
 
 public slots:
     void updateSliders(double, double, double, double);
@@ -38,7 +38,6 @@ signals:
     void BR_botSlider_ValChanged(double);
 
 private:
-    QtCharts::QChartView *chartView;
 
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;

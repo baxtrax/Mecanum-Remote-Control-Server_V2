@@ -48,8 +48,8 @@ MainWindow::MainWindow(QWidget *parent)
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler();
     kinematicsHandler = new KinematicsHandler();
-    outputHandler = new OutputHandler(ui->kinematicsGraphView,
-                                      loggerHandler);
+    outputHandler = new OutputHandler(loggerHandler);
+    outputHandler->configureChartView(ui->kinematicsGraphView);
     simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
                                               ui->DebugInfoFrame);
 

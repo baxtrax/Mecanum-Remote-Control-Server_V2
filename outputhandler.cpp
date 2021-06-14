@@ -2,10 +2,8 @@
 
 
 // Constructor
-OutputHandler::OutputHandler(QtCharts::QChartView *chartViewRef,
-                             LoggerHandler *loggerRef)
+OutputHandler::OutputHandler(LoggerHandler *loggerRef)
 {
-    chartView = chartViewRef;
     logger = loggerRef;
 
     detailLevel = SettingsConstants::ADVANCED_INFO;
@@ -124,14 +122,12 @@ void OutputHandler::configureChart()
     chart->setMargins(QMargins(0, 0, 0, -20)); //-20 removes unnessary x-axis
     chart->setBackgroundRoundness(0);
 
-    chartView->setChart(chart);
-    chartView->setStyleSheet(NULL);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->chart()->addSeries(FRSeries);
-    chartView->chart()->addSeries(BLSeries);
-    chartView->chart()->addSeries(FLSeries);
-    chartView->chart()->addSeries(BRSeries);
-    chartView->chart()->addSeries(dirSeries);
+    chart->addSeries(FRSeries);
+    chart->addSeries(BLSeries);
+    chart->addSeries(FLSeries);
+    chart->addSeries(BRSeries);
+    chart->addSeries(dirSeries);
+
     FRSeries->attachAxis(axisX);
     FRSeries->attachAxis(axisY);
     BLSeries->attachAxis(axisX);
@@ -142,6 +138,13 @@ void OutputHandler::configureChart()
     BRSeries->attachAxis(axisY);
     dirSeries->attachAxis(axisX);
     dirSeries->attachAxis(axisY);
+}
+
+void OutputHandler::configureChartView(QtCharts::QChartView *chartView)
+{
+    chartView->setChart(chart);
+    chartView->setStyleSheet(NULL);
+    chartView->setRenderHint(QPainter::Antialiasing);
 }
 
 
