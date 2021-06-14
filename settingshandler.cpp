@@ -1,49 +1,11 @@
 #include "settingshandler.h"
 
-SettingsHandler::SettingsHandler(QLineEdit *conn_CamAddressTextRef,
-                                 QLineEdit *conn_CamPortTextRef,
-                                 QRadioButton *conn_CamEnButtonRef,
-                                 QLineEdit *conn_CommAddressTextRef,
-                                 QLineEdit *conn_CommPortTextRef,
-                                 QRadioButton *conn_CommEnButtonRef,
-                                 QRadioButton *graph_PerformEnButtonRef,
-                                 QComboBox *graph_PerformQualComboRef,
-                                 QSlider *graph_PerformPointsSliderRef,
-                                 QRadioButton *render_PerformFPSLimEnButtonRef,
-                                 QComboBox *render_PerformQualComboRef,
-                                 QSlider *render_PerformFPSSliderRef,
-                                 QRadioButton *render_ViewEnButtonRef,
-                                 QRadioButton *render_ViewCountEnButtonRef,
-                                 QRadioButton *render_ViewDebugEnButtonRef,
-                                 QRadioButton *appear_ThemeDarkEnButtonRef)
+SettingsHandler::SettingsHandler()
 {
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
                              "MechanumRemoteControl", "settings");
     qDebug() << settings->fileName();
-
-    conn_CamAddressText = conn_CamAddressTextRef;
-    conn_CamPortText = conn_CamPortTextRef;
-    conn_CamEnButton = conn_CamEnButtonRef;
-
-    conn_CommAddressText = conn_CommAddressTextRef;
-    conn_CommPortText = conn_CommPortTextRef;
-    conn_CommEnButton = conn_CommEnButtonRef;
-
-    graph_PerformEnButton = graph_PerformEnButtonRef;
-    graph_PerformQualCombo = graph_PerformQualComboRef;
-    graph_PerformPointsSlider = graph_PerformPointsSliderRef;
-
-    render_PerformFPSLimEnButton = render_PerformFPSLimEnButtonRef;
-    render_PerformQualCombo = render_PerformQualComboRef;
-    render_PerformFPSSlider = render_PerformFPSSliderRef;
-
-    render_ViewEnButton = render_ViewEnButtonRef;
-    render_ViewCountEnButton = render_ViewCountEnButtonRef;
-    render_ViewDebugEnButton = render_ViewDebugEnButtonRef;
-
-    appear_ThemeDarkEnButton = appear_ThemeDarkEnButtonRef;
-
     initSettings();
 }
 
@@ -64,28 +26,23 @@ void SettingsHandler::initSettings()
  */
 void SettingsHandler::resetSettings()
 {
-    qDebug() << "Reset Settings";
-    settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, "123.123.123.123");
-    settings->setValue(SettingsConstants::CONN_CAM_PORT, "12345");
-    settings->setValue(SettingsConstants::CONN_CAM_EN, false);
-
-    settings->setValue(SettingsConstants::CONN_SOCK_ADDRESS, "123.123.123.123");
-    settings->setValue(SettingsConstants::CONN_SOCK_PORT, "12345");
-    settings->setValue(SettingsConstants::CONN_SOCK_EN, false);
-
-    settings->setValue(SettingsConstants::GRAPH_PERF_EN, false);
-    settings->setValue(SettingsConstants::GRAPH_PERF_QUAL, 0);
-    settings->setValue(SettingsConstants::GRAPH_PERF_POINTS, 15);
-
-    settings->setValue(SettingsConstants::RENDER_PERF_FPS_EN, false);
-    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, 0);
-    settings->setValue(SettingsConstants::RENDER_PERF_FPS_LIM, 0);
-
-    settings->setValue(SettingsConstants::RENDER_VIEW_EN, false);
-    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, false);
-    settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, false);
-    settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, false);
-    displaySettings();
+    qDebug() << "Reset Settings";    
+    emit signalConn_CamAddressText("123.123.123.123");
+    emit signalConn_CamPortText("12345");
+    emit signalConn_CamEnButton(false);
+    emit signalConn_CommAddressText("123.123.123.123");
+    emit signalConn_CommPortText("12345");
+    emit signalConn_CommEnButton(false);
+    emit signalGraph_PerformEnButton(false);
+    emit signalGraph_PerformQualCombo(0);
+    emit signalGraph_PerformPointsSlider(15);
+    emit signalRender_PerformFPSLimEnButton(false);
+    emit signalRender_PerformQualCombo(0);
+    emit signalRender_PerformFPSSlider(0);
+    emit signalRender_ViewEnButton(false);
+    emit signalRender_ViewCountEnButton(false);
+    emit signalRender_ViewDebugEnButton(false);
+    emit signalAppear_ThemeDarkEnButton(false);
 
 }
 
@@ -94,10 +51,40 @@ void SettingsHandler::resetSettings()
  * @brief Apply current settings to file, will also proprogate changes
  * throughout the program.
  */
-void SettingsHandler::applySettings()
+void SettingsHandler::applySettings(QString conn_CamAddressText,
+                                    QString conn_CamPortText,
+                                    bool conn_CamEnButton,
+                                    QString conn_CommAddressText,
+                                    QString conn_CommPortText,
+                                    bool conn_CommEnButton,
+                                    bool graph_PerformEnButton,
+                                    int graph_PerformQualCombo,
+                                    int graph_PerformPointsSlider,
+                                    bool render_PerformFPSLimEnButton,
+                                    int render_PerformQualCombo,
+                                    int render_PerformFPSSlider,
+                                    bool render_ViewEnButton,
+                                    bool render_ViewCountEnButton,
+                                    bool render_ViewDebugEnButton,
+                                    bool appear_ThemeDarkEnButton)
 {
     qDebug() << "Apply Settings";
-    saveSettings();
+    saveSettings(conn_CamAddressText,
+                 conn_CamPortText,
+                 conn_CamEnButton,
+                 conn_CommAddressText,
+                 conn_CommPortText,
+                 conn_CommEnButton,
+                 graph_PerformEnButton,
+                 graph_PerformQualCombo,
+                 graph_PerformPointsSlider,
+                 render_PerformFPSLimEnButton,
+                 render_PerformQualCombo,
+                 render_PerformFPSSlider,
+                 render_ViewEnButton,
+                 render_ViewCountEnButton,
+                 render_ViewDebugEnButton,
+                 appear_ThemeDarkEnButton);
     emit settingsUpdated();
 }
 
@@ -108,71 +95,71 @@ void SettingsHandler::applySettings()
 void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
-    conn_CamAddressText->setText(
+    emit signalConn_CamAddressText(
         settings->value(
                     SettingsConstants::CONN_CAM_ADDRESS,
                     "123.123.123.123").toString());
-    conn_CamPortText->setText(
+    emit signalConn_CamPortText(
         settings->value(
                     SettingsConstants::CONN_CAM_PORT,
                     "12345").toString());
-    conn_CamEnButton->setChecked(
+    emit signalConn_CamEnButton(
         settings->value(
                     SettingsConstants::CONN_CAM_EN,
                     false).toBool());
 
-    conn_CommAddressText->setText(
+    emit signalConn_CommAddressText(
         settings->value(
                     SettingsConstants::CONN_SOCK_ADDRESS,
                     "123.123.123.123").toString());
-    conn_CommPortText->setText(
+    emit signalConn_CommPortText(
         settings->value(
                     SettingsConstants::CONN_SOCK_PORT,
                     "12345").toString());
-    conn_CommEnButton->setChecked(
+    emit signalConn_CommEnButton(
         settings->value(
                     SettingsConstants::CONN_SOCK_EN,
                     false).toBool());
 
-    graph_PerformEnButton->setChecked(
+    emit signalGraph_PerformEnButton(
         settings->value(
                     SettingsConstants::GRAPH_PERF_EN,
                     false).toBool());
-    graph_PerformQualCombo->setCurrentIndex(
+    emit signalGraph_PerformQualCombo(
         settings->value(
                     SettingsConstants::GRAPH_PERF_QUAL,
                     0).toInt());
-    graph_PerformPointsSlider->setValue(
+    emit signalGraph_PerformPointsSlider(
         settings->value(
                     SettingsConstants::GRAPH_PERF_POINTS,
                     15).toInt());
 
-    render_PerformFPSLimEnButton->setChecked(
+    emit signalRender_PerformFPSLimEnButton(
         settings->value(
                     SettingsConstants::RENDER_PERF_FPS_EN,
                     false).toBool());
-    render_PerformQualCombo->setCurrentIndex(
+    emit signalRender_PerformQualCombo(
         settings->value(
                     SettingsConstants::RENDER_PERF_QUAL,
                     0).toInt());
-    render_PerformFPSSlider->setValue(
+    emit signalRender_PerformFPSSlider(
         settings->value(
                     SettingsConstants::RENDER_PERF_FPS_LIM,
                     0).toInt());
 
-    render_ViewEnButton->setChecked(
+    emit signalRender_ViewEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_EN,
                     false).toBool());
-    render_ViewCountEnButton->setChecked(
+    emit signalRender_ViewCountEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_COUNT_EN,
                     false).toBool());
-    render_ViewDebugEnButton->setChecked(
+    emit signalRender_ViewDebugEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_DEBUG_EN,
                     false).toBool());
-    appear_ThemeDarkEnButton->setChecked(
+    emit signalAppear_ThemeDarkEnButton(
         settings->value(
                     SettingsConstants::APPEAR_THEME_DARK_EN,
                     false).toBool());
@@ -182,63 +169,78 @@ void SettingsHandler::displaySettings()
 /**
  * @brief Grabs current user entered settings and saves them to file.
  */
-void SettingsHandler::saveSettings()
+void SettingsHandler::saveSettings(QString conn_CamAddressText,
+                                   QString conn_CamPortText,
+                                   bool conn_CamEnButton,
+                                   QString conn_CommAddressText,
+                                   QString conn_CommPortText,
+                                   bool conn_CommEnButton,
+                                   bool graph_PerformEnButton,
+                                   int graph_PerformQualCombo,
+                                   int graph_PerformPointsSlider,
+                                   bool render_PerformFPSLimEnButton,
+                                   int render_PerformQualCombo,
+                                   int render_PerformFPSSlider,
+                                   bool render_ViewEnButton,
+                                   bool render_ViewCountEnButton,
+                                   bool render_ViewDebugEnButton,
+                                   bool appear_ThemeDarkEnButton)
 {
     qDebug() << "Save Settings";
     settings->setValue(
         SettingsConstants::CONN_CAM_ADDRESS,
-        conn_CamAddressText->text());
+        conn_CamAddressText);
 
     settings->setValue(
         SettingsConstants::CONN_CAM_PORT,
-        conn_CamPortText->text());
+        conn_CamPortText);
     settings->setValue(
         SettingsConstants::CONN_CAM_EN,
-        conn_CamEnButton->isChecked());
+        conn_CamEnButton);
 
     settings->setValue(
         SettingsConstants::CONN_SOCK_ADDRESS,
-        conn_CommAddressText->text());
+        conn_CommAddressText);
     settings->setValue(
         SettingsConstants::CONN_SOCK_PORT,
-        conn_CommPortText->text());
+        conn_CommPortText);
     settings->setValue(
         SettingsConstants::CONN_SOCK_EN,
-        conn_CommEnButton->isChecked());
+        conn_CommEnButton);
 
     settings->setValue(
         SettingsConstants::GRAPH_PERF_EN,
-        graph_PerformEnButton->isChecked());
+        graph_PerformEnButton);
     settings->setValue(
         SettingsConstants::GRAPH_PERF_QUAL,
-        graph_PerformQualCombo->currentIndex());
+        graph_PerformQualCombo);
     settings->setValue(
         SettingsConstants::GRAPH_PERF_POINTS,
-        graph_PerformPointsSlider->value());
+        graph_PerformPointsSlider);
 
     settings->setValue(
         SettingsConstants::RENDER_PERF_FPS_EN,
-        render_PerformFPSLimEnButton->isChecked());
+        render_PerformFPSLimEnButton);
     settings->setValue(
         SettingsConstants::RENDER_PERF_QUAL,
-        render_PerformQualCombo->currentIndex());
+        render_PerformQualCombo);
     settings->setValue(
         SettingsConstants::RENDER_PERF_FPS_LIM,
-        render_PerformFPSSlider->value());
+        render_PerformFPSSlider);
 
     settings->setValue(
         SettingsConstants::RENDER_VIEW_EN,
-        render_ViewEnButton->isChecked());
+        render_ViewEnButton);
     settings->setValue(
         SettingsConstants::RENDER_VIEW_COUNT_EN,
-        render_ViewCountEnButton->isChecked());
+        render_ViewCountEnButton);
     settings->setValue(
         SettingsConstants::RENDER_VIEW_DEBUG_EN,
-        render_ViewDebugEnButton->isChecked());
+        render_ViewDebugEnButton);
 
     settings->setValue(
         SettingsConstants::APPEAR_THEME_DARK_EN,
-        appear_ThemeDarkEnButton->isChecked());
+        appear_ThemeDarkEnButton);
 }
 
 

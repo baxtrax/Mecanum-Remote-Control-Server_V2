@@ -29,26 +29,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Possible just pass in Ui instead of each ui element indiv
     loggerHandler = new LoggerHandler(ui->loggerTextEdit);
-    settingsHandler = new SettingsHandler(ui->conn_CamAddressText,
-                                          ui->conn_CamPortText,
-                                          ui->conn_CamEnButton,
-                                          ui->conn_CommAddressText,
-                                          ui->conn_CommPortText,
-                                          ui->conn_CommEnButton,
-                                          ui->graph_PerformEnButton,
-                                          ui->graph_PerformQualCombo,
-                                          ui->graph_PerformPointsSlider,
-                                          ui->render_PerformFPSLimEnButton,
-                                          ui->render_PerformQualCombo,
-                                          ui->render_PerformFPSSlider,
-                                          ui->render_ViewEnButton,
-                                          ui->render_ViewCountEnButton,
-                                          ui->render_ViewDebugEnButton,
-                                          ui->appear_ThemeDarkEnButton);
+    settingsHandler = new SettingsHandler();
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler();
     kinematicsHandler = new KinematicsHandler();
     outputHandler = new OutputHandler(loggerHandler);
+    //attaching chart to GraphView
     outputHandler->configureChartView(ui->kinematicsGraphView);
     simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
                                               ui->DebugInfoFrame);
@@ -260,20 +246,39 @@ void MainWindow::configureConnections()
             simulationHandler,
             SLOT(updateAnimators(double,double,double,double)));
 
-    // Quick settings connections
-    // TODO move these into the settings handler
+
     connect(ui->settings_ResetButton,
             SIGNAL(clicked()),
             settingsHandler,
             SLOT(resetSettings()));
     connect(ui->settings_ApplyButton,
-            SIGNAL(clicked()),
-            settingsHandler,
-            SLOT(applySettings()));
+            &QRadioButton::clicked,
+            this,
+            [this]()
+            {
+                settingsHandler->
+                    applySettings(ui->conn_CamAddressText->text(),
+                                  ui->conn_CamPortText->text(),
+                                  ui->conn_CamEnButton->isChecked(),
+                                  ui->conn_CommAddressText->text(),
+                                  ui->conn_CommPortText->text(),
+                                  ui->conn_CommEnButton->isChecked(),
+                                  ui->graph_PerformEnButton->isChecked(),
+                                  ui->graph_PerformQualCombo->currentIndex(),
+                                  ui->graph_PerformPointsSlider->value(),
+                                  ui->render_PerformFPSLimEnButton->isChecked(),
+                                  ui->render_PerformQualCombo->currentIndex(),
+                                  ui->render_PerformFPSSlider->value(),
+                                  ui->render_ViewEnButton->isChecked(),
+                                  ui->render_ViewCountEnButton->isChecked(),
+                                  ui->render_ViewDebugEnButton->isChecked(),
+                                  ui->appear_ThemeDarkEnButton->isChecked());
+            });
     connect(ui->settings_CancelButton,
             SIGNAL(clicked()),
             settingsHandler,
             SLOT(displaySettings()));
+
     connect(ui->graph_PerformPointsSlider,
             &QSlider::valueChanged,
             this,
@@ -295,6 +300,80 @@ void MainWindow::configureConnections()
                     break;
                 }
             });
+
+
+//        ui->appear_ThemeDarkEnButton
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CamAddressText,
+            ui->conn_CamAddressText,
+            &QLineEdit::setText);
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CamPortText,
+            ui->conn_CamPortText,
+            &QLineEdit::setText);
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CamEnButton,
+            ui->conn_CamEnButton,
+            &QRadioButton::setChecked);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CommAddressText,
+            ui->conn_CommAddressText,
+            &QLineEdit::setText);
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CommPortText,
+            ui->conn_CommPortText,
+            &QLineEdit::setText);
+    connect(settingsHandler,
+            &SettingsHandler::signalConn_CommEnButton,
+            ui->conn_CommEnButton,
+            &QRadioButton::setChecked);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalGraph_PerformEnButton,
+            ui->graph_PerformEnButton,
+            &QRadioButton::setChecked);
+    connect(settingsHandler,
+            &SettingsHandler::signalGraph_PerformQualCombo,
+            ui->graph_PerformQualCombo,
+            &QComboBox::setCurrentIndex);
+    connect(settingsHandler,
+            &SettingsHandler::signalGraph_PerformPointsSlider,
+            ui->graph_PerformPointsSlider,
+            &QSlider::setValue);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_PerformFPSLimEnButton,
+            ui->render_PerformFPSLimEnButton,
+            &QRadioButton::setChecked);
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_PerformQualCombo,
+            ui->render_PerformQualCombo,
+            &QComboBox::setCurrentIndex);
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_PerformFPSSlider,
+            ui->render_PerformFPSSlider,
+            &QSlider::setValue);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_ViewEnButton,
+            ui->render_ViewEnButton,
+            &QRadioButton::setChecked);
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_ViewCountEnButton,
+            ui->render_ViewCountEnButton,
+            &QRadioButton::setChecked);
+    connect(settingsHandler,
+            &SettingsHandler::signalRender_ViewDebugEnButton,
+            ui->render_ViewDebugEnButton,
+            &QRadioButton::setChecked);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalAppear_ThemeDarkEnButton,
+            ui->appear_ThemeDarkEnButton,
+            &QRadioButton::setChecked);
+
+
     connect(settingsHandler,
             SIGNAL(settingsUpdated()),
             simulationHandler,

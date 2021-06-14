@@ -15,54 +15,70 @@ class SettingsHandler : public QObject
 {
     Q_OBJECT
 public:
-    SettingsHandler(QLineEdit *conn_CamAddressTextRef,
-                    QLineEdit *conn_CamPortTextRef,
-                    QRadioButton *conn_CamEnButtonRef,
-                    QLineEdit *conn_CommAddressTextRef,
-                    QLineEdit *conn_CommPortTextRef,
-                    QRadioButton *conn_CommEnButtonRef,
-                    QRadioButton *graph_PerformEnButtonRef,
-                    QComboBox *graph_PerformQualComboRef,
-                    QSlider *graph_PerformPointsSlider,
-                    QRadioButton *render_PerformFPSLimEnButtonRef,
-                    QComboBox *render_PerformQualComboRef,
-                    QSlider *render_PerformFPSSliderRef,
-                    QRadioButton *render_ViewEnButtonRef,
-                    QRadioButton *render_ViewCountEnButtonRef,
-                    QRadioButton *render_ViewDebugEnButtonRef,
-                    QRadioButton *appear_ThemeDarkEnButtonRef);
+    SettingsHandler();
     QSettings* getSettings();
+    void applySettings(QString conn_CamAddressText,
+                       QString conn_CamPortText,
+                       bool conn_CamEnButton,
+                       QString conn_CommAddressText,
+                       QString conn_CommPortText,
+                       bool conn_CommEnButton,
+                       bool graph_PerformEnButton,
+                       int graph_PerformQualCombo,
+                       int graph_PerformPointsSlider,
+                       bool render_PerformFPSLimEnButton,
+                       int render_PerformQualCombo,
+                       int render_PerformFPSSlider,
+                       bool render_ViewEnButton,
+                       bool render_ViewCountEnButton,
+                       bool render_ViewDebugEnButton,
+                       bool appear_ThemeDarkEnButton);
 
 public slots:
     void resetSettings();
-    void applySettings();
     void displaySettings();
+
+signals:
+    void signalConn_CamAddressText(QString);
+    void signalConn_CamPortText(QString);
+    void signalConn_CamEnButton(bool);
+    void signalConn_CommAddressText(QString);
+    void signalConn_CommPortText(QString);
+    void signalConn_CommEnButton(bool);
+    void signalGraph_PerformEnButton(bool);
+    void signalGraph_PerformQualCombo(int);
+    void signalGraph_PerformPointsSlider(int);
+    void signalRender_PerformFPSLimEnButton(bool);
+    void signalRender_PerformQualCombo(int);
+    void signalRender_PerformFPSSlider(int);
+    void signalRender_ViewEnButton(bool);
+    void signalRender_ViewCountEnButton(bool);
+    void signalRender_ViewDebugEnButton(bool);
+    void signalAppear_ThemeDarkEnButton(bool);
 
 private:
     QSettings *settings;
-
-    QLineEdit *conn_CamAddressText;
-    QLineEdit *conn_CamPortText;
-    QRadioButton *conn_CamEnButton;
-    QLineEdit *conn_CommAddressText;
-    QLineEdit *conn_CommPortText;
-    QRadioButton *conn_CommEnButton;
-    QRadioButton *graph_PerformEnButton;
-    QComboBox *graph_PerformQualCombo;
-    QSlider *graph_PerformPointsSlider;
-    QRadioButton *render_PerformFPSLimEnButton;
-    QComboBox *render_PerformQualCombo;
-    QSlider *render_PerformFPSSlider;
-    QRadioButton *render_ViewEnButton;
-    QRadioButton *render_ViewCountEnButton;
-    QRadioButton *render_ViewDebugEnButton;
-    QRadioButton *appear_ThemeDarkEnButton;
-
     void initSettings();
-    void saveSettings();
+    void saveSettings(QString conn_CamAddressText,
+                      QString conn_CamPortText,
+                      bool conn_CamEnButton,
+                      QString conn_CommAddressText,
+                      QString conn_CommPortText,
+                      bool conn_CommEnButton,
+                      bool graph_PerformEnButton,
+                      int graph_PerformQualCombo,
+                      int graph_PerformPointsSlider,
+                      bool render_PerformFPSLimEnButton,
+                      int render_PerformQualCombo,
+                      int render_PerformFPSSlider,
+                      bool render_ViewEnButton,
+                      bool render_ViewCountEnButton,
+                      bool render_ViewDebugEnButton,
+                      bool appear_ThemeDarkEnButton);
 
 signals:
     void settingsUpdated();
 };
+
 
 #endif // SETTINGSHANDLER_H
