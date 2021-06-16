@@ -12,8 +12,10 @@
 
 // Constructor
 SimulationHandler::SimulationHandler(QSettings *settingsRef,
+                                     LoggerHandler *loggerRef,
                                      QFrame *debugInfoFrameRef)
 {
+    logger = loggerRef;
     settings = settingsRef;
     debugInfoFrame = debugInfoFrameRef;
     setupGraph();

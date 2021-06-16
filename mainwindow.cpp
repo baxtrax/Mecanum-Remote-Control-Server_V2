@@ -28,21 +28,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     loggerHandler = new LoggerHandler();
-    settingsHandler = new SettingsHandler();
+    settingsHandler = new SettingsHandler(loggerHandler);
     gamepadHandler = new GamepadHandler(loggerHandler);
-    inputHandler = new InputHandler();
-    kinematicsHandler = new KinematicsHandler();
+    inputHandler = new InputHandler(loggerHandler);
+    kinematicsHandler = new KinematicsHandler(loggerHandler);
     outputHandler = new OutputHandler(loggerHandler);
-    //attaching chart to GraphView
     outputHandler->configureChartView(ui->kinematicsGraphView);
+    loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
+
     simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
+                                              loggerHandler,
                                               ui->DebugInfoFrame);
 
     configureConnections();
     loggerHandler->clear();
 
-    ui->loggerTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    ui->loggerTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);
+    ui->loggerPlainTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->loggerPlainTextEdit->setVerticalScrollBar(ui->loggerVerticalScrollbar);
 
     ui->Application_Stack->setCurrentIndex(0);
     ui->home_toolButton->setChecked(true);
@@ -57,8 +59,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->render_placeholder->deleteLater();
     ui->DebugInfoFrame->setVisible(false);
 
-    qDebug()<< ui->simulation_Frame->layout();
+    //Start outputting to logger since ui is now setup.
+    //Need to verify that 3D is working some how (need to research)
     loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
+    settingsHandler->checkStatus();
 }
 
 
@@ -134,17 +138,13 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 void MainWindow::configureConnections()
 {
     connect(loggerHandler,
-            &LoggerHandler::changingColor,
-            ui->loggerTextEdit,
-            &QTextEdit::setTextColor);
-    connect(loggerHandler,
             &LoggerHandler::appendingText,
-            ui->loggerTextEdit,
-            &QTextEdit::append);
+            ui->loggerPlainTextEdit,
+            &QPlainTextEdit::appendHtml);
     connect(loggerHandler,
             &LoggerHandler::clearingText,
-            ui->loggerTextEdit,
-            &QTextEdit::clear);
+            ui->loggerPlainTextEdit,
+            &QPlainTextEdit::clear);
 
     connect(gamepadHandler,
             SIGNAL(gamepad_axisLeftXChanged(double)),

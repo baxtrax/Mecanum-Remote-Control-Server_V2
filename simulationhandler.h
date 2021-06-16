@@ -1,6 +1,10 @@
 #ifndef SIMULATIONHANDLER_H
 #define SIMULATIONHANDLER_H
 
+#include "constants.h"
+#include "helper.h"
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QDebug>
 #include <QWidget>
@@ -14,8 +18,6 @@
 #include <QtDataVisualization/QScatterDataItem>
 #include <QtDataVisualization/QCustom3DItem>
 
-#include "constants.h"
-#include "helper.h"
 
 using namespace QtDataVisualization;
 
@@ -23,7 +25,7 @@ class SimulationHandler : public QObject
 {
     Q_OBJECT
 public:
-    SimulationHandler(QSettings *settingsRef, QFrame *debugInfoFrameRef);
+    SimulationHandler(QSettings *settingsRef, LoggerHandler *loggerRef,QFrame *debugInfoFrameRef);
     QWidget* getWidget();
 
 public slots:
@@ -32,6 +34,8 @@ public slots:
 
 
 private:
+
+    LoggerHandler *logger;
     QSettings *settings;
     QFrame *debugInfoFrame;
     QWidget *simulationWidget;

@@ -1,16 +1,18 @@
 #ifndef KINEMATICSHANDLER_H
 #define KINEMATICSHANDLER_H
 
+#include "constants.h"
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QDebug>
 #include <math.h>
-#include "constants.h"
 
 class KinematicsHandler :  public QObject
 {
     Q_OBJECT
 public:
-    KinematicsHandler();
+    KinematicsHandler(LoggerHandler *loggerRef);
 
 public slots:
     void updateSpeeds(double, double, double);
@@ -20,6 +22,7 @@ signals:
     void functionChanged(double, double, double, double);
 
 private:
+    LoggerHandler *logger;
     double speeds[4];
     double calculateMagnitude(double x, double y);
     double calculateDirection(double x, double y);

@@ -1,6 +1,10 @@
 #ifndef OUTPUTHANDLER_H
 #define OUTPUTHANDLER_H
 
+#include "constants.h"
+#include "helper.h"
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QDebug>
 #include <QSlider>
@@ -9,9 +13,6 @@
 #include <QtCharts/QCategoryAxis>
 
 #include <math.h>
-#include "constants.h"
-#include "loggerhandler.h"
-#include "helper.h"
 
 class OutputHandler : public QObject
 {
@@ -39,6 +40,7 @@ signals:
 
 private:
 
+    LoggerHandler *logger;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
 
@@ -54,7 +56,6 @@ private:
 
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
-    LoggerHandler *logger;
 
     QPen *axisYPen;
     QPen *axisXPen;

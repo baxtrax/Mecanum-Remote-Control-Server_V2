@@ -1,11 +1,12 @@
 #include "settingshandler.h"
 
-SettingsHandler::SettingsHandler()
+SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
 {
+    logger = loggerRef;
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
                              "MechanumRemoteControl", "settings");
-    qDebug() << settings->fileName();
+
     initSettings();
 }
 
@@ -241,6 +242,23 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
     settings->setValue(
         SettingsConstants::APPEAR_THEME_DARK_EN,
         appear_ThemeDarkEnButton);
+}
+
+
+void SettingsHandler::checkStatus()
+{
+    settings->sync();
+    switch(settings->status()) {
+    case QSettings::NoError:
+        logger->write(LoggerConstants::INFO, "Successfully loaded settings");
+        break;
+    case QSettings::AccessError:
+        logger->write(LoggerConstants::ERR, "Could not access settings file");
+        break;
+    case QSettings::FormatError:
+        logger->write(LoggerConstants::ERR, "Could not load settings file");
+        break;
+    }
 }
 
 

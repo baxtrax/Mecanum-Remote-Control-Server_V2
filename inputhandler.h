@@ -1,17 +1,19 @@
 #ifndef INPUTHANDLER_H
 #define INPUTHANDLER_H
 
+#include "constants.h"
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QDebug>
 #include <QSlider>
 
-#include "constants.h"
 
 class InputHandler : public QObject
 {
     Q_OBJECT
 public:
-    InputHandler();
+    InputHandler(LoggerHandler *loggerRef);
 
     //Getters
     double getX();
@@ -40,6 +42,8 @@ signals:
     void z_botSlider_ValChanged(double);
 
 private:
+
+    LoggerHandler *logger;
 
     //Setters
     void setX(double value);

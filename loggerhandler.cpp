@@ -21,53 +21,69 @@ void LoggerHandler::write(QString text)
     }
 
     if (isColorify()) {
+        // TODO: move colors so they can be swapped between dark and light mode
         switch (getLevel()) {
         case LoggerConstants::DEBUG:
-            text = time + " [D]: " + text;
-            emit changingColor(QColor(QRgb(0x9F9F9F)));
+            text = "<font color=\"#9F9F9F\">" +
+                   time + " [D]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::INFO:
-            text = time + " [I]: " + text;
-            emit changingColor(QColor(QRgb(0xFFFFFF)));
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [I]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::WARNING:
-            text = time + " [W]: " + text;
-            emit changingColor(QColor(QRgb(0xFFEA95)));
+            text = "<font color=\"#FFEA95\">" +
+                   time + " [W]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::ERR:
-            text = time + " [E]: " + text;
-            emit changingColor(QColor(QRgb(0xFE6E7C)));
+            text = "<font color=\"#FE6E7C\">" +
+                   time + " [E]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::FATAL:
-            text = time + " [F]: " + text;
-            emit changingColor(QColor(QRgb(0xFF0505)));
+            text = "<font color=\"#FF0505\">" +
+                   time + " [F]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         }
     } else {
         switch (getLevel()) {
         case LoggerConstants::DEBUG:
-            text = time + " [D]: " + text;
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [D]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::INFO:
-            text = time + " [I:] " + text;
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [I]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::WARNING:
-            text = time + " [W]: " + text;
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [W]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::ERR:
-            text = time + " [E]: " + text;
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [E]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         case LoggerConstants::FATAL:
-            text = time + " [F]: " + text;
+            text = "<font color=\"#FFFFFF\">" +
+                   time + " [F]: " + text +
+                   "</font>";
             emit appendingText(text);
             break;
         }

@@ -1,10 +1,11 @@
 #ifndef LOGGERHANDLER_H
 #define LOGGERHANDLER_H
 
+#include "constants.h"
+
 #include <QTextEdit>
 #include <QString>
 #include <QDateTime>
-#include "constants.h"
 
 
 class LoggerHandler : public QObject
@@ -27,7 +28,6 @@ public slots:
     void clear();
 
 signals:
-    void changingColor(QColor);
     void appendingText(QString);
     void clearingText();
 

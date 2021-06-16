@@ -2069,7 +2069,7 @@ font: 16pt  'Open Sans'; }</string>
                    <number>2</number>
                   </property>
                   <item>
-                   <widget class="QTextEdit" name="loggerTextEdit">
+                   <widget class="QPlainTextEdit" name="loggerPlainTextEdit">
                     <property name="font">
                      <font>
                       <family>Roboto Mono for Powerline</family>
@@ -2092,12 +2092,36 @@ font: 16pt  'Open Sans'; }</string>
                     <property name="readOnly">
                      <bool>true</bool>
                     </property>
-                    <property name="html">
-                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Roboto Mono for Powerline'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Open Sans';&quot;&gt;10:35:03: Logger Initilized!&lt;br /&gt;10:35:03: Movement Socket connecting to: 127.0.0.1:5020 ...&lt;br /&gt;10:35:03: Movement Socket connected!&lt;br /&gt;10:35:11: Keyboard turn left pressed!&lt;br /&gt;10:35:11: Keyboard turn left released!&lt;br /&gt;10:35:11: Keyboard up pressed!&lt;br /&gt;10:35:11: Keyboard up released!&lt;br /&gt;10:35:11: Keyboard down pressed!&lt;br /&gt;10:35:11: Keyboard down released!&lt;br /&gt;10:35:12: Keyboard turn left pressed!&lt;br /&gt;10:35:12: Keyboard turn left released!&lt;br /&gt;10:35:12: Keyboard up pressed!&lt;br /&gt;10:35:12: Keyboard up released!&lt;br /&gt;10:35:12: Keyboard down pressed!&lt;br /&gt;10:35:12: Keyboard down released!&lt;br /&gt;10:35:13: Keyboard turn left pressed!&lt;br /&gt;10:35:13: Keyboard turn left released!&lt;br /&gt;10:35:13: Keyboard up pressed!&lt;br /&gt;10:35:13: Keyboard up released!&lt;br /&gt;10:35:13: Keyboard down pressed!&lt;br /&gt;10:35:13: Keyboard down released!&lt;br /&gt;10:35:13: Movement Socket reconnecting ...&lt;br /&gt;10:35:12: Keyboard turn left pressed!&lt;br /&gt;10:35:12: Keyboard turn left released!&lt;br /&gt;10:35:12: Keyboard up pressed!&lt;br /&gt;10:35:12: Keyboard up released!&lt;br /&gt;10:35:12: Keyboard down pressed!&lt;br /&gt;10:35:12: Keyboard down released!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    <property name="plainText">
+                     <string>10:35:03: Logger Initilized!
+10:35:03: Movement Socket connecting to: 127.0.0.1:5020 ...
+10:35:03: Movement Socket connected!
+10:35:11: Keyboard turn left pressed!
+10:35:11: Keyboard turn left released!
+10:35:11: Keyboard up pressed!
+10:35:11: Keyboard up released!
+10:35:11: Keyboard down pressed!
+10:35:11: Keyboard down released!
+10:35:12: Keyboard turn left pressed!
+10:35:12: Keyboard turn left released!
+10:35:12: Keyboard up pressed!
+10:35:12: Keyboard up released!
+10:35:12: Keyboard down pressed!
+10:35:12: Keyboard down released!
+10:35:13: Keyboard turn left pressed!
+10:35:13: Keyboard turn left released!
+10:35:13: Keyboard up pressed!
+10:35:13: Keyboard up released!
+10:35:13: Keyboard down pressed!
+10:35:13: Keyboard down released!
+10:35:13: Movement Socket reconnecting ...
+10:35:12: Keyboard turn left pressed!
+10:35:12: Keyboard turn left released!
+10:35:12: Keyboard up pressed!
+10:35:12: Keyboard up released!
+10:35:12: Keyboard down pressed!
+10:35:12: Keyboard down released!
+</string>
                     </property>
                    </widget>
                   </item>

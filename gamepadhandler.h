@@ -1,11 +1,12 @@
 #ifndef GAMEPADHANDLER_H
 #define GAMEPADHANDLER_H
 
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QtDebug>
 #include <QGamepad>
 #include <QGamepadManager>
-#include "loggerhandler.h"
 
 class GamepadHandler : public QObject
 {

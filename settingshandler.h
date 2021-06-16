@@ -1,8 +1,9 @@
 #ifndef SETTINGSHANDLER_H
 #define SETTINGSHANDLER_H
 
-
 #include "constants.h"
+#include "loggerhandler.h"
+
 #include <QObject>
 #include <QDebug>
 #include <QSettings>
@@ -15,7 +16,7 @@ class SettingsHandler : public QObject
 {
     Q_OBJECT
 public:
-    SettingsHandler();
+    SettingsHandler(LoggerHandler *loggerRef);
     QSettings* getSettings();
     void applySettings(QString conn_CamAddressText,
                        QString conn_CamPortText,
@@ -33,6 +34,7 @@ public:
                        bool render_ViewCountEnButton,
                        bool render_ViewDebugEnButton,
                        bool appear_ThemeDarkEnButton);
+    void checkStatus();
 
 public slots:
     void resetSettings();
@@ -58,6 +60,7 @@ signals:
 
 private:
     QSettings *settings;
+    LoggerHandler *logger;
     void initSettings();
     void saveSettings(QString conn_CamAddressText,
                       QString conn_CamPortText,

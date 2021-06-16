@@ -1,8 +1,9 @@
 #include "inputhandler.h"
 
 // Constructor
-InputHandler::InputHandler()
+InputHandler::InputHandler(LoggerHandler *loggerRef)
 {
+    logger = loggerRef;
     x = 0.0;
     y = 0.0;
     z = 0.0;

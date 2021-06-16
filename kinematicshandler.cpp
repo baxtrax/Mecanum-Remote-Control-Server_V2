@@ -1,8 +1,9 @@
 #include "kinematicshandler.h"
 
 // Constructor
-KinematicsHandler::KinematicsHandler()
+KinematicsHandler::KinematicsHandler(LoggerHandler *loggerRef)
 {
+    logger = loggerRef;
     for (int i=0; i < 4; i++) {
         speeds[i] = 0.0;
     }
