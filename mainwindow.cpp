@@ -257,6 +257,19 @@ void MainWindow::configureConnections()
             SIGNAL(speedsChanged(double,double,double,double)),
             simulationHandler,
             SLOT(updateAnimators(double,double,double,double)));
+    connect(kinematicsHandler,
+            &KinematicsHandler::speedsChanged,
+            this,
+            [this](double FRSpeed,
+                   double BLSpeed,
+                   double FLSpeed,
+                   double BRSpeed)
+            {
+                ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
+                ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
+                ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
+                ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
+            });
 
 
     connect(ui->settings_ResetButton,
@@ -390,6 +403,15 @@ void MainWindow::configureConnections()
             SIGNAL(settingsUpdated()),
             simulationHandler,
             SLOT(updateWithSettings()));
+
+    connect(simulationHandler,
+            &SimulationHandler::updateDebugFPS,
+            ui->debug_FPS,
+            &QLabel::selectedText);
+    connect(simulationHandler,
+            &SimulationHandler::updateDebugFPS,
+            this,
+            [this](double fps) { ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0')); });
 }
 
 //MainWindow deconstructor

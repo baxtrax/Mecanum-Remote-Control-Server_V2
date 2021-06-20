@@ -32,6 +32,8 @@ public slots:
     void updateAnimators(double, double, double, double);
     void updateWithSettings();
 
+signals:
+    void updateDebugFPS(double);
 
 private:
 

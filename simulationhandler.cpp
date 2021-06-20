@@ -224,11 +224,14 @@ void SimulationHandler::setupGraph()
     setup3DOjects();
 
     graph->setMeasureFps(true);
+//    connect(graph,
+//            &QAbstract3DGraph::currentFpsChanged,
+//            this,
+//            [](double value) { //qDebug() << value; });
     connect(graph,
             &QAbstract3DGraph::currentFpsChanged,
             this,
-            [](double value) { qDebug() << value; });
-
+            &SimulationHandler::updateDebugFPS);
     simulationWidget = QWidget::createWindowContainer(graph);
     simulationWidget->setSizePolicy(QSizePolicy::Expanding,
                                     QSizePolicy::Expanding);
