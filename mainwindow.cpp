@@ -265,10 +265,13 @@ void MainWindow::configureConnections()
                    double FLSpeed,
                    double BRSpeed)
             {
-                ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
-                ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
-                ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
-                ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
+                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN).toBool())
+                {
+                    ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
+                    ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
+                    ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
+                    ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
+                }
             });
 
 
@@ -411,7 +414,12 @@ void MainWindow::configureConnections()
     connect(simulationHandler,
             &SimulationHandler::updateDebugFPS,
             this,
-            [this](double fps) { ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0')); });
+            [this](double fps)
+            {
+                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN).toBool()) {
+                    ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
+                }
+            });
 }
 
 //MainWindow deconstructor
