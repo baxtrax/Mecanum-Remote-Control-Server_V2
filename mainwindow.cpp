@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     kinematicsHandler = new KinematicsHandler(loggerHandler);
     outputHandler = new OutputHandler(loggerHandler);
     outputHandler->configureChartView(ui->kinematicsGraphView);
-    loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
 
     simulationHandler = new SimulationHandler(loggerHandler,
                                               settingsHandler->getSettings());
@@ -58,14 +57,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->render_placeholder->deleteLater();
     ui->DebugInfoFrame->setVisible(false);
 
-    //Need a way to check if polish step has happened
-    //Start outputting to logger since ui is now setup.
-    //Need to verify that 3D is working some how (need to research)
-    loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
-    settingsHandler->initSettings();
-    settingsHandler->checkStatus();
+
 }
 
+bool MainWindow::event(QEvent *event)
+{
+    int returnV = QWidget::event(event);
+
+    if (event->type() == QEvent::Polish)
+    {
+        loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
+        settingsHandler->initSettings();
+        settingsHandler->checkStatus();
+        //Need to verify that 3D is working some how (need to research)
+        loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
+    }
+    return returnV;
+}
 
 /**
  * @brief Is called when any key is pressed down and emits signals for each

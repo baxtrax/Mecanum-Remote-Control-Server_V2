@@ -46,15 +46,19 @@ void OutputHandler::configurePenBrushFont()
     lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
     lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
     lightPinkBruise_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
+    //QBrush lightPinkBruise_GradientPenBrush = QBrush(QRgb(0xE84DD1));
+    QBrush lightPinkBruise_GradientPenBrush = QBrush(lightPinkBruise_Gradient);
 
     QLinearGradient darkUltramarine_Gradient(QPointF(0, 0),QPointF(1, 0));
     darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
     darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
     darkUltramarine_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
+    //QBrush darkUltramarine_GradientPenBrush = QBrush(QRgb(0x4F46FA));
+    QBrush darkUltramarine_GradientPenBrush = QBrush(darkUltramarine_Gradient);
 
-    FRBLPen = new QPen(lightPinkBruise_Gradient, 5,
+    FRBLPen = new QPen(lightPinkBruise_GradientPenBrush, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    FLBRPen = new QPen(darkUltramarine_Gradient, 5,
+    FLBRPen = new QPen(darkUltramarine_GradientPenBrush, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     QBrush dirPenBrush = QBrush(QRgb(0xFFFFFF));
@@ -138,6 +142,8 @@ void OutputHandler::configureChart()
     BRSeries->attachAxis(axisY);
     dirSeries->attachAxis(axisX);
     dirSeries->attachAxis(axisY);
+
+    useHardwareAcceleration(true);
 }
 
 void OutputHandler::configureChartView(QtCharts::QChartView *chartView)
@@ -408,6 +414,16 @@ void OutputHandler::plotArray(double** arr, int graphNum) {
             case 3: BRSeries->append(x, y); break;
         }
     }
+}
+
+//TODO add to settings for chart
+void OutputHandler::useHardwareAcceleration(bool value)
+{
+    FRSeries->setUseOpenGL(value);
+    BLSeries->setUseOpenGL(value);
+    FLSeries->setUseOpenGL(value);
+    BRSeries->setUseOpenGL(value);
+    dirSeries->setUseOpenGL(value);
 }
 
 

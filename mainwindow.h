@@ -29,6 +29,7 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    bool event(QEvent *event);
 
 private slots:
     void on_home_toolButton_clicked();

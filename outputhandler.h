@@ -85,6 +85,7 @@ private:
     void configureAxis();
     void configureSeries();
     void configureChart();
+    void useHardwareAcceleration(bool value);
 };
 
 #endif // OUTPUTHANDLER_H
