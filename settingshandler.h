@@ -35,6 +35,7 @@ public:
                        bool render_ViewDebugEnButton,
                        bool appear_ThemeDarkEnButton);
     void checkStatus();
+    void initSettings();
 
 public slots:
     void resetSettings();
@@ -61,7 +62,6 @@ signals:
 private:
     QSettings *settings;
     LoggerHandler *logger;
-    void initSettings();
     void saveSettings(QString conn_CamAddressText,
                       QString conn_CamPortText,
                       bool conn_CamEnButton,

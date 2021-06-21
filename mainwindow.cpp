@@ -36,9 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     outputHandler->configureChartView(ui->kinematicsGraphView);
     loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
 
-    simulationHandler = new SimulationHandler(settingsHandler->getSettings(),
-                                              loggerHandler,
-                                              ui->DebugInfoFrame);
+    simulationHandler = new SimulationHandler(loggerHandler,
+                                              settingsHandler->getSettings());
 
     configureConnections();
     loggerHandler->clear();
@@ -59,9 +58,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->render_placeholder->deleteLater();
     ui->DebugInfoFrame->setVisible(false);
 
+    //Need a way to check if polish step has happened
     //Start outputting to logger since ui is now setup.
     //Need to verify that 3D is working some how (need to research)
     loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
+    settingsHandler->initSettings();
     settingsHandler->checkStatus();
 }
 
@@ -265,7 +266,7 @@ void MainWindow::configureConnections()
                    double FLSpeed,
                    double BRSpeed)
             {
-                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN).toBool())
+                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool())
                 {
                     ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
                     ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
@@ -329,8 +330,6 @@ void MainWindow::configureConnections()
                 }
             });
 
-
-//        ui->appear_ThemeDarkEnButton
     connect(settingsHandler,
             &SettingsHandler::signalConn_CamAddressText,
             ui->conn_CamAddressText,
@@ -409,17 +408,17 @@ void MainWindow::configureConnections()
 
     connect(simulationHandler,
             &SimulationHandler::updateDebugFPS,
-            ui->debug_FPS,
-            &QLabel::selectedText);
-    connect(simulationHandler,
-            &SimulationHandler::updateDebugFPS,
             this,
             [this](double fps)
             {
-                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN).toBool()) {
+                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) {
                     ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
                 }
             });
+    connect(simulationHandler,
+            &SimulationHandler::setDebugInfoFrameVisible,
+            ui->DebugInfoFrame,
+            &QFrame::setVisible);
 }
 
 //MainWindow deconstructor

@@ -25,7 +25,7 @@ class SimulationHandler : public QObject
 {
     Q_OBJECT
 public:
-    SimulationHandler(QSettings *settingsRef, LoggerHandler *loggerRef,QFrame *debugInfoFrameRef);
+    SimulationHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     QWidget* getWidget();
 
 public slots:
@@ -34,6 +34,7 @@ public slots:
 
 signals:
     void updateDebugFPS(double);
+    void setDebugInfoFrameVisible(bool);
 
 private:
 

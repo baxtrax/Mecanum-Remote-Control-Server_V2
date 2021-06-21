@@ -6,8 +6,6 @@ SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
                              "MechanumRemoteControl", "settings");
-
-    initSettings();
 }
 
 
@@ -17,6 +15,7 @@ SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
  */
 void SettingsHandler::initSettings()
 {
+    settings->sync();
     displaySettings();
     emit settingsUpdated();
 }
@@ -96,6 +95,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
 void SettingsHandler::displaySettings()
 {
     qDebug() << "Display Settings";
+    //qDebug() << settings->value(SettingsConstants::CONN_CAM_ADDRESS).toString();
     emit signalConn_CamAddressText(
         settings->value(
                     SettingsConstants::CONN_CAM_ADDRESS,
@@ -248,6 +248,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
 void SettingsHandler::checkStatus()
 {
     settings->sync();
+    qDebug() << settings->fileName();
     switch(settings->status()) {
     case QSettings::NoError:
         logger->write(LoggerConstants::INFO, "Successfully loaded settings");

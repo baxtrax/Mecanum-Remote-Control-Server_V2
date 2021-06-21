@@ -11,13 +11,11 @@
 //
 
 // Constructor
-SimulationHandler::SimulationHandler(QSettings *settingsRef,
-                                     LoggerHandler *loggerRef,
-                                     QFrame *debugInfoFrameRef)
+SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
+                                     QSettings *settingsRef)
 {
     logger = loggerRef;
     settings = settingsRef;
-    debugInfoFrame = debugInfoFrameRef;
     setupGraph();
 
     FLcurrentRotation = FLWheelMesh->rotation();
@@ -433,11 +431,7 @@ void SimulationHandler::setupBRAnimation() {
 
 void SimulationHandler::updateWithSettings()
 {
-    debugInfoFrame->setVisible(
-        settings->value(
-                    SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                    false).toBool());
-
+    emit setDebugInfoFrameVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool());
 }
 
 // Getters
