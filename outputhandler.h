@@ -11,6 +11,7 @@
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QChartView>
 #include <QtCharts/QCategoryAxis>
+#include <QSettings>
 
 #include <math.h>
 
@@ -18,7 +19,7 @@ class OutputHandler : public QObject
 {
     Q_OBJECT
 public:
-    OutputHandler(LoggerHandler *loggerRef);
+    OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
     void configureChartView(QtCharts::QChartView *chartView);
@@ -26,6 +27,7 @@ public:
 public slots:
     void updateSliders(double, double, double, double);
     void updateChart(double, double, double, double);
+    void updateWithSettings();
 
 signals:
     void FR_topSlider_ValChanged(double);
@@ -38,9 +40,12 @@ signals:
     void BR_topSlider_ValChanged(double);
     void BR_botSlider_ValChanged(double);
 
+    void setChartVisibility(bool);
+
 private:
 
     LoggerHandler *logger;
+    QSettings *settings;
     QtCharts::QCategoryAxis *axisX;
     QtCharts::QCategoryAxis *axisY;
 
@@ -53,6 +58,7 @@ private:
     double** BLarrPtr;
     double** FLarrPtr;
     double** BRarrPtr;
+
 
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
@@ -67,11 +73,16 @@ private:
     QBrush *axisLabelPenBrush;
 
     int detailLevel;
+    int maxDataPoints;
 
     void setFRSlider(double value);
     void setBLSlider(double value);
     void setFLSlider(double value);
     void setBRSlider(double value);
+    void setMaxDataPoints(int value);
+
+    int getMaxDataPoints;
+
     double** generateSinePointsKinematics(int numberOfPoints,
                                                          double cycles,
                                                          double amp,

@@ -2,9 +2,10 @@
 
 
 // Constructor
-OutputHandler::OutputHandler(LoggerHandler *loggerRef)
+OutputHandler::OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef)
 {
     logger = loggerRef;
+    settings = settingsRef;
 
     detailLevel = SettingsConstants::ADVANCED_INFO;
 
@@ -426,6 +427,11 @@ void OutputHandler::useHardwareAcceleration(bool value)
     dirSeries->setUseOpenGL(value);
 }
 
+void OutputHandler::updateWithSettings()
+{
+    qDebug() << "output handler update";
+    emit setChartVisibility(settings->value(SettingsConstants::GRAPH_PERF_EN, false).toBool());
+}
 
 // Getters
 

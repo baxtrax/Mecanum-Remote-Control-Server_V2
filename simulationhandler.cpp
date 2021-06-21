@@ -185,6 +185,11 @@ void SimulationHandler::updateBRAnimation(double BRSpeed) {
     }
 }
 
+void SimulationHandler::updateWithSettings()
+{
+    qDebug() << "simulation handler update";
+    emit setDebugInfoFrameVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool());
+}
 
 /**
  * @brief Sets up graph and customizes it.
@@ -429,10 +434,6 @@ void SimulationHandler::setupBRAnimation() {
     BRAnimation->start();
 }
 
-void SimulationHandler::updateWithSettings()
-{
-    emit setDebugInfoFrameVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool());
-}
 
 // Getters
 QWidget* SimulationHandler::getWidget()

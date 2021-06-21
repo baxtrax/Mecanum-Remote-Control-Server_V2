@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(loggerHandler);
     kinematicsHandler = new KinematicsHandler(loggerHandler);
-    outputHandler = new OutputHandler(loggerHandler);
+    outputHandler = new OutputHandler(loggerHandler,
+                                      settingsHandler->getSettings());
     outputHandler->configureChartView(ui->kinematicsGraphView);
 
     simulationHandler = new SimulationHandler(loggerHandler,
@@ -254,6 +255,11 @@ void MainWindow::configureConnections()
             ui->BR_botVSlider,
             &QSlider::setValue);
 
+    connect(outputHandler,
+            &OutputHandler::setChartVisibility,
+            ui->kinematicsGraphView,
+            &QChartView::setVisible);
+
     connect(kinematicsHandler,
             SIGNAL(speedsChanged(double,double,double,double)),
             outputHandler,
@@ -412,6 +418,10 @@ void MainWindow::configureConnections()
     connect(settingsHandler,
             SIGNAL(settingsUpdated()),
             simulationHandler,
+            SLOT(updateWithSettings()));
+    connect(settingsHandler,
+            SIGNAL(settingsUpdated()),
+            outputHandler,
             SLOT(updateWithSettings()));
 
     connect(simulationHandler,
