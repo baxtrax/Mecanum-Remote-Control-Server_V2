@@ -47,6 +47,29 @@ namespace SettingsConstants {
     inline constexpr auto RENDER_VIEW_DEBUG_EN = "render/view/debug_en";
 
     inline constexpr auto APPEAR_THEME_DARK_EN = "appear/theme/dark_en";
+
+    //Defaults
+    inline constexpr auto D_CONN_CAM_ADDRESS = "123.123.123.123";
+    inline constexpr auto D_CONN_CAM_PORT = "12345";
+    inline constexpr bool D_CONN_CAM_EN = false;
+
+    inline constexpr auto D_CONN_SOCK_ADDRESS = "123.123.123.123";
+    inline constexpr auto D_CONN_SOCK_PORT = "12345";
+    inline constexpr bool D_CONN_SOCK_EN = false;
+
+    inline constexpr bool D_GRAPH_PERF_EN = false;
+    inline constexpr int D_GRAPH_PERF_QUAL = 0;
+    inline constexpr int D_GRAPH_PERF_POINTS = 15;
+
+    inline constexpr bool D_RENDER_PERF_FPS_EN = false;
+    inline constexpr int D_RENDER_PERF_QUAL = 0;
+    inline constexpr int D_RENDER_PERF_FPS_LIM = 0;
+
+    inline constexpr bool D_RENDER_VIEW_EN = false;
+    inline constexpr bool D_RENDER_VIEW_COUNT_EN = false;
+    inline constexpr bool D_RENDER_VIEW_DEBUG_EN = false;
+
+    inline constexpr bool D_APPEAR_THEME_DARK_EN = false;
 }
 
 namespace LoggerConstants {
