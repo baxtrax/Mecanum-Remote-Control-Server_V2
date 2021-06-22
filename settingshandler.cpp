@@ -26,23 +26,23 @@ void SettingsHandler::initSettings()
  */
 void SettingsHandler::resetSettings()
 {
-    qDebug() << "Reset Settings";    
-    emit signalConn_CamAddressText("123.123.123.123");
-    emit signalConn_CamPortText("12345");
-    emit signalConn_CamEnButton(false);
-    emit signalConn_CommAddressText("123.123.123.123");
-    emit signalConn_CommPortText("12345");
-    emit signalConn_CommEnButton(false);
-    emit signalGraph_PerformEnButton(false);
-    emit signalGraph_PerformQualCombo(0);
-    emit signalGraph_PerformPointsSlider(15);
-    emit signalRender_PerformFPSLimEnButton(false);
-    emit signalRender_PerformQualCombo(0);
-    emit signalRender_PerformFPSSlider(0);
-    emit signalRender_ViewEnButton(false);
-    emit signalRender_ViewCountEnButton(false);
-    emit signalRender_ViewDebugEnButton(false);
-    emit signalAppear_ThemeDarkEnButton(false);
+    qDebug() << "Reset Settings";
+    emit signalConn_CamAddressText(SettingsConstants::D_CONN_CAM_ADDRESS);
+    emit signalConn_CamPortText(SettingsConstants::D_CONN_CAM_PORT);
+    emit signalConn_CamEnButton(SettingsConstants::D_CONN_CAM_EN);
+    emit signalConn_CommAddressText(SettingsConstants::D_CONN_COMM_ADDRESS);
+    emit signalConn_CommPortText(SettingsConstants::D_CONN_COMM_PORT);
+    emit signalConn_CommEnButton(SettingsConstants::D_CONN_COMM_EN);
+    emit signalGraph_PerformEnButton(SettingsConstants::D_GRAPH_PERF_EN);
+    emit signalGraph_PerformQualCombo(SettingsConstants::D_GRAPH_PERF_QUAL);
+    emit signalGraph_PerformPointsSlider(SettingsConstants::D_GRAPH_PERF_POINTS);
+    emit signalRender_PerformFPSLimEnButton(SettingsConstants::D_RENDER_PERF_FPS_EN);
+    emit signalRender_PerformQualCombo(SettingsConstants::D_RENDER_PERF_QUAL);
+    emit signalRender_PerformFPSSlider(SettingsConstants::D_RENDER_PERF_FPS_LIM);
+    emit signalRender_ViewEnButton(SettingsConstants::D_RENDER_VIEW_EN);
+    emit signalRender_ViewCountEnButton(SettingsConstants::D_RENDER_VIEW_COUNT_EN);
+    emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
+    emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
 
 }
 
@@ -99,71 +99,71 @@ void SettingsHandler::displaySettings()
     emit signalConn_CamAddressText(
         settings->value(
                     SettingsConstants::CONN_CAM_ADDRESS,
-                    "123.123.123.123").toString());
+                    SettingsConstants::D_CONN_CAM_ADDRESS).toString());
     emit signalConn_CamPortText(
         settings->value(
                     SettingsConstants::CONN_CAM_PORT,
-                    "12345").toString());
+                    SettingsConstants::D_CONN_CAM_PORT).toString());
     emit signalConn_CamEnButton(
         settings->value(
                     SettingsConstants::CONN_CAM_EN,
-                    false).toBool());
+                    SettingsConstants::D_CONN_CAM_EN).toBool());
 
     emit signalConn_CommAddressText(
         settings->value(
-                    SettingsConstants::CONN_SOCK_ADDRESS,
-                    "123.123.123.123").toString());
+                    SettingsConstants::CONN_COMM_ADDRESS,
+                    SettingsConstants::D_CONN_COMM_ADDRESS).toString());
     emit signalConn_CommPortText(
         settings->value(
-                    SettingsConstants::CONN_SOCK_PORT,
-                    "12345").toString());
+                    SettingsConstants::CONN_COMM_PORT,
+                    SettingsConstants::D_CONN_COMM_PORT).toString());
     emit signalConn_CommEnButton(
         settings->value(
-                    SettingsConstants::CONN_SOCK_EN,
-                    false).toBool());
+                    SettingsConstants::CONN_COMM_EN,
+                    SettingsConstants::D_CONN_COMM_EN).toBool());
 
     emit signalGraph_PerformEnButton(
         settings->value(
                     SettingsConstants::GRAPH_PERF_EN,
-                    false).toBool());
+                    SettingsConstants::D_GRAPH_PERF_EN).toBool());
     emit signalGraph_PerformQualCombo(
         settings->value(
                     SettingsConstants::GRAPH_PERF_QUAL,
-                    0).toInt());
+                    SettingsConstants::D_GRAPH_PERF_QUAL).toInt());
     emit signalGraph_PerformPointsSlider(
         settings->value(
                     SettingsConstants::GRAPH_PERF_POINTS,
-                    15).toInt());
+                    SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
 
     emit signalRender_PerformFPSLimEnButton(
         settings->value(
                     SettingsConstants::RENDER_PERF_FPS_EN,
-                    false).toBool());
+                    SettingsConstants::D_RENDER_PERF_FPS_EN).toBool());
     emit signalRender_PerformQualCombo(
         settings->value(
                     SettingsConstants::RENDER_PERF_QUAL,
-                    0).toInt());
+                    SettingsConstants::D_RENDER_PERF_QUAL).toInt());
     emit signalRender_PerformFPSSlider(
         settings->value(
                     SettingsConstants::RENDER_PERF_FPS_LIM,
-                    0).toInt());
+                    SettingsConstants::D_RENDER_PERF_FPS_LIM).toInt());
 
     emit signalRender_ViewEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_EN,
-                    false).toBool());
+                    SettingsConstants::D_RENDER_VIEW_EN).toBool());
     emit signalRender_ViewCountEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_COUNT_EN,
-                    false).toBool());
+                    SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool());
     emit signalRender_ViewDebugEnButton(
         settings->value(
                     SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                    false).toBool());
+                    SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
     emit signalAppear_ThemeDarkEnButton(
         settings->value(
                     SettingsConstants::APPEAR_THEME_DARK_EN,
-                    false).toBool());
+                    SettingsConstants::D_APPEAR_THEME_DARK_EN).toBool());
 }
 
 
@@ -200,13 +200,13 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
         conn_CamEnButton);
 
     settings->setValue(
-        SettingsConstants::CONN_SOCK_ADDRESS,
+        SettingsConstants::CONN_COMM_ADDRESS,
         conn_CommAddressText);
     settings->setValue(
-        SettingsConstants::CONN_SOCK_PORT,
+        SettingsConstants::CONN_COMM_PORT,
         conn_CommPortText);
     settings->setValue(
-        SettingsConstants::CONN_SOCK_EN,
+        SettingsConstants::CONN_COMM_EN,
         conn_CommEnButton);
 
     settings->setValue(
