@@ -234,17 +234,19 @@ void OutputHandler::updateChart(double dir,
     logger->write(LoggerConstants::DEBUG, "Updating kinematics chart ...");
     // Generate series showing vertical line where speeds are currently getting
     // fetched from.
-    if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
-    dir = linearMap(dir,
-                    0,
-                    (2 * MathConstants::PI),
-                    IOConstants::MIN_XCHART,
-                    IOConstants::MAX_XCHART);
-    dirSeries->clear();
-    dirSeries->append(dir, IOConstants::MAX+.02);
-    dirSeries->append(dir, IOConstants::MIN-.02);
+    if(!(getCurrentDetailLevel() == SettingsConstants::DISABLED_INFO)) {
+        if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
+        dir = linearMap(dir,
+                        0,
+                        (2 * MathConstants::PI),
+                        IOConstants::MIN_XCHART,
+                        IOConstants::MAX_XCHART);
+        dirSeries->clear();
+        dirSeries->append(dir, IOConstants::MAX+.02);
+        dirSeries->append(dir, IOConstants::MIN-.02);
 
-    if (scaleFactor == 0) { scaleFactor = 1.0; }
+        if (scaleFactor == 0) { scaleFactor = 1.0; }
+    }
 
     // TODO Potentially switch over to using vectors? Statically allocated
     // arrays seems fine in this case as the array size does not change after
@@ -252,9 +254,19 @@ void OutputHandler::updateChart(double dir,
     // Show line at dir
     switch (getCurrentDetailLevel()) {
         case SettingsConstants::DISABLED_INFO:
+            FRSeries->setVisible(false);
+            BLSeries->setVisible(false);
+            FLSeries->setVisible(false);
+            BRSeries->setVisible(false);
+
             break;
         case SettingsConstants::BASIC_INFO:
-            // Generate data of wave with mag, and scale for FRBL
+            // Generate mag and scale - 2 speed lines
+            FRSeries->setVisible(true);
+            BLSeries->setVisible(false);
+            FLSeries->setVisible(true);
+            BRSeries->setVisible(false);
+
             FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
                                                       1.0,
                                                       1.0,
@@ -290,7 +302,12 @@ void OutputHandler::updateChart(double dir,
             break;
 
         case SettingsConstants::DETAILED_INFO:
-            // Generate data of wave with mag, z, and scale for FRBL
+            //Generate Mag scale and z - 2 speed lines
+            FRSeries->setVisible(true);
+            BLSeries->setVisible(false);
+            FLSeries->setVisible(true);
+            BRSeries->setVisible(false);
+
             FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
                                                       1.0,
                                                       1.0,
@@ -325,7 +342,12 @@ void OutputHandler::updateChart(double dir,
             break;
 
         case SettingsConstants::ADVANCED_INFO:
-            // Generate data of wave with mag, z, and scale for FRBL
+            // Generate Mag scale and z - 4 speed lines
+            FRSeries->setVisible(true);
+            BLSeries->setVisible(true);
+            FLSeries->setVisible(true);
+            BRSeries->setVisible(true);
+
             FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
                                                     1.0,
                                                     1.0,
@@ -430,8 +452,31 @@ void OutputHandler::useHardwareAcceleration(bool value)
 void OutputHandler::updateWithSettings()
 {
     qDebug() << "output handler update";
-    emit setChartVisibility(settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN).toBool());
-//    switch(settings->value(SettingsConstants::GRAPH_PERF_QUAL, ))
+    bool enStatus = settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN).toBool();
+    qDebug() << enStatus;
+    emit setChartVisibility(enStatus);
+    if (!enStatus)
+    {
+        qDebug() << "ooga";
+        setDetailLevel(SettingsConstants::DISABLED_INFO);
+    } else {
+        int test = settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt();
+        switch(test)
+        {
+            case 0:
+                qDebug() << 0;
+                setDetailLevel(SettingsConstants::BASIC_INFO);
+                break;
+            case 1:
+                qDebug() << 1;
+                setDetailLevel(SettingsConstants::DETAILED_INFO);
+                break;
+            case 2:
+                qDebug() << 2;
+                setDetailLevel(SettingsConstants::ADVANCED_INFO);
+                break;
+        }
+    }
 }
 
 // Getters

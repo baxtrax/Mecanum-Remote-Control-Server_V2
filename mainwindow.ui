@@ -3934,7 +3934,7 @@ QComboBox QAbstractItemView {
                      <bool>false</bool>
                     </property>
                     <property name="currentIndex">
-                     <number>2</number>
+                     <number>0</number>
                     </property>
                     <property name="maxVisibleItems">
                      <number>3</number>
@@ -3953,17 +3953,17 @@ QComboBox QAbstractItemView {
                     </property>
                     <item>
                      <property name="text">
-                      <string>Basic</string>
+                      <string extracomment="test1">Basic</string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>Detailed</string>
+                      <string extracomment="test2">Detailed</string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>Advanced</string>
+                      <string extracomment="test3">Advanced</string>
                      </property>
                     </item>
                    </widget>
