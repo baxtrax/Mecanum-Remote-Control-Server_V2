@@ -451,28 +451,22 @@ void OutputHandler::useHardwareAcceleration(bool value)
 
 void OutputHandler::updateWithSettings()
 {
-    qDebug() << "output handler update";
     bool enStatus = settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN).toBool();
-    qDebug() << enStatus;
     emit setChartVisibility(enStatus);
     if (!enStatus)
     {
-        qDebug() << "ooga";
         setDetailLevel(SettingsConstants::DISABLED_INFO);
     } else {
         int test = settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt();
         switch(test)
         {
             case 0:
-                qDebug() << 0;
                 setDetailLevel(SettingsConstants::BASIC_INFO);
                 break;
             case 1:
-                qDebug() << 1;
                 setDetailLevel(SettingsConstants::DETAILED_INFO);
                 break;
             case 2:
-                qDebug() << 2;
                 setDetailLevel(SettingsConstants::ADVANCED_INFO);
                 break;
         }
@@ -490,6 +484,11 @@ int OutputHandler::getCurrentDetailLevel()
     return detailLevel;
 }
 
+int OutputHandler::getMaxDataPoints()
+{
+    return maxDataPoints;
+}
+
 
 // Setters
 /**
@@ -499,6 +498,11 @@ int OutputHandler::getCurrentDetailLevel()
 void OutputHandler::setDetailLevel(int level)
 {
     detailLevel = level;
+}
+
+void OutputHandler::setMaxDataPoints(int value)
+{
+    maxDataPoints = value;
 }
 
 

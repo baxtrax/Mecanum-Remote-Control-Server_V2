@@ -81,7 +81,7 @@ private:
     void setBRSlider(double value);
     void setMaxDataPoints(int value);
 
-    int getMaxDataPoints;
+    int getMaxDataPoints();
 
     double** generateSinePointsKinematics(int numberOfPoints,
                                                          double cycles,
