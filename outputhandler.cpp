@@ -451,6 +451,7 @@ void OutputHandler::useHardwareAcceleration(bool value)
 
 void OutputHandler::updateWithSettings()
 {
+    qDebug() << "output handler update";
     bool enStatus = settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN).toBool();
     emit setChartVisibility(enStatus);
     if (!enStatus)
