@@ -36,9 +36,7 @@ void SettingsHandler::resetSettings()
     emit signalGraph_PerformQualCombo(SettingsConstants::D_GRAPH_PERF_QUAL);
     emit signalGraph_PerformPointsSlider(SettingsConstants::D_GRAPH_PERF_POINTS);
     emit signalGraph_PerformAccelEnButton(SettingsConstants::D_GRAPH_PERF_ACCEL);
-    emit signalRender_PerformFPSLimEnButton(SettingsConstants::D_RENDER_PERF_FPS_EN);
     emit signalRender_PerformQualCombo(SettingsConstants::D_RENDER_PERF_QUAL);
-    emit signalRender_PerformFPSSlider(SettingsConstants::D_RENDER_PERF_FPS_LIM);
     emit signalRender_ViewEnButton(SettingsConstants::D_RENDER_VIEW_EN);
     emit signalRender_ViewCountEnButton(SettingsConstants::D_RENDER_VIEW_COUNT_EN);
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
@@ -60,9 +58,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     int graph_PerformQualCombo,
                                     int graph_PerformPointsSlider,
                                     bool graph_PerformAccel,
-                                    bool render_PerformFPSLimEnButton,
                                     int render_PerformQualCombo,
-                                    int render_PerformFPSSlider,
                                     bool render_ViewEnButton,
                                     bool render_ViewCountEnButton,
                                     bool render_ViewDebugEnButton,
@@ -78,9 +74,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                  graph_PerformQualCombo,
                  graph_PerformPointsSlider,
                  graph_PerformAccel,
-                 render_PerformFPSLimEnButton,
                  render_PerformQualCombo,
-                 render_PerformFPSSlider,
                  render_ViewEnButton,
                  render_ViewCountEnButton,
                  render_ViewDebugEnButton,
@@ -137,18 +131,10 @@ void SettingsHandler::displaySettings()
                     SettingsConstants::GRAPH_PERF_ACCEL,
                     SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
 
-    emit signalRender_PerformFPSLimEnButton(
-        settings->value(
-                    SettingsConstants::RENDER_PERF_FPS_EN,
-                    SettingsConstants::D_RENDER_PERF_FPS_EN).toBool());
     emit signalRender_PerformQualCombo(
         settings->value(
                     SettingsConstants::RENDER_PERF_QUAL,
                     SettingsConstants::D_RENDER_PERF_QUAL).toInt());
-    emit signalRender_PerformFPSSlider(
-        settings->value(
-                    SettingsConstants::RENDER_PERF_FPS_LIM,
-                    SettingsConstants::D_RENDER_PERF_FPS_LIM).toInt());
 
     emit signalRender_ViewEnButton(
         settings->value(
@@ -182,9 +168,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    int graph_PerformQualCombo,
                                    int graph_PerformPointsSlider,
                                    bool graph_PerformAccel,
-                                   bool render_PerformFPSLimEnButton,
                                    int render_PerformQualCombo,
-                                   int render_PerformFPSSlider,
                                    bool render_ViewEnButton,
                                    bool render_ViewCountEnButton,
                                    bool render_ViewDebugEnButton,
@@ -225,14 +209,8 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
         graph_PerformAccel);
 
     settings->setValue(
-        SettingsConstants::RENDER_PERF_FPS_EN,
-        render_PerformFPSLimEnButton);
-    settings->setValue(
         SettingsConstants::RENDER_PERF_QUAL,
         render_PerformQualCombo);
-    settings->setValue(
-        SettingsConstants::RENDER_PERF_FPS_LIM,
-        render_PerformFPSSlider);
 
     settings->setValue(
         SettingsConstants::RENDER_VIEW_EN,

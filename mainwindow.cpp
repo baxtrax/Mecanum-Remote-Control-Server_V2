@@ -310,9 +310,7 @@ void MainWindow::configureConnections()
                                   ui->graph_PerformQualCombo->currentIndex(),
                                   ui->graph_PerformPointsSlider->value(),
                                   ui->graph_PerformAccelEnButton->isChecked(),
-                                  ui->render_PerformFPSLimEnButton->isChecked(),
                                   ui->render_PerformQualCombo->currentIndex(),
-                                  ui->render_PerformFPSSlider->value(),
                                   ui->render_ViewEnButton->isChecked(),
                                   ui->render_ViewCountEnButton->isChecked(),
                                   ui->render_ViewDebugEnButton->isChecked(),
@@ -327,23 +325,6 @@ void MainWindow::configureConnections()
             &QSlider::valueChanged,
             this,
             [this](int value) { ui->graph_PerformPointsText->setNum(value); });
-    connect(ui->render_PerformFPSSlider,
-            &QSlider::valueChanged,
-            this,
-            [this](int value)
-            {
-                switch(value) {
-                case 0:
-                    ui->render_PerformFPSText->setNum(15);
-                    break;
-                case 1:
-                    ui->render_PerformFPSText->setNum(30);
-                    break;
-                case 2:
-                    ui->render_PerformFPSText->setNum(60);
-                    break;
-                }
-            });
 
     connect(settingsHandler,
             &SettingsHandler::signalConn_CamAddressText,
@@ -389,17 +370,9 @@ void MainWindow::configureConnections()
             &QRadioButton::setChecked);
 
     connect(settingsHandler,
-            &SettingsHandler::signalRender_PerformFPSLimEnButton,
-            ui->render_PerformFPSLimEnButton,
-            &QRadioButton::setChecked);
-    connect(settingsHandler,
             &SettingsHandler::signalRender_PerformQualCombo,
             ui->render_PerformQualCombo,
             &QComboBox::setCurrentIndex);
-    connect(settingsHandler,
-            &SettingsHandler::signalRender_PerformFPSSlider,
-            ui->render_PerformFPSSlider,
-            &QSlider::setValue);
 
     connect(settingsHandler,
             &SettingsHandler::signalRender_ViewEnButton,

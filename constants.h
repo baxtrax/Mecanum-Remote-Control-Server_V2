@@ -62,9 +62,7 @@ namespace SettingsConstants {
     inline constexpr int D_GRAPH_PERF_QUAL = 2;
     inline constexpr int D_GRAPH_PERF_POINTS = 15;
 
-    inline constexpr bool D_RENDER_PERF_FPS_EN = false;
     inline constexpr int D_RENDER_PERF_QUAL = 0;
-    inline constexpr int D_RENDER_PERF_FPS_LIM = 0;
     inline constexpr bool D_GRAPH_PERF_ACCEL = true;
 
     inline constexpr bool D_RENDER_VIEW_EN = true;
