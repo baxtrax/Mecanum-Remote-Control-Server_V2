@@ -309,6 +309,7 @@ void MainWindow::configureConnections()
                                   ui->graph_PerformEnButton->isChecked(),
                                   ui->graph_PerformQualCombo->currentIndex(),
                                   ui->graph_PerformPointsSlider->value(),
+                                  ui->graph_PerformAccelEnButton->isChecked(),
                                   ui->render_PerformFPSLimEnButton->isChecked(),
                                   ui->render_PerformQualCombo->currentIndex(),
                                   ui->render_PerformFPSSlider->value(),
@@ -382,6 +383,10 @@ void MainWindow::configureConnections()
             &SettingsHandler::signalGraph_PerformPointsSlider,
             ui->graph_PerformPointsSlider,
             &QSlider::setValue);
+    connect(settingsHandler,
+            &SettingsHandler::signalGraph_PerformAccelEnButton,
+            ui->graph_PerformAccelEnButton,
+            &QRadioButton::setChecked);
 
     connect(settingsHandler,
             &SettingsHandler::signalRender_PerformFPSLimEnButton,

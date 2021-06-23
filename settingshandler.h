@@ -27,6 +27,7 @@ public:
                        bool graph_PerformEnButton,
                        int graph_PerformQualCombo,
                        int graph_PerformPointsSlider,
+                       bool graph_PerformAccel,
                        bool render_PerformFPSLimEnButton,
                        int render_PerformQualCombo,
                        int render_PerformFPSSlider,
@@ -51,6 +52,7 @@ signals:
     void signalGraph_PerformEnButton(bool);
     void signalGraph_PerformQualCombo(int);
     void signalGraph_PerformPointsSlider(int);
+    void signalGraph_PerformAccelEnButton(bool);
     void signalRender_PerformFPSLimEnButton(bool);
     void signalRender_PerformQualCombo(int);
     void signalRender_PerformFPSSlider(int);
@@ -71,6 +73,7 @@ private:
                       bool graph_PerformEnButton,
                       int graph_PerformQualCombo,
                       int graph_PerformPointsSlider,
+                      bool graph_PerformAccel,
                       bool render_PerformFPSLimEnButton,
                       int render_PerformQualCombo,
                       int render_PerformFPSSlider,

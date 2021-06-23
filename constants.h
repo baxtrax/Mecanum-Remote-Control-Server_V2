@@ -37,6 +37,7 @@ namespace SettingsConstants {
     inline constexpr auto GRAPH_PERF_EN = "graph/performance/en";
     inline constexpr auto GRAPH_PERF_QUAL = "graph/performance/qual";
     inline constexpr auto GRAPH_PERF_POINTS = "graph/performance/points";
+    inline constexpr auto GRAPH_PERF_ACCEL = "graph/performance/accel";
 
     inline constexpr auto RENDER_PERF_FPS_EN = "render/performance/FPS_en";
     inline constexpr auto RENDER_PERF_QUAL = "render/performance/qual";
@@ -64,6 +65,7 @@ namespace SettingsConstants {
     inline constexpr bool D_RENDER_PERF_FPS_EN = false;
     inline constexpr int D_RENDER_PERF_QUAL = 0;
     inline constexpr int D_RENDER_PERF_FPS_LIM = 0;
+    inline constexpr bool D_GRAPH_PERF_ACCEL = true;
 
     inline constexpr bool D_RENDER_VIEW_EN = true;
     inline constexpr bool D_RENDER_VIEW_COUNT_EN = false;

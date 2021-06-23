@@ -42,21 +42,9 @@ void OutputHandler::configurePenBrushFont()
     axisLabelFont = new QFont("Open Sans", 12);
     axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
 
-    // TODO setup a way to grab gradient from somwhere without having to
-    // generate a new one every time (may happen during light mode rewrite)
-    QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
-    lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
-    lightPinkBruise_Gradient.setColorAt(1.0, QRgb(0xFF6F7A));
-    lightPinkBruise_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
-    //QBrush lightPinkBruise_GradientPenBrush = QBrush(QRgb(0xE84DD1));
-    QBrush lightPinkBruise_GradientPenBrush = QBrush(lightPinkBruise_Gradient);
+    QBrush lightPinkBruise_GradientPenBrush = QBrush(QRgb(0xE84DD1));
 
-    QLinearGradient darkUltramarine_Gradient(QPointF(0, 0),QPointF(1, 0));
-    darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
-    darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
-    darkUltramarine_Gradient.setCoordinateMode(QGradient::StretchToDeviceMode);
-    //QBrush darkUltramarine_GradientPenBrush = QBrush(QRgb(0x4F46FA));
-    QBrush darkUltramarine_GradientPenBrush = QBrush(darkUltramarine_Gradient);
+    QBrush darkUltramarine_GradientPenBrush = QBrush(QRgb(0x4F46FA));
 
     FRBLPen = new QPen(lightPinkBruise_GradientPenBrush, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -472,6 +460,7 @@ void OutputHandler::updateWithSettings()
         }
     }
     setMaxDataPoints(settings->value(SettingsConstants::GRAPH_PERF_POINTS, SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
+    useHardwareAcceleration(settings->value(SettingsConstants::GRAPH_PERF_ACCEL, SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
     updateChart(0,0,0,0);
 
 }

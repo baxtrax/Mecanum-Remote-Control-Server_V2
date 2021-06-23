@@ -4195,7 +4195,7 @@ font: 12pt  'Open Sans'; }</string>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QRadioButton" name="graph_PerformEnButton_2">
+                   <widget class="QRadioButton" name="graph_PerformAccelEnButton">
                     <property name="maximumSize">
                      <size>
                       <width>30</width>

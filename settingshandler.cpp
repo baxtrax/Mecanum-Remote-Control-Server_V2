@@ -26,7 +26,6 @@ void SettingsHandler::initSettings()
  */
 void SettingsHandler::resetSettings()
 {
-    qDebug() << "Reset Settings";
     emit signalConn_CamAddressText(SettingsConstants::D_CONN_CAM_ADDRESS);
     emit signalConn_CamPortText(SettingsConstants::D_CONN_CAM_PORT);
     emit signalConn_CamEnButton(SettingsConstants::D_CONN_CAM_EN);
@@ -36,6 +35,7 @@ void SettingsHandler::resetSettings()
     emit signalGraph_PerformEnButton(SettingsConstants::D_GRAPH_PERF_EN);
     emit signalGraph_PerformQualCombo(SettingsConstants::D_GRAPH_PERF_QUAL);
     emit signalGraph_PerformPointsSlider(SettingsConstants::D_GRAPH_PERF_POINTS);
+    emit signalGraph_PerformAccelEnButton(SettingsConstants::D_GRAPH_PERF_ACCEL);
     emit signalRender_PerformFPSLimEnButton(SettingsConstants::D_RENDER_PERF_FPS_EN);
     emit signalRender_PerformQualCombo(SettingsConstants::D_RENDER_PERF_QUAL);
     emit signalRender_PerformFPSSlider(SettingsConstants::D_RENDER_PERF_FPS_LIM);
@@ -43,7 +43,6 @@ void SettingsHandler::resetSettings()
     emit signalRender_ViewCountEnButton(SettingsConstants::D_RENDER_VIEW_COUNT_EN);
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
-
 }
 
 
@@ -60,6 +59,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     bool graph_PerformEnButton,
                                     int graph_PerformQualCombo,
                                     int graph_PerformPointsSlider,
+                                    bool graph_PerformAccel,
                                     bool render_PerformFPSLimEnButton,
                                     int render_PerformQualCombo,
                                     int render_PerformFPSSlider,
@@ -68,7 +68,6 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     bool render_ViewDebugEnButton,
                                     bool appear_ThemeDarkEnButton)
 {
-    qDebug() << "Apply Settings";
     saveSettings(conn_CamAddressText,
                  conn_CamPortText,
                  conn_CamEnButton,
@@ -78,6 +77,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                  graph_PerformEnButton,
                  graph_PerformQualCombo,
                  graph_PerformPointsSlider,
+                 graph_PerformAccel,
                  render_PerformFPSLimEnButton,
                  render_PerformQualCombo,
                  render_PerformFPSSlider,
@@ -94,8 +94,6 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
  */
 void SettingsHandler::displaySettings()
 {
-    qDebug() << "Display Settings";
-    //qDebug() << settings->value(SettingsConstants::CONN_CAM_ADDRESS).toString();
     emit signalConn_CamAddressText(
         settings->value(
                     SettingsConstants::CONN_CAM_ADDRESS,
@@ -134,6 +132,10 @@ void SettingsHandler::displaySettings()
         settings->value(
                     SettingsConstants::GRAPH_PERF_POINTS,
                     SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
+    emit signalGraph_PerformAccelEnButton(
+        settings->value(
+                    SettingsConstants::GRAPH_PERF_ACCEL,
+                    SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
 
     emit signalRender_PerformFPSLimEnButton(
         settings->value(
@@ -179,6 +181,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool graph_PerformEnButton,
                                    int graph_PerformQualCombo,
                                    int graph_PerformPointsSlider,
+                                   bool graph_PerformAccel,
                                    bool render_PerformFPSLimEnButton,
                                    int render_PerformQualCombo,
                                    int render_PerformFPSSlider,
@@ -187,7 +190,6 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool render_ViewDebugEnButton,
                                    bool appear_ThemeDarkEnButton)
 {
-    qDebug() << "Save Settings";
     settings->setValue(
         SettingsConstants::CONN_CAM_ADDRESS,
         conn_CamAddressText);
@@ -218,6 +220,9 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
     settings->setValue(
         SettingsConstants::GRAPH_PERF_POINTS,
         graph_PerformPointsSlider);
+    settings->setValue(
+        SettingsConstants::GRAPH_PERF_ACCEL,
+        graph_PerformAccel);
 
     settings->setValue(
         SettingsConstants::RENDER_PERF_FPS_EN,
