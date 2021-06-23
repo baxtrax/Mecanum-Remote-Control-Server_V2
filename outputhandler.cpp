@@ -22,6 +22,7 @@ OutputHandler::OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef)
 
     configurePenBrushFont();
     configureAxis();
+    setMaxDataPoints(15);
     configureSeries();
     configureChart();
 
@@ -91,7 +92,6 @@ void OutputHandler::configureAxis()
     // TODO get rid of magic numbers
     // + and - are padding around max numbers shown
     axisY->setRange(IOConstants::MIN-0.1, IOConstants::MAX+0.1);
-    axisX->setRange(IOConstants::MIN_XCHART-0.3, IOConstants::MAX_XCHART+0.3);
 }
 
 
@@ -240,7 +240,7 @@ void OutputHandler::updateChart(double dir,
                         0,
                         (2 * MathConstants::PI),
                         IOConstants::MIN_XCHART,
-                        IOConstants::MAX_XCHART);
+                        getMaxDataPoints());
         dirSeries->clear();
         dirSeries->append(dir, IOConstants::MAX+.02);
         dirSeries->append(dir, IOConstants::MIN-.02);
@@ -267,16 +267,16 @@ void OutputHandler::updateChart(double dir,
             FLSeries->setVisible(true);
             BRSeries->setVisible(false);
 
-            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
-                                                      1.0,
-                                                      1.0,
-                                                      0.0,
-                                                      (-(MathConstants::PI/4)),
-                                                      mag,
-                                                      0.0,
-                                                      scaleFactor);
+            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                    1.0,
+                                                    1.0,
+                                                    0.0,
+                                                    (-(MathConstants::PI/4)),
+                                                    mag,
+                                                    0.0,
+                                                    scaleFactor);
 
-            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     1.0,
                                                     0.0,
@@ -292,7 +292,7 @@ void OutputHandler::updateChart(double dir,
             plotArray(FLarrPtr, IOConstants::FL_GRAPH);
 
             // Clean up memory used by array
-            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for(int i=0; i<getMaxDataPoints(); i++) {
                 delete[] FRarrPtr[i];
                 delete[] FLarrPtr[i];
             }
@@ -308,7 +308,7 @@ void OutputHandler::updateChart(double dir,
             FLSeries->setVisible(true);
             BRSeries->setVisible(false);
 
-            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                       1.0,
                                                       1.0,
                                                       0.0,
@@ -317,7 +317,7 @@ void OutputHandler::updateChart(double dir,
                                                       z,
                                                       scaleFactor);
 
-            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     1.0,
                                                     0.0,
@@ -332,7 +332,7 @@ void OutputHandler::updateChart(double dir,
             plotArray(FLarrPtr, IOConstants::FL_GRAPH);
 
             // Clean up memory used by array
-            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for(int i=0; i<getMaxDataPoints(); i++) {
                 delete[] FRarrPtr[i];
                 delete[] FLarrPtr[i];
             }
@@ -348,7 +348,7 @@ void OutputHandler::updateChart(double dir,
             FLSeries->setVisible(true);
             BRSeries->setVisible(true);
 
-            FRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     1.0,
                                                     0.0,
@@ -357,7 +357,7 @@ void OutputHandler::updateChart(double dir,
                                                     z,
                                                     scaleFactor);
 
-            BLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            BLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     -1.0,
                                                     0.0,
@@ -366,7 +366,7 @@ void OutputHandler::updateChart(double dir,
                                                     z,
                                                     scaleFactor);
 
-            FLarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     -1.0,
                                                     0.0,
@@ -375,7 +375,7 @@ void OutputHandler::updateChart(double dir,
                                                     z,
                                                     scaleFactor);
 
-            BRarrPtr = generateSinePointsKinematics(IOConstants::MAX_XCHART,
+            BRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
                                                     1.0,
                                                     1.0,
                                                     0.0,
@@ -388,7 +388,7 @@ void OutputHandler::updateChart(double dir,
             FLSeries->clear();
             BRSeries->clear();
 
-            for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for (int i=0; i<getMaxDataPoints(); i++) {
                 BLarrPtr[i][1] = -BLarrPtr[i][1];
                 FLarrPtr[i][1] = -FLarrPtr[i][1];
             }
@@ -399,7 +399,7 @@ void OutputHandler::updateChart(double dir,
             plotArray(BRarrPtr, IOConstants::BR_GRAPH);
 
             // Clean up memory used by array
-            for(int i=0; i<IOConstants::MAX_XCHART; i++) {
+            for(int i=0; i<getMaxDataPoints(); i++) {
                 delete[] FRarrPtr[i];
                 delete[] BLarrPtr[i];
                 delete[] FLarrPtr[i];
@@ -422,7 +422,7 @@ void OutputHandler::updateChart(double dir,
  */
 void OutputHandler::plotArray(double** arr, int graphNum) {
     double x, y;
-    for (int i=0; i<IOConstants::MAX_XCHART; i++) {
+    for (int i=0; i<getMaxDataPoints(); i++) {
         for (int j=0; j<2; j++) {
             if (j == 0) {
                 x = arr[i][j];
@@ -458,8 +458,7 @@ void OutputHandler::updateWithSettings()
     {
         setDetailLevel(SettingsConstants::DISABLED_INFO);
     } else {
-        int test = settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt();
-        switch(test)
+        switch(settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt())
         {
             case 0:
                 setDetailLevel(SettingsConstants::BASIC_INFO);
@@ -472,6 +471,9 @@ void OutputHandler::updateWithSettings()
                 break;
         }
     }
+    setMaxDataPoints(settings->value(SettingsConstants::GRAPH_PERF_POINTS, SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
+    updateChart(0,0,0,0);
+
 }
 
 // Getters
@@ -504,6 +506,8 @@ void OutputHandler::setDetailLevel(int level)
 void OutputHandler::setMaxDataPoints(int value)
 {
     maxDataPoints = value;
+    //update datapoint ranges
+    axisX->setRange(IOConstants::MIN_XCHART-0.3, value+0.3);
 }
 
 
