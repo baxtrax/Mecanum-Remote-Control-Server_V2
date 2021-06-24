@@ -56,9 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
         ->replaceWidget(ui->render_placeholder,
                         simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
-    ui->DebugInfoFrame->setVisible(false);
-
-
+    ui->DebugInfoFrame->setVisible(true);
 }
 
 bool MainWindow::event(QEvent *event)
@@ -407,15 +405,74 @@ void MainWindow::configureConnections()
             this,
             [this](double fps)
             {
-                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) {
-                    ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
+                // Only update text if its enabled
+                if (settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
+                   ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
+                }
+            });
+
+    connect(simulationHandler,
+            &SimulationHandler::setDebugFrameVisible,
+            ui->DebugInfoFrame,
+            &QFrame::setVisible);
+
+    connect(simulationHandler,
+            &SimulationHandler::setDebugFrameVisible,
+            ui->debug_Line,
+            &QFrame::setVisible);
+
+    connect(simulationHandler,
+            &SimulationHandler::debugDataVisible,
+            this,
+            [this](bool status)
+            {
+                if(status) {
+                    ui->debug_FR->setVisible(true);
+                    ui->debug_FR_Desc->setVisible(true);
+                    ui->debug_BL->setVisible(true);
+                    ui->debug_BL_Desc->setVisible(true);
+                    ui->debug_FL->setVisible(true);
+                    ui->debug_FL_Desc->setVisible(true);
+                    ui->debug_BR->setVisible(true);
+                    ui->debug_BR_Desc->setVisible(true);
+
+                } else {
+                    ui->debug_FR->setVisible(false);
+                    ui->debug_FR_Desc->setVisible(false);
+                    ui->debug_BL->setVisible(false);
+                    ui->debug_BL_Desc->setVisible(false);
+                    ui->debug_FL->setVisible(false);
+                    ui->debug_FL_Desc->setVisible(false);
+                    ui->debug_BR->setVisible(false);
+                    ui->debug_BR_Desc->setVisible(false);
                 }
             });
     connect(simulationHandler,
-            &SimulationHandler::setDebugInfoFrameVisible,
-            ui->DebugInfoFrame,
-            &QFrame::setVisible);
+            &SimulationHandler::fpsDataVisible,
+            this,
+            [this](bool status)
+            {
+                if(status) {
+                    ui->debug_FPS->setVisible(true);
+                    ui->debug_FPS_Desc->setVisible(true);
+                } else {
+                    ui->debug_FPS->setVisible(false);
+                    ui->debug_FPS_Desc->setVisible(false);
+                }
+            });
 }
+
+
+//if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) {
+//    ui->DebugInfoFrame->setVisible(true);
+//    ui->debug_FPS->setVisible(true);
+//    ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
+//} else if (!(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) &&
+//           !(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false).toBool()))
+//{
+//    ui->DebugInfoFrame->setVisible(false);
+//} else {
+//    ui->debug_FPS->setVisible(false);
 
 //MainWindow deconstructor
 MainWindow::~MainWindow()

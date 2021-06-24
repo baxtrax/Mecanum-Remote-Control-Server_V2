@@ -188,7 +188,23 @@ void SimulationHandler::updateBRAnimation(double BRSpeed) {
 void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
-    emit setDebugInfoFrameVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+
+    if (!settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
+        !settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
+        emit setDebugFrameVisible(false);
+    } else {
+        emit setDebugFrameVisible(true);
+    }
+
+    if (settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
+        settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
+        emit debugSepVisible(true);
+    } else {
+        emit debugSepVisible(false);
+    }
+
+    emit debugDataVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+    emit fpsDataVisible(settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool());
 }
 
 /**

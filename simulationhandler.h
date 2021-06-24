@@ -34,7 +34,10 @@ public slots:
 
 signals:
     void updateDebugFPS(double);
-    void setDebugInfoFrameVisible(bool);
+    void setDebugFrameVisible(bool);
+    void debugSepVisible(bool);
+    void debugDataVisible(bool);
+    void fpsDataVisible(bool);
 
 private:
 

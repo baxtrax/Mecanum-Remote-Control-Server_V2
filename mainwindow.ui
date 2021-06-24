@@ -225,7 +225,7 @@ QToolButton:checked {
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2491,7 +2491,7 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item alignment="Qt::AlignRight">
-                 <widget class="QLabel" name="label_47">
+                 <widget class="QLabel" name="debug_FPS_Desc">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -2514,7 +2514,7 @@ font: 12pt  'Open Sans'; }</string>
                </layout>
               </item>
               <item>
-               <widget class="Line" name="line">
+               <widget class="Line" name="debug_Line">
                 <property name="styleSheet">
                  <string notr="true">QFrame[frameShape=&quot;5&quot;]
 {
@@ -2540,7 +2540,7 @@ font: 12pt  'Open Sans'; }</string>
                    <number>6</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="label_62">
+                   <widget class="QLabel" name="debug_FR_Desc">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2604,7 +2604,7 @@ font: 12pt  'Open Sans'; }</string>
                    <number>6</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="label_63">
+                   <widget class="QLabel" name="debug_BL_Desc">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2668,7 +2668,7 @@ font: 12pt  'Open Sans'; }</string>
                    <number>6</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="label_57">
+                   <widget class="QLabel" name="debug_FL_Desc">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2738,7 +2738,7 @@ font: 12pt  'Open Sans'; }</string>
                    <number>6</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="label_54">
+                   <widget class="QLabel" name="debug_BR_Desc">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
