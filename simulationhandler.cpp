@@ -213,7 +213,7 @@ void SimulationHandler::updateWithSettings()
 void SimulationHandler::setupGraph()
 {
     graph = new Q3DScatter();
-    graph->setShadowQuality(QAbstract3DGraph::ShadowQualityNone);
+    graph->setShadowQuality(Q3DScatter::ShadowQualityNone);
     graph->scene()->activeCamera()->setCameraPosition(-135,22.5,160);
     graph->scene()->activeCamera()->setTarget(QVector3D(0,0,0));
 
@@ -231,6 +231,9 @@ void SimulationHandler::setupGraph()
     graph->axisX()->setSegmentCount(2);
     graph->axisY()->setSegmentCount(2);
     graph->axisZ()->setSegmentCount(2);
+
+    graph->axisY()
+
     graph->axisX()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisX()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisY()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
@@ -238,10 +241,11 @@ void SimulationHandler::setupGraph()
     graph->axisZ()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
     graph->axisZ()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
 
-    graph->setSelectionMode(QAbstract3DGraph::SelectionNone);
+    graph->setSelectionMode(Q3DScatter::SelectionNone);
 
     setup3DOjects();
 
+    // May cause issues later
     graph->setOptimizationHints(Q3DScatter::OptimizationStatic);
 
     graph->setMeasureFps(true);
