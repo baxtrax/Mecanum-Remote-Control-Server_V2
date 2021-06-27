@@ -52,9 +52,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Add 3D widget
     ui->render_placeholder->setStyleSheet(NULL);
+    QQuickView *view = new QQuickView();
+    QUrl url("qrc:/qml/resources/3DRender.qml");
+    view->setSource(url);
+    QWidget *container = QWidget::createWindowContainer(view);
     ui->simulation_Frame->layout()
         ->replaceWidget(ui->render_placeholder,
-                        simulationHandler->getWidget());
+                        container);
+//    ui->simulation_Frame->layout()
+//        ->replaceWidget(ui->render_placeholder,
+//                        simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
     ui->DebugInfoFrame->setVisible(true);
 }

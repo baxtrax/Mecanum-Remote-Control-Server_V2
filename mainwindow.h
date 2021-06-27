@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QGridLayout>
 #include <QLabel>
+#include <QQuickView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

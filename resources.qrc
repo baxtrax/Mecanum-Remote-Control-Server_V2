@@ -25,4 +25,7 @@
         <file>resources/RightMech.obj</file>
         <file>resources/Cylinder.obj</file>
     </qresource>
+    <qresource prefix="/qml">
+        <file>resources/3DRender.qml</file>
+    </qresource>
 </RCC>
