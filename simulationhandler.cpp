@@ -242,6 +242,8 @@ void SimulationHandler::setupGraph()
 
     setup3DOjects();
 
+    graph->setOptimizationHints(Q3DScatter::OptimizationStatic);
+
     graph->setMeasureFps(true);
     connect(graph,
             &QAbstract3DGraph::currentFpsChanged,

@@ -225,7 +225,7 @@ QToolButton:checked {
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2965,13 +2965,13 @@ border-radius: 16px;</string>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>300</x>
-          <y>289</y>
+          <x>310</x>
+          <y>280</y>
           <width>272</width>
-          <height>301</height>
+          <height>291</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_42">
@@ -3336,7 +3336,7 @@ color: white;
 font: 12pt  'Open Sans'; }</string>
                   </property>
                   <property name="text">
-                   <string>Quality</string>
+                   <string>Shadows</string>
                   </property>
                  </widget>
                 </item>
@@ -3438,11 +3438,11 @@ QComboBox QAbstractItemView {
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>600</y>
+          <x>610</x>
+          <y>280</y>
           <width>321</width>
           <height>176</height>
          </rect>
@@ -3631,7 +3631,7 @@ QRadioButton::indicator::checked {
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -4209,7 +4209,15 @@ QRadioButton::indicator::checked {
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1116</width>
+          <height>255</height>
+         </rect>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout_40">
          <property name="spacing">
           <number>16</number>
