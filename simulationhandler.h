@@ -12,14 +12,22 @@
 #include <QLabel>
 #include <QSettings>
 
-#include <QtDataVisualization/Q3DScatter>
-#include <QtDataVisualization/QScatter3DSeries>
-#include <QtDataVisualization/QScatterDataProxy>
-#include <QtDataVisualization/QScatterDataItem>
-#include <QtDataVisualization/QCustom3DItem>
+#include <Qt3DCore/QTransform>
+#include <Qt3DCore/QAspectEngine>
+#include <Qt3DRender/QRenderAspect>
+#include <Qt3DExtras/QForwardRenderer>
+#include <Qt3DExtras/Qt3DWindow>
+#include <Qt3DExtras/QOrbitCameraController>
+#include <Qt3DRender/QCamera>
+#include <Qt3DCore/QEntity>
+#include <Qt3DRender/QCameraLens>
+#include <Qt3DRender/QDirectionalLight>
+#include <Qt3DExtras/QPlaneMesh>
+#include <Qt3DExtras/QCylinderMesh>
+#include <Qt3DRender/QMesh>
+#include <Qt3DExtras/QPhongMaterial>
+#include <Qt3DExtras/QPhongAlphaMaterial>
 
-
-using namespace QtDataVisualization;
 
 class SimulationHandler : public QObject
 {
@@ -29,57 +37,20 @@ public:
     QWidget* getWidget();
 
 public slots:
-    void updateAnimators(double, double, double, double);
     void updateWithSettings();
 
 signals:
     void updateDebugFPS(double);
     void setDebugFrameVisible(bool);
-    void debugSepVisible(bool);
-    void debugDataVisible(bool);
+    void setDebugSepVisible(bool);
+    void setDebugDataVisible(bool);
     void fpsDataVisible(bool);
 
 private:
 
     LoggerHandler *logger;
     QSettings *settings;
-    QFrame *debugInfoFrame;
     QWidget *simulationWidget;
-    QScatter3DSeries *FLBRSeries;
-    QScatter3DSeries *FRBLSeries;
-    QScatterDataArray *wheelDataArray;
-    QCustom3DItem *FRWheelMesh;
-    QCustom3DItem *BLWheelMesh;
-    QCustom3DItem *FLWheelMesh;
-    QCustom3DItem *BRWheelMesh;
-    Q3DScatter *graph;
-    QVariantAnimation *FRAnimation;
-    QVariantAnimation *BLAnimation;
-    QVariantAnimation *FLAnimation;
-    QVariantAnimation *BRAnimation;
-    QQuaternion FLcurrentRotation;
-    QQuaternion BRcurrentRotation;
-    QQuaternion FRcurrentRotation;
-    QQuaternion BLcurrentRotation;
-
-    int FRmappedDuration;
-    int BLmappedDuration;
-    int FLmappedDuration;
-    int BRmappedDuration;
-
-    void setupFRAnimation();
-    void setupBLAnimation();
-    void setupFLAnimation();
-    void setupBRAnimation();
-
-    void setup3DOjects();
-    void setupGraph();
-
-    void updateFRAnimation(double FRSpeed);
-    void updateBLAnimation(double BLSpeed);
-    void updateFLAnimation(double FLSpeed);
-    void updateBRAnimation(double BRSpeed);
-
 };
 
 #endif // SIMULATIONHANDLER_H

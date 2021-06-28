@@ -225,7 +225,7 @@ QToolButton:checked {
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2971,7 +2971,7 @@ border-radius: 16px;</string>
           <x>310</x>
           <y>280</y>
           <width>272</width>
-          <height>291</height>
+          <height>292</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_42">

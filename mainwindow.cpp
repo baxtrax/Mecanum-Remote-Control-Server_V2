@@ -417,12 +417,12 @@ void MainWindow::configureConnections()
             &QFrame::setVisible);
 
     connect(simulationHandler,
-            &SimulationHandler::setDebugFrameVisible,
+            &SimulationHandler::setDebugSepVisible,
             ui->debug_Line,
             &QFrame::setVisible);
 
     connect(simulationHandler,
-            &SimulationHandler::debugDataVisible,
+            &SimulationHandler::setDebugDataVisible,
             this,
             [this](bool status)
             {
