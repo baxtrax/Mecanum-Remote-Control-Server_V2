@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
     QUrl url("qrc:/qml/resources/3DRender.qml");
     view->setSource(url);
     QWidget *container = QWidget::createWindowContainer(view);
+    container->setSizePolicy(QSizePolicy::Expanding,
+                             QSizePolicy::Expanding);
     ui->simulation_Frame->layout()
         ->replaceWidget(ui->render_placeholder,
                         container);

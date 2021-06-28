@@ -1,23 +1,32 @@
 import QtQuick 2.0
 
-Item {
-    id: item1
+Rectangle {
+    id: backgroundRecBorder
+    anchors.centerIn: parent
+    anchors.fill: parent
+    color: "#05050f"
+    border.color: "#dd0000"
+    border.width: 10
 
     Text {
         id: text1
-        x: 275
-        y: 8
-        width: 91
-        height: 64
-        color: "#b70000"
-        text: qsTr("Test")
+        x: 272
+        y: 110
+        width: 96
+        height: 53
+        color: "#c40000"
+        text: qsTr("TEST")
+        anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: 40
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+        anchors.horizontalCenterOffset: 0
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
-
 }
+
+
 
 /*##^##
 Designer {
