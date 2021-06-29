@@ -48,49 +48,94 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     Qt3DExtras::QOrbitCameraController *camController = new Qt3DExtras::QOrbitCameraController(rootEntity);
     camController->setCamera(cameraEntity);
 
-    // Plane
-    Qt3DExtras::QPlaneMesh *plane = new Qt3DExtras::QPlaneMesh();
-    plane->setHeight(10.0);
-    plane->setWidth(10.0);
+    // Base
+    Qt3DExtras::QPlaneMesh *base = new Qt3DExtras::QPlaneMesh();
+    base->setHeight(10.0);
+    base->setWidth(10.0);
 
-    Qt3DExtras::QPhongMaterial *planeMaterial = new Qt3DExtras::QPhongMaterial();
-    planeMaterial->setAmbient(QColor(QRgb(0xa6d8ff)));
-
-
-    Qt3DCore::QEntity *planeEntity = new Qt3DCore::QEntity(rootEntity);
-    planeEntity->addComponent(plane);
-    planeEntity->addComponent(planeMaterial);
+    Qt3DExtras::QPhongAlphaMaterial *baseMaterial = new Qt3DExtras::QPhongAlphaMaterial();
+    baseMaterial->setAmbient(QColor(QRgb(0x7517f8)));
+    baseMaterial->setAlpha(0.25);
 
 
-    // Cyl
-    Qt3DExtras::QCylinderMesh *cyl = new Qt3DExtras::QCylinderMesh();
-    cyl->setLength(2);
-    cyl->setRadius(1);
-    cyl->setSlices(10);
-    cyl->setRings(5);
+    Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(rootEntity);
+    baseEntity->addComponent(base);
+    baseEntity->addComponent(baseMaterial);
 
+
+    // Frame
     Qt3DExtras::QPhongMaterial *cylMaterial = new Qt3DExtras::QPhongMaterial();
-    cylMaterial->setAmbient(QColor(QRgb(0xffa6a6)));
-    //cylMaterial->setShininess(0);
+    cylMaterial->setAmbient(QColor(QRgb(0xffffff)));
+
+    Qt3DExtras::QCylinderMesh *cyl1 = new Qt3DExtras::QCylinderMesh();
+    cyl1->setLength(SimulationConstants::BASE_WIDTH);
+    cyl1->setRadius(SimulationConstants::FRAME_THICKNESS);
+    cyl1->setSlices(20);
+    cyl1->setRings(2);
+
+    Qt3DExtras::QCylinderMesh *cyl2 = new Qt3DExtras::QCylinderMesh();
+    cyl2->setLength(SimulationConstants::BASE_WIDTH);
+    cyl2->setRadius(SimulationConstants::FRAME_THICKNESS);
+    cyl2->setSlices(20);
+    cyl2->setRings(2);
+
+    Qt3DExtras::QCylinderMesh *cyl3 = new Qt3DExtras::QCylinderMesh();
+    cyl3->setLength(SimulationConstants::BASE_LENGTH);
+    cyl3->setRadius(SimulationConstants::FRAME_THICKNESS);
+    cyl3->setSlices(20);
+    cyl3->setRings(2);
+
+    Qt3DExtras::QCylinderMesh *cyl4 = new Qt3DExtras::QCylinderMesh();
+    cyl4->setLength(SimulationConstants::BASE_LENGTH);
+    cyl4->setRadius(SimulationConstants::FRAME_THICKNESS);
+    cyl4->setSlices(20);
+    cyl4->setRings(2);
 
 
-    Qt3DCore::QTransform *cylTransform = new Qt3DCore::QTransform();
-    cylTransform->setScale(0.5f);
-    cylTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 45.0f));
-    cylTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+    Qt3DCore::QTransform *cyl1Transform = new Qt3DCore::QTransform();
+    cyl1Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cyl1Transform->setTranslation(QVector3D(0.0f, 1.0f, SimulationConstants::BASE_LENGTH/2));
 
-    Qt3DCore::QEntity *cylEntity = new Qt3DCore::QEntity(rootEntity);
-    cylEntity->addComponent(cyl);
-    cylEntity->addComponent(cylMaterial);
-    cylEntity->addComponent(cylTransform);
+    Qt3DCore::QTransform *cyl2Transform = new Qt3DCore::QTransform();
+    cyl2Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cyl2Transform->setTranslation(QVector3D(0.0f, 1.0f, -SimulationConstants::BASE_LENGTH/2));
+
+    Qt3DCore::QTransform *cyl3Transform = new Qt3DCore::QTransform();
+    cyl3Transform->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cyl3Transform->setTranslation(QVector3D(SimulationConstants::BASE_WIDTH/2, 1.0f, 0.0f));
+
+    Qt3DCore::QTransform *cyl4Transform = new Qt3DCore::QTransform();
+    cyl4Transform->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cyl4Transform->setTranslation(QVector3D(-SimulationConstants::BASE_WIDTH/2, 1.0f, 0.0f));
+
+
+    Qt3DCore::QEntity *cyl1Entity = new Qt3DCore::QEntity(rootEntity);
+    cyl1Entity->addComponent(cyl1);
+    cyl1Entity->addComponent(cylMaterial);
+    cyl1Entity->addComponent(cyl1Transform);
+
+    Qt3DCore::QEntity *cyl2Entity = new Qt3DCore::QEntity(rootEntity);
+    cyl2Entity->addComponent(cyl2);
+    cyl2Entity->addComponent(cylMaterial);
+    cyl2Entity->addComponent(cyl2Transform);
+
+    Qt3DCore::QEntity *cyl3Entity = new Qt3DCore::QEntity(rootEntity);
+    cyl3Entity->addComponent(cyl3);
+    cyl3Entity->addComponent(cylMaterial);
+    cyl3Entity->addComponent(cyl3Transform);
+
+    Qt3DCore::QEntity *cyl4Entity = new Qt3DCore::QEntity(rootEntity);
+    cyl4Entity->addComponent(cyl4);
+    cyl4Entity->addComponent(cylMaterial);
+    cyl4Entity->addComponent(cyl4Transform);
 
     // Plane 2
     Qt3DExtras::QPlaneMesh *plane2 = new Qt3DExtras::QPlaneMesh();
-    plane2->setHeight(2.0);
-    plane2->setWidth(2.0);
+    plane2->setHeight(SimulationConstants::BASE_LENGTH);
+    plane2->setWidth(SimulationConstants::BASE_WIDTH);
 
     Qt3DExtras::QPhongAlphaMaterial *plane2Material = new Qt3DExtras::QPhongAlphaMaterial();
-    plane2Material->setAmbient(QColor(QRgb(0xff0000)));
+    plane2Material->setAmbient(QColor(QRgb(0xe223ff)));
     plane2Material->setAlpha(0.5);
 
     Qt3DCore::QTransform *plane2Transform = new Qt3DCore::QTransform();
