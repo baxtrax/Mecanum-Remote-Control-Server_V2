@@ -189,111 +189,12 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     sph4Entity->addComponent(sph4Transform);
 
 
-    generateLeftWheel(9);
-//    // Left Wheel
+    FRWheel = generateWheel(9,
+                            SimulationConstants::WHEEL_WIDTH,
+                            SimulationConstants::WHEEL_DIAMETER,
+                            SimulationConstants::FRAME_THICKNESS,
+                            false);
 
-//    Qt3DCore::QEntity *lwEntity = new Qt3DCore::QEntity(root);
-
-//    //LW 1
-//    Qt3DCore::QEntity *lw1Entity = new Qt3DCore::QEntity(lwEntity);
-
-//    Qt3DExtras::QCylinderMesh *lwc1 = new Qt3DExtras::QCylinderMesh();
-//    lwc1->setLength(SimulationConstants::WHEEL_WIDTH);
-//    lwc1->setRadius(SimulationConstants::FRAME_THICKNESS);
-//    lwc1->setSlices(20);
-//    lwc1->setRings(2);
-
-//    Qt3DCore::QTransform *lwc1Transform = new Qt3DCore::QTransform();
-//    lwc1Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
-
-//    Qt3DExtras::QSphereMesh *lws11 = new Qt3DExtras::QSphereMesh();
-//    lws11->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-//    lws11->setSlices(10);
-//    lws11->setRings(10);
-
-//    Qt3DCore::QTransform *lws11Transform = new Qt3DCore::QTransform();
-//    lws11Transform->setTranslation(QVector3D(SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
-
-//    Qt3DExtras::QSphereMesh *lws21 = new Qt3DExtras::QSphereMesh();
-//    lws21->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-//    lws21->setSlices(10);
-//    lws21->setRings(10);
-
-//    Qt3DCore::QTransform *lws21Transform = new Qt3DCore::QTransform();
-//    lws21Transform->setTranslation(QVector3D(-SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
-
-//    Qt3DCore::QEntity *lwc1Entity = new Qt3DCore::QEntity(lw1Entity);
-//    lwc1Entity->addComponent(lwc1);
-//    lwc1Entity->addComponent(lwc1Transform);
-//    lwc1Entity->addComponent(cylMaterial);
-
-//    Qt3DCore::QEntity *lws11Entity = new Qt3DCore::QEntity(lw1Entity);
-//    lws11Entity->addComponent(lws11);
-//    lws11Entity->addComponent(lws11Transform);
-//    lws11Entity->addComponent(cylMaterial);
-
-//    Qt3DCore::QEntity *lws21Entity = new Qt3DCore::QEntity(lw1Entity);
-//    lws21Entity->addComponent(lws21);
-//    lws21Entity->addComponent(lws21Transform);
-//    lws21Entity->addComponent(cylMaterial);
-
-
-//    Qt3DCore::QTransform *lw1Transform = new Qt3DCore::QTransform();
-//    //0.0, 0.0, -1.0, -45.0
-//    lw1Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 0.0f, 0.0f));
-//    lw1Transform->setTranslation(QVector3D(0, sin(0.0)*SimulationConstants::WHEEL_DIAMETER/2, -cos(0.0)*SimulationConstants::WHEEL_DIAMETER/2));
-
-//    lw1Entity->addComponent(lw1Transform);
-
-//    //LW 2
-//    Qt3DCore::QEntity *lw2Entity = new Qt3DCore::QEntity(lwEntity);
-
-//    Qt3DExtras::QCylinderMesh *lwc2 = new Qt3DExtras::QCylinderMesh();
-//    lwc2->setLength(SimulationConstants::WHEEL_WIDTH);
-//    lwc2->setRadius(SimulationConstants::FRAME_THICKNESS);
-//    lwc2->setSlices(20);
-//    lwc2->setRings(2);
-
-//    Qt3DCore::QTransform *lwc2Transform = new Qt3DCore::QTransform();
-//    lwc2Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
-
-//    Qt3DExtras::QSphereMesh *lws12 = new Qt3DExtras::QSphereMesh();
-//    lws12->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-//    lws12->setSlices(10);
-//    lws12->setRings(10);
-
-//    Qt3DCore::QTransform *lws12Transform = new Qt3DCore::QTransform();
-//    lws12Transform->setTranslation(QVector3D(SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
-
-//    Qt3DExtras::QSphereMesh *lws22 = new Qt3DExtras::QSphereMesh();
-//    lws22->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-//    lws22->setSlices(10);
-//    lws22->setRings(10);
-
-//    Qt3DCore::QTransform *lws22Transform = new Qt3DCore::QTransform();
-//    lws22Transform->setTranslation(QVector3D(-SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
-
-//    Qt3DCore::QEntity *lwc2Entity = new Qt3DCore::QEntity(lw2Entity);
-//    lwc2Entity->addComponent(lwc2);
-//    lwc2Entity->addComponent(lwc2Transform);
-//    lwc2Entity->addComponent(cylMaterial);
-
-//    Qt3DCore::QEntity *lws12Entity = new Qt3DCore::QEntity(lw2Entity);
-//    lws12Entity->addComponent(lws12);
-//    lws12Entity->addComponent(lws12Transform);
-//    lws12Entity->addComponent(cylMaterial);
-
-//    Qt3DCore::QEntity *lws22Entity = new Qt3DCore::QEntity(lw2Entity);
-//    lws22Entity->addComponent(lws22);
-//    lws22Entity->addComponent(lws22Transform);
-//    lws22Entity->addComponent(cylMaterial);
-
-
-//    Qt3DCore::QTransform *lw2Transform = new Qt3DCore::QTransform();
-//    lw2Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 0.0f, 0.0f));
-//    lw2Transform->setTranslation(QVector3D(0, sin(40.0)*SimulationConstants::WHEEL_DIAMETER/2, cos(40.0)*SimulationConstants::WHEEL_DIAMETER/2));
-
-//    lw2Entity->addComponent(lw2Transform);
 
 
     // Plane 2
@@ -321,8 +222,14 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
 }
 
-Qt3DCore::QEntity* SimulationHandler::generateLeftWheel(int partCount) {
-    Qt3DCore::QEntity *lwEntity = new Qt3DCore::QEntity(root);
+
+
+Qt3DCore::QEntity* SimulationHandler::generateWheel(int partCount,
+                                                        double wheelWidth,
+                                                        double wheelDiameter,
+                                                        double frameThickness,
+                                                        bool invert) {
+    Qt3DCore::QEntity *wEntity = new Qt3DCore::QEntity(root);
 
     //Double pointer setup
     Qt3DCore::QEntity **parts = new Qt3DCore::QEntity*[partCount];
@@ -337,60 +244,64 @@ Qt3DCore::QEntity* SimulationHandler::generateLeftWheel(int partCount) {
     for (int i=0; i<partCount; i++) {
         //LW 1
         //lw1Entity
-        parts[i] = new Qt3DCore::QEntity(lwEntity);
+        parts[i] = new Qt3DCore::QEntity(wEntity);
         currentAngle += angleBetween;
 
-        Qt3DExtras::QCylinderMesh *lwc = new Qt3DExtras::QCylinderMesh();
-        lwc->setLength(SimulationConstants::WHEEL_WIDTH);
-        lwc->setRadius(SimulationConstants::FRAME_THICKNESS);
-        lwc->setSlices(20);
-        lwc->setRings(2);
+        Qt3DExtras::QCylinderMesh *wCyl = new Qt3DExtras::QCylinderMesh();
+        wCyl->setLength(wheelWidth);
+        wCyl->setRadius(frameThickness);
+        wCyl->setSlices(20);
+        wCyl->setRings(2);
 
-        Qt3DCore::QTransform *lwcTransform = new Qt3DCore::QTransform();
-        lwcTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+        Qt3DCore::QTransform *wCylTransform = new Qt3DCore::QTransform();
+        wCylTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
 
-        Qt3DExtras::QSphereMesh *lws1 = new Qt3DExtras::QSphereMesh();
-        lws1->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-        lws1->setSlices(10);
-        lws1->setRings(10);
+        Qt3DExtras::QSphereMesh *wSph1 = new Qt3DExtras::QSphereMesh();
+        wSph1->setRadius(frameThickness*2);
+        wSph1->setSlices(10);
+        wSph1->setRings(10);
 
-        Qt3DCore::QTransform *lws1Transform = new Qt3DCore::QTransform();
-        lws1Transform->setTranslation(QVector3D(SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
+        Qt3DCore::QTransform *wSph1Transform = new Qt3DCore::QTransform();
+        wSph1Transform->setTranslation(QVector3D(wheelWidth/2, 0.0f, 0.0f));
 
-        Qt3DExtras::QSphereMesh *lws2 = new Qt3DExtras::QSphereMesh();
-        lws2->setRadius(SimulationConstants::FRAME_THICKNESS*2);
-        lws2->setSlices(10);
-        lws2->setRings(10);
+        Qt3DExtras::QSphereMesh *wSph2 = new Qt3DExtras::QSphereMesh();
+        wSph2->setRadius(frameThickness*2);
+        wSph2->setSlices(10);
+        wSph2->setRings(10);
 
-        Qt3DCore::QTransform *lws2Transform = new Qt3DCore::QTransform();
-        lws2Transform->setTranslation(QVector3D(-SimulationConstants::WHEEL_WIDTH/2, 0.0f, 0.0f));
+        Qt3DCore::QTransform *wSph2Transform = new Qt3DCore::QTransform();
+        wSph2Transform->setTranslation(QVector3D(-wheelWidth/2, 0.0f, 0.0f));
 
-        Qt3DCore::QEntity *lwcEntity = new Qt3DCore::QEntity(parts[i]);
-        lwcEntity->addComponent(lwc);
-        lwcEntity->addComponent(lwcTransform);
-        lwcEntity->addComponent(wheelMaterial);
+        Qt3DCore::QEntity *wCylEntity = new Qt3DCore::QEntity(parts[i]);
+        wCylEntity->addComponent(wCyl);
+        wCylEntity->addComponent(wCylTransform);
+        wCylEntity->addComponent(wheelMaterial);
 
-        Qt3DCore::QEntity *lws1Entity = new Qt3DCore::QEntity(parts[i]);
-        lws1Entity->addComponent(lws1);
-        lws1Entity->addComponent(lws1Transform);
-        lws1Entity->addComponent(wheelMaterial);
+        Qt3DCore::QEntity *wSph1Entity = new Qt3DCore::QEntity(parts[i]);
+        wSph1Entity->addComponent(wSph1);
+        wSph1Entity->addComponent(wSph1Transform);
+        wSph1Entity->addComponent(wheelMaterial);
 
-        Qt3DCore::QEntity *lws2Entity = new Qt3DCore::QEntity(parts[i]);
-        lws2Entity->addComponent(lws2);
-        lws2Entity->addComponent(lws2Transform);
-        lws2Entity->addComponent(wheelMaterial);
+        Qt3DCore::QEntity *wSph2Entity = new Qt3DCore::QEntity(parts[i]);
+        wSph2Entity->addComponent(wSph2);
+        wSph2Entity->addComponent(wSph2Transform);
+        wSph2Entity->addComponent(wheelMaterial);
 
 
         Qt3DCore::QTransform *partsTransform = new Qt3DCore::QTransform();
         //0.0, 0.0, -1.0, -45.0
-        partsTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 0.0f, 0.0f));
-        double height = sin(currentAngle*MathConstants::PI/180.0)*SimulationConstants::WHEEL_DIAMETER/2;
-        double width = cos(currentAngle*MathConstants::PI/180.0)*SimulationConstants::WHEEL_DIAMETER/2;
+        double height = sin(currentAngle*MathConstants::PI/180.0);
+        double width = cos(currentAngle*MathConstants::PI/180.0);
         qDebug() << currentAngle << height << width;
-        partsTransform->setTranslation(QVector3D(0, height, width));
+        if(invert) {
+            partsTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0,height,width,-45.0));
+        } else {
+            partsTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0,height,width,45.0));
+        }
+        partsTransform->setTranslation(QVector3D(0, height*wheelDiameter/2, width*wheelDiameter/2));
         parts[i]->addComponent(partsTransform);
     }
-    return lwEntity;
+    return wEntity;
 
 }
 

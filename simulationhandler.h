@@ -59,8 +59,12 @@ private:
     Qt3DCore::QEntity *BRWheel;
     QWidget *simulationWidget;
 
-    Qt3DCore::QEntity* generateLeftWheel(int partCount);
-    Qt3DCore::QEntity generateRightWheel();
+    Qt3DCore::QEntity* generateFrame();
+    Qt3DCore::QEntity* generateWheel(int partCount,
+                                     double wheelWidth,
+                                     double wheelDiameter,
+                                     double frameThickness,
+                                     bool invert);
 
 };
 
