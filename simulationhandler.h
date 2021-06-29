@@ -11,6 +11,7 @@
 #include <QVariantAnimation>
 #include <QLabel>
 #include <QSettings>
+#include <math.h>
 
 #include <Qt3DCore/QTransform>
 #include <Qt3DCore/QAspectEngine>
@@ -24,6 +25,7 @@
 #include <Qt3DRender/QDirectionalLight>
 #include <Qt3DExtras/QPlaneMesh>
 #include <Qt3DExtras/QCylinderMesh>
+#include <Qt3DExtras/QSphereMesh>
 #include <Qt3DRender/QMesh>
 #include <Qt3DExtras/QPhongMaterial>
 #include <Qt3DExtras/QPhongAlphaMaterial>
@@ -50,7 +52,16 @@ private:
 
     LoggerHandler *logger;
     QSettings *settings;
+    Qt3DCore::QEntity *root;
+    Qt3DCore::QEntity *FRWheel;
+    Qt3DCore::QEntity *BLWheel;
+    Qt3DCore::QEntity *FLWheel;
+    Qt3DCore::QEntity *BRWheel;
     QWidget *simulationWidget;
+
+    Qt3DCore::QEntity* generateLeftWheel(int partCount);
+    Qt3DCore::QEntity generateRightWheel();
+
 };
 
 #endif // SIMULATIONHANDLER_H
