@@ -56,7 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
         ->replaceWidget(ui->render_placeholder,
                         simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
-    ui->DebugInfoFrame->setVisible(true);
 }
 
 bool MainWindow::event(QEvent *event)
@@ -270,22 +269,22 @@ void MainWindow::configureConnections()
             SIGNAL(speedsChanged(double,double,double,double)),
             simulationHandler,
             SLOT(updateAnimators(double,double,double,double)));
-    connect(kinematicsHandler,
-            &KinematicsHandler::speedsChanged,
-            this,
-            [this](double FRSpeed,
-                   double BLSpeed,
-                   double FLSpeed,
-                   double BRSpeed)
-            {
-                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool())
-                {
-                    ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
-                    ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
-                    ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
-                    ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
-                }
-            });
+//    connect(kinematicsHandler,
+//            &KinematicsHandler::speedsChanged,
+//            this,
+//            [this](double FRSpeed,
+//                   double BLSpeed,
+//                   double FLSpeed,
+//                   double BRSpeed)
+//            {
+//                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool())
+//                {
+//                    ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
+//                    ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
+//                    ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
+//                    ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
+//                }
+//            });
 
 
     connect(ui->settings_ResetButton,
