@@ -18,13 +18,13 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     settings = settingsRef;
     root = new Qt3DCore::QEntity();
 
-    Qt3DExtras::Qt3DWindow *view = new Qt3DExtras::Qt3DWindow();
+    view = new Qt3DExtras::Qt3DWindow();
 //    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
     simulationWidget = QWidget::createWindowContainer(view);
     simulationWidget->setSizePolicy(QSizePolicy::Expanding,
                                     QSizePolicy::Expanding);
 
-    setup3DView(view);
+    setup3DView();
 
 
     // Materials
@@ -82,31 +82,31 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
                  baseMaterial);
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
     baseTransform->setTranslation(QVector3D(0.0f,
-                                            SimulationConstants::WHEEL_DIAMETER/2+SimulationConstants::FRAME_THICKNESS,
+                                            SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                             0.0f));
     baseFrame->addComponent(baseTransform);
 
     Qt3DCore::QTransform *FRTransform = new Qt3DCore::QTransform();
     FRTransform->setTranslation(QVector3D(-SimulationConstants::INBASE_WIDTH/2 - SimulationConstants::WHEEL_WIDTH/2,
-                                          SimulationConstants::WHEEL_DIAMETER/2+SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                           SimulationConstants::INBASE_LENGTH/2));
     FRWheel->addComponent(FRTransform);
 
     Qt3DCore::QTransform *BLTransform = new Qt3DCore::QTransform();
     BLTransform->setTranslation(QVector3D(SimulationConstants::INBASE_WIDTH/2 + SimulationConstants::WHEEL_WIDTH/2,
-                                          SimulationConstants::WHEEL_DIAMETER/2+SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                           -SimulationConstants::INBASE_LENGTH/2));
     BLWheel->addComponent(BLTransform);
 
     Qt3DCore::QTransform *FLTransform = new Qt3DCore::QTransform();
     FLTransform->setTranslation(QVector3D(SimulationConstants::INBASE_WIDTH/2 + SimulationConstants::WHEEL_WIDTH/2,
-                                          SimulationConstants::WHEEL_DIAMETER/2+SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                           SimulationConstants::INBASE_LENGTH/2));
     FLWheel->addComponent(FLTransform);
 
     Qt3DCore::QTransform *BRTransform = new Qt3DCore::QTransform();
     BRTransform->setTranslation(QVector3D(-SimulationConstants::INBASE_WIDTH/2 - SimulationConstants::WHEEL_WIDTH/2,
-                                          SimulationConstants::WHEEL_DIAMETER/2+SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                           -SimulationConstants::INBASE_LENGTH/2));
     BRWheel->addComponent(BRTransform);
 
@@ -118,8 +118,11 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
 }
 
-void SimulationHandler::setup3DView(Qt3DExtras::Qt3DWindow *view) {
+//Grab keyboard and send it over to the input handler
+void SimulationHandler::setup3DView() {
     view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
+    view->defaultFrameGraph()->setFrustumCullingEnabled(true);
+
     // Camera
     Qt3DRender::QCamera *cameraEntity = view->camera();
     cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);
@@ -372,24 +375,13 @@ Qt3DCore::QEntity* SimulationHandler::generateWheel(int partCount,
 void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
-
-    if (!settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
-        !settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
-        emit setDebugFrameVisible(false);
-    } else {
-        emit setDebugFrameVisible(true);
-    }
-
-    if (settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
-        settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
-        emit setDebugSepVisible(true);
-    } else {
-        emit setDebugSepVisible(false);
-    }
-
-    emit setDebugDataVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
-    emit fpsDataVisible(settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool());
+    view->defaultFrameGraph()->
+        setShowDebugOverlay(
+            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
 }
+
+
 // Getters
 QWidget* SimulationHandler::getWidget()
 {

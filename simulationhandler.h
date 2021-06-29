@@ -23,6 +23,7 @@
 #include <Qt3DCore/QEntity>
 #include <Qt3DRender/QCameraLens>
 #include <Qt3DRender/QDirectionalLight>
+#include <Qt3DRender/QSortPolicy>
 #include <Qt3DExtras/QPlaneMesh>
 #include <Qt3DExtras/QCylinderMesh>
 #include <Qt3DExtras/QSphereMesh>
@@ -40,15 +41,6 @@ public:
 public slots:
     void updateWithSettings();
 
-signals:
-    void updateDebugFPS(double);
-    void setDebugFrameVisible(bool);
-    void setDebugSepVisible(bool);
-    void setDebugDataVisible(bool);
-    void fpsDataVisible(bool);
-
-    void wheelsGenerated();
-
 private:
 
     LoggerHandler *logger;
@@ -59,9 +51,10 @@ private:
     Qt3DCore::QEntity *FLWheel;
     Qt3DCore::QEntity *BRWheel;
     Qt3DCore::QEntity *baseFrame;
+    Qt3DExtras::Qt3DWindow *view;
     QWidget *simulationWidget;
 
-    void setup3DView(Qt3DExtras::Qt3DWindow *view);
+    void setup3DView();
 
     void generateBase(double width,
                              double height,
