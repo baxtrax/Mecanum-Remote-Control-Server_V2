@@ -81,12 +81,15 @@ namespace LoggerConstants {
 }
 
 namespace SimulationConstants {
-    inline constexpr double BASE_WIDTH = 3.0f;
-    inline constexpr double BASE_LENGTH = 4.0f;
+    inline constexpr double BASE_WIDTH = 10.0f;
+    inline constexpr double BASE_LENGTH = 10.0f;
+    inline constexpr double INBASE_WIDTH = 3.0f;
+    inline constexpr double INBASE_LENGTH = 4.0f;
     inline constexpr double WHEEL_DIAMETER = 1.5f;
     inline constexpr double WHEEL_WIDTH = 1.0f;
     inline constexpr double FRAME_THICKNESS = 0.05f;
-    inline constexpr double MAX_GRAPH_SIZE = 1.0f;
+    inline constexpr int WHEEL_RIGHT = false;
+    inline constexpr int WHEEL_LEFT = true;
     inline constexpr double MIN_WHEEL_ROT_DURATION = 25000;
     inline constexpr double MAX_WHEEL_ROT_DURATION = 2000;
 }

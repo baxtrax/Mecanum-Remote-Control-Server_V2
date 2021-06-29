@@ -27,8 +27,7 @@
 #include <Qt3DExtras/QCylinderMesh>
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DRender/QMesh>
-#include <Qt3DExtras/QPhongMaterial>
-#include <Qt3DExtras/QPhongAlphaMaterial>
+#include <Qt3DExtras/QDiffuseSpecularMaterial>
 
 
 class SimulationHandler : public QObject
@@ -57,14 +56,25 @@ private:
     Qt3DCore::QEntity *BLWheel;
     Qt3DCore::QEntity *FLWheel;
     Qt3DCore::QEntity *BRWheel;
+    Qt3DCore::QEntity *baseFrame;
     QWidget *simulationWidget;
 
-    Qt3DCore::QEntity* generateFrame();
+    void setup3DView(Qt3DExtras::Qt3DWindow *view);
+
+    void generateBase(double width,
+                             double height,
+                             Qt3DExtras::QDiffuseSpecularMaterial *planeMaterial);
+    Qt3DCore::QEntity* generateFrame(double baseLength,
+                                     double baseWidth,
+                                     double frameThickness,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *inBaseMaterial);
     Qt3DCore::QEntity* generateWheel(int partCount,
                                      double wheelWidth,
                                      double wheelDiameter,
                                      double frameThickness,
-                                     bool invert);
+                                     bool invert,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *wheelMaterial);
 
 };
 
