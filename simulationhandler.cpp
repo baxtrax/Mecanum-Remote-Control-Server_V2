@@ -26,6 +26,7 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
     setup3DView(view);
 
+
     // Materials
     Qt3DExtras::QDiffuseSpecularMaterial *baseMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     baseMaterial->setAmbient(QColor(117,23,248));
@@ -189,23 +190,19 @@ Qt3DCore::QEntity* SimulationHandler::generateFrame(double baseLength,
 
     Qt3DExtras::QSphereMesh *sph1 = new Qt3DExtras::QSphereMesh();
     sph1->setRadius(frameThickness*2);
-    sph1->setSlices(10);
-    sph1->setRings(10);
+    sph1->generateTangents();
 
     Qt3DExtras::QSphereMesh *sph2 = new Qt3DExtras::QSphereMesh();
     sph2->setRadius(frameThickness*2);
-    sph2->setSlices(10);
-    sph2->setRings(10);
+    sph2->generateTangents();
 
     Qt3DExtras::QSphereMesh *sph3 = new Qt3DExtras::QSphereMesh();
     sph3->setRadius(frameThickness*2);
-    sph3->setSlices(10);
-    sph3->setRings(10);
+    sph3->generateTangents();
 
     Qt3DExtras::QSphereMesh *sph4 = new Qt3DExtras::QSphereMesh();
     sph4->setRadius(frameThickness*2);
-    sph4->setSlices(10);
-    sph4->setRings(10);
+    sph4->generateTangents();
 
     // Transforms
     Qt3DCore::QTransform *cyl1Transform = new Qt3DCore::QTransform();

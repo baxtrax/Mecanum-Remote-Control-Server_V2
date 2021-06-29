@@ -47,6 +47,8 @@ signals:
     void setDebugDataVisible(bool);
     void fpsDataVisible(bool);
 
+    void wheelsGenerated();
+
 private:
 
     LoggerHandler *logger;
