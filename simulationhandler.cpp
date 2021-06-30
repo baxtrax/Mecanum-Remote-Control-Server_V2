@@ -28,10 +28,10 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
 
     // Materials
-    Qt3DExtras::QDiffuseSpecularMaterial *baseMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
-    baseMaterial->setAmbient(QColor(117,23,248));
-    baseMaterial->setAlphaBlendingEnabled(true);
-    baseMaterial->setDiffuse(QColor(117,23,248,51));
+    Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    gridMaterial->setAmbient(QColor(255,255,255));
+    gridMaterial->setAlphaBlendingEnabled(true);
+    gridMaterial->setDiffuse(QColor(255,255,255,128));
 
     Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     innerBaseMaterial->setAmbient(QColor(226,35,255));
@@ -40,6 +40,7 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
     Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     frameMaterial->setAmbient(QColor(255,255,255));
+    frameMaterial->setDiffuse(QColor(255,255,255));
 
 
     FRWheel = generateWheel(9,
@@ -76,10 +77,8 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
                               frameMaterial,
                               innerBaseMaterial);
 
-    generateBase(SimulationConstants::BASE_WIDTH,
-                 SimulationConstants::BASE_WIDTH,
-
-                 baseMaterial);
+    generateGrid(SimulationConstants::GRID_WIDTH,
+                 gridMaterial);
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
     baseTransform->setTranslation(QVector3D(0.0f,
                                             SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
@@ -126,7 +125,7 @@ void SimulationHandler::setup3DView() {
     // Camera
     Qt3DRender::QCamera *cameraEntity = view->camera();
     cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);
-    cameraEntity->setPosition(QVector3D(10.0f, 8.0f, 10.0f));
+    cameraEntity->setPosition(QVector3D(-10.0f, 7.0f, 10.0f));
     cameraEntity->setUpVector(QVector3D(0, 1.0f, 0));
     cameraEntity->setViewCenter(QVector3D(0, 0, 0));
 
@@ -144,17 +143,52 @@ void SimulationHandler::setup3DView() {
 }
 
 
-void SimulationHandler::generateBase(double width,
-                                            double height,
-                                            Qt3DExtras::QDiffuseSpecularMaterial *planeMaterial) {
-    // Base
-    Qt3DExtras::QPlaneMesh *base = new Qt3DExtras::QPlaneMesh();
-    base->setHeight(height);
-    base->setWidth(width);
+void SimulationHandler::generateGrid(double width,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
 
     Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
-    baseEntity->addComponent(base);
-    baseEntity->addComponent(planeMaterial);
+
+    // Meshs
+    Qt3DExtras::QPlaneMesh **gridLines = new Qt3DExtras::QPlaneMesh*[10];
+    Qt3DCore::QTransform **lineTransform = new Qt3DCore::QTransform*[10];
+    Qt3DCore::QEntity **lineEntity = new Qt3DCore::QEntity*[10];
+
+    for (int i=0; i < 10; i++) {
+        gridLines[i] = new Qt3DExtras::QPlaneMesh();
+        gridLines[i]->setHeight(SimulationConstants::GRID_THICKNESS);
+        gridLines[i]->setWidth(width+SimulationConstants::GRID_PAD);
+    }
+
+    for (int i=0; i < 10; i++) {
+        lineTransform[i] = new Qt3DCore::QTransform();
+    }
+
+    // Transforms
+    //Vertical
+    lineTransform[0]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[1]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[1]->setTranslation(QVector3D(width/2, 0.0f, 0.0f));
+    lineTransform[2]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[2]->setTranslation(QVector3D(-width/2, 0.0f, 0.0f));
+    lineTransform[3]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[3]->setTranslation(QVector3D(-width/2+0.2, 0.0f, 0.0f));
+    lineTransform[4]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[4]->setTranslation(QVector3D(width/2-0.2, 0.0f, 0.0f));
+
+    //Horizontal
+    lineTransform[5]->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+    lineTransform[6]->setTranslation(QVector3D(0.0f, 0.0f, width/2));
+    lineTransform[7]->setTranslation(QVector3D(0.0f, 0.0f, -width/2));
+    lineTransform[8]->setTranslation(QVector3D(0.0f, 0.0f, width/2-0.2));
+    lineTransform[9]->setTranslation(QVector3D(0.0f, 0.0f, -width/2+0.2));
+
+    //Entities
+    for (int i=0; i < 10; i++) {
+        lineEntity[i] = new Qt3DCore::QEntity(baseEntity);
+        lineEntity[i]->addComponent(gridLines[i]);
+        lineEntity[i]->addComponent(lineTransform[i]);
+        lineEntity[i]->addComponent(gridMaterial);
+    }
 }
 
 

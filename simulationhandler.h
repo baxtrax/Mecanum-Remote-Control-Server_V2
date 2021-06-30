@@ -56,9 +56,8 @@ private:
 
     void setup3DView();
 
-    void generateBase(double width,
-                             double height,
-                             Qt3DExtras::QDiffuseSpecularMaterial *planeMaterial);
+    void generateGrid(double width,
+                      Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
     Qt3DCore::QEntity* generateFrame(double baseLength,
                                      double baseWidth,
                                      double frameThickness,
