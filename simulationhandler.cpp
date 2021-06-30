@@ -42,6 +42,14 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     frameMaterial->setAmbient(QColor(255,255,255));
     frameMaterial->setDiffuse(QColor(255,255,255));
 
+    Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    FRBLMaterial->setAmbient(QColor(232,77,209));
+    FRBLMaterial->setDiffuse(QColor(232,77,209));
+
+    Qt3DExtras::QDiffuseSpecularMaterial *FLBRMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    FLBRMaterial->setAmbient(QColor(79,70,250));
+    FLBRMaterial->setDiffuse(QColor(79,70,250));
+
 
     FRWheel = generateWheel(9,
                             SimulationConstants::WHEEL_WIDTH,
