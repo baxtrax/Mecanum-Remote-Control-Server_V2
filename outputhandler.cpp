@@ -35,23 +35,23 @@ OutputHandler::OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef)
  */
 void OutputHandler::configurePenBrushFont()
 {
-    axisYPen = new QPen(QBrush(QRgb(0x5E5E6F)), 1,
+    axisYPen = new QPen(QBrush(QColor(94,94,111)), 1,
                         Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    axisXPen = new QPen(QBrush(QRgb(0x303046)), 1,
+    axisXPen = new QPen(QBrush(QColor(48,48,70)), 1,
                         Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     axisLabelFont = new QFont("Open Sans", 12);
-    axisLabelPenBrush = new QBrush(QRgb(0xA3A3AD));
+    axisLabelPenBrush = new QBrush(QColor(163,163,173));
 
-    QBrush lightPinkBruise_GradientPenBrush = QBrush(QRgb(0xE84DD1));
+    QBrush lightPinkBruise_GradientPenBrush = QBrush(QColor(232,77,209));
 
-    QBrush darkUltramarine_GradientPenBrush = QBrush(QRgb(0x4F46FA));
+    QBrush darkUltramarine_GradientPenBrush = QBrush(QColor(79,70,250));
 
     FRBLPen = new QPen(lightPinkBruise_GradientPenBrush, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     FLBRPen = new QPen(darkUltramarine_GradientPenBrush, 5,
                        Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-    QBrush dirPenBrush = QBrush(QRgb(0xFFFFFF));
+    QBrush dirPenBrush = QBrush(QColor(255,255,255));
     dirPen = new QPen(dirPenBrush, 3,
                       Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
