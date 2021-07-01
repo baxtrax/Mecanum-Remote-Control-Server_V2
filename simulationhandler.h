@@ -23,12 +23,18 @@
 #include <Qt3DCore/QEntity>
 #include <Qt3DRender/QCameraLens>
 #include <Qt3DRender/QDirectionalLight>
+#include <Qt3DRender/QClearBuffers>
+#include <Qt3DRender/QViewport>
+#include <Qt3DRender/QLayerFilter>
+#include <Qt3DRender/QCameraSelector>
+#include <Qt3DRender/QRenderSurfaceSelector>
 #include <Qt3DRender/QSortPolicy>
 #include <Qt3DExtras/QPlaneMesh>
 #include <Qt3DExtras/QCylinderMesh>
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DRender/QMesh>
 #include <Qt3DExtras/QDiffuseSpecularMaterial>
+#include <Qt3DRender/QLayer>
 
 
 class SimulationHandler : public QObject
@@ -52,6 +58,8 @@ private:
     Qt3DCore::QEntity *BRWheel;
     Qt3DCore::QEntity *baseFrame;
     Qt3DExtras::Qt3DWindow *view;
+    Qt3DRender::QLayer *transparentLayer;
+    Qt3DRender::QLayer *opaqueLayer;
     QWidget *simulationWidget;
 
     void setup3DView();
