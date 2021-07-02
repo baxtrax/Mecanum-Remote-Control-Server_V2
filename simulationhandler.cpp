@@ -45,9 +45,9 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     frameMaterial->setDiffuse(QColor(255,255,255));
 
     Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
-    innerBaseMaterial->setAmbient(QColor(226,35,255));
-    innerBaseMaterial->setAlphaBlendingEnabled(true);
-    innerBaseMaterial->setDiffuse(QColor(226,35,255,128));
+    arrowMaterial->setAmbient(QColor(226,35,255));
+    arrowMaterial->setAlphaBlendingEnabled(true);
+    arrowMaterial->setDiffuse(QColor(226,35,255,128));
 
     Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FRBLMaterial->setAmbient(QColor(232,77,209));
@@ -127,8 +127,9 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
                                           -SimulationConstants::INBASE_LENGTH/2));
     BRWheel->addComponent(BRTransform);
 
-    Qt3DCore::QTransform *arrowTransform = new Qt3DCore::QTransform();
-    arrowTransform->setTranslation(QVector3D(0.0f,2.0f,0.0f));
+    arrowTransform = new Qt3DCore::QTransform();
+    arrowTransform->setScale(0.3);
+    arrowTransform->setTranslation(QVector3D(0.0f,SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,0.0f));
 
     arrow->addComponent(arrowTransform);
 
@@ -188,27 +189,19 @@ void SimulationHandler::setup3DView() {
 
 Qt3DCore::QEntity* SimulationHandler::generateArrow(Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial) {
     Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
-
-    Qt3DExtras::QPlaneMesh *test = new Qt3DExtras::QPlaneMesh();
-    test->setHeight(3);
-    test->setWidth(3);
-
     Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
     connect(arrowMesh,
             &Qt3DRender::QMesh::statusChanged,
             this,
-            [this] (Qt3DRender::QMesh::Status status) {
+            [] (Qt3DRender::QMesh::Status status) {
                 qDebug() << status;
-                qDebug() << arrow->thread();
-                qDebug() << arrow->parentEntity();
             });
 
-    arrowMesh->setMeshName("arrow");
-    arrowMesh->setSource(QUrl::fromLocalFile("D:\\QT\\Examples\\Qt-5.15.2\\qt3d\\exampleresources\\assets\\obj"));
+    arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right.obj"));
 
     arrowEntity->addComponent(arrowMesh);
     arrowEntity->addComponent(arrowMaterial);
-    arrowEntity->addComponent(opaqueLayer);
+    arrowEntity->addComponent(transparentLayer);
 
     return arrowEntity;
 }
@@ -507,6 +500,7 @@ void SimulationHandler::updateArrow(double dir)
         dir = dir + 360;
     }
 
+    arrowTransform->setRotationY(dir);
     qDebug() << dir;
 }
 

@@ -61,7 +61,10 @@ private:
     Qt3DCore::QEntity *BLWheel;
     Qt3DCore::QEntity *FLWheel;
     Qt3DCore::QEntity *BRWheel;
+
     Qt3DCore::QEntity *arrow;
+    Qt3DCore::QTransform *arrowTransform;
+
     Qt3DCore::QEntity *baseFrame;
     Qt3DExtras::Qt3DWindow *view;
     Qt3DRender::QLayer *transparentLayer;
