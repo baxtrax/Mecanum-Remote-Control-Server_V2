@@ -44,6 +44,11 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     frameMaterial->setAmbient(QColor(255,255,255));
     frameMaterial->setDiffuse(QColor(255,255,255));
 
+    Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    innerBaseMaterial->setAmbient(QColor(226,35,255));
+    innerBaseMaterial->setAlphaBlendingEnabled(true);
+    innerBaseMaterial->setDiffuse(QColor(226,35,255,128));
+
     Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FRBLMaterial->setAmbient(QColor(232,77,209));
     FRBLMaterial->setDiffuse(QColor(232,77,209));
@@ -90,6 +95,8 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     generateGrid(SimulationConstants::GRID_WIDTH,
                  gridMaterial);
 
+    arrow = generateArrow(arrowMaterial);
+
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
     baseTransform->setTranslation(QVector3D(0.0f,
                                             SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
@@ -119,6 +126,11 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
                                           SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
                                           -SimulationConstants::INBASE_LENGTH/2));
     BRWheel->addComponent(BRTransform);
+
+    Qt3DCore::QTransform *arrowTransform = new Qt3DCore::QTransform();
+    arrowTransform->setTranslation(QVector3D(0.0f,2.0f,0.0f));
+
+    arrow->addComponent(arrowTransform);
 
 
     view->setRootEntity(root);
@@ -174,8 +186,35 @@ void SimulationHandler::setup3DView() {
     view->defaultFrameGraph()->setFrustumCullingEnabled(true);
 }
 
+Qt3DCore::QEntity* SimulationHandler::generateArrow(Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial) {
+    Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
 
-void SimulationHandler::generateGrid(double width,
+    Qt3DExtras::QPlaneMesh *test = new Qt3DExtras::QPlaneMesh();
+    test->setHeight(3);
+    test->setWidth(3);
+
+    Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
+    connect(arrowMesh,
+            &Qt3DRender::QMesh::statusChanged,
+            this,
+            [this] (Qt3DRender::QMesh::Status status) {
+                qDebug() << status;
+                qDebug() << arrow->thread();
+                qDebug() << arrow->parentEntity();
+            });
+
+    arrowMesh->setMeshName("arrow");
+    arrowMesh->setSource(QUrl::fromLocalFile("D:\\QT\\Examples\\Qt-5.15.2\\qt3d\\exampleresources\\assets\\obj"));
+
+    arrowEntity->addComponent(arrowMesh);
+    arrowEntity->addComponent(arrowMaterial);
+    arrowEntity->addComponent(opaqueLayer);
+
+    return arrowEntity;
+}
+
+
+void SimulationHandler::generateGrid(double size,
                                      Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
 
     Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
@@ -188,7 +227,7 @@ void SimulationHandler::generateGrid(double width,
     for (int i=0; i < 10; i++) {
         gridLines[i] = new Qt3DExtras::QPlaneMesh();
         gridLines[i]->setHeight(SimulationConstants::GRID_THICKNESS);
-        gridLines[i]->setWidth(width+SimulationConstants::GRID_PAD);
+        gridLines[i]->setWidth(size+SimulationConstants::GRID_PAD);
     }
 
     for (int i=0; i < 10; i++) {
@@ -199,20 +238,20 @@ void SimulationHandler::generateGrid(double width,
     //Vertical
     lineTransform[0]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
     lineTransform[1]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
-    lineTransform[1]->setTranslation(QVector3D(width/2, 0.0f, 0.0f));
+    lineTransform[1]->setTranslation(QVector3D(size/2, 0.0f, 0.0f));
     lineTransform[2]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
-    lineTransform[2]->setTranslation(QVector3D(-width/2, 0.0f, 0.0f));
+    lineTransform[2]->setTranslation(QVector3D(-size/2, 0.0f, 0.0f));
     lineTransform[3]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
-    lineTransform[3]->setTranslation(QVector3D(-width/2+0.2, 0.0f, 0.0f));
+    lineTransform[3]->setTranslation(QVector3D(-size/2+0.2, 0.0f, 0.0f));
     lineTransform[4]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
-    lineTransform[4]->setTranslation(QVector3D(width/2-0.2, 0.0f, 0.0f));
+    lineTransform[4]->setTranslation(QVector3D(size/2-0.2, 0.0f, 0.0f));
 
     //Horizontal
     lineTransform[5]->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
-    lineTransform[6]->setTranslation(QVector3D(0.0f, 0.0f, width/2));
-    lineTransform[7]->setTranslation(QVector3D(0.0f, 0.0f, -width/2));
-    lineTransform[8]->setTranslation(QVector3D(0.0f, 0.0f, width/2-0.2));
-    lineTransform[9]->setTranslation(QVector3D(0.0f, 0.0f, -width/2+0.2));
+    lineTransform[6]->setTranslation(QVector3D(0.0f, 0.0f, size/2));
+    lineTransform[7]->setTranslation(QVector3D(0.0f, 0.0f, -size/2));
+    lineTransform[8]->setTranslation(QVector3D(0.0f, 0.0f, size/2-0.2));
+    lineTransform[9]->setTranslation(QVector3D(0.0f, 0.0f, -size/2+0.2));
 
     //Entities
     for (int i=0; i < 10; i++) {
@@ -459,6 +498,21 @@ void SimulationHandler::updateWithSettings()
         setShowDebugOverlay(
             settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
                             SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+}
+
+void SimulationHandler::updateArrow(double dir)
+{
+    dir = dir*180.0/MathConstants::PI;
+    if (dir < 0.0) {
+        dir = dir + 360;
+    }
+
+    qDebug() << dir;
+}
+
+void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
+{
+    qDebug() << FR << BL << FL << BR;
 }
 
 

@@ -21,8 +21,6 @@
         <file>resources/Arrow-Down.svg</file>
     </qresource>
     <qresource prefix="/obj">
-        <file>resources/LeftMech.obj</file>
-        <file>resources/RightMech.obj</file>
-        <file>resources/Cylinder.obj</file>
+        <file>resources/Arrow-Right.obj</file>
     </qresource>
 </RCC>

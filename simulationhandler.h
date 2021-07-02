@@ -29,12 +29,15 @@
 #include <Qt3DRender/QCameraSelector>
 #include <Qt3DRender/QRenderSurfaceSelector>
 #include <Qt3DRender/QSortPolicy>
+#include <Qt3DRender/QMesh>
 #include <Qt3DExtras/QPlaneMesh>
 #include <Qt3DExtras/QCylinderMesh>
 #include <Qt3DExtras/QSphereMesh>
+#include <Qt3DRender/QAbstractTexture>
 #include <Qt3DRender/QMesh>
 #include <Qt3DExtras/QDiffuseSpecularMaterial>
 #include <Qt3DRender/QLayer>
+
 
 
 class SimulationHandler : public QObject
@@ -46,6 +49,8 @@ public:
 
 public slots:
     void updateWithSettings();
+    void updateWheels(double,double,double,double);
+    void updateArrow(double);
 
 private:
 
@@ -56,6 +61,7 @@ private:
     Qt3DCore::QEntity *BLWheel;
     Qt3DCore::QEntity *FLWheel;
     Qt3DCore::QEntity *BRWheel;
+    Qt3DCore::QEntity *arrow;
     Qt3DCore::QEntity *baseFrame;
     Qt3DExtras::Qt3DWindow *view;
     Qt3DRender::QLayer *transparentLayer;
@@ -64,7 +70,8 @@ private:
 
     void setup3DView();
 
-    void generateGrid(double width,
+    Qt3DCore::QEntity* generateArrow(Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
+    void generateGrid(double size,
                       Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
     Qt3DCore::QEntity* generateFrame(double baseLength,
                                      double baseWidth,
