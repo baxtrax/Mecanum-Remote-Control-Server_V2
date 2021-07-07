@@ -50,7 +50,7 @@ public:
 public slots:
     void updateWithSettings();
     void updateWheels(double,double,double,double);
-    void updateArrow(double, double);
+    void updateArrow(double, double, double);
     void checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
@@ -65,6 +65,12 @@ private:
 
     Qt3DCore::QEntity *arrow;
     Qt3DCore::QTransform *arrowTransform;
+
+    Qt3DCore::QEntity *arrowL;
+    Qt3DCore::QTransform *arrowLTransform;
+
+    Qt3DCore::QEntity *arrowR;
+    Qt3DCore::QTransform *arrowRTransform;
 
     Qt3DCore::QEntity *baseFrame;
     Qt3DExtras::Qt3DWindow *view;

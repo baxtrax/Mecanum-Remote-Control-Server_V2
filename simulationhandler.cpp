@@ -52,6 +52,11 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     arrowMaterial->setAlphaBlendingEnabled(true);
     arrowMaterial->setDiffuse(QColor(226,35,255,128));
 
+    Qt3DExtras::QDiffuseSpecularMaterial *tarrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    tarrowMaterial->setAmbient(QColor(226,35,255));
+    tarrowMaterial->setAlphaBlendingEnabled(true);
+    tarrowMaterial->setDiffuse(QColor(226,35,255,191));
+
     Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FRBLMaterial->setAmbient(QColor(232,77,209));
     FRBLMaterial->setDiffuse(QColor(232,77,209));
@@ -98,6 +103,8 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     generateGrid(SimulationConstants::GRID_WIDTH,
                  gridMaterial);
 
+    arrowR = generateArrow(tarrowMaterial);
+    arrowL = generateArrow(tarrowMaterial);
     arrow = generateArrow(arrowMaterial);
 
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
@@ -131,11 +138,18 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     BRWheel->addComponent(BRTransform);
 
     arrowTransform = new Qt3DCore::QTransform();
-    arrowTransform->setScale(0.3);
-    arrowTransform->setTranslation(QVector3D(0.0f,SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,0.0f));
-
+    arrowTransform->setTranslation(QVector3D(0.0f,
+                                              SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                              0.0f));
     arrow->addComponent(arrowTransform);
 
+
+    arrowRTransform = new Qt3DCore::QTransform();
+    arrowR->addComponent(arrowRTransform);
+
+    arrowLTransform = new Qt3DCore::QTransform();
+    arrowLTransform->setRotationY(180);
+    arrowL->addComponent(arrowLTransform);
 
     view->setRootEntity(root);
 
@@ -495,8 +509,9 @@ void SimulationHandler::updateWithSettings()
                             SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
 }
 
-void SimulationHandler::updateArrow(double dir, double mag)
+void SimulationHandler::updateArrow(double dir, double mag, double z)
 {
+
     if (mag > 0) {
         arrow->setEnabled(true);
         dir = dir*180.0/MathConstants::PI;
@@ -508,6 +523,44 @@ void SimulationHandler::updateArrow(double dir, double mag)
     } else {
         arrow->setEnabled(false);
     }
+
+    double offset = linearMap(abs(z), 0.0, 1.0, 0.4, 1.5);
+    double scale = linearMap(abs(z), 0.0, 1.0, 0.13, 0.3);
+    if (z < 0) { // Left
+        arrowL->setEnabled(true);
+        arrowR->setEnabled(false);
+        arrowLTransform->setScale(scale);
+        arrowLTransform->setTranslation(QVector3D(0.6f,
+                                                  SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                                  SimulationConstants::INBASE_LENGTH/2+offset));
+    } else if (z > 0) { // Right
+        arrowL->setEnabled(false);
+        arrowR->setEnabled(true);
+        arrowRTransform->setScale(scale);
+        arrowRTransform->setTranslation(QVector3D(-0.6f,
+                                                  SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                                  SimulationConstants::INBASE_LENGTH/2+offset));
+    } else {
+        arrowL->setEnabled(false);
+        arrowR->setEnabled(false);
+    }
+
+//    arrowLTransform = new Qt3DCore::QTransform();
+//    arrowLTransform->setScale(0.2);
+//    arrowLTransform->setTranslation(QVector3D(0.5f,
+//                                              SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+//                                              SimulationConstants::INBASE_LENGTH/2+1.5));
+//    arrowLTransform->setRotationY(180);
+
+//    arrowL->addComponent(arrowLTransform);
+
+//    arrowRTransform = new Qt3DCore::QTransform();
+//    arrowRTransform->setScale(0.2);
+//    arrowRTransform->setTranslation(QVector3D(-0.5f,
+//                                              SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+//                                              SimulationConstants::INBASE_LENGTH/2+1.5));
+
+//    arrowR->addComponent(arrowRTransform);
 }
 
 void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
@@ -519,9 +572,11 @@ void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status) {
     if (status == Qt3DRender::QMesh::Status::Ready) {
         loadedMeshesCount++;
     }
-
+    qDebug() << loadedMeshesCount;
     if (loadedMeshesCount == expectedLoadedMeshes) {
-        updateArrow(0.0,0.0);
+        updateArrow(0.0, 0.0, -1.0);
+        updateArrow(0.0, 0.0, 1.0);
+        updateArrow(0.0, 0.0, 0.0);
     }
 }
 
