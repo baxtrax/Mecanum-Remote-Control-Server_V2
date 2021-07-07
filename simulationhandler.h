@@ -51,6 +51,7 @@ public slots:
     void updateWithSettings();
     void updateWheels(double,double,double,double);
     void updateArrow(double, double);
+    void checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
 
@@ -70,6 +71,9 @@ private:
     Qt3DRender::QLayer *transparentLayer;
     Qt3DRender::QLayer *opaqueLayer;
     QWidget *simulationWidget;
+
+    int loadedMeshesCount;
+    int expectedLoadedMeshes;
 
     void setup3DView();
 

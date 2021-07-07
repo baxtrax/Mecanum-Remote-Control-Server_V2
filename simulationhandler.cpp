@@ -28,6 +28,9 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
     setup3DView();
 
+    loadedMeshesCount = 0;
+    expectedLoadedMeshes = 0;
+
 
     // Materials
     Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
@@ -193,11 +196,10 @@ Qt3DCore::QEntity* SimulationHandler::generateArrow(Qt3DExtras::QDiffuseSpecular
     connect(arrowMesh,
             &Qt3DRender::QMesh::statusChanged,
             this,
-            [] (Qt3DRender::QMesh::Status status) {
-                qDebug() << status;
-            });
+            &SimulationHandler::checkLoaded);
 
     arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right.obj"));
+    expectedLoadedMeshes++;
 
     arrowEntity->addComponent(arrowMesh);
     arrowEntity->addComponent(arrowMaterial);
@@ -513,6 +515,15 @@ void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
     //qDebug() << FR << BL << FL << BR;
 }
 
+void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status) {
+    if (status == Qt3DRender::QMesh::Status::Ready) {
+        loadedMeshesCount++;
+    }
+
+    if (loadedMeshesCount == expectedLoadedMeshes) {
+        updateArrow(0.0,0.0);
+    }
+}
 
 // Getters
 QWidget* SimulationHandler::getWidget()
