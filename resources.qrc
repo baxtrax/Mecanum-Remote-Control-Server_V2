@@ -22,5 +22,7 @@
     </qresource>
     <qresource prefix="/obj">
         <file>resources/Arrow-Right.obj</file>
+        <file>resources/Arrow-Right-Curved.obj</file>
+        <file>resources/Arrow-Right-Curved-M.obj</file>
     </qresource>
 </RCC>

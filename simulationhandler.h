@@ -83,7 +83,9 @@ private:
 
     void setup3DView();
 
-    Qt3DCore::QEntity* generateArrow(Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
+    Qt3DCore::QEntity* generateArrow(bool curved,
+                                     bool mirrorCurve,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
     void generateGrid(double size,
                       Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
     Qt3DCore::QEntity* generateFrame(double baseLength,

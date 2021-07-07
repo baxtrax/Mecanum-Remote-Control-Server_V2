@@ -103,9 +103,9 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     generateGrid(SimulationConstants::GRID_WIDTH,
                  gridMaterial);
 
-    arrowR = generateArrow(tarrowMaterial);
-    arrowL = generateArrow(tarrowMaterial);
-    arrow = generateArrow(arrowMaterial);
+    arrowR = generateArrow(true, false, tarrowMaterial);
+    arrowL = generateArrow(true, true, tarrowMaterial);
+    arrow = generateArrow(false, false, arrowMaterial);
 
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
     baseTransform->setTranslation(QVector3D(0.0f,
@@ -148,7 +148,6 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     arrowR->addComponent(arrowRTransform);
 
     arrowLTransform = new Qt3DCore::QTransform();
-    arrowLTransform->setRotationY(180);
     arrowL->addComponent(arrowLTransform);
 
     view->setRootEntity(root);
@@ -204,15 +203,22 @@ void SimulationHandler::setup3DView() {
     view->defaultFrameGraph()->setFrustumCullingEnabled(true);
 }
 
-Qt3DCore::QEntity* SimulationHandler::generateArrow(Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial) {
+Qt3DCore::QEntity* SimulationHandler::generateArrow(bool curved,
+                                                    bool mirrorCurve,
+                                                    Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial) {
     Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
     Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
     connect(arrowMesh,
             &Qt3DRender::QMesh::statusChanged,
             this,
             &SimulationHandler::checkLoaded);
-
-    arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right.obj"));
+    if (curved && !mirrorCurve) {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved.obj"));
+    } else if (curved && mirrorCurve) {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved-M.obj"));
+    } else {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right.obj"));
+    }
     expectedLoadedMeshes++;
 
     arrowEntity->addComponent(arrowMesh);
@@ -574,8 +580,6 @@ void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status) {
     }
     qDebug() << loadedMeshesCount;
     if (loadedMeshesCount == expectedLoadedMeshes) {
-        updateArrow(0.0, 0.0, -1.0);
-        updateArrow(0.0, 0.0, 1.0);
         updateArrow(0.0, 0.0, 0.0);
     }
 }
