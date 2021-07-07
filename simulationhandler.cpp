@@ -493,20 +493,24 @@ void SimulationHandler::updateWithSettings()
                             SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
 }
 
-void SimulationHandler::updateArrow(double dir)
+void SimulationHandler::updateArrow(double dir, double mag)
 {
-    dir = dir*180.0/MathConstants::PI;
-    if (dir < 0.0) {
-        dir = dir + 360;
+    if (mag > 0) {
+        arrow->setEnabled(true);
+        dir = dir*180.0/MathConstants::PI;
+        if (dir < 0.0) {
+            dir = dir + 360;
+        }
+        arrowTransform->setRotationY(dir);
+        arrowTransform->setScale(linearMap(mag, 0.0, 1.0, 0.13, 0.4));
+    } else {
+        arrow->setEnabled(false);
     }
-
-    arrowTransform->setRotationY(dir);
-    qDebug() << dir;
 }
 
 void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
 {
-    qDebug() << FR << BL << FL << BR;
+    //qDebug() << FR << BL << FL << BR;
 }
 
 

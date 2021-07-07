@@ -272,7 +272,7 @@ void MainWindow::configureConnections()
     connect(kinematicsHandler,
             SIGNAL(functionChanged(double,double,double,double)),
             simulationHandler,
-            SLOT(updateArrow(double)));
+            SLOT(updateArrow(double, double)));
 //    connect(kinematicsHandler,
 //            &KinematicsHandler::speedsChanged,
 //            this,

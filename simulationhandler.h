@@ -50,7 +50,7 @@ public:
 public slots:
     void updateWithSettings();
     void updateWheels(double,double,double,double);
-    void updateArrow(double);
+    void updateArrow(double, double);
 
 private:
 
