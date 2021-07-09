@@ -276,10 +276,10 @@ void SimulationHandler::generateGridLabels(double size,
                 textMeshs[i]->setText("Back");
                 break;
             case 2:
-                textMeshs[i]->setText("Left");
+                textMeshs[i]->setText("Right");
                 break;
             case 3:
-                textMeshs[i]->setText("Right");
+                textMeshs[i]->setText("Left");
                 break;
         }
     }
@@ -289,26 +289,26 @@ void SimulationHandler::generateGridLabels(double size,
         textTransform[i] = new Qt3DCore::QTransform();
         textTransform[i]->setScale(0.5);
         textTransform[i]->setRotationX(-90);
-        textTransform[i]->setRotationZ(180);
+        textTransform[i]->setRotationZ(0);
     }
 
     //TODO Get rid of the magic number offsets
     //Front
-    textTransform[0]->setTranslation(QVector3D(0.77f,
+    textTransform[0]->setTranslation(QVector3D(-0.77f,
                                                0.0f,
-                                               (size/2+0.2)));
+                                               (size/2+0.2+0.5)));
     //Back
-    textTransform[1]->setTranslation(QVector3D(0.725f,
+    textTransform[1]->setTranslation(QVector3D(-0.73f,
                                                0.0f,
-                                               (-size/2-0.2-0.5)));
-    //Left
-    textTransform[2]->setTranslation(QVector3D((-size/2-0.1),
-                                               0.0f,
-                                               -0.25f));
+                                               (-size/2-0.2)));
     //Right
-    textTransform[3]->setTranslation(QVector3D(((size/2+0.2+1.55)),
+    textTransform[2]->setTranslation(QVector3D((-size/2-0.2-1.55),
                                                0.0f,
-                                               -0.25f));
+                                               0.25f));
+    //Left
+    textTransform[3]->setTranslation(QVector3D(((size/2+0.2)),
+                                               0.0f,
+                                               0.25f));
 
     //Entities
     for (int i=0; i < 4; i++) {
@@ -327,120 +327,70 @@ Qt3DCore::QEntity* SimulationHandler::generateFrame(double baseLength,
                                                     Qt3DExtras::QDiffuseSpecularMaterial *inBaseMaterial) {
     Qt3DCore::QEntity *frameEntity = new Qt3DCore::QEntity(root);
 
+    Qt3DExtras::QCylinderMesh **cylMeshs = new Qt3DExtras::QCylinderMesh*[4];
+    Qt3DCore::QTransform **cylTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **cylEntity = new Qt3DCore::QEntity*[4];
+
+    Qt3DExtras::QSphereMesh **sphMeshs = new Qt3DExtras::QSphereMesh*[4];
+    Qt3DCore::QTransform **sphTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **sphEntity = new Qt3DCore::QEntity*[4];
+
     // Frame
     // Meshs
-    Qt3DExtras::QCylinderMesh *cyl1 = new Qt3DExtras::QCylinderMesh();
-    cyl1->setLength(baseWidth);
-    cyl1->setRadius(frameThickness);
-    cyl1->setSlices(20);
-    cyl1->setRings(2);
+    for (int i=0; i < 4; i++) {
+        cylMeshs[i] = new Qt3DExtras::QCylinderMesh();
+        if (i >= 2) {
+            cylMeshs[i]->setLength(baseLength);
+        } else {
+            cylMeshs[i]->setLength(baseWidth);
+        }
+        cylMeshs[i]->setRadius(frameThickness);
+        cylMeshs[i]->setSlices(20);
+        cylMeshs[i]->setRings(2);
+    }
 
-    Qt3DExtras::QCylinderMesh *cyl2 = new Qt3DExtras::QCylinderMesh();
-    cyl2->setLength(baseWidth);
-    cyl2->setRadius(frameThickness);
-    cyl2->setSlices(20);
-    cyl2->setRings(2);
+    for (int i=0; i < 4; i++) {
+        sphMeshs[i] = new Qt3DExtras::QSphereMesh();
+        sphMeshs[i]->setRadius(frameThickness*2);
+        sphMeshs[i]->generateTangents();
+    }
 
-    Qt3DExtras::QCylinderMesh *cyl3 = new Qt3DExtras::QCylinderMesh();
-    cyl3->setLength(baseLength);
-    cyl3->setRadius(frameThickness);
-    cyl3->setSlices(20);
-    cyl3->setRings(2);
-
-    Qt3DExtras::QCylinderMesh *cyl4 = new Qt3DExtras::QCylinderMesh();
-    cyl4->setLength(baseLength);
-    cyl4->setRadius(frameThickness);
-    cyl4->setSlices(20);
-    cyl4->setRings(2);
-
-    Qt3DExtras::QSphereMesh *sph1 = new Qt3DExtras::QSphereMesh();
-    sph1->setRadius(frameThickness*2);
-    sph1->generateTangents();
-
-    Qt3DExtras::QSphereMesh *sph2 = new Qt3DExtras::QSphereMesh();
-    sph2->setRadius(frameThickness*2);
-    sph2->generateTangents();
-
-    Qt3DExtras::QSphereMesh *sph3 = new Qt3DExtras::QSphereMesh();
-    sph3->setRadius(frameThickness*2);
-    sph3->generateTangents();
-
-    Qt3DExtras::QSphereMesh *sph4 = new Qt3DExtras::QSphereMesh();
-    sph4->setRadius(frameThickness*2);
-    sph4->generateTangents();
+    for (int i=0; i < 4; i++) {
+        cylTransform[i] = new Qt3DCore::QTransform();
+        sphTransform[i] = new Qt3DCore::QTransform();
+    }
 
     // Transforms
-    Qt3DCore::QTransform *cyl1Transform = new Qt3DCore::QTransform();
-    cyl1Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
-    cyl1Transform->setTranslation(QVector3D(0.0f, 0.0f, baseLength/2));
+    cylTransform[0]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cylTransform[0]->setTranslation(QVector3D(0.0f, 0.0f, baseLength/2));
+    cylTransform[1]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cylTransform[1]->setTranslation(QVector3D(0.0f, 0.0f, -baseLength/2));
+    cylTransform[2]->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cylTransform[2]->setTranslation(QVector3D(baseWidth/2, 0.0f, 0.0f));
+    cylTransform[3]->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cylTransform[3]->setTranslation(QVector3D(-baseWidth/2, 0.0f, 0.0f));
 
-    Qt3DCore::QTransform *cyl2Transform = new Qt3DCore::QTransform();
-    cyl2Transform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
-    cyl2Transform->setTranslation(QVector3D(0.0f, 0.0f, -baseLength/2));
-
-    Qt3DCore::QTransform *cyl3Transform = new Qt3DCore::QTransform();
-    cyl3Transform->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
-    cyl3Transform->setTranslation(QVector3D(baseWidth/2, 0.0f, 0.0f));
-
-    Qt3DCore::QTransform *cyl4Transform = new Qt3DCore::QTransform();
-    cyl4Transform->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
-    cyl4Transform->setTranslation(QVector3D(-baseWidth/2, 0.0f, 0.0f));
-
-    Qt3DCore::QTransform *sph1Transform = new Qt3DCore::QTransform();
-    sph1Transform->setTranslation(QVector3D(baseWidth/2, 0.0f, baseLength/2));
-
-    Qt3DCore::QTransform *sph2Transform = new Qt3DCore::QTransform();
-    sph2Transform->setTranslation(QVector3D(-baseWidth/2, 0.0f, baseLength/2));
-
-    Qt3DCore::QTransform *sph3Transform = new Qt3DCore::QTransform();
-    sph3Transform->setTranslation(QVector3D(baseWidth/2, 0.0f, -baseLength/2));
-
-    Qt3DCore::QTransform *sph4Transform = new Qt3DCore::QTransform();
-    sph4Transform->setTranslation(QVector3D(-baseWidth/2, 0.0f, -baseLength/2));
+    sphTransform[0]->setTranslation(QVector3D(baseWidth/2, 0.0f, baseLength/2));
+    sphTransform[1]->setTranslation(QVector3D(-baseWidth/2, 0.0f, baseLength/2));
+    sphTransform[2]->setTranslation(QVector3D(baseWidth/2, 0.0f, -baseLength/2));
+    sphTransform[3]->setTranslation(QVector3D(-baseWidth/2, 0.0f, -baseLength/2));
 
     // Entities
-    Qt3DCore::QEntity *cyl1Entity = new Qt3DCore::QEntity(frameEntity);
-    cyl1Entity->addComponent(cyl1);
-    cyl1Entity->addComponent(frameMaterial);
-    cyl1Entity->addComponent(cyl1Transform);
+    for (int i=0; i < 4; i++) {
+        cylEntity[i] = new Qt3DCore::QEntity(frameEntity);
+        cylEntity[i]->addComponent(cylMeshs[i]);
+        cylEntity[i]->addComponent(cylTransform[i]);
+        cylEntity[i]->addComponent(frameMaterial);
+    }
 
-    Qt3DCore::QEntity *cyl2Entity = new Qt3DCore::QEntity(frameEntity);
-    cyl2Entity->addComponent(cyl2);
-    cyl2Entity->addComponent(frameMaterial);
-    cyl2Entity->addComponent(cyl2Transform);
-
-    Qt3DCore::QEntity *cyl3Entity = new Qt3DCore::QEntity(frameEntity);
-    cyl3Entity->addComponent(cyl3);
-    cyl3Entity->addComponent(frameMaterial);
-    cyl3Entity->addComponent(cyl3Transform);
-
-    Qt3DCore::QEntity *cyl4Entity = new Qt3DCore::QEntity(frameEntity);
-    cyl4Entity->addComponent(cyl4);
-    cyl4Entity->addComponent(frameMaterial);
-    cyl4Entity->addComponent(cyl4Transform);
-
-    Qt3DCore::QEntity *sph1Entity = new Qt3DCore::QEntity(frameEntity);
-    sph1Entity->addComponent(sph1);
-    sph1Entity->addComponent(frameMaterial);
-    sph1Entity->addComponent(sph1Transform);
-
-    Qt3DCore::QEntity *sph2Entity = new Qt3DCore::QEntity(frameEntity);
-    sph2Entity->addComponent(sph2);
-    sph2Entity->addComponent(frameMaterial);
-    sph2Entity->addComponent(sph2Transform);
-
-    Qt3DCore::QEntity *sph3Entity = new Qt3DCore::QEntity(frameEntity);
-    sph3Entity->addComponent(sph3);
-    sph3Entity->addComponent(frameMaterial);
-    sph3Entity->addComponent(sph3Transform);
-
-    Qt3DCore::QEntity *sph4Entity = new Qt3DCore::QEntity(frameEntity);
-    sph4Entity->addComponent(sph4);
-    sph4Entity->addComponent(frameMaterial);
-    sph4Entity->addComponent(sph4Transform);
+    for (int i=0; i < 4; i++) {
+        sphEntity[i] = new Qt3DCore::QEntity(frameEntity);
+        sphEntity[i]->addComponent(sphMeshs[i]);
+        sphEntity[i]->addComponent(sphTransform[i]);
+        sphEntity[i]->addComponent(frameMaterial);
+    }
 
     // Inner Base
-
     // Meshs
     Qt3DExtras::QPlaneMesh *innerBasePlane = new Qt3DExtras::QPlaneMesh();
     innerBasePlane->setHeight(baseLength);
