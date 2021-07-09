@@ -35,34 +35,40 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     gridMaterial->setAmbient(QColor(255,255,255));
     gridMaterial->setAlphaBlendingEnabled(true);
     gridMaterial->setDiffuse(QColor(255,255,255,128));
+    gridMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     innerBaseMaterial->setAmbient(QColor(226,35,255));
     innerBaseMaterial->setAlphaBlendingEnabled(true);
     innerBaseMaterial->setDiffuse(QColor(226,35,255,128));
+    innerBaseMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     frameMaterial->setAmbient(QColor(255,255,255));
     frameMaterial->setDiffuse(QColor(255,255,255));
+    frameMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     arrowMaterial->setAmbient(QColor(226,35,255));
     arrowMaterial->setAlphaBlendingEnabled(true);
     arrowMaterial->setDiffuse(QColor(226,35,255,128));
+    arrowMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *tarrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     tarrowMaterial->setAmbient(QColor(226,35,255));
     tarrowMaterial->setAlphaBlendingEnabled(true);
     tarrowMaterial->setDiffuse(QColor(226,35,255,191));
+    tarrowMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FRBLMaterial->setAmbient(QColor(232,77,209));
     FRBLMaterial->setDiffuse(QColor(232,77,209));
+    FRBLMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *FLBRMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FLBRMaterial->setAmbient(QColor(79,70,250));
     FLBRMaterial->setDiffuse(QColor(79,70,250));
-
+    FLBRMaterial->setShininess(0.0f);
 
     FRWheel = generateWheel(9,
                             SimulationConstants::WHEEL_WIDTH,
@@ -148,47 +154,7 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     arrowLTransform = new Qt3DCore::QTransform();
     arrowL->addComponent(arrowLTransform);
 
-//    Qt3DExtras::QSphereMesh *testPointMesh = new Qt3DExtras::QSphereMesh();
-//    testPointMesh->setGenerateTangents(true);
-//    testPointMesh->setRadius(0.1);
-
-//    Qt3DCore::QTransform *testTransform = new Qt3DCore::QTransform();
-//    testTransform->setTranslation(QVector3D((SimulationConstants::GRID_WIDTH/4.0),
-//                                             0.0f,
-//                                            (SimulationConstants::GRID_WIDTH/4.0)));
-
-//    Qt3DCore::QEntity *test = new Qt3DCore::QEntity(root);
-//    test->addComponent(testPointMesh);
-//    test->addComponent(gridMaterial);
-//    test->addComponent(testTransform);
-//    test->addComponent(opaqueLayer);
-
-
-//    Qt3DExtras::QExtrudedTextMesh *FRTextMesh = new Qt3DExtras::QExtrudedTextMesh();
-//    FRTextMesh->setDepth(0.0);
-//    FRTextMesh->setText("FR");
-//    FRTextMesh->setFont(QFont("Open Sans", 50));
-
-//    Qt3DCore::QTransform *FRTextTransform = new Qt3DCore::QTransform();
-//    FRTextTransform->setTranslation(QVector3D((SimulationConstants::GRID_WIDTH/4.0+0.75),
-//                                               0.0f,
-//                                              (SimulationConstants::GRID_WIDTH/4.0-0.5)));
-//    FRTextTransform->setRotationX(-90);
-//    FRTextTransform->setRotationZ(180);
-
-
-//    Qt3DCore::QEntity *FRText = new Qt3DCore::QEntity(root);
-//    FRText->addComponent(FRTextMesh);
-//    FRText->addComponent(gridMaterial);
-//    FRText->addComponent(FRTextTransform);
-//    FRText->addComponent(opaqueLayer);
-
-
     view->setRootEntity(root);
-
-
-
-
 }
 
 //Grab keyboard and send it over to the input handler
@@ -345,13 +311,14 @@ void SimulationHandler::generateGridLabels(double size,
         }
     }
 
+    // Transforms
     for (int i=0; i < 4; i++) {
         textTransform[i] = new Qt3DCore::QTransform();
         textTransform[i]->setRotationX(-90);
         textTransform[i]->setRotationZ(180);
     }
 
-    // Transforms
+    //TODO Get rid of the magic number offsets
     //Front
     textTransform[0]->setTranslation(QVector3D(1.55f,
                                                0.0f,
