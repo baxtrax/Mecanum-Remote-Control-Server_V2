@@ -289,7 +289,6 @@ void SimulationHandler::generateGridLabels(double size,
         textTransform[i] = new Qt3DCore::QTransform();
         textTransform[i]->setScale(0.5);
         textTransform[i]->setRotationX(-90);
-        textTransform[i]->setRotationZ(0);
     }
 
     //TODO Get rid of the magic number offsets
