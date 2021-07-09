@@ -161,6 +161,10 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 void SimulationHandler::setup3DView() {
     Qt3DRender::QRenderSurfaceSelector *renderSurfaceSelector
         = new Qt3DRender::QRenderSurfaceSelector();
+    view->defaultFrameGraph()->setFrustumCullingEnabled(true);
+    view->defaultFrameGraph()->setShowDebugOverlay(true);
+    qDebug() << view->defaultFrameGraph()->isFrustumCullingEnabled();
+    qDebug() << view->defaultFrameGraph()->showDebugOverlay();
     renderSurfaceSelector->setSurface(view);
 
     Qt3DRender::QClearBuffers *clearBuffers
@@ -200,7 +204,6 @@ void SimulationHandler::setup3DView() {
     camController->setCamera(camera);
 
     view->setActiveFrameGraph(renderSurfaceSelector);
-    view->defaultFrameGraph()->setFrustumCullingEnabled(true);
 }
 
 Qt3DCore::QEntity* SimulationHandler::generateArrow(bool curved,
@@ -314,27 +317,28 @@ void SimulationHandler::generateGridLabels(double size,
     // Transforms
     for (int i=0; i < 4; i++) {
         textTransform[i] = new Qt3DCore::QTransform();
+        textTransform[i]->setScale(0.5);
         textTransform[i]->setRotationX(-90);
         textTransform[i]->setRotationZ(180);
     }
 
     //TODO Get rid of the magic number offsets
     //Front
-    textTransform[0]->setTranslation(QVector3D(1.55f,
+    textTransform[0]->setTranslation(QVector3D(0.77f,
                                                0.0f,
                                                (size/2+0.2)));
     //Back
-    textTransform[1]->setTranslation(QVector3D(1.45f,
+    textTransform[1]->setTranslation(QVector3D(0.725f,
                                                0.0f,
-                                               (-size/2-0.2-1.0)));
+                                               (-size/2-0.2-0.5)));
     //Left
     textTransform[2]->setTranslation(QVector3D((-size/2-0.1),
                                                0.0f,
-                                               -0.5f));
+                                               -0.25f));
     //Right
-    textTransform[3]->setTranslation(QVector3D(((size/2+0.2+3.1)),
+    textTransform[3]->setTranslation(QVector3D(((size/2+0.2+1.55)),
                                                0.0f,
-                                               -0.5f));
+                                               -0.25f));
 
     //Entities
     for (int i=0; i < 4; i++) {
@@ -577,10 +581,11 @@ Qt3DCore::QEntity* SimulationHandler::generateWheel(int partCount,
 void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
-    view->defaultFrameGraph()->
-        setShowDebugOverlay(
-            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+    view->defaultFrameGraph()->setShowDebugOverlay(true);
+//    view->defaultFrameGraph()->
+//        setShowDebugOverlay(
+//            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+//                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
 }
 
 void SimulationHandler::updateArrow(double dir, double mag, double z)
