@@ -35,6 +35,8 @@
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DRender/QAbstractTexture>
 #include <Qt3DRender/QMesh>
+#include <Qt3DExtras/QText2DEntity>
+#include <Qt3DExtras/QExtrudedTextMesh>
 #include <Qt3DExtras/QDiffuseSpecularMaterial>
 #include <Qt3DRender/QLayer>
 
@@ -88,6 +90,8 @@ private:
                                      Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
     void generateGrid(double size,
                       Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
+    void generateGridLabels(double size,
+                            Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
     Qt3DCore::QEntity* generateFrame(double baseLength,
                                      double baseWidth,
                                      double frameThickness,

@@ -16,20 +16,18 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 {
     logger = loggerRef;
     settings = settingsRef;
+    loadedMeshesCount = 0;
+    expectedLoadedMeshes = 0;
     root = new Qt3DCore::QEntity();
-
-    view = new Qt3DExtras::Qt3DWindow();
-//    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
-    simulationWidget = QWidget::createWindowContainer(view);
-    simulationWidget->setSizePolicy(QSizePolicy::Expanding,
-                                    QSizePolicy::Expanding);
+    view = new Qt3DExtras::Qt3DWindow();    
     transparentLayer = new Qt3DRender::QLayer;
     opaqueLayer = new Qt3DRender::QLayer;
 
+    simulationWidget = QWidget::createWindowContainer(view);
+    simulationWidget->setSizePolicy(QSizePolicy::Expanding,
+                                    QSizePolicy::Expanding);
     setup3DView();
 
-    loadedMeshesCount = 0;
-    expectedLoadedMeshes = 0;
 
 
     // Materials
@@ -150,6 +148,42 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     arrowLTransform = new Qt3DCore::QTransform();
     arrowL->addComponent(arrowLTransform);
 
+//    Qt3DExtras::QSphereMesh *testPointMesh = new Qt3DExtras::QSphereMesh();
+//    testPointMesh->setGenerateTangents(true);
+//    testPointMesh->setRadius(0.1);
+
+//    Qt3DCore::QTransform *testTransform = new Qt3DCore::QTransform();
+//    testTransform->setTranslation(QVector3D((SimulationConstants::GRID_WIDTH/4.0),
+//                                             0.0f,
+//                                            (SimulationConstants::GRID_WIDTH/4.0)));
+
+//    Qt3DCore::QEntity *test = new Qt3DCore::QEntity(root);
+//    test->addComponent(testPointMesh);
+//    test->addComponent(gridMaterial);
+//    test->addComponent(testTransform);
+//    test->addComponent(opaqueLayer);
+
+
+//    Qt3DExtras::QExtrudedTextMesh *FRTextMesh = new Qt3DExtras::QExtrudedTextMesh();
+//    FRTextMesh->setDepth(0.0);
+//    FRTextMesh->setText("FR");
+//    FRTextMesh->setFont(QFont("Open Sans", 50));
+
+//    Qt3DCore::QTransform *FRTextTransform = new Qt3DCore::QTransform();
+//    FRTextTransform->setTranslation(QVector3D((SimulationConstants::GRID_WIDTH/4.0+0.75),
+//                                               0.0f,
+//                                              (SimulationConstants::GRID_WIDTH/4.0-0.5)));
+//    FRTextTransform->setRotationX(-90);
+//    FRTextTransform->setRotationZ(180);
+
+
+//    Qt3DCore::QEntity *FRText = new Qt3DCore::QEntity(root);
+//    FRText->addComponent(FRTextMesh);
+//    FRText->addComponent(gridMaterial);
+//    FRText->addComponent(FRTextTransform);
+//    FRText->addComponent(opaqueLayer);
+
+
     view->setRootEntity(root);
 
 
@@ -190,7 +224,7 @@ void SimulationHandler::setup3DView() {
     // Disable light
     Qt3DRender::QDirectionalLight *light = new Qt3DRender::QDirectionalLight();
     light->setColor("white");
-    light->setIntensity(0);
+    light->setIntensity(0.0);
 
     Qt3DCore::QEntity *lightEntity = new Qt3DCore::QEntity(root);
     lightEntity->addComponent(light);
@@ -233,6 +267,7 @@ void SimulationHandler::generateGrid(double size,
                                      Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
 
     Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
+    generateGridLabels(size, gridMaterial);
 
     // Meshs
     Qt3DExtras::QPlaneMesh **gridLines = new Qt3DExtras::QPlaneMesh*[10];
@@ -276,6 +311,72 @@ void SimulationHandler::generateGrid(double size,
         lineEntity[i]->addComponent(gridMaterial);
         //Need to be behind transparent base so rendered as opaque
         lineEntity[i]->addComponent(opaqueLayer);
+    }
+}
+
+
+void SimulationHandler::generateGridLabels(double size,
+                                           Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
+
+    Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
+
+    // Meshs
+    Qt3DExtras::QExtrudedTextMesh **textMeshs = new Qt3DExtras::QExtrudedTextMesh*[4];
+    Qt3DCore::QTransform **textTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **textEntity = new Qt3DCore::QEntity*[4];
+
+    for (int i=0; i < 4; i++) {
+        textMeshs[i] = new Qt3DExtras::QExtrudedTextMesh();
+        textMeshs[i]->setDepth(0.0);
+        textMeshs[i]->setFont(QFont("Open Sans", 50));
+        switch(i) {
+            case 0:
+                textMeshs[i]->setText("Front");
+                break;
+            case 1:
+                textMeshs[i]->setText("Back");
+                break;
+            case 2:
+                textMeshs[i]->setText("Left");
+                break;
+            case 3:
+                textMeshs[i]->setText("Right");
+                break;
+        }
+    }
+
+    for (int i=0; i < 4; i++) {
+        textTransform[i] = new Qt3DCore::QTransform();
+        textTransform[i]->setRotationX(-90);
+        textTransform[i]->setRotationZ(180);
+    }
+
+    // Transforms
+    //Front
+    textTransform[0]->setTranslation(QVector3D((-size/4.0+0.75),
+                                               0.0f,
+                                               (size/4.0-0.5)));
+    //Back
+    textTransform[1]->setTranslation(QVector3D((size/4.0+0.75),
+                                               0.0f,
+                                               (-size/4.0-0.5)));
+    //Left
+    textTransform[2]->setTranslation(QVector3D((size/4.0+0.75),
+                                               0.0f,
+                                               (size/4.0-0.5)));
+    //BR
+    textTransform[3]->setTranslation(QVector3D((-size/4.0+0.75),
+                                               0.0f,
+                                               (-size/4.0-0.5)));
+
+    //Entities
+    for (int i=0; i < 4; i++) {
+        textEntity[i] = new Qt3DCore::QEntity(baseEntity);
+        textEntity[i]->addComponent(textMeshs[i]);
+        textEntity[i]->addComponent(textTransform[i]);
+        textEntity[i]->addComponent(gridMaterial);
+        //Need to be behind transparent base so rendered as opaque
+        textEntity[i]->addComponent(opaqueLayer);
     }
 }
 
