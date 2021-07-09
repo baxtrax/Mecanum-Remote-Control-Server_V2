@@ -353,21 +353,21 @@ void SimulationHandler::generateGridLabels(double size,
 
     // Transforms
     //Front
-    textTransform[0]->setTranslation(QVector3D((-size/4.0+0.75),
+    textTransform[0]->setTranslation(QVector3D(1.55f,
                                                0.0f,
-                                               (size/4.0-0.5)));
+                                               (size/2+0.2)));
     //Back
-    textTransform[1]->setTranslation(QVector3D((size/4.0+0.75),
+    textTransform[1]->setTranslation(QVector3D(1.45f,
                                                0.0f,
-                                               (-size/4.0-0.5)));
+                                               (-size/2-0.2-1.0)));
     //Left
-    textTransform[2]->setTranslation(QVector3D((size/4.0+0.75),
+    textTransform[2]->setTranslation(QVector3D((-size/2-0.1),
                                                0.0f,
-                                               (size/4.0-0.5)));
-    //BR
-    textTransform[3]->setTranslation(QVector3D((-size/4.0+0.75),
+                                               -0.5f));
+    //Right
+    textTransform[3]->setTranslation(QVector3D(((size/2+0.2+3.1)),
                                                0.0f,
-                                               (-size/4.0-0.5)));
+                                               -0.5f));
 
     //Entities
     for (int i=0; i < 4; i++) {
