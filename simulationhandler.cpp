@@ -618,23 +618,6 @@ void SimulationHandler::updateArrow(double dir, double mag, double z)
         arrowL->setEnabled(false);
         arrowR->setEnabled(false);
     }
-
-//    arrowLTransform = new Qt3DCore::QTransform();
-//    arrowLTransform->setScale(0.2);
-//    arrowLTransform->setTranslation(QVector3D(0.5f,
-//                                              SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
-//                                              SimulationConstants::INBASE_LENGTH/2+1.5));
-//    arrowLTransform->setRotationY(180);
-
-//    arrowL->addComponent(arrowLTransform);
-
-//    arrowRTransform = new Qt3DCore::QTransform();
-//    arrowRTransform->setScale(0.2);
-//    arrowRTransform->setTranslation(QVector3D(-0.5f,
-//                                              SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
-//                                              SimulationConstants::INBASE_LENGTH/2+1.5));
-
-//    arrowR->addComponent(arrowRTransform);
 }
 
 void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
