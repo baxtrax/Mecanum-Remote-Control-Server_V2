@@ -28,6 +28,8 @@
 #include <Qt3DRender/QLayerFilter>
 #include <Qt3DRender/QCameraSelector>
 #include <Qt3DRender/QRenderSurfaceSelector>
+#include <Qt3DRender/QDebugOverlay>
+#include <Qt3DRender/QFrustumCulling>
 #include <Qt3DRender/QSortPolicy>
 #include <Qt3DRender/QMesh>
 #include <Qt3DExtras/QPlaneMesh>
@@ -76,8 +78,6 @@ private:
 
     Qt3DCore::QEntity *baseFrame;
     Qt3DExtras::Qt3DWindow *view;
-    Qt3DRender::QLayer *transparentLayer;
-    Qt3DRender::QLayer *opaqueLayer;
     QWidget *simulationWidget;
 
     int loadedMeshesCount;

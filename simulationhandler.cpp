@@ -20,8 +20,6 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     expectedLoadedMeshes = 0;
     root = new Qt3DCore::QEntity();
     view = new Qt3DExtras::Qt3DWindow();    
-    transparentLayer = new Qt3DRender::QLayer;
-    opaqueLayer = new Qt3DRender::QLayer;
 
     simulationWidget = QWidget::createWindowContainer(view);
     simulationWidget->setSizePolicy(QSizePolicy::Expanding,
@@ -50,15 +48,8 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
     Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     arrowMaterial->setAmbient(QColor(226,35,255));
-    arrowMaterial->setAlphaBlendingEnabled(true);
-    arrowMaterial->setDiffuse(QColor(226,35,255,128));
+    arrowMaterial->setDiffuse(QColor(226,35,255));
     arrowMaterial->setShininess(0.0f);
-
-    Qt3DExtras::QDiffuseSpecularMaterial *tarrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
-    tarrowMaterial->setAmbient(QColor(226,35,255));
-    tarrowMaterial->setAlphaBlendingEnabled(true);
-    tarrowMaterial->setDiffuse(QColor(226,35,255,191));
-    tarrowMaterial->setShininess(0.0f);
 
     Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
     FRBLMaterial->setAmbient(QColor(232,77,209));
@@ -107,8 +98,8 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     generateGrid(SimulationConstants::GRID_WIDTH,
                  gridMaterial);
 
-    arrowR = generateArrow(true, false, tarrowMaterial);
-    arrowL = generateArrow(true, true, tarrowMaterial);
+    arrowR = generateArrow(true, false, arrowMaterial);
+    arrowL = generateArrow(true, true, arrowMaterial);
     arrow = generateArrow(false, false, arrowMaterial);
 
     Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
@@ -159,37 +150,20 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
 //Grab keyboard and send it over to the input handler
 void SimulationHandler::setup3DView() {
-    Qt3DRender::QRenderSurfaceSelector *renderSurfaceSelector
-        = new Qt3DRender::QRenderSurfaceSelector();
-    view->defaultFrameGraph()->setFrustumCullingEnabled(true);
-    view->defaultFrameGraph()->setShowDebugOverlay(true);
-    qDebug() << view->defaultFrameGraph()->isFrustumCullingEnabled();
-    qDebug() << view->defaultFrameGraph()->showDebugOverlay();
-    renderSurfaceSelector->setSurface(view);
+    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
+    Qt3DRender::QFrameGraphNode *framegraph = view->activeFrameGraph();
+    Qt3DRender::QSortPolicy *sortPolicy = new Qt3DRender::QSortPolicy(root);
+    framegraph->setParent(sortPolicy);
+    QVector<Qt3DRender::QSortPolicy::SortType> sortTypes =
+      QVector<Qt3DRender::QSortPolicy::SortType>() << Qt3DRender::QSortPolicy::BackToFront;
+    sortPolicy->setSortTypes(sortTypes);
+    view->setActiveFrameGraph(framegraph);
 
-    Qt3DRender::QClearBuffers *clearBuffers
-        = new Qt3DRender::QClearBuffers(renderSurfaceSelector);
-    clearBuffers->setBuffers(Qt3DRender::QClearBuffers::AllBuffers);
-    clearBuffers->setClearColor(QColor(QRgb(0x05050f)));
-
-    Qt3DRender::QViewport *viewport = new Qt3DRender::QViewport(renderSurfaceSelector);
-    Qt3DRender::QCameraSelector *cameraSelector = new Qt3DRender::QCameraSelector(viewport);
-    Qt3DRender::QCamera *camera = new Qt3DRender::QCamera(cameraSelector);
-    // set your camera parameters here
-    cameraSelector->setCamera(camera);
-
-    // Camera
-    //camera->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);;
+    Qt3DRender::QCamera *camera = view->camera();
     camera->setPosition(QVector3D(-10.0f, 9.0f, 10.0f));
     camera->setUpVector(QVector3D(0, 1.0f, 0));
     camera->setViewCenter(QVector3D(0, 0, 0));
     camera->setFieldOfView(45);
-    Qt3DRender::QLayerFilter *opaqueFilter = new Qt3DRender::QLayerFilter(camera);
-    opaqueFilter->addLayer(opaqueLayer);
-
-    Qt3DRender::QLayerFilter *transparentFilter = new Qt3DRender::QLayerFilter(camera);
-    transparentFilter->addLayer(transparentLayer);
-
 
     // Disable light
     Qt3DRender::QDirectionalLight *light = new Qt3DRender::QDirectionalLight();
@@ -203,7 +177,6 @@ void SimulationHandler::setup3DView() {
     Qt3DExtras::QOrbitCameraController *camController = new Qt3DExtras::QOrbitCameraController(root);
     camController->setCamera(camera);
 
-    view->setActiveFrameGraph(renderSurfaceSelector);
 }
 
 Qt3DCore::QEntity* SimulationHandler::generateArrow(bool curved,
@@ -226,7 +199,6 @@ Qt3DCore::QEntity* SimulationHandler::generateArrow(bool curved,
 
     arrowEntity->addComponent(arrowMesh);
     arrowEntity->addComponent(arrowMaterial);
-    arrowEntity->addComponent(transparentLayer);
 
     return arrowEntity;
 }
@@ -278,8 +250,6 @@ void SimulationHandler::generateGrid(double size,
         lineEntity[i]->addComponent(gridLines[i]);
         lineEntity[i]->addComponent(lineTransform[i]);
         lineEntity[i]->addComponent(gridMaterial);
-        //Need to be behind transparent base so rendered as opaque
-        lineEntity[i]->addComponent(opaqueLayer);
     }
 }
 
@@ -346,8 +316,6 @@ void SimulationHandler::generateGridLabels(double size,
         textEntity[i]->addComponent(textMeshs[i]);
         textEntity[i]->addComponent(textTransform[i]);
         textEntity[i]->addComponent(gridMaterial);
-        //Need to be behind transparent base so rendered as opaque
-        textEntity[i]->addComponent(opaqueLayer);
     }
 }
 
@@ -435,49 +403,41 @@ Qt3DCore::QEntity* SimulationHandler::generateFrame(double baseLength,
     cyl1Entity->addComponent(cyl1);
     cyl1Entity->addComponent(frameMaterial);
     cyl1Entity->addComponent(cyl1Transform);
-    cyl1Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *cyl2Entity = new Qt3DCore::QEntity(frameEntity);
     cyl2Entity->addComponent(cyl2);
     cyl2Entity->addComponent(frameMaterial);
     cyl2Entity->addComponent(cyl2Transform);
-    cyl2Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *cyl3Entity = new Qt3DCore::QEntity(frameEntity);
     cyl3Entity->addComponent(cyl3);
     cyl3Entity->addComponent(frameMaterial);
     cyl3Entity->addComponent(cyl3Transform);
-    cyl3Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *cyl4Entity = new Qt3DCore::QEntity(frameEntity);
     cyl4Entity->addComponent(cyl4);
     cyl4Entity->addComponent(frameMaterial);
     cyl4Entity->addComponent(cyl4Transform);
-    cyl4Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *sph1Entity = new Qt3DCore::QEntity(frameEntity);
     sph1Entity->addComponent(sph1);
     sph1Entity->addComponent(frameMaterial);
     sph1Entity->addComponent(sph1Transform);
-    sph1Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *sph2Entity = new Qt3DCore::QEntity(frameEntity);
     sph2Entity->addComponent(sph2);
     sph2Entity->addComponent(frameMaterial);
     sph2Entity->addComponent(sph2Transform);
-    sph2Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *sph3Entity = new Qt3DCore::QEntity(frameEntity);
     sph3Entity->addComponent(sph3);
     sph3Entity->addComponent(frameMaterial);
     sph3Entity->addComponent(sph3Transform);
-    sph3Entity->addComponent(opaqueLayer);
 
     Qt3DCore::QEntity *sph4Entity = new Qt3DCore::QEntity(frameEntity);
     sph4Entity->addComponent(sph4);
     sph4Entity->addComponent(frameMaterial);
     sph4Entity->addComponent(sph4Transform);
-    sph4Entity->addComponent(opaqueLayer);
 
     // Inner Base
 
@@ -490,7 +450,6 @@ Qt3DCore::QEntity* SimulationHandler::generateFrame(double baseLength,
     Qt3DCore::QEntity *innerBaseEntity = new Qt3DCore::QEntity(frameEntity);
     innerBaseEntity->addComponent(innerBasePlane);
     innerBaseEntity->addComponent(inBaseMaterial);
-    innerBaseEntity->addComponent(transparentLayer);
     return frameEntity;
 }
 
@@ -547,19 +506,16 @@ Qt3DCore::QEntity* SimulationHandler::generateWheel(int partCount,
         wCylEntity->addComponent(wCyl);
         wCylEntity->addComponent(wCylTransform);
         wCylEntity->addComponent(wheelMaterial);
-        wCylEntity->addComponent(opaqueLayer);
 
         Qt3DCore::QEntity *wSph1Entity = new Qt3DCore::QEntity(parts[i]);
         wSph1Entity->addComponent(wSph1);
         wSph1Entity->addComponent(wSph1Transform);
         wSph1Entity->addComponent(wheelMaterial);
-        wSph1Entity->addComponent(opaqueLayer);
 
         Qt3DCore::QEntity *wSph2Entity = new Qt3DCore::QEntity(parts[i]);
         wSph2Entity->addComponent(wSph2);
         wSph2Entity->addComponent(wSph2Transform);
         wSph2Entity->addComponent(wheelMaterial);
-        wSph2Entity->addComponent(opaqueLayer);
 
         // Rotating segments to 45 degrees around the axis of a vector pointing
         // to the center of the wheel.
