@@ -19,14 +19,37 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
     loadedMeshesCount = 0;
     expectedLoadedMeshes = 0;
     root = new Qt3DCore::QEntity();
-    view = new Qt3DExtras::Qt3DWindow();    
-
+    view = new Custom3DWindow();
+    view->setKeyboardGrabEnabled(false);
     simulationWidget = QWidget::createWindowContainer(view);
     simulationWidget->setSizePolicy(QSizePolicy::Expanding,
                                     QSizePolicy::Expanding);
     setup3DView();
 
-
+    connect(view,
+            &Custom3DWindow::passKeyboard_WChanged,
+            this,
+            &SimulationHandler::passKeyboard_WChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_SChanged,
+            this,
+            &SimulationHandler::passKeyboard_SChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_AChanged,
+            this,
+            &SimulationHandler::passKeyboard_AChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_DChanged,
+            this,
+            &SimulationHandler::passKeyboard_DChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_QChanged,
+            this,
+            &SimulationHandler::passKeyboard_QChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_EChanged,
+            this,
+            &SimulationHandler::passKeyboard_EChanged);
 
     // Materials
     Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();

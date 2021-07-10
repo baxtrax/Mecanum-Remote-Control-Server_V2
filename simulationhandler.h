@@ -11,13 +11,14 @@
 #include <QVariantAnimation>
 #include <QLabel>
 #include <QSettings>
+#include <QKeyEvent>
 #include <math.h>
 
 #include <Qt3DCore/QTransform>
 #include <Qt3DCore/QAspectEngine>
 #include <Qt3DRender/QRenderAspect>
 #include <Qt3DExtras/QForwardRenderer>
-#include <Qt3DExtras/Qt3DWindow>
+#include "custom3dwindow.h"
 #include <Qt3DExtras/QOrbitCameraController>
 #include <Qt3DRender/QCamera>
 #include <Qt3DCore/QEntity>
@@ -51,6 +52,14 @@ public:
     SimulationHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     QWidget* getWidget();
 
+signals:
+    void passKeyboard_WChanged(bool);
+    void passKeyboard_SChanged(bool);
+    void passKeyboard_AChanged(bool);
+    void passKeyboard_DChanged(bool);
+    void passKeyboard_QChanged(bool);
+    void passKeyboard_EChanged(bool);
+
 public slots:
     void updateWithSettings();
     void updateWheels(double,double,double,double);
@@ -77,7 +86,7 @@ private:
     Qt3DCore::QTransform *arrowRTransform;
 
     Qt3DCore::QEntity *baseFrame;
-    Qt3DExtras::Qt3DWindow *view;
+    Custom3DWindow *view;
     QWidget *simulationWidget;
 
     int loadedMeshesCount;

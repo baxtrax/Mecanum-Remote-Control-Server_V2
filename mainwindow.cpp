@@ -273,23 +273,6 @@ void MainWindow::configureConnections()
             SIGNAL(functionChanged(double,double,double,double)),
             simulationHandler,
             SLOT(updateArrow(double, double, double)));
-//    connect(kinematicsHandler,
-//            &KinematicsHandler::speedsChanged,
-//            this,
-//            [this](double FRSpeed,
-//                   double BLSpeed,
-//                   double FLSpeed,
-//                   double BRSpeed)
-//            {
-//                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool())
-//                {
-//                    ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
-//                    ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
-//                    ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
-//                    ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
-//                }
-//            });
-
 
     connect(ui->settings_ResetButton,
             SIGNAL(clicked()),
@@ -402,6 +385,31 @@ void MainWindow::configureConnections()
             SIGNAL(settingsUpdated()),
             outputHandler,
             SLOT(updateWithSettings()));
+
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_WChanged,
+            inputHandler,
+            &InputHandler::keyboard_WSetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_SChanged,
+            inputHandler,
+            &InputHandler::keyboard_SSetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_AChanged,
+            inputHandler,
+            &InputHandler::keyboard_ASetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_DChanged,
+            inputHandler,
+            &InputHandler::keyboard_DSetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_QChanged,
+            inputHandler,
+            &InputHandler::keyboard_ASetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_EChanged,
+            inputHandler,
+            &InputHandler::keyboard_ESetter);
 }
 
 //MainWindow deconstructor
