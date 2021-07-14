@@ -405,7 +405,7 @@ void MainWindow::configureConnections()
     connect(simulationHandler,
             &SimulationHandler::passKeyboard_QChanged,
             inputHandler,
-            &InputHandler::keyboard_ASetter);
+            &InputHandler::keyboard_QSetter);
     connect(simulationHandler,
             &SimulationHandler::passKeyboard_EChanged,
             inputHandler,
