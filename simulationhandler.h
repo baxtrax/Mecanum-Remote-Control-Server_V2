@@ -11,15 +11,40 @@
 #include <QVariantAnimation>
 #include <QLabel>
 #include <QSettings>
+#include <QKeyEvent>
+#include <QQuaternion>
+#include <math.h>
 
-#include <QtDataVisualization/Q3DScatter>
-#include <QtDataVisualization/QScatter3DSeries>
-#include <QtDataVisualization/QScatterDataProxy>
-#include <QtDataVisualization/QScatterDataItem>
-#include <QtDataVisualization/QCustom3DItem>
+#include <Qt3DCore/QTransform>
+#include <Qt3DCore/QAspectEngine>
+#include <Qt3DRender/QRenderAspect>
+#include <Qt3DExtras/QForwardRenderer>
+#include "custom3dwindow.h"
+#include <Qt3DExtras/QOrbitCameraController>
+#include <Qt3DRender/QCamera>
+#include <Qt3DCore/QEntity>
+#include <Qt3DRender/QCameraLens>
+#include <Qt3DRender/QDirectionalLight>
+#include <Qt3DRender/QClearBuffers>
+#include <Qt3DRender/QViewport>
+#include <Qt3DRender/QLayerFilter>
+#include <Qt3DRender/QCameraSelector>
+#include <Qt3DRender/QRenderSurfaceSelector>
+#include <Qt3DRender/QDebugOverlay>
+#include <Qt3DRender/QFrustumCulling>
+#include <Qt3DRender/QSortPolicy>
+#include <Qt3DRender/QMesh>
+#include <Qt3DExtras/QPlaneMesh>
+#include <Qt3DExtras/QCylinderMesh>
+#include <Qt3DExtras/QSphereMesh>
+#include <Qt3DRender/QAbstractTexture>
+#include <Qt3DRender/QMesh>
+#include <Qt3DExtras/QText2DEntity>
+#include <Qt3DExtras/QExtrudedTextMesh>
+#include <Qt3DExtras/QDiffuseSpecularMaterial>
+#include <Qt3DRender/QLayer>
 
 
-using namespace QtDataVisualization;
 
 class SimulationHandler : public QObject
 {
@@ -28,58 +53,105 @@ public:
     SimulationHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     QWidget* getWidget();
 
-public slots:
-    void updateAnimators(double, double, double, double);
-    void updateWithSettings();
-
 signals:
-    void updateDebugFPS(double);
-    void setDebugFrameVisible(bool);
-    void debugSepVisible(bool);
-    void debugDataVisible(bool);
-    void fpsDataVisible(bool);
+    void passKeyboard_WChanged(bool);
+    void passKeyboard_SChanged(bool);
+    void passKeyboard_AChanged(bool);
+    void passKeyboard_DChanged(bool);
+    void passKeyboard_QChanged(bool);
+    void passKeyboard_EChanged(bool);
+
+public slots:
+    void updateWithSettings();
+    void updateWheels(double,double,double,double);
+    void updateArrow(double, double, double);
+    void checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
-
+    // Variables
     LoggerHandler *logger;
     QSettings *settings;
-    QFrame *debugInfoFrame;
-    QWidget *simulationWidget;
-    QScatter3DSeries *FLBRSeries;
-    QScatter3DSeries *FRBLSeries;
-    QScatterDataArray *wheelDataArray;
-    QCustom3DItem *FRWheelMesh;
-    QCustom3DItem *BLWheelMesh;
-    QCustom3DItem *FLWheelMesh;
-    QCustom3DItem *BRWheelMesh;
-    Q3DScatter *graph;
+
+    Qt3DCore::QEntity *root;
+    Qt3DCore::QEntity *FRWheel;
+    Qt3DCore::QEntity *BLWheel;
+    Qt3DCore::QEntity *FLWheel;
+    Qt3DCore::QEntity *BRWheel;
+    Qt3DCore::QEntity *arrow;
+    Qt3DCore::QEntity *arrowL;
+    Qt3DCore::QEntity *arrowR;
+    Qt3DCore::QEntity *baseFrame;
+
     QVariantAnimation *FRAnimation;
     QVariantAnimation *BLAnimation;
     QVariantAnimation *FLAnimation;
     QVariantAnimation *BRAnimation;
-    QQuaternion FLcurrentRotation;
-    QQuaternion BRcurrentRotation;
-    QQuaternion FRcurrentRotation;
-    QQuaternion BLcurrentRotation;
+
+    Qt3DCore::QTransform *arrowTransform;
+    Qt3DCore::QTransform *arrowLTransform;
+    Qt3DCore::QTransform *arrowRTransform;
+
+    Qt3DCore::QTransform *FRWheelTransform;
+    Qt3DCore::QTransform *BLWheelTransform;
+    Qt3DCore::QTransform *FLWheelTransform;
+    Qt3DCore::QTransform *BRWheelTransform;
+
+    Custom3DWindow *view;
+    QWidget *simulationWidget;
+
+    int loadedMeshesCount;
+    int expectedLoadedMeshes;
+
+    float FLcurrentRotation;
+    float BRcurrentRotation;
+    float FRcurrentRotation;
+    float BLcurrentRotation;
 
     int FRmappedDuration;
     int BLmappedDuration;
     int FLmappedDuration;
     int BRmappedDuration;
 
+    // Functions
+    void setup3DView();
+    void setupConnections();
+    void setupMeshs();
+
+    void alignMeshs();
+
+    void generateMeshs(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
+
+    Qt3DCore::QEntity* generateArrow(bool curved,
+                                     bool mirrorCurve,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
+    void generateGrid(double size,
+                      Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
+    void generateGridLabels(double size,
+                            Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
+    Qt3DCore::QEntity* generateFrame(double baseLength,
+                                     double baseWidth,
+                                     double frameThickness,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *inBaseMaterial);
+    Qt3DCore::QEntity* generateWheel(int partCount,
+                                     double wheelWidth,
+                                     double wheelDiameter,
+                                     double frameThickness,
+                                     bool invert,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *wheelMaterial);
+
     void setupFRAnimation();
     void setupBLAnimation();
     void setupFLAnimation();
     void setupBRAnimation();
 
-    void setup3DOjects();
-    void setupGraph();
-
     void updateFRAnimation(double FRSpeed);
     void updateBLAnimation(double BLSpeed);
     void updateFLAnimation(double FLSpeed);
     void updateBRAnimation(double BRSpeed);
-
 };
 
 #endif // SIMULATIONHANDLER_H

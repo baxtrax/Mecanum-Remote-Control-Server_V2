@@ -56,7 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
         ->replaceWidget(ui->render_placeholder,
                         simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
-    ui->DebugInfoFrame->setVisible(true);
 }
 
 bool MainWindow::event(QEvent *event)
@@ -269,24 +268,11 @@ void MainWindow::configureConnections()
     connect(kinematicsHandler,
             SIGNAL(speedsChanged(double,double,double,double)),
             simulationHandler,
-            SLOT(updateAnimators(double,double,double,double)));
+            SLOT(updateWheels(double,double,double,double)));
     connect(kinematicsHandler,
-            &KinematicsHandler::speedsChanged,
-            this,
-            [this](double FRSpeed,
-                   double BLSpeed,
-                   double FLSpeed,
-                   double BRSpeed)
-            {
-                if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool())
-                {
-                    ui->debug_FR->setText(QString{"%1"}.arg(FRSpeed, 5, 'f', 4, '0'));
-                    ui->debug_BL->setText(QString{"%1"}.arg(BLSpeed, 5, 'f', 4, '0'));
-                    ui->debug_FL->setText(QString{"%1"}.arg(FLSpeed, 5, 'f', 4, '0'));
-                    ui->debug_BR->setText(QString{"%1"}.arg(BRSpeed, 5, 'f', 4, '0'));
-                }
-            });
-
+            SIGNAL(functionChanged(double,double,double,double)),
+            simulationHandler,
+            SLOT(updateArrow(double, double, double)));
 
     connect(ui->settings_ResetButton,
             SIGNAL(clicked()),
@@ -401,78 +387,30 @@ void MainWindow::configureConnections()
             SLOT(updateWithSettings()));
 
     connect(simulationHandler,
-            &SimulationHandler::updateDebugFPS,
-            this,
-            [this](double fps)
-            {
-                // Only update text if its enabled
-                if (settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
-                   ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
-                }
-            });
-
+            &SimulationHandler::passKeyboard_WChanged,
+            inputHandler,
+            &InputHandler::keyboard_WSetter);
     connect(simulationHandler,
-            &SimulationHandler::setDebugFrameVisible,
-            ui->DebugInfoFrame,
-            &QFrame::setVisible);
-
+            &SimulationHandler::passKeyboard_SChanged,
+            inputHandler,
+            &InputHandler::keyboard_SSetter);
     connect(simulationHandler,
-            &SimulationHandler::setDebugFrameVisible,
-            ui->debug_Line,
-            &QFrame::setVisible);
-
+            &SimulationHandler::passKeyboard_AChanged,
+            inputHandler,
+            &InputHandler::keyboard_ASetter);
     connect(simulationHandler,
-            &SimulationHandler::debugDataVisible,
-            this,
-            [this](bool status)
-            {
-                if(status) {
-                    ui->debug_FR->setVisible(true);
-                    ui->debug_FR_Desc->setVisible(true);
-                    ui->debug_BL->setVisible(true);
-                    ui->debug_BL_Desc->setVisible(true);
-                    ui->debug_FL->setVisible(true);
-                    ui->debug_FL_Desc->setVisible(true);
-                    ui->debug_BR->setVisible(true);
-                    ui->debug_BR_Desc->setVisible(true);
-
-                } else {
-                    ui->debug_FR->setVisible(false);
-                    ui->debug_FR_Desc->setVisible(false);
-                    ui->debug_BL->setVisible(false);
-                    ui->debug_BL_Desc->setVisible(false);
-                    ui->debug_FL->setVisible(false);
-                    ui->debug_FL_Desc->setVisible(false);
-                    ui->debug_BR->setVisible(false);
-                    ui->debug_BR_Desc->setVisible(false);
-                }
-            });
+            &SimulationHandler::passKeyboard_DChanged,
+            inputHandler,
+            &InputHandler::keyboard_DSetter);
     connect(simulationHandler,
-            &SimulationHandler::fpsDataVisible,
-            this,
-            [this](bool status)
-            {
-                if(status) {
-                    ui->debug_FPS->setVisible(true);
-                    ui->debug_FPS_Desc->setVisible(true);
-                } else {
-                    ui->debug_FPS->setVisible(false);
-                    ui->debug_FPS_Desc->setVisible(false);
-                }
-            });
+            &SimulationHandler::passKeyboard_QChanged,
+            inputHandler,
+            &InputHandler::keyboard_ASetter);
+    connect(simulationHandler,
+            &SimulationHandler::passKeyboard_EChanged,
+            inputHandler,
+            &InputHandler::keyboard_ESetter);
 }
-
-
-//if(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) {
-//    ui->DebugInfoFrame->setVisible(true);
-//    ui->debug_FPS->setVisible(true);
-//    ui->debug_FPS->setText(QString{"%1"}.arg(fps, 3, 'f', 1, '0'));
-//} else if (!(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, false).toBool()) &&
-//           !(settingsHandler->getSettings()->value(SettingsConstants::RENDER_VIEW_COUNT_EN, false).toBool()))
-//{
-//    ui->DebugInfoFrame->setVisible(false);
-//} else {
-//    ui->debug_FPS->setVisible(false);
 
 //MainWindow deconstructor
 MainWindow::~MainWindow()

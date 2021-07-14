@@ -16,12 +16,22 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 {
     logger = loggerRef;
     settings = settingsRef;
-    setupGraph();
+    loadedMeshesCount = 0;
+    expectedLoadedMeshes = 0;
+    root = new Qt3DCore::QEntity();
+    view = new Custom3DWindow();
+    simulationWidget = QWidget::createWindowContainer(view);
 
-    FLcurrentRotation = FLWheelMesh->rotation();
-    BRcurrentRotation = BRWheelMesh->rotation();
-    FRcurrentRotation = FRWheelMesh->rotation();
-    BLcurrentRotation = BLWheelMesh->rotation();
+    simulationWidget->setSizePolicy(QSizePolicy::Expanding,
+                                    QSizePolicy::Expanding);
+    setup3DView();
+    setupConnections();
+    setupMeshs();
+
+    FRcurrentRotation = FRWheelTransform->rotationX();
+    BLcurrentRotation = BLWheelTransform->rotationX();
+    FLcurrentRotation = FLWheelTransform->rotationX();
+    BRcurrentRotation = BRWheelTransform->rotationX();
 
     setupFRAnimation();
     setupBLAnimation();
@@ -30,385 +40,33 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef,
 
     connect(FRAnimation, &QVariantAnimation::valueChanged, // FR
             this, [this](const QVariant value) {
-        FRWheelMesh->setRotation(
-                    FRcurrentRotation *
-                    QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f,
-                                                  value.toFloat()));
-    });
-
-    connect(BLAnimation, &QVariantAnimation::valueChanged, // BL
+                FRcurrentRotation = value.toFloat();
+                FRWheelTransform->setRotationX(FRcurrentRotation);
+                qDebug() << FRcurrentRotation;
+            });
+    connect(BLAnimation, &QVariantAnimation::valueChanged, // FR
             this, [this](const QVariant value) {
-        BLWheelMesh->setRotation(
-                    BLcurrentRotation *
-                    QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f,
-                                                  value.toFloat()));
-    });
-
-    connect(FLAnimation, &QVariantAnimation::valueChanged, // FL
+                BLcurrentRotation = value.toFloat();
+                BLWheelTransform->setRotationX(BLcurrentRotation);
+            });
+    connect(FLAnimation, &QVariantAnimation::valueChanged, // FR
             this, [this](const QVariant value) {
-        FLWheelMesh->setRotation(
-                    FLcurrentRotation *
-                    QQuaternion::fromAxisAndAngle(-1.0f,0.0f,0.0f,
-                                                  -value.toFloat()));
-    });
-
-    connect(BRAnimation, &QVariantAnimation::valueChanged, // BR
+                FLcurrentRotation = value.toFloat();
+                FLWheelTransform->setRotationX(FLcurrentRotation);
+            });
+    connect(BRAnimation, &QVariantAnimation::valueChanged, // FR
             this, [this](const QVariant value) {
-        BRWheelMesh->setRotation(
-                    BRcurrentRotation *
-                    QQuaternion::fromAxisAndAngle(1.0f,0.0f,0.0f,
-                                                  -value.toFloat()));
-    });
+                BRcurrentRotation = value.toFloat();
+                BRWheelTransform->setRotationX(BRcurrentRotation);
+            });
 
-    FRAnimation->setLoopCount(0);
-    BLAnimation->setLoopCount(0);
-    FLAnimation->setLoopCount(0);
-    BRAnimation->setLoopCount(0);
+
+
+    view->setRootEntity(root);
 }
 
-/**
- * @brief Sends updates to all animations and to update the physical rotation
- * speed.
- * @param double FRSpeed
- * @param double BLSpeed
- * @param double FLSpeed
- * @param double BRSpeed
- */
-void SimulationHandler::updateAnimators(double FRSpeed,
-                                        double BLSpeed,
-                                        double FLSpeed,
-                                        double BRSpeed)
+void SimulationHandler::setupFRAnimation()
 {
-    // TODO  fix small jitter when swapping inputs very quickly. Easy to see
-    // when using joystick.
-    //100000 for slow, 1000 for fast
-    FRmappedDuration =  linearMap(abs(FRSpeed), 0.0, 1.0,
-                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
-                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
-    BLmappedDuration =  linearMap(abs(BLSpeed), 0.0, 1.0,
-                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
-                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
-    FLmappedDuration =  linearMap(abs(FLSpeed), 0.0, 1.0,
-                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
-                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
-    BRmappedDuration =  linearMap(abs(BRSpeed), 0.0, 1.0,
-                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
-                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
-
-    updateFRAnimation(FRSpeed);
-    updateBLAnimation(BLSpeed);
-    updateFLAnimation(FLSpeed);
-    updateBRAnimation(BRSpeed);
-}
-
-
-/**
- * @brief Updates the FR animator for the FR wheel
- * @param double FRSpeed
- */
-void SimulationHandler::updateFRAnimation(double FRSpeed) {
-    if(FRSpeed == 0.0) {
-        //Capture current rotation and set it as reset
-        FRcurrentRotation = FRWheelMesh->rotation();
-        FRAnimation->setLoopCount(0);
-    } else if (FRSpeed > 0.0) {
-        FRAnimation->setDuration(FRmappedDuration);
-        FRAnimation->setEndValue(QVariant(360.0)); // Forward
-        FRAnimation->setLoopCount(-1);
-    } else if (FRSpeed < 0.0) {
-        FRAnimation->setDuration(FRmappedDuration);
-        FRAnimation->setEndValue(QVariant(-360.0)); // Backward
-        FRAnimation->setLoopCount(-1);
-    }
-}
-
-
-/**
- * @brief Updates the BL animator for the BL wheel
- * @param double BLSpeed
- */
-void SimulationHandler::updateBLAnimation(double BLSpeed) {
-    if(BLSpeed == 0.0) {
-        //Capture current rotation and set it as reset
-        BLcurrentRotation = BLWheelMesh->rotation();
-        BLAnimation->setLoopCount(0);
-    } else if (BLSpeed > 0.0) {
-        BLAnimation->setDuration(BLmappedDuration);
-        BLAnimation->setEndValue(QVariant(360.0)); // Forward
-        BLAnimation->setLoopCount(-1);
-    } else if (BLSpeed < 0.0) {
-        BLAnimation->setDuration(BLmappedDuration);
-        BLAnimation->setEndValue(QVariant(-360.0)); // Backward
-        BLAnimation->setLoopCount(-1);
-    }
-}
-
-
-/**
- * @brief Updates the FL animator for the FL wheel
- * @param double FLSpeed
- */
-void SimulationHandler::updateFLAnimation(double FLSpeed) {
-    if(FLSpeed == 0.0) {
-        //Capture current rotation and set it as reset
-        FLcurrentRotation = FLWheelMesh->rotation();
-        FLAnimation->setLoopCount(0);
-    } else if (FLSpeed > 0.0) {
-        FLAnimation->setDuration(FLmappedDuration);
-        FLAnimation->setEndValue(QVariant(360.0)); // Forward
-        FLAnimation->setLoopCount(-1);
-    } else if (FLSpeed < 0.0) {
-        FLAnimation->setDuration(FLmappedDuration);
-        FLAnimation->setEndValue(QVariant(-360.0)); // Backward
-        FLAnimation->setLoopCount(-1);
-    }
-}
-
-
-/**
- * @brief Updates the BR animator for the BR wheel
- * @param double BRSpeed
- */
-void SimulationHandler::updateBRAnimation(double BRSpeed) {
-    if(BRSpeed == 0.0) {
-        //Capture current rotation and set it as reset
-        BRcurrentRotation = BRWheelMesh->rotation();
-        BRAnimation->setLoopCount(0);
-    } else if (BRSpeed > 0.0) {
-        BRAnimation->setDuration(BRmappedDuration);
-        BRAnimation->setEndValue(QVariant(360.0)); // Forward
-        BRAnimation->setLoopCount(-1);
-    } else if (BRSpeed < 0.0) {
-        BRAnimation->setDuration(BRmappedDuration);
-        BRAnimation->setEndValue(QVariant(-360.0)); // Backward
-        BRAnimation->setLoopCount(-1);
-    }
-}
-
-void SimulationHandler::updateWithSettings()
-{
-    qDebug() << "simulation handler update";
-
-    if (!settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
-        !settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
-        emit setDebugFrameVisible(false);
-    } else {
-        emit setDebugFrameVisible(true);
-    }
-
-    if (settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool() &&
-        settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool()) {
-        emit debugSepVisible(true);
-    } else {
-        emit debugSepVisible(false);
-    }
-
-    emit debugDataVisible(settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN, SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
-    emit fpsDataVisible(settings->value(SettingsConstants::RENDER_VIEW_COUNT_EN, SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool());
-}
-
-/**
- * @brief Sets up graph and customizes it.
- */
-void SimulationHandler::setupGraph()
-{
-    graph = new Q3DScatter();
-    graph->setShadowQuality(Q3DScatter::ShadowQualityNone);
-    graph->scene()->activeCamera()->setCameraPosition(-135,22.5,160);
-    graph->scene()->activeCamera()->setTarget(QVector3D(0,0,0));
-
-    graph->activeTheme()->setType(Q3DTheme::ThemeUserDefined);
-    graph->activeTheme()->setBackgroundEnabled(false);
-    graph->activeTheme()->setWindowColor(QColor(5, 5, 15));
-    graph->activeTheme()->setFont(QFont("Open Sans", 12));
-    graph->activeTheme()->setLabelBackgroundEnabled(false);
-    graph->activeTheme()->setLabelTextColor(QColor(QRgb(0xffffff)));
-    graph->activeTheme()->setLightColor(QColor(QRgb(0xffffff)));
-    graph->activeTheme()->setLightStrength(6.0f);
-    graph->activeTheme()->setGridLineColor(QColor(QRgb(0xffffff)));
-    graph->activeTheme()->setColorStyle(Q3DTheme::ColorStyleObjectGradient);
-
-    graph->axisX()->setSegmentCount(2);
-    graph->axisY()->setSegmentCount(2);
-    graph->axisZ()->setSegmentCount(2);
-
-    graph->axisY()
-
-    graph->axisX()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
-    graph->axisX()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
-    graph->axisY()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
-    graph->axisY()->setMin(0.0);
-    graph->axisZ()->setMax(SimulationConstants::MAX_GRAPH_SIZE);
-    graph->axisZ()->setMin(-SimulationConstants::MAX_GRAPH_SIZE);
-
-    graph->setSelectionMode(Q3DScatter::SelectionNone);
-
-    setup3DOjects();
-
-    // May cause issues later
-    graph->setOptimizationHints(Q3DScatter::OptimizationStatic);
-
-    graph->setMeasureFps(true);
-    connect(graph,
-            &QAbstract3DGraph::currentFpsChanged,
-            this,
-            &SimulationHandler::updateDebugFPS);
-    simulationWidget = QWidget::createWindowContainer(graph);
-    simulationWidget->setSizePolicy(QSizePolicy::Expanding,
-                                    QSizePolicy::Expanding);
-
-}
-
-
-/**
- * @brief Sets up 3D objects and meshes show in scene and customizes theme.
- */
-void SimulationHandler::setup3DOjects()
-{
-    QImage color = QImage(2.0, 2.0, QImage::Format_RGB32);
-    color.fill(QRgb(0xFFFFFF));
-
-    FRWheelMesh = new
-        QCustom3DItem(":/obj/resources/RightMech.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f),
-                      color);
-
-    BLWheelMesh = new
-        QCustom3DItem(":/obj/resources/RightMech.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                -SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
-                      color);
-
-    FLWheelMesh = new
-        QCustom3DItem(":/obj/resources/LeftMech.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,180.0f),
-                      color);
-
-    BRWheelMesh = new
-        QCustom3DItem(":/obj/resources/LeftMech.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                -SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(0.05f,0.05f,0.05f),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
-                      color);
-
-    QCustom3DItem *BCyl = new
-        QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(0.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                -SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f),
-                      color);
-
-    QCustom3DItem *FCyl = new
-        QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(0.0,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                SimulationConstants::BASE_LENGTH/2.0f),
-                      QVector3D(SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::BASE_WIDTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,90.0f),
-                      color);
-
-    QCustom3DItem *LCyl = new
-        QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(-SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                0.0),
-                      QVector3D(SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
-                      color);
-    QCustom3DItem *RCyl = new
-        QCustom3DItem(":/obj/resources/Cylinder.obj",
-                      QVector3D(SimulationConstants::BASE_WIDTH/2.0f,
-                                SimulationConstants::WHEEL_HEIGHT/2.0f,
-                                0.0),
-                      QVector3D(SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::FRAME_THICKNESS,
-                                SimulationConstants::BASE_LENGTH),
-                      QQuaternion::fromAxisAndAngle(0.0f,1.0f,0.0f,0.0f),
-                      color);
-
-    QLinearGradient lightPinkBruise_Gradient(QPointF(0, 0), QPointF(1, 0));
-    lightPinkBruise_Gradient.setColorAt(0.0, QRgb(0xDD3CFD));
-    lightPinkBruise_Gradient.setColorAt(1, QRgb(0xFF6F7A));
-    lightPinkBruise_Gradient.setCoordinateMode(QGradient::LogicalMode);
-
-    QLinearGradient darkUltramarine_Gradient(QPointF(0, 0),QPointF(1, 0));
-    darkUltramarine_Gradient.setColorAt(0.0, QRgb(0x7517F8));
-    darkUltramarine_Gradient.setColorAt(1.0, QRgb(0x02A4FF));
-    darkUltramarine_Gradient.setCoordinateMode(QGradient::LogicalMode);
-
-    QScatterDataProxy *FRBLDataProxy = new QScatterDataProxy();
-    FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //FR
-        SimulationConstants::BASE_WIDTH/2.0f,
-        SimulationConstants::WHEEL_HEIGHT/2.0f,
-        SimulationConstants::BASE_LENGTH/2.0f)));
-    FRBLDataProxy->addItem(QScatterDataItem(QVector3D( //BL
-        -SimulationConstants::BASE_WIDTH/2.0f,
-        SimulationConstants::WHEEL_HEIGHT/2.0f,
-        -SimulationConstants::BASE_LENGTH/2.0f)));
-    FRBLSeries = new QScatter3DSeries(FRBLDataProxy);
-    FRBLSeries->setItemLabelVisible(false);
-    FRBLSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    FRBLSeries->setItemSize(0.15f);
-    FRBLSeries->setMeshSmooth(true);
-    FRBLSeries->setBaseGradient(lightPinkBruise_Gradient);
-
-    QScatterDataProxy *FLBRDataProxy = new QScatterDataProxy();
-    FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //FL
-        -SimulationConstants::BASE_WIDTH/2.0f,
-        SimulationConstants::WHEEL_HEIGHT/2.0f,
-        SimulationConstants::BASE_LENGTH/2.0f)));
-    FLBRDataProxy->addItem(QScatterDataItem(QVector3D( //BR
-        SimulationConstants::BASE_WIDTH/2.0f,
-        SimulationConstants::WHEEL_HEIGHT/2.0f,
-        -SimulationConstants::BASE_LENGTH/2.0f)));
-
-    FLBRSeries = new QScatter3DSeries(FLBRDataProxy);
-    FLBRSeries->setMesh(QAbstract3DSeries::MeshSphere);
-    FLBRSeries->setItemSize(0.15f);
-    FLBRSeries->setMeshSmooth(true);
-    FLBRSeries->setBaseGradient(darkUltramarine_Gradient);
-    FLBRSeries->setItemLabelVisible(true);
-
-    graph->addSeries(FRBLSeries);
-    graph->addSeries(FLBRSeries);
-
-    graph->addCustomItem(FRWheelMesh);
-    graph->addCustomItem(BLWheelMesh);
-    graph->addCustomItem(FLWheelMesh);
-    graph->addCustomItem(BRWheelMesh);
-
-    graph->addCustomItem(BCyl);
-    graph->addCustomItem(FCyl);
-    graph->addCustomItem(LCyl);
-    graph->addCustomItem(RCyl);
-}
-
-
-/**
- * @brief Sets up the FR animator for the FR wheel
- */
-void SimulationHandler::setupFRAnimation() {
     FRAnimation = new QVariantAnimation();
     FRAnimation->setStartValue(QVariant(0.0));
     FRAnimation->setEndValue(QVariant(360.0));
@@ -417,11 +75,8 @@ void SimulationHandler::setupFRAnimation() {
     FRAnimation->start();
 }
 
-
-/**
- * @brief Sets up the BL animator for the BL wheel
- */
-void SimulationHandler::setupBLAnimation() {
+void SimulationHandler::setupBLAnimation()
+{
     BLAnimation = new QVariantAnimation();
     BLAnimation->setStartValue(QVariant(0.0));
     BLAnimation->setEndValue(QVariant(360.0));
@@ -430,11 +85,8 @@ void SimulationHandler::setupBLAnimation() {
     BLAnimation->start();
 }
 
-
-/**
- * @brief Sets up the FL animator for the FL wheel
- */
-void SimulationHandler::setupFLAnimation() {
+void SimulationHandler::setupFLAnimation()
+{
     FLAnimation = new QVariantAnimation();
     FLAnimation->setStartValue(QVariant(0.0));
     FLAnimation->setEndValue(QVariant(360.0));
@@ -443,11 +95,8 @@ void SimulationHandler::setupFLAnimation() {
     FLAnimation->start();
 }
 
-
-/**
- * @brief Sets up the BR animator for the BR wheel
- */
-void SimulationHandler::setupBRAnimation() {
+void SimulationHandler::setupBRAnimation()
+{
     BRAnimation = new QVariantAnimation();
     BRAnimation->setStartValue(QVariant(0.0));
     BRAnimation->setEndValue(QVariant(360.0));
@@ -456,9 +105,669 @@ void SimulationHandler::setupBRAnimation() {
     BRAnimation->start();
 }
 
+void SimulationHandler::updateFRAnimation(double FRSpeed)
+{
+    FRcurrentRotation = FRWheelTransform->rotationX();
+    qDebug() << FRAnimation->currentTime();
+    FRAnimation->pause();
+
+    // Jitter might be related to when duration is set
+    if (FRSpeed > 0.0) { // Forward
+        FRAnimation->setDuration(FRmappedDuration);
+        FRAnimation->setEndValue(QVariant(360.0));
+        FRAnimation->resume();
+    } else if (FRSpeed < 0.0) { // Reverse
+        FRAnimation->setDuration(FRmappedDuration);
+        FRAnimation->setEndValue(QVariant(-360.0));
+        FRAnimation->resume();
+    }
+
+}
+
+void SimulationHandler::updateBLAnimation(double BLSpeed)
+{
+    BLcurrentRotation = BLWheelTransform->rotationX();
+    BLAnimation->pause();
+
+    // Jitter might be related to when duration is set
+    if (BLSpeed > 0.0) { // Forward
+        BLAnimation->setDuration(BLmappedDuration);
+        BLAnimation->setEndValue(QVariant(360.0));
+        BLAnimation->resume();
+    } else if (BLSpeed < 0.0) { // Reverse
+        BLAnimation->setDuration(BLmappedDuration);
+        BLAnimation->setEndValue(QVariant(-360.0));
+        BLAnimation->resume();
+    }
+
+}
+
+void SimulationHandler::updateFLAnimation(double FLSpeed)
+{
+    FLcurrentRotation = FLWheelTransform->rotationX();
+    FLAnimation->pause();
+
+    // Jitter might be related to when duration is set
+    if (FLSpeed > 0.0) { // Forward
+        FLAnimation->setDuration(FLmappedDuration);
+        FLAnimation->setEndValue(QVariant(360.0));
+        FLAnimation->resume();
+    } else if (FLSpeed < 0.0) { // Reverse
+        FLAnimation->setDuration(FLmappedDuration);
+        FLAnimation->setEndValue(QVariant(-360.0));
+        FLAnimation->resume();
+    }
+
+}
+
+void SimulationHandler::updateBRAnimation(double BRSpeed)
+{
+    BRcurrentRotation = BRWheelTransform->rotationX();
+    BRAnimation->pause();
+
+    // Jitter might be related to when duration is set
+    if (BRSpeed > 0.0) { // Forward
+        BRAnimation->setDuration(BRmappedDuration);
+        BRAnimation->setEndValue(QVariant(360.0));
+        BRAnimation->resume();
+    } else if (BRSpeed < 0.0) { // Reverse
+        BRAnimation->setDuration(BRmappedDuration);
+        BRAnimation->setEndValue(QVariant(-360.0));
+        BRAnimation->resume();
+    }
+
+}
+
+// Grab keyboard and send it over to the input handler
+void SimulationHandler::setup3DView() {
+    view->defaultFrameGraph()->setClearColor(QColor(QRgb(0x05050f)));
+
+    // Setup sorting for better transparency handling
+    Qt3DRender::QFrameGraphNode *framegraph = view->activeFrameGraph();
+    Qt3DRender::QSortPolicy *sortPolicy = new Qt3DRender::QSortPolicy(root);
+    framegraph->setParent(sortPolicy);
+    QVector<Qt3DRender::QSortPolicy::SortType> sortTypes =
+      QVector<Qt3DRender::QSortPolicy::SortType>() << Qt3DRender::QSortPolicy::BackToFront;
+
+    // Why this wants a vector, instead of a enum, no one will ever know
+    sortPolicy->setSortTypes(sortTypes);
+
+    view->setActiveFrameGraph(framegraph);
+
+    // Camera stuff
+    Qt3DRender::QCamera *camera = view->camera();
+    camera->setPosition(QVector3D(-10.0f, 9.0f, 10.0f));
+    camera->setUpVector(QVector3D(0, 1.0f, 0));
+    camera->setViewCenter(QVector3D(0, 0, 0));
+    camera->setFieldOfView(45);
+
+    // Disable light
+    Qt3DRender::QDirectionalLight *light = new Qt3DRender::QDirectionalLight();
+    light->setColor("white");
+    light->setIntensity(0.0);
+
+    Qt3DCore::QEntity *lightEntity = new Qt3DCore::QEntity(root);
+    lightEntity->addComponent(light);
+
+    // For camera controls
+    Qt3DExtras::QOrbitCameraController *camController = new Qt3DExtras::QOrbitCameraController(root);
+    camController->setCamera(camera);
+
+}
+
+void SimulationHandler::setupConnections()
+{
+    connect(view,
+            &Custom3DWindow::passKeyboard_WChanged,
+            this,
+            &SimulationHandler::passKeyboard_WChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_SChanged,
+            this,
+            &SimulationHandler::passKeyboard_SChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_AChanged,
+            this,
+            &SimulationHandler::passKeyboard_AChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_DChanged,
+            this,
+            &SimulationHandler::passKeyboard_DChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_QChanged,
+            this,
+            &SimulationHandler::passKeyboard_QChanged);
+    connect(view,
+            &Custom3DWindow::passKeyboard_EChanged,
+            this,
+            &SimulationHandler::passKeyboard_EChanged);
+}
+
+void SimulationHandler::setupMeshs()
+{
+    // Materials
+    Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    gridMaterial->setAmbient(QColor(255,255,255));
+    gridMaterial->setAlphaBlendingEnabled(true);
+    gridMaterial->setDiffuse(QColor(255,255,255,128));
+    gridMaterial->setShininess(0.0f);
+
+    Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    innerBaseMaterial->setAmbient(QColor(226,35,255));
+    innerBaseMaterial->setAlphaBlendingEnabled(true);
+    innerBaseMaterial->setDiffuse(QColor(226,35,255,128));
+    innerBaseMaterial->setShininess(0.0f);
+
+    Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    frameMaterial->setAmbient(QColor(255,255,255));
+    frameMaterial->setDiffuse(QColor(255,255,255));
+    frameMaterial->setShininess(0.0f);
+
+    Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    arrowMaterial->setAmbient(QColor(226,35,255));
+    arrowMaterial->setDiffuse(QColor(226,35,255));
+    arrowMaterial->setShininess(0.0f);
+
+    Qt3DExtras::QDiffuseSpecularMaterial *FRBLMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    FRBLMaterial->setAmbient(QColor(232,77,209));
+    FRBLMaterial->setDiffuse(QColor(232,77,209));
+    FRBLMaterial->setShininess(0.0f);
+
+    Qt3DExtras::QDiffuseSpecularMaterial *FLBRMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+    FLBRMaterial->setAmbient(QColor(79,70,250));
+    FLBRMaterial->setDiffuse(QColor(79,70,250));
+    FLBRMaterial->setShininess(0.0f);
+
+    generateMeshs(gridMaterial,
+                  innerBaseMaterial,
+                  frameMaterial,
+                  arrowMaterial);
+    alignMeshs();
+}
+
+void SimulationHandler::alignMeshs()
+{
+    Qt3DCore::QTransform *baseTransform = new Qt3DCore::QTransform();
+    FRWheelTransform = new Qt3DCore::QTransform();
+    BLWheelTransform = new Qt3DCore::QTransform();
+    FLWheelTransform = new Qt3DCore::QTransform();
+    BRWheelTransform = new Qt3DCore::QTransform();
+    arrowTransform = new Qt3DCore::QTransform();
+    arrowRTransform = new Qt3DCore::QTransform();
+    arrowLTransform = new Qt3DCore::QTransform();
+
+    baseTransform->setTranslation(QVector3D(0.0f,
+                                            SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                            0.0f));
+    FRWheelTransform->setTranslation(QVector3D(-SimulationConstants::INBASE_WIDTH/2 - SimulationConstants::WHEEL_WIDTH/2,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::INBASE_LENGTH/2));
+    BLWheelTransform->setTranslation(QVector3D(SimulationConstants::INBASE_WIDTH/2 + SimulationConstants::WHEEL_WIDTH/2,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                          -SimulationConstants::INBASE_LENGTH/2));
+    FLWheelTransform->setTranslation(QVector3D(SimulationConstants::INBASE_WIDTH/2 + SimulationConstants::WHEEL_WIDTH/2,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                          SimulationConstants::INBASE_LENGTH/2));
+    BRWheelTransform->setTranslation(QVector3D(-SimulationConstants::INBASE_WIDTH/2 - SimulationConstants::WHEEL_WIDTH/2,
+                                          SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                          -SimulationConstants::INBASE_LENGTH/2));
+    arrowTransform->setTranslation(QVector3D(0.0f,
+                                             SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                             0.0f));
+
+    baseFrame->addComponent(baseTransform);
+    FRWheel->addComponent(FRWheelTransform);
+    BLWheel->addComponent(BLWheelTransform);
+    FLWheel->addComponent(FLWheelTransform);
+    BRWheel->addComponent(BRWheelTransform);
+    arrow->addComponent(arrowTransform);
+    arrowR->addComponent(arrowRTransform);
+    arrowL->addComponent(arrowLTransform);
+}
+
+void SimulationHandler::generateMeshs(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
+                                      Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
+                                      Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                                      Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial)
+{
+    FRWheel = generateWheel(9,
+                            SimulationConstants::WHEEL_WIDTH,
+                            SimulationConstants::WHEEL_DIAMETER,
+                            SimulationConstants::FRAME_THICKNESS,
+                            SimulationConstants::WHEEL_RIGHT,
+                            frameMaterial);
+
+    BLWheel = generateWheel(9,
+                            SimulationConstants::WHEEL_WIDTH,
+                            SimulationConstants::WHEEL_DIAMETER,
+                            SimulationConstants::FRAME_THICKNESS,
+                            SimulationConstants::WHEEL_RIGHT,
+                            frameMaterial);
+
+    FLWheel = generateWheel(9,
+                            SimulationConstants::WHEEL_WIDTH,
+                            SimulationConstants::WHEEL_DIAMETER,
+                            SimulationConstants::FRAME_THICKNESS,
+                            SimulationConstants::WHEEL_LEFT,
+                            frameMaterial);
+
+    BRWheel = generateWheel(9,
+                            SimulationConstants::WHEEL_WIDTH,
+                            SimulationConstants::WHEEL_DIAMETER,
+                            SimulationConstants::FRAME_THICKNESS,
+                            SimulationConstants::WHEEL_LEFT,
+                            frameMaterial);
+
+    baseFrame = generateFrame(SimulationConstants::INBASE_LENGTH,
+                              SimulationConstants::INBASE_WIDTH,
+                              SimulationConstants::FRAME_THICKNESS,
+                              frameMaterial,
+                              innerBaseMaterial);
+
+    generateGrid(SimulationConstants::GRID_WIDTH,
+                 gridMaterial);
+
+    arrowR = generateArrow(true, false, arrowMaterial);
+    arrowL = generateArrow(true, true, arrowMaterial);
+    arrow = generateArrow(false, false, arrowMaterial);
+}
+
+Qt3DCore::QEntity* SimulationHandler::generateArrow(bool curved,
+                                                    bool mirrorCurve,
+                                                    Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial) {
+    Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
+    Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
+    connect(arrowMesh,
+            &Qt3DRender::QMesh::statusChanged,
+            this,
+            &SimulationHandler::checkLoaded);
+    if (curved && !mirrorCurve) {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved.obj"));
+    } else if (curved && mirrorCurve) {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved-M.obj"));
+    } else {
+        arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right.obj"));
+    }
+    expectedLoadedMeshes++;
+
+    arrowEntity->addComponent(arrowMesh);
+    arrowEntity->addComponent(arrowMaterial);
+
+    return arrowEntity;
+}
+
+
+void SimulationHandler::generateGrid(double size,
+                                     Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
+
+    Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
+    generateGridLabels(size, gridMaterial);
+
+    // Meshs
+    Qt3DExtras::QPlaneMesh **gridLines = new Qt3DExtras::QPlaneMesh*[10];
+    Qt3DCore::QTransform **lineTransform = new Qt3DCore::QTransform*[10];
+    Qt3DCore::QEntity **lineEntity = new Qt3DCore::QEntity*[10];
+
+    for (int i=0; i < 10; i++) {
+        gridLines[i] = new Qt3DExtras::QPlaneMesh();
+        gridLines[i]->setHeight(SimulationConstants::GRID_THICKNESS);
+        gridLines[i]->setWidth(size+SimulationConstants::GRID_PAD);
+    }
+
+    for (int i=0; i < 10; i++) {
+        lineTransform[i] = new Qt3DCore::QTransform();
+    }
+
+    // Transforms
+    //Vertical
+    lineTransform[0]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[1]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[1]->setTranslation(QVector3D(size/2, 0.0f, 0.0f));
+    lineTransform[2]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[2]->setTranslation(QVector3D(-size/2, 0.0f, 0.0f));
+    lineTransform[3]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[3]->setTranslation(QVector3D(-size/2+0.2, 0.0f, 0.0f));
+    lineTransform[4]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 90.0f));
+    lineTransform[4]->setTranslation(QVector3D(size/2-0.2, 0.0f, 0.0f));
+
+    //Horizontal
+    lineTransform[5]->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+    lineTransform[6]->setTranslation(QVector3D(0.0f, 0.0f, size/2));
+    lineTransform[7]->setTranslation(QVector3D(0.0f, 0.0f, -size/2));
+    lineTransform[8]->setTranslation(QVector3D(0.0f, 0.0f, size/2-0.2));
+    lineTransform[9]->setTranslation(QVector3D(0.0f, 0.0f, -size/2+0.2));
+
+    //Entities
+    for (int i=0; i < 10; i++) {
+        lineEntity[i] = new Qt3DCore::QEntity(baseEntity);
+        lineEntity[i]->addComponent(gridLines[i]);
+        lineEntity[i]->addComponent(lineTransform[i]);
+        lineEntity[i]->addComponent(gridMaterial);
+    }
+}
+
+
+void SimulationHandler::generateGridLabels(double size,
+                                           Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial) {
+
+    Qt3DCore::QEntity *baseEntity = new Qt3DCore::QEntity(root);
+
+    // Meshs
+    Qt3DExtras::QExtrudedTextMesh **textMeshs = new Qt3DExtras::QExtrudedTextMesh*[4];
+    Qt3DCore::QTransform **textTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **textEntity = new Qt3DCore::QEntity*[4];
+
+    for (int i=0; i < 4; i++) {
+        textMeshs[i] = new Qt3DExtras::QExtrudedTextMesh();
+        textMeshs[i]->setDepth(0.0);
+        textMeshs[i]->setFont(QFont("Open Sans", 50));
+        switch(i) {
+            case 0:
+                textMeshs[i]->setText("Front");
+                break;
+            case 1:
+                textMeshs[i]->setText("Back");
+                break;
+            case 2:
+                textMeshs[i]->setText("Right");
+                break;
+            case 3:
+                textMeshs[i]->setText("Left");
+                break;
+        }
+    }
+
+    // Transforms
+    for (int i=0; i < 4; i++) {
+        textTransform[i] = new Qt3DCore::QTransform();
+        textTransform[i]->setScale(0.5);
+        textTransform[i]->setRotationX(-90);
+    }
+
+    //TODO Get rid of the magic number offsets
+    //Front
+    textTransform[0]->setTranslation(QVector3D(-0.77f,
+                                               0.0f,
+                                               (size/2+0.2+0.5)));
+    //Back
+    textTransform[1]->setTranslation(QVector3D(-0.73f,
+                                               0.0f,
+                                               (-size/2-0.2)));
+    //Right
+    textTransform[2]->setTranslation(QVector3D((-size/2-0.2-1.55),
+                                               0.0f,
+                                               0.25f));
+    //Left
+    textTransform[3]->setTranslation(QVector3D(((size/2+0.2)),
+                                               0.0f,
+                                               0.25f));
+
+    //Entities
+    for (int i=0; i < 4; i++) {
+        textEntity[i] = new Qt3DCore::QEntity(baseEntity);
+        textEntity[i]->addComponent(textMeshs[i]);
+        textEntity[i]->addComponent(textTransform[i]);
+        textEntity[i]->addComponent(gridMaterial);
+    }
+}
+
+
+Qt3DCore::QEntity* SimulationHandler::generateFrame(double baseLength,
+                                                    double baseWidth,
+                                                    double frameThickness,
+                                                    Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                                                    Qt3DExtras::QDiffuseSpecularMaterial *inBaseMaterial) {
+    Qt3DCore::QEntity *frameEntity = new Qt3DCore::QEntity(root);
+
+    Qt3DExtras::QCylinderMesh **cylMeshs = new Qt3DExtras::QCylinderMesh*[4];
+    Qt3DCore::QTransform **cylTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **cylEntity = new Qt3DCore::QEntity*[4];
+
+    Qt3DExtras::QSphereMesh **sphMeshs = new Qt3DExtras::QSphereMesh*[4];
+    Qt3DCore::QTransform **sphTransform = new Qt3DCore::QTransform*[4];
+    Qt3DCore::QEntity **sphEntity = new Qt3DCore::QEntity*[4];
+
+    // Frame
+    // Meshs
+    for (int i=0; i < 4; i++) {
+        cylMeshs[i] = new Qt3DExtras::QCylinderMesh();
+        if (i >= 2) {
+            cylMeshs[i]->setLength(baseLength);
+        } else {
+            cylMeshs[i]->setLength(baseWidth);
+        }
+        cylMeshs[i]->setRadius(frameThickness);
+        cylMeshs[i]->setSlices(20);
+        cylMeshs[i]->setRings(2);
+    }
+
+    for (int i=0; i < 4; i++) {
+        sphMeshs[i] = new Qt3DExtras::QSphereMesh();
+        sphMeshs[i]->setRadius(frameThickness*2);
+        sphMeshs[i]->generateTangents();
+    }
+
+    for (int i=0; i < 4; i++) {
+        cylTransform[i] = new Qt3DCore::QTransform();
+        sphTransform[i] = new Qt3DCore::QTransform();
+    }
+
+    // Transforms
+    cylTransform[0]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cylTransform[0]->setTranslation(QVector3D(0.0f, 0.0f, baseLength/2));
+    cylTransform[1]->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+    cylTransform[1]->setTranslation(QVector3D(0.0f, 0.0f, -baseLength/2));
+    cylTransform[2]->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cylTransform[2]->setTranslation(QVector3D(baseWidth/2, 0.0f, 0.0f));
+    cylTransform[3]->setRotation(QQuaternion::fromAxisAndAngle(1.0f, 0.0f, 0.0f, 90.0f));
+    cylTransform[3]->setTranslation(QVector3D(-baseWidth/2, 0.0f, 0.0f));
+
+    sphTransform[0]->setTranslation(QVector3D(baseWidth/2, 0.0f, baseLength/2));
+    sphTransform[1]->setTranslation(QVector3D(-baseWidth/2, 0.0f, baseLength/2));
+    sphTransform[2]->setTranslation(QVector3D(baseWidth/2, 0.0f, -baseLength/2));
+    sphTransform[3]->setTranslation(QVector3D(-baseWidth/2, 0.0f, -baseLength/2));
+
+    // Entities
+    for (int i=0; i < 4; i++) {
+        cylEntity[i] = new Qt3DCore::QEntity(frameEntity);
+        cylEntity[i]->addComponent(cylMeshs[i]);
+        cylEntity[i]->addComponent(cylTransform[i]);
+        cylEntity[i]->addComponent(frameMaterial);
+    }
+
+    for (int i=0; i < 4; i++) {
+        sphEntity[i] = new Qt3DCore::QEntity(frameEntity);
+        sphEntity[i]->addComponent(sphMeshs[i]);
+        sphEntity[i]->addComponent(sphTransform[i]);
+        sphEntity[i]->addComponent(frameMaterial);
+    }
+
+    // Inner Base
+    // Meshs
+    Qt3DExtras::QPlaneMesh *innerBasePlane = new Qt3DExtras::QPlaneMesh();
+    innerBasePlane->setHeight(baseLength);
+    innerBasePlane->setWidth(baseWidth);
+
+    // Entities
+    Qt3DCore::QEntity *innerBaseEntity = new Qt3DCore::QEntity(frameEntity);
+    innerBaseEntity->addComponent(innerBasePlane);
+    innerBaseEntity->addComponent(inBaseMaterial);
+    return frameEntity;
+}
+
+Qt3DCore::QEntity* SimulationHandler::generateWheel(int partCount,
+                                                    double wheelWidth,
+                                                    double wheelDiameter,
+                                                    double frameThickness,
+                                                    bool invert,
+                                                    Qt3DExtras::QDiffuseSpecularMaterial *wheelMaterial) {
+    Qt3DCore::QEntity *wEntity = new Qt3DCore::QEntity(root);
+
+    //Double pointer setup
+    Qt3DCore::QEntity **parts = new Qt3DCore::QEntity*[partCount];
+
+    double angleBetween = 360.0/(double)partCount;
+    double currentAngle = 0.0;
+
+    //For each part
+    for (int i=0; i<partCount; i++) {
+        //LW 1
+        //lw1Entity
+        parts[i] = new Qt3DCore::QEntity(wEntity);
+        currentAngle += angleBetween;
+
+        // Meshs
+        Qt3DExtras::QCylinderMesh *wCyl = new Qt3DExtras::QCylinderMesh();
+        wCyl->setLength(wheelWidth);
+        wCyl->setRadius(frameThickness);
+        wCyl->setSlices(20);
+        wCyl->setRings(2);
+
+        Qt3DExtras::QSphereMesh *wSph1 = new Qt3DExtras::QSphereMesh();
+        wSph1->setRadius(frameThickness*2);
+        wSph1->setSlices(10);
+        wSph1->setRings(10);
+
+        Qt3DExtras::QSphereMesh *wSph2 = new Qt3DExtras::QSphereMesh();
+        wSph2->setRadius(frameThickness*2);
+        wSph2->setSlices(10);
+        wSph2->setRings(10);
+
+        // Transforms
+        Qt3DCore::QTransform *wCylTransform = new Qt3DCore::QTransform();
+        wCylTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0f, 0.0f, 1.0f, 90.0f));
+
+        Qt3DCore::QTransform *wSph1Transform = new Qt3DCore::QTransform();
+        wSph1Transform->setTranslation(QVector3D(wheelWidth/2, 0.0f, 0.0f));
+
+        Qt3DCore::QTransform *wSph2Transform = new Qt3DCore::QTransform();
+        wSph2Transform->setTranslation(QVector3D(-wheelWidth/2, 0.0f, 0.0f));
+
+        // Entities
+        Qt3DCore::QEntity *wCylEntity = new Qt3DCore::QEntity(parts[i]);
+        wCylEntity->addComponent(wCyl);
+        wCylEntity->addComponent(wCylTransform);
+
+        if (!(i == 0)) {
+            wCylEntity->addComponent(wheelMaterial);
+        } else {
+            Qt3DExtras::QDiffuseSpecularMaterial *testMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+            testMaterial->setAmbient(QColor(255,0,0));
+            testMaterial->setDiffuse(QColor(255,0,0));
+            testMaterial->setShininess(0.0f);
+            wCylEntity->addComponent(testMaterial);
+        }
+
+        Qt3DCore::QEntity *wSph1Entity = new Qt3DCore::QEntity(parts[i]);
+        wSph1Entity->addComponent(wSph1);
+        wSph1Entity->addComponent(wSph1Transform);
+        wSph1Entity->addComponent(wheelMaterial);
+
+        Qt3DCore::QEntity *wSph2Entity = new Qt3DCore::QEntity(parts[i]);
+        wSph2Entity->addComponent(wSph2);
+        wSph2Entity->addComponent(wSph2Transform);
+        wSph2Entity->addComponent(wheelMaterial);
+
+        // Rotating segments to 45 degrees around the axis of a vector pointing
+        // to the center of the wheel.
+        Qt3DCore::QTransform *partsTransform = new Qt3DCore::QTransform();
+        double height = sin(currentAngle*MathConstants::PI/180.0);
+        double width = cos(currentAngle*MathConstants::PI/180.0);
+        if(invert) {
+            partsTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0,height,width,-45.0));
+        } else {
+            partsTransform->setRotation(QQuaternion::fromAxisAndAngle(0.0,height,width,45.0));
+        }
+        partsTransform->setTranslation(QVector3D(0, height*wheelDiameter/2, width*wheelDiameter/2));
+        parts[i]->addComponent(partsTransform);
+    }
+    return wEntity;
+
+}
+
+void SimulationHandler::updateWithSettings()
+{
+    qDebug() << "simulation handler update";
+    view->defaultFrameGraph()->setShowDebugOverlay(true);
+    view->defaultFrameGraph()->
+        setShowDebugOverlay(
+            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+}
+
+void SimulationHandler::updateArrow(double dir, double mag, double z)
+{
+
+    if (mag > 0) {
+        arrow->setEnabled(true);
+        dir = dir*180.0/MathConstants::PI;
+        if (dir < 0.0) {
+            dir = dir + 360;
+        }
+        arrowTransform->setRotationY(dir);
+        arrowTransform->setScale(linearMap(mag, 0.0, 1.0, 0.13, 0.4));
+    } else {
+        arrow->setEnabled(false);
+    }
+
+    double offset = linearMap(abs(z), 0.0, 1.0, 0.4, 1.5);
+    double scale = linearMap(abs(z), 0.0, 1.0, 0.13, 0.3);
+    if (z > 0) { // Left
+        arrowL->setEnabled(true);
+        arrowR->setEnabled(false);
+        arrowLTransform->setScale(scale);
+        arrowLTransform->setTranslation(QVector3D(0.6f,
+                                                  SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                                  SimulationConstants::INBASE_LENGTH/2+offset));
+    } else if (z < 0) { // Right
+        arrowL->setEnabled(false);
+        arrowR->setEnabled(true);
+        arrowRTransform->setScale(scale);
+        arrowRTransform->setTranslation(QVector3D(-0.6f,
+                                                  SimulationConstants::WHEEL_DIAMETER/2 + SimulationConstants::FRAME_THICKNESS,
+                                                  SimulationConstants::INBASE_LENGTH/2+offset));
+    } else {
+        arrowL->setEnabled(false);
+        arrowR->setEnabled(false);
+    }
+}
+
+void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
+{
+    // when using joystick.
+    //100000 for slow, 1000 for fast
+    FRmappedDuration =  linearMap(abs(FR), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    BLmappedDuration =  linearMap(abs(BL), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    FLmappedDuration =  linearMap(abs(FL), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    BRmappedDuration =  linearMap(abs(BR), 0.0, 1.0,
+                                 SimulationConstants::MIN_WHEEL_ROT_DURATION,
+                                 SimulationConstants::MAX_WHEEL_ROT_DURATION);
+    updateFRAnimation(FR);
+    updateBLAnimation(BL);
+    updateFLAnimation(FL);
+    updateBRAnimation(BR);
+    qDebug() << FR << BL << FL << BR;
+}
+
+void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status) {
+    if (status == Qt3DRender::QMesh::Status::Ready) {
+        loadedMeshesCount++;
+    }
+    qDebug() << loadedMeshesCount;
+    if (loadedMeshesCount == expectedLoadedMeshes) {
+        updateArrow(0.0, 0.0, 0.0);
+    }
+}
 
 // Getters
 QWidget* SimulationHandler::getWidget()
 {
     return simulationWidget;
 }
+
