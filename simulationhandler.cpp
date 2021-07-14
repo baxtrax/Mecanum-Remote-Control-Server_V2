@@ -762,6 +762,7 @@ void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status) {
     qDebug() << loadedMeshesCount;
     if (loadedMeshesCount == expectedLoadedMeshes) {
         updateArrow(0.0, 0.0, 0.0);
+        updateWheels(0.0,0.0,0.0,0.0);
     }
 }
 
