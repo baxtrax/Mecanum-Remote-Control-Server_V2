@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QSettings>
 #include <QKeyEvent>
+#include <QQuaternion>
 #include <math.h>
 
 #include <Qt3DCore/QTransform>
@@ -67,32 +68,61 @@ public slots:
     void checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
-
+    // Variables
     LoggerHandler *logger;
     QSettings *settings;
+
     Qt3DCore::QEntity *root;
     Qt3DCore::QEntity *FRWheel;
     Qt3DCore::QEntity *BLWheel;
     Qt3DCore::QEntity *FLWheel;
     Qt3DCore::QEntity *BRWheel;
-
     Qt3DCore::QEntity *arrow;
-    Qt3DCore::QTransform *arrowTransform;
-
     Qt3DCore::QEntity *arrowL;
-    Qt3DCore::QTransform *arrowLTransform;
-
     Qt3DCore::QEntity *arrowR;
+    Qt3DCore::QEntity *baseFrame;
+
+    QVariantAnimation *FRAnimation;
+    QVariantAnimation *BLAnimation;
+    QVariantAnimation *FLAnimation;
+    QVariantAnimation *BRAnimation;
+
+    Qt3DCore::QTransform *arrowTransform;
+    Qt3DCore::QTransform *arrowLTransform;
     Qt3DCore::QTransform *arrowRTransform;
 
-    Qt3DCore::QEntity *baseFrame;
+    Qt3DCore::QTransform *FRWheelTransform;
+    Qt3DCore::QTransform *BLWheelTransform;
+    Qt3DCore::QTransform *FLWheelTransform;
+    Qt3DCore::QTransform *BRWheelTransform;
+
     Custom3DWindow *view;
     QWidget *simulationWidget;
 
     int loadedMeshesCount;
     int expectedLoadedMeshes;
 
+    float FLcurrentRotation;
+    float BRcurrentRotation;
+    float FRcurrentRotation;
+    float BLcurrentRotation;
+
+    int FRmappedDuration;
+    int BLmappedDuration;
+    int FLmappedDuration;
+    int BRmappedDuration;
+
+    // Functions
     void setup3DView();
+    void setupConnections();
+    void setupMeshs();
+
+    void alignMeshs();
+
+    void generateMeshs(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                       Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
 
     Qt3DCore::QEntity* generateArrow(bool curved,
                                      bool mirrorCurve,
@@ -113,6 +143,15 @@ private:
                                      bool invert,
                                      Qt3DExtras::QDiffuseSpecularMaterial *wheelMaterial);
 
+    void setupFRAnimation();
+    void setupBLAnimation();
+    void setupFLAnimation();
+    void setupBRAnimation();
+
+    void updateFRAnimation(double FRSpeed);
+    void updateBLAnimation(double BLSpeed);
+    void updateFLAnimation(double FLSpeed);
+    void updateBRAnimation(double BRSpeed);
 };
 
 #endif // SIMULATIONHANDLER_H

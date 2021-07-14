@@ -19,6 +19,7 @@ KinematicsHandler::KinematicsHandler(LoggerHandler *loggerRef)
  */
 void KinematicsHandler::updateSpeeds(double x, double y, double z)
 {
+    z = -z;
     double dir = calculateDirection(x, y);
     double mag = calculateMagnitude(x, y);
 
