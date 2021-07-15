@@ -52,7 +52,7 @@ public slots:
     void updateWithSettings();
     void updateWheels(double, double, double, double);
     void updateArrow(double, double, double);
-    void checkLoaded(Qt3DRender::QMesh::Status status);
+    bool checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
     // Variables
@@ -97,15 +97,15 @@ private:
     // Functions
     void setup3DView();
     void setupConnections();
-    void setupMeshs();
+    void setupMeshes();
     void setupFRAnimation();
     void setupBLAnimation();
     void setupFLAnimation();
     void setupBRAnimation();
 
-    void alignMeshs();
+    void alignMeshes();
 
-    void generateMeshs(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
+    void generateMeshes(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
                        Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
                        Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
                        Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
