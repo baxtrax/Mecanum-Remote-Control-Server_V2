@@ -7,7 +7,7 @@ This is a QT Gui / Application that was made in QT Creator to be used as a bridg
 This section will show current features of the GUI and up to date pictures of the GUI its self.
 
 ### Pictures of Current state of GUI
-Main GUI:
+Main GUI (3D Render is still a work in progress):
 
 ![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/Showcase.gif)
 Settings GUI:
