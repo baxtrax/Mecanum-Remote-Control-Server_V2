@@ -17,56 +17,61 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef, QSettings *settin
     settings = settingsRef;
     loadedMeshesCount = 0;
     expectedLoadedMeshes = 0;
+    simulationWidget = NULL; // Start as Null (Error checking this way could be entirely wrong?)
     root = new Qt3DCore::QEntity();
     view = new Custom3DWindow();
-    simulationWidget = QWidget::createWindowContainer(view);
+    if (view)
+    {
+        simulationWidget = QWidget::createWindowContainer(view);
 
-    simulationWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        simulationWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    setup3DView();
-    setupConnections();
-    setupMeshes();
 
-    FRcurrentRotation = FRWheelTransform->rotationX();
-    BLcurrentRotation = BLWheelTransform->rotationX();
-    FLcurrentRotation = FLWheelTransform->rotationX();
-    BRcurrentRotation = BRWheelTransform->rotationX();
+        setup3DView();
+        setupConnections();
+        setupMeshes();
 
-    setupFRAnimation();
-    setupBLAnimation();
-    setupFLAnimation();
-    setupBRAnimation();
+        FRcurrentRotation = FRWheelTransform->rotationX();
+        BLcurrentRotation = BLWheelTransform->rotationX();
+        FLcurrentRotation = FLWheelTransform->rotationX();
+        BRcurrentRotation = BRWheelTransform->rotationX();
 
-    connect(FRAnimation,
-            &QVariantAnimation::valueChanged, // FR
-            this,
-            [this](const QVariant value) {
-                FRcurrentRotation = value.toFloat();
-                FRWheelTransform->setRotationX(FRcurrentRotation);
-            });
-    connect(BLAnimation,
-            &QVariantAnimation::valueChanged, // BL
-            this,
-            [this](const QVariant value) {
-                BLcurrentRotation = value.toFloat();
-                BLWheelTransform->setRotationX(BLcurrentRotation);
-            });
-    connect(FLAnimation,
-            &QVariantAnimation::valueChanged, // FL
-            this,
-            [this](const QVariant value) {
-                FLcurrentRotation = value.toFloat();
-                FLWheelTransform->setRotationX(FLcurrentRotation);
-            });
-    connect(BRAnimation,
-            &QVariantAnimation::valueChanged, // BR
-            this,
-            [this](const QVariant value) {
-                BRcurrentRotation = value.toFloat();
-                BRWheelTransform->setRotationX(BRcurrentRotation);
-            });
+        setupFRAnimation();
+        setupBLAnimation();
+        setupFLAnimation();
+        setupBRAnimation();
 
-    view->setRootEntity(root);
+        connect(FRAnimation,
+                &QVariantAnimation::valueChanged, // FR
+                this,
+                [this](const QVariant value) {
+                    FRcurrentRotation = value.toFloat();
+                    FRWheelTransform->setRotationX(FRcurrentRotation);
+                });
+        connect(BLAnimation,
+                &QVariantAnimation::valueChanged, // BL
+                this,
+                [this](const QVariant value) {
+                    BLcurrentRotation = value.toFloat();
+                    BLWheelTransform->setRotationX(BLcurrentRotation);
+                });
+        connect(FLAnimation,
+                &QVariantAnimation::valueChanged, // FL
+                this,
+                [this](const QVariant value) {
+                    FLcurrentRotation = value.toFloat();
+                    FLWheelTransform->setRotationX(FLcurrentRotation);
+                });
+        connect(BRAnimation,
+                &QVariantAnimation::valueChanged, // BR
+                this,
+                [this](const QVariant value) {
+                    BRcurrentRotation = value.toFloat();
+                    BRWheelTransform->setRotationX(BRcurrentRotation);
+                });
+
+        view->setRootEntity(root);
+    }
 }
 
 /**
@@ -436,7 +441,10 @@ Qt3DCore::QEntity *SimulationHandler::generateArrow(
     Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
     Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
 
-    connect(arrowMesh, &Qt3DRender::QMesh::statusChanged, this, &SimulationHandler::checkLoaded);
+    connect(arrowMesh,
+            &Qt3DRender::QMesh::statusChanged,
+            this,
+            &SimulationHandler::checkLoaded);
 
     if (curved && !mirrorCurve) {
         arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved.obj"));
@@ -773,10 +781,13 @@ Qt3DCore::QEntity *SimulationHandler::generateWheel(int partCount,
 void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
-    view->defaultFrameGraph()->setShowDebugOverlay(true);
-    view->defaultFrameGraph()->setShowDebugOverlay(
-        settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                        SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+    if (view)
+    {
+        view->defaultFrameGraph()->setShowDebugOverlay(true);
+        view->defaultFrameGraph()->setShowDebugOverlay(
+            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+    }
 }
 
 /**
@@ -865,9 +876,9 @@ void SimulationHandler::updateWheels(double FR, double BL, double FL, double BR)
  * @brief Checks if all meshes are fully loaded. Will then reset arrows and wheels to make sure
  * everything is ready for the user to see. This method is connected to all meshes and will be called
  * when the status of the mesh changes.
- * @param The loading status of a mesh
+ * @param The loading status of a meshes
  */
-bool SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status)
+void SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status)
 {
     if (status == Qt3DRender::QMesh::Status::Ready) {
         loadedMeshesCount++;
@@ -875,9 +886,8 @@ bool SimulationHandler::checkLoaded(Qt3DRender::QMesh::Status status)
     if (loadedMeshesCount == expectedLoadedMeshes) {
         updateArrow(0.0, 0.0, 0.0);
         updateWheels(0.0, 0.0, 0.0, 0.0);
-        return true;
+        emit meshesLoaded();
     }
-    return false;
 }
 
 // Getters

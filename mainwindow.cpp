@@ -52,9 +52,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Add 3D widget
     ui->render_placeholder->setStyleSheet(NULL);
-    ui->simulation_Frame->layout()
-        ->replaceWidget(ui->render_placeholder,
-                        simulationHandler->getWidget());
+
+        ui->simulation_Frame->layout()
+            ->replaceWidget(ui->render_placeholder,
+                            simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
 }
 
@@ -65,10 +66,14 @@ bool MainWindow::event(QEvent *event)
     if (event->type() == QEvent::Polish)
     {
         loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
+        if (simulationHandler->getWidget())
+        {
+            loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualization");\
+        } else {
+            loggerHandler->write(LoggerConstants::ERR, "Failed to setup 3D visualization");
+        }
         settingsHandler->initSettings();
         settingsHandler->checkStatus();
-        //Need to verify that 3D is working some how (need to research)
-        loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualation");
     }
     return returnV;
 }
@@ -410,12 +415,13 @@ void MainWindow::configureConnections()
             &SimulationHandler::passKeyboard_EChanged,
             inputHandler,
             &InputHandler::keyboard_ESetter);
-}
 
-//MainWindow deconstructor
-MainWindow::~MainWindow()
-{
-    delete ui;
+    connect(simulationHandler,
+            &SimulationHandler::meshesLoaded,
+            this,
+            [] {
+                loggerHandler->write(LoggerConstants::INFO, "Loaded all 3D meshes");
+            });
 }
 
 // TODO deal with focus and disabling input to robot while other pages
@@ -443,3 +449,10 @@ void MainWindow::on_info_toolButton_clicked()
     ui->settings_toolButton->setChecked(false);
     ui->info_toolButton->setChecked(true);
 }
+
+//MainWindow deconstructor
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+

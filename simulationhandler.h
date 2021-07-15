@@ -48,11 +48,13 @@ signals:
     void passKeyboard_QChanged(bool);
     void passKeyboard_EChanged(bool);
 
+    void meshesLoaded();
+
 public slots:
     void updateWithSettings();
     void updateWheels(double, double, double, double);
     void updateArrow(double, double, double);
-    bool checkLoaded(Qt3DRender::QMesh::Status status);
+    void checkLoaded(Qt3DRender::QMesh::Status status);
 
 private:
     // Variables
