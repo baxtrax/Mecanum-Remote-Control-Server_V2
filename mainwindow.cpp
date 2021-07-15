@@ -68,7 +68,7 @@ bool MainWindow::event(QEvent *event)
         loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
         if (simulationHandler->getWidget())
         {
-            loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualization");\
+            loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualization");
         } else {
             loggerHandler->write(LoggerConstants::ERR, "Failed to setup 3D visualization");
         }
