@@ -18,15 +18,18 @@ OutputHandler::OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef)
     BRSeries = new QtCharts::QLineSeries();
     dirSeries = new QtCharts::QLineSeries();
 
-    chart = new QtCharts::QChart();
+    chart = new QtCharts::QChart;
 
-    configurePenBrushFont();
-    configureAxis();
-    setMaxDataPoints(15);
-    configureSeries();
-    configureChart();
+    if (chart)
+    {
+        configurePenBrushFont();
+        configureAxis();
+        setMaxDataPoints(15);
+        configureSeries();
+        configureChart();
 
-    updateChart(0,0,0,0);
+        updateChart(0,0,0,0);
+    }
 }
 
 
@@ -137,9 +140,14 @@ void OutputHandler::configureChart()
 
 void OutputHandler::configureChartView(QtCharts::QChartView *chartView)
 {
-    chartView->setChart(chart);
-    chartView->setStyleSheet(NULL);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setStyleSheet("background-color: rgb(25, 25, 50);");
+    chartView->hide();
+    if (chart)
+    {
+        chartView->show();
+        chartView->setChart(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+    }
 }
 
 
@@ -219,186 +227,182 @@ void OutputHandler::updateChart(double dir,
                                 double z,
                                 double scaleFactor)
 {
-    logger->write(LoggerConstants::DEBUG, "Updating kinematics chart ...");
-    // Generate series showing vertical line where speeds are currently getting
-    // fetched from.
-    if(!(getCurrentDetailLevel() == SettingsConstants::DISABLED_INFO)) {
-        if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
-        dir = linearMap(dir,
-                        0,
-                        (2 * MathConstants::PI),
-                        IOConstants::MIN_XCHART,
-                        getMaxDataPoints());
-        dirSeries->clear();
-        dirSeries->append(dir, IOConstants::MAX+.02);
-        dirSeries->append(dir, IOConstants::MIN-.02);
+    if (chart && !(getCurrentDetailLevel() == SettingsConstants::DISABLED_INFO))
+    {
+        logger->write(LoggerConstants::DEBUG, "Updating kinematics chart ...");
+        // Generate series showing vertical line where speeds are currently getting
+        // fetched from.
+        if(!(getCurrentDetailLevel() == SettingsConstants::DISABLED_INFO)) {
+            if (dir < 0.0) { dir = dir + (2 * MathConstants::PI); }
+            dir = linearMap(dir,
+                            0,
+                            (2 * MathConstants::PI),
+                            IOConstants::MIN_XCHART,
+                            getMaxDataPoints());
+            dirSeries->clear();
+            dirSeries->append(dir, IOConstants::MAX+.02);
+            dirSeries->append(dir, IOConstants::MIN-.02);
 
-        if (scaleFactor == 0) { scaleFactor = 1.0; }
-    }
+            if (scaleFactor == 0) { scaleFactor = 1.0; }
+        }
 
-    // TODO Potentially switch over to using vectors? Statically allocated
-    // arrays seems fine in this case as the array size does not change after
-    // compile timer.
-    // Show line at dir
-    switch (getCurrentDetailLevel()) {
-        case SettingsConstants::DISABLED_INFO:
-            FRSeries->setVisible(false);
-            BLSeries->setVisible(false);
-            FLSeries->setVisible(false);
-            BRSeries->setVisible(false);
+        // TODO Potentially switch over to using vectors? Statically allocated
+        // arrays seems fine in this case as the array size does not change after
+        // compile timer.
+        // Show line at dir
+        switch (getCurrentDetailLevel()) {
+            case SettingsConstants::BASIC_INFO:
+                // Generate mag and scale - 2 speed lines
+                FRSeries->setVisible(true);
+                BLSeries->setVisible(false);
+                FLSeries->setVisible(true);
+                BRSeries->setVisible(false);
 
-            break;
-        case SettingsConstants::BASIC_INFO:
-            // Generate mag and scale - 2 speed lines
-            FRSeries->setVisible(true);
-            BLSeries->setVisible(false);
-            FLSeries->setVisible(true);
-            BRSeries->setVisible(false);
+                FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        (-(MathConstants::PI/4)),
+                                                        mag,
+                                                        0.0,
+                                                        scaleFactor);
 
-            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    1.0,
-                                                    0.0,
-                                                    (-(MathConstants::PI/4)),
-                                                    mag,
-                                                    0.0,
-                                                    scaleFactor);
+                FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        ((MathConstants::PI/4)),
+                                                        mag,
+                                                        0.0,
+                                                        scaleFactor);
 
-            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    1.0,
-                                                    0.0,
-                                                    ((MathConstants::PI/4)),
-                                                    mag,
-                                                    0.0,
-                                                    scaleFactor);
+                FRSeries->clear();
+                FLSeries->clear();
 
-            FRSeries->clear();
-            FLSeries->clear();
+                plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+                plotArray(FLarrPtr, IOConstants::FL_GRAPH);
 
-            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
-            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+                // Clean up memory used by array
+                for(int i=0; i<getMaxDataPoints(); i++) {
+                    delete[] FRarrPtr[i];
+                    delete[] FLarrPtr[i];
+                }
+                delete[] FRarrPtr;
+                delete[] FLarrPtr;
 
-            // Clean up memory used by array
-            for(int i=0; i<getMaxDataPoints(); i++) {
-                delete[] FRarrPtr[i];
-                delete[] FLarrPtr[i];
-            }
-            delete[] FRarrPtr;
-            delete[] FLarrPtr;
+                break;
 
-            break;
+            case SettingsConstants::DETAILED_INFO:
+                //Generate Mag scale and z - 2 speed lines
+                FRSeries->setVisible(true);
+                BLSeries->setVisible(false);
+                FLSeries->setVisible(true);
+                BRSeries->setVisible(false);
 
-        case SettingsConstants::DETAILED_INFO:
-            //Generate Mag scale and z - 2 speed lines
-            FRSeries->setVisible(true);
-            BLSeries->setVisible(false);
-            FLSeries->setVisible(true);
-            BRSeries->setVisible(false);
+                FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        (-(MathConstants::PI/4)),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
 
-            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                      1.0,
-                                                      1.0,
-                                                      0.0,
-                                                      (-(MathConstants::PI/4)),
-                                                      mag,
-                                                      z,
-                                                      scaleFactor);
+                FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        ((MathConstants::PI/4)),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
+                FRSeries->clear();
+                FLSeries->clear();
 
-            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    1.0,
-                                                    0.0,
-                                                    ((MathConstants::PI/4)),
-                                                    mag,
-                                                    z,
-                                                    scaleFactor);
-            FRSeries->clear();
-            FLSeries->clear();
+                plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+                plotArray(FLarrPtr, IOConstants::FL_GRAPH);
 
-            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
-            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+                // Clean up memory used by array
+                for(int i=0; i<getMaxDataPoints(); i++) {
+                    delete[] FRarrPtr[i];
+                    delete[] FLarrPtr[i];
+                }
+                delete[] FRarrPtr;
+                delete[] FLarrPtr;
 
-            // Clean up memory used by array
-            for(int i=0; i<getMaxDataPoints(); i++) {
-                delete[] FRarrPtr[i];
-                delete[] FLarrPtr[i];
-            }
-            delete[] FRarrPtr;
-            delete[] FLarrPtr;
+                break;
 
-            break;
+            case SettingsConstants::ADVANCED_INFO:
+                // Generate Mag scale and z - 4 speed lines
+                FRSeries->setVisible(true);
+                BLSeries->setVisible(true);
+                FLSeries->setVisible(true);
+                BRSeries->setVisible(true);
 
-        case SettingsConstants::ADVANCED_INFO:
-            // Generate Mag scale and z - 4 speed lines
-            FRSeries->setVisible(true);
-            BLSeries->setVisible(true);
-            FLSeries->setVisible(true);
-            BRSeries->setVisible(true);
+                FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        (-(MathConstants::PI/4)),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
 
-            FRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    1.0,
-                                                    0.0,
-                                                    (-(MathConstants::PI/4)),
-                                                    mag,
-                                                    z,
-                                                    scaleFactor);
+                BLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        -1.0,
+                                                        0.0,
+                                                        (-(MathConstants::PI/4)),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
 
-            BLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    -1.0,
-                                                    0.0,
-                                                    (-(MathConstants::PI/4)),
-                                                    mag,
-                                                    z,
-                                                    scaleFactor);
+                FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        -1.0,
+                                                        0.0,
+                                                        (MathConstants::PI/4),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
 
-            FLarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    -1.0,
-                                                    0.0,
-                                                    (MathConstants::PI/4),
-                                                    mag,
-                                                    z,
-                                                    scaleFactor);
+                BRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
+                                                        1.0,
+                                                        1.0,
+                                                        0.0,
+                                                        (MathConstants::PI/4),
+                                                        mag,
+                                                        z,
+                                                        scaleFactor);
+                FRSeries->clear();
+                BLSeries->clear();
+                FLSeries->clear();
+                BRSeries->clear();
 
-            BRarrPtr = generateSinePointsKinematics(getMaxDataPoints(),
-                                                    1.0,
-                                                    1.0,
-                                                    0.0,
-                                                    (MathConstants::PI/4),
-                                                    mag,
-                                                    z,
-                                                    scaleFactor);
-            FRSeries->clear();
-            BLSeries->clear();
-            FLSeries->clear();
-            BRSeries->clear();
+                for (int i=0; i<getMaxDataPoints(); i++) {
+                    BLarrPtr[i][1] = -BLarrPtr[i][1];
+                    FLarrPtr[i][1] = -FLarrPtr[i][1];
+                }
 
-            for (int i=0; i<getMaxDataPoints(); i++) {
-                BLarrPtr[i][1] = -BLarrPtr[i][1];
-                FLarrPtr[i][1] = -FLarrPtr[i][1];
-            }
+                plotArray(FRarrPtr, IOConstants::FR_GRAPH);
+                plotArray(BLarrPtr, IOConstants::BL_GRAPH);
+                plotArray(FLarrPtr, IOConstants::FL_GRAPH);
+                plotArray(BRarrPtr, IOConstants::BR_GRAPH);
 
-            plotArray(FRarrPtr, IOConstants::FR_GRAPH);
-            plotArray(BLarrPtr, IOConstants::BL_GRAPH);
-            plotArray(FLarrPtr, IOConstants::FL_GRAPH);
-            plotArray(BRarrPtr, IOConstants::BR_GRAPH);
+                // Clean up memory used by array
+                for(int i=0; i<getMaxDataPoints(); i++) {
+                    delete[] FRarrPtr[i];
+                    delete[] BLarrPtr[i];
+                    delete[] FLarrPtr[i];
+                    delete[] BRarrPtr[i];
+                }
+                delete[] FRarrPtr;
+                delete[] BLarrPtr;
+                delete[] FLarrPtr;
+                delete[] BRarrPtr;
 
-            // Clean up memory used by array
-            for(int i=0; i<getMaxDataPoints(); i++) {
-                delete[] FRarrPtr[i];
-                delete[] BLarrPtr[i];
-                delete[] FLarrPtr[i];
-                delete[] BRarrPtr[i];
-            }
-            delete[] FRarrPtr;
-            delete[] BLarrPtr;
-            delete[] FLarrPtr;
-            delete[] BRarrPtr;
-
-            break;
+                break;
+        }
     }
 }
 
@@ -441,13 +445,15 @@ void OutputHandler::updateWithSettings()
 {
     qDebug() << "output handler update";
     bool enStatus = settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN).toBool();
-    emit setChartVisibility(enStatus);
-    if (!enStatus)
+    if (chart)
     {
-        setDetailLevel(SettingsConstants::DISABLED_INFO);
-    } else {
-        switch(settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt())
+        emit setChartVisibility(enStatus);
+        if (!enStatus)
         {
+            setDetailLevel(SettingsConstants::DISABLED_INFO);
+        } else {
+            switch(settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL).toInt())
+            {
             case 0:
                 setDetailLevel(SettingsConstants::BASIC_INFO);
                 break;
@@ -457,12 +463,12 @@ void OutputHandler::updateWithSettings()
             case 2:
                 setDetailLevel(SettingsConstants::ADVANCED_INFO);
                 break;
+            }
         }
+        setMaxDataPoints(settings->value(SettingsConstants::GRAPH_PERF_POINTS, SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
+        useHardwareAcceleration(settings->value(SettingsConstants::GRAPH_PERF_ACCEL, SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
+        updateChart(0,0,0,0);
     }
-    setMaxDataPoints(settings->value(SettingsConstants::GRAPH_PERF_POINTS, SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
-    useHardwareAcceleration(settings->value(SettingsConstants::GRAPH_PERF_ACCEL, SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
-    updateChart(0,0,0,0);
-
 }
 
 // Getters
@@ -609,6 +615,11 @@ void OutputHandler::setBRSlider(double value)
         emit BR_botSlider_ValChanged(0.0);
         emit BR_topSlider_ValChanged(0.0);
     }
+}
+
+QtCharts::QChart* OutputHandler::getChart()
+{
+    return chart;
 }
 
 

@@ -22,6 +22,7 @@ public:
     OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
+    QtCharts::QChart* getChart();
     void configureChartView(QtCharts::QChartView *chartView);
 
 public slots:

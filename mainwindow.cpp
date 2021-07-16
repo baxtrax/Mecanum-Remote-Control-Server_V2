@@ -65,13 +65,22 @@ bool MainWindow::event(QEvent *event)
 
     if (event->type() == QEvent::Polish)
     {
-        loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
+        // Chart error checking and logging
+        if (outputHandler->getChart())
+        {
+            loggerHandler->write(LoggerConstants::INFO, "Setup kinematics chart");
+        } else {
+            loggerHandler->write(LoggerConstants::ERR, "Failed to setup kinematics chart");
+        }
+
+        // 3D error checking and logging
         if (simulationHandler->getWidget())
         {
             loggerHandler->write(LoggerConstants::INFO, "Setup 3D visualization");
         } else {
             loggerHandler->write(LoggerConstants::ERR, "Failed to setup 3D visualization");
         }
+
         settingsHandler->initSettings();
         settingsHandler->checkStatus();
     }
