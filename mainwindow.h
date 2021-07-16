@@ -1,13 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QKeyEvent>
 #include <QGridLayout>
+#include <QKeyEvent>
 #include <QLabel>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -26,18 +28,18 @@ signals:
     void keyboard_QChanged(bool);
     void keyboard_EChanged(bool);
 
-protected:
-    void keyPressEvent(QKeyEvent* event);
-    void keyReleaseEvent(QKeyEvent* event);
-    bool event(QEvent *event);
+private:
+    Ui::MainWindow *ui;
+    void configureConnections();
 
 private slots:
     void on_home_toolButton_clicked();
     void on_settings_toolButton_clicked();
     void on_info_toolButton_clicked();
 
-private:
-    Ui::MainWindow *ui;
-    void configureConnections();
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    bool event(QEvent *event);
 };
 #endif // MAINWINDOW_H NICWOLE CUTEST

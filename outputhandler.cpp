@@ -634,8 +634,8 @@ void OutputHandler::setBRSlider(double value)
 }
 
 /**
- * @brief Gets the current chart configured
- * @return chart
+ * @brief Gets the current chart configured.
+ * @return chart.
  */
 QtCharts::QChart *OutputHandler::getChart()
 {
