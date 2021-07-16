@@ -4,20 +4,21 @@
 #include "constants.h"
 #include "loggerhandler.h"
 
-#include <QObject>
 #include <QDebug>
+#include <QObject>
 #include <QSettings>
 
+#include <QComboBox>
 #include <QLineEdit>
 #include <QRadioButton>
-#include <QComboBox>
 
 class SettingsHandler : public QObject
 {
     Q_OBJECT
 public:
+    // Functions
     SettingsHandler(LoggerHandler *loggerRef);
-    QSettings* getSettings();
+    QSettings *getSettings();
     void applySettings(QString conn_CamAddressText,
                        QString conn_CamPortText,
                        bool conn_CamEnButton,
@@ -58,10 +59,12 @@ signals:
     void signalRender_ViewCountEnButton(bool);
     void signalRender_ViewDebugEnButton(bool);
     void signalAppear_ThemeDarkEnButton(bool);
+    void settingsUpdated();
 
 private:
     QSettings *settings;
     LoggerHandler *logger;
+
     void saveSettings(QString conn_CamAddressText,
                       QString conn_CamPortText,
                       bool conn_CamEnButton,
@@ -77,10 +80,6 @@ private:
                       bool render_ViewCountEnButton,
                       bool render_ViewDebugEnButton,
                       bool appear_ThemeDarkEnButton);
-
-signals:
-    void settingsUpdated();
 };
-
 
 #endif // SETTINGSHANDLER_H

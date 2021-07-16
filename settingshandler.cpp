@@ -1,13 +1,14 @@
 #include "settingshandler.h"
 
+//Constructor
 SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
 {
     logger = loggerRef;
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
-                             "MechanumRemoteControl", "settings");
+                             "MechanumRemoteControl",
+                             "settings");
 }
-
 
 /**
  * @brief Will read current settings from file and set them up in the program,
@@ -19,7 +20,6 @@ void SettingsHandler::initSettings()
     displaySettings();
     emit settingsUpdated();
 }
-
 
 /**
  * @brief Resets the settings to defaults values and
@@ -42,7 +42,6 @@ void SettingsHandler::resetSettings()
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
 }
-
 
 /**
  * @brief Apply current settings to file, will also proprogate changes
@@ -82,78 +81,67 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
     emit settingsUpdated();
 }
 
-
 /**
  * @brief Reads settings file and display them in GUI
  */
 void SettingsHandler::displaySettings()
 {
+    // Camera Socket
     emit signalConn_CamAddressText(
-        settings->value(
-                    SettingsConstants::CONN_CAM_ADDRESS,
-                    SettingsConstants::D_CONN_CAM_ADDRESS).toString());
+        settings->value(SettingsConstants::CONN_CAM_ADDRESS, SettingsConstants::D_CONN_CAM_ADDRESS)
+            .toString());
     emit signalConn_CamPortText(
-        settings->value(
-                    SettingsConstants::CONN_CAM_PORT,
-                    SettingsConstants::D_CONN_CAM_PORT).toString());
+        settings->value(SettingsConstants::CONN_CAM_PORT, SettingsConstants::D_CONN_CAM_PORT)
+            .toString());
     emit signalConn_CamEnButton(
-        settings->value(
-                    SettingsConstants::CONN_CAM_EN,
-                    SettingsConstants::D_CONN_CAM_EN).toBool());
+        settings->value(SettingsConstants::CONN_CAM_EN, SettingsConstants::D_CONN_CAM_EN).toBool());
 
+    // Communication Socket
     emit signalConn_CommAddressText(
-        settings->value(
-                    SettingsConstants::CONN_COMM_ADDRESS,
-                    SettingsConstants::D_CONN_COMM_ADDRESS).toString());
+        settings->value(SettingsConstants::CONN_COMM_ADDRESS, SettingsConstants::D_CONN_COMM_ADDRESS)
+            .toString());
     emit signalConn_CommPortText(
-        settings->value(
-                    SettingsConstants::CONN_COMM_PORT,
-                    SettingsConstants::D_CONN_COMM_PORT).toString());
+        settings->value(SettingsConstants::CONN_COMM_PORT, SettingsConstants::D_CONN_COMM_PORT)
+            .toString());
     emit signalConn_CommEnButton(
-        settings->value(
-                    SettingsConstants::CONN_COMM_EN,
-                    SettingsConstants::D_CONN_COMM_EN).toBool());
+        settings->value(SettingsConstants::CONN_COMM_EN, SettingsConstants::D_CONN_COMM_EN).toBool());
 
+    // Graph
     emit signalGraph_PerformEnButton(
-        settings->value(
-                    SettingsConstants::GRAPH_PERF_EN,
-                    SettingsConstants::D_GRAPH_PERF_EN).toBool());
+        settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN)
+            .toBool());
     emit signalGraph_PerformQualCombo(
-        settings->value(
-                    SettingsConstants::GRAPH_PERF_QUAL,
-                    SettingsConstants::D_GRAPH_PERF_QUAL).toInt());
+        settings->value(SettingsConstants::GRAPH_PERF_QUAL, SettingsConstants::D_GRAPH_PERF_QUAL)
+            .toInt());
     emit signalGraph_PerformPointsSlider(
-        settings->value(
-                    SettingsConstants::GRAPH_PERF_POINTS,
-                    SettingsConstants::D_GRAPH_PERF_POINTS).toInt());
+        settings->value(SettingsConstants::GRAPH_PERF_POINTS, SettingsConstants::D_GRAPH_PERF_POINTS)
+            .toInt());
     emit signalGraph_PerformAccelEnButton(
-        settings->value(
-                    SettingsConstants::GRAPH_PERF_ACCEL,
-                    SettingsConstants::D_GRAPH_PERF_ACCEL).toBool());
+        settings->value(SettingsConstants::GRAPH_PERF_ACCEL, SettingsConstants::D_GRAPH_PERF_ACCEL)
+            .toBool());
 
+    // Render
     emit signalRender_PerformQualCombo(
-        settings->value(
-                    SettingsConstants::RENDER_PERF_QUAL,
-                    SettingsConstants::D_RENDER_PERF_QUAL).toInt());
-
+        settings->value(SettingsConstants::RENDER_PERF_QUAL, SettingsConstants::D_RENDER_PERF_QUAL)
+            .toInt());
     emit signalRender_ViewEnButton(
-        settings->value(
-                    SettingsConstants::RENDER_VIEW_EN,
-                    SettingsConstants::D_RENDER_VIEW_EN).toBool());
-    emit signalRender_ViewCountEnButton(
-        settings->value(
-                    SettingsConstants::RENDER_VIEW_COUNT_EN,
-                    SettingsConstants::D_RENDER_VIEW_COUNT_EN).toBool());
-    emit signalRender_ViewDebugEnButton(
-        settings->value(
-                    SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                    SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
-    emit signalAppear_ThemeDarkEnButton(
-        settings->value(
-                    SettingsConstants::APPEAR_THEME_DARK_EN,
-                    SettingsConstants::D_APPEAR_THEME_DARK_EN).toBool());
-}
+        settings->value(SettingsConstants::RENDER_VIEW_EN, SettingsConstants::D_RENDER_VIEW_EN)
+            .toBool());
+    emit signalRender_ViewCountEnButton(settings
+                                            ->value(SettingsConstants::RENDER_VIEW_COUNT_EN,
+                                                    SettingsConstants::D_RENDER_VIEW_COUNT_EN)
+                                            .toBool());
+    emit signalRender_ViewDebugEnButton(settings
+                                            ->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                                                    SettingsConstants::D_RENDER_VIEW_DEBUG_EN)
+                                            .toBool());
 
+    // Appearance
+    emit signalAppear_ThemeDarkEnButton(settings
+                                            ->value(SettingsConstants::APPEAR_THEME_DARK_EN,
+                                                    SettingsConstants::D_APPEAR_THEME_DARK_EN)
+                                            .toBool());
+}
 
 /**
  * @brief Grabs current user entered settings and saves them to file.
@@ -174,65 +162,40 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool render_ViewDebugEnButton,
                                    bool appear_ThemeDarkEnButton)
 {
-    settings->setValue(
-        SettingsConstants::CONN_CAM_ADDRESS,
-        conn_CamAddressText);
+    // Camera Socket
+    settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText);
+    settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText);
+    settings->setValue(SettingsConstants::CONN_CAM_EN, conn_CamEnButton);
 
-    settings->setValue(
-        SettingsConstants::CONN_CAM_PORT,
-        conn_CamPortText);
-    settings->setValue(
-        SettingsConstants::CONN_CAM_EN,
-        conn_CamEnButton);
+    // Communication Socket
+    settings->setValue(SettingsConstants::CONN_COMM_ADDRESS, conn_CommAddressText);
+    settings->setValue(SettingsConstants::CONN_COMM_PORT, conn_CommPortText);
+    settings->setValue(SettingsConstants::CONN_COMM_EN, conn_CommEnButton);
 
-    settings->setValue(
-        SettingsConstants::CONN_COMM_ADDRESS,
-        conn_CommAddressText);
-    settings->setValue(
-        SettingsConstants::CONN_COMM_PORT,
-        conn_CommPortText);
-    settings->setValue(
-        SettingsConstants::CONN_COMM_EN,
-        conn_CommEnButton);
+    // Graph
+    settings->setValue(SettingsConstants::GRAPH_PERF_EN, graph_PerformEnButton);
+    settings->setValue(SettingsConstants::GRAPH_PERF_QUAL, graph_PerformQualCombo);
+    settings->setValue(SettingsConstants::GRAPH_PERF_POINTS, graph_PerformPointsSlider);
+    settings->setValue(SettingsConstants::GRAPH_PERF_ACCEL, graph_PerformAccel);
 
-    settings->setValue(
-        SettingsConstants::GRAPH_PERF_EN,
-        graph_PerformEnButton);
-    settings->setValue(
-        SettingsConstants::GRAPH_PERF_QUAL,
-        graph_PerformQualCombo);
-    settings->setValue(
-        SettingsConstants::GRAPH_PERF_POINTS,
-        graph_PerformPointsSlider);
-    settings->setValue(
-        SettingsConstants::GRAPH_PERF_ACCEL,
-        graph_PerformAccel);
+    // Render
+    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, render_PerformQualCombo);
+    settings->setValue(SettingsConstants::RENDER_VIEW_EN, render_ViewEnButton);
+    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, render_ViewCountEnButton);
+    settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, render_ViewDebugEnButton);
 
-    settings->setValue(
-        SettingsConstants::RENDER_PERF_QUAL,
-        render_PerformQualCombo);
-
-    settings->setValue(
-        SettingsConstants::RENDER_VIEW_EN,
-        render_ViewEnButton);
-    settings->setValue(
-        SettingsConstants::RENDER_VIEW_COUNT_EN,
-        render_ViewCountEnButton);
-    settings->setValue(
-        SettingsConstants::RENDER_VIEW_DEBUG_EN,
-        render_ViewDebugEnButton);
-
-    settings->setValue(
-        SettingsConstants::APPEAR_THEME_DARK_EN,
-        appear_ThemeDarkEnButton);
+    // Appearance
+    settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, appear_ThemeDarkEnButton);
 }
 
-
+/**
+ * @brief Checks and reports status of settings file that is designated to be loaded.
+ */
 void SettingsHandler::checkStatus()
 {
     settings->sync();
-    qDebug() << settings->fileName();
-    switch(settings->status()) {
+
+    switch (settings->status()) {
     case QSettings::NoError:
         logger->write(LoggerConstants::INFO, "Successfully loaded settings");
         break;
@@ -245,14 +208,12 @@ void SettingsHandler::checkStatus()
     }
 }
 
-
+// Getters
 /**
  * @brief Gets the current instance of settings for other programs to grab from.
- * @return Qsettings pointer
+ * @return settings
  */
-QSettings* SettingsHandler::getSettings()
+QSettings *SettingsHandler::getSettings()
 {
     return settings;
 }
-
-

@@ -40,6 +40,12 @@ public:
     SimulationHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     QWidget *getWidget();
 
+public slots:
+    void updateWithSettings();
+    void updateWheels(double, double, double, double);
+    void updateArrow(double, double, double);
+    void checkLoaded(Qt3DRender::QMesh::Status status);
+
 signals:
     void passKeyboard_WChanged(bool);
     void passKeyboard_SChanged(bool);
@@ -50,14 +56,7 @@ signals:
 
     void meshesLoaded();
 
-public slots:
-    void updateWithSettings();
-    void updateWheels(double, double, double, double);
-    void updateArrow(double, double, double);
-    void checkLoaded(Qt3DRender::QMesh::Status status);
-
 private:
-    // Variables
     LoggerHandler *logger;
     QSettings *settings;
 
@@ -96,7 +95,6 @@ private:
     float FRcurrentRotation;
     float BLcurrentRotation;
 
-    // Functions
     void setup3DView();
     void setupConnections();
     void setupMeshes();
