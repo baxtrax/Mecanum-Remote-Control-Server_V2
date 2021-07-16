@@ -1,6 +1,6 @@
 #include "settingshandler.h"
 
-//Constructor
+// Constructor
 SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
 {
     logger = loggerRef;

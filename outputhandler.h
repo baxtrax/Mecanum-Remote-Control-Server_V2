@@ -5,13 +5,13 @@
 #include "helper.h"
 #include "loggerhandler.h"
 
-#include <QObject>
 #include <QDebug>
-#include <QSlider>
-#include <QtCharts/QSplineSeries>
-#include <QtCharts/QChartView>
-#include <QtCharts/QCategoryAxis>
+#include <QObject>
 #include <QSettings>
+#include <QSlider>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QChartView>
+#include <QtCharts/QSplineSeries>
 
 #include <math.h>
 
@@ -22,7 +22,7 @@ public:
     OutputHandler(LoggerHandler *loggerRef, QSettings *settingsRef);
     void setDetailLevel(int level);
     int getCurrentDetailLevel();
-    QtCharts::QChart* getChart();
+    QtCharts::QChart *getChart();
     void configureChartView(QtCharts::QChartView *chartView);
 
 public slots:
@@ -44,7 +44,6 @@ signals:
     void setChartVisibility(bool);
 
 private:
-
     LoggerHandler *logger;
     QSettings *settings;
     QtCharts::QCategoryAxis *axisX;
@@ -55,11 +54,10 @@ private:
     QtCharts::QLineSeries *FLSeries;
     QtCharts::QLineSeries *BRSeries;
 
-    double** FRarrPtr;
-    double** BLarrPtr;
-    double** FLarrPtr;
-    double** BRarrPtr;
-
+    double **FRarrPtr;
+    double **BLarrPtr;
+    double **FLarrPtr;
+    double **BRarrPtr;
 
     QtCharts::QLineSeries *dirSeries;
     QtCharts::QChart *chart;
@@ -84,19 +82,21 @@ private:
 
     int getMaxDataPoints();
 
-    double** generateSinePointsKinematics(int numberOfPoints,
-                                                         double cycles,
-                                                         double amp,
-                                                         double yOffset,
-                                                         double xOffset,
-                                                         double mag,
-                                                         double z,
-                                                         double scale);
-    void plotArray(double** arr, int graphNum);
+    double **generateSinePointsKinematics(int numberOfPoints,
+                                          double cycles,
+                                          double amp,
+                                          double yOffset,
+                                          double xOffset,
+                                          double mag,
+                                          double z,
+                                          double scale);
+    void plotArray(double **arr, int graphNum);
+
     void configurePenBrushFont();
     void configureAxis();
     void configureSeries();
     void configureChart();
+
     void useHardwareAcceleration(bool value);
 };
 
