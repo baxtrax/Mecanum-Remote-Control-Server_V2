@@ -118,7 +118,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 /**
  * @brief Is called when any key is released and emits signals for each
  * key pressed.
- * @param A key release event
+ * @param A key release event.
  */
 void MainWindow::keyReleaseEvent(QKeyEvent *event)
 {

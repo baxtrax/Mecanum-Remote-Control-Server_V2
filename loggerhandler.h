@@ -3,10 +3,9 @@
 
 #include "constants.h"
 
-#include <QTextEdit>
-#include <QString>
 #include <QDateTime>
-
+#include <QString>
+#include <QTextEdit>
 
 class LoggerHandler : public QObject
 {

@@ -4,10 +4,9 @@
 #include "constants.h"
 #include "loggerhandler.h"
 
-#include <QObject>
 #include <QDebug>
+#include <QObject>
 #include <QSlider>
-
 
 class InputHandler : public QObject
 {
@@ -15,7 +14,6 @@ class InputHandler : public QObject
 public:
     InputHandler(LoggerHandler *loggerRef);
 
-    //Getters
     double getX();
     double getY();
     double getZ();
@@ -42,10 +40,8 @@ signals:
     void z_botSlider_ValChanged(double);
 
 private:
-
     LoggerHandler *logger;
 
-    //Setters
     void setX(double value);
     void setY(double value);
     void setZ(double value);

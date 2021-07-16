@@ -30,11 +30,10 @@ void InputHandler::updateSliders()
     setZSlider(z);
 }
 
-
 // Setters
 /**
  * @brief Sets value of x slider scaled to fit.
- * @param double value between IOConstants::MIN and IOConstants::MAX
+ * @param Value between IOConstants::MIN and IOConstants::MAX.
  */
 void InputHandler::setXSlider(double value)
 {
@@ -48,8 +47,8 @@ void InputHandler::setXSlider(double value)
         }
     } else if (amplifiedX < 0.0) { // negative
         emit x_topSlider_ValChanged(0.0);
-        if (amplifiedX >= -IOConstants::MIN_SLIDER+1) {
-            emit x_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
+        if (amplifiedX >= -IOConstants::MIN_SLIDER + 1) {
+            emit x_botSlider_ValChanged(-IOConstants::MIN_SLIDER + 1);
         } else {
             emit x_botSlider_ValChanged(amplifiedX);
         }
@@ -59,10 +58,9 @@ void InputHandler::setXSlider(double value)
     }
 }
 
-
 /**
  * @brief Sets value of y slider scaled to fit.
- * @param double value between IOConstants::MIN and IOConstants::MAX
+ * @param Value between IOConstants::MIN and IOConstants::MAX.
  */
 void InputHandler::setYSlider(double value)
 {
@@ -71,14 +69,14 @@ void InputHandler::setYSlider(double value)
         emit y_botSlider_ValChanged(0.0);
         if (amplifiedY <= IOConstants::MIN_SLIDER) {
             emit y_topSlider_ValChanged(IOConstants::MIN_SLIDER);
-        }  else {
+        } else {
             emit y_topSlider_ValChanged(amplifiedY);
         }
     } else if (amplifiedY < 0.0) { // negative
         emit y_topSlider_ValChanged(0.0);
-        if (amplifiedY >= -IOConstants::MIN_SLIDER+1) {
-            emit y_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
-        }  else {
+        if (amplifiedY >= -IOConstants::MIN_SLIDER + 1) {
+            emit y_botSlider_ValChanged(-IOConstants::MIN_SLIDER + 1);
+        } else {
             emit y_botSlider_ValChanged(amplifiedY);
         }
     } else { // zero
@@ -87,10 +85,9 @@ void InputHandler::setYSlider(double value)
     }
 }
 
-
 /**
  * @brief Sets value of z slider scaled to fit.
- * @param double value between IOConstants::MIN and IOConstants::MAX
+ * @param Value between IOConstants::MIN and IOConstants::MAX.
  */
 void InputHandler::setZSlider(double value)
 {
@@ -99,14 +96,14 @@ void InputHandler::setZSlider(double value)
         emit z_botSlider_ValChanged(0.0);
         if (amplifiedZ <= IOConstants::MIN_SLIDER) {
             emit z_topSlider_ValChanged(IOConstants::MIN_SLIDER);
-        }  else {
+        } else {
             emit z_topSlider_ValChanged(amplifiedZ);
         }
     } else if (amplifiedZ < 0.0) { // negative
         emit z_topSlider_ValChanged(0.0);
-        if (amplifiedZ >= -IOConstants::MIN_SLIDER+1) {
-            emit z_botSlider_ValChanged(-IOConstants::MIN_SLIDER+1);
-        }  else {
+        if (amplifiedZ >= -IOConstants::MIN_SLIDER + 1) {
+            emit z_botSlider_ValChanged(-IOConstants::MIN_SLIDER + 1);
+        } else {
             emit z_botSlider_ValChanged(amplifiedZ);
         }
     } else { // zero
@@ -115,118 +112,132 @@ void InputHandler::setZSlider(double value)
     }
 }
 
-
 /**
  * @brief Sets jx calculation for up and down translate, combining gamepad
  * control and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::gamepad_axisLeftXSetter(double value)
 {
     jx = value;
-    setX((kx_Right+kx_Left)+jx);
+    setX((kx_Right + kx_Left) + jx);
 }
-
 
 /**
  * @brief Sets jy calulation for up and down translate, combining gamepad
  * control and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::gamepad_axisLeftYSetter(double value)
 {
     jy = value;
-    setY((ky_Up+ky_Down)+jy);
+    setY((ky_Up + ky_Down) + jy);
 }
-
 
 /**
  * @brief Sets jz calulation for left and right turn, combining gamepad
  * control and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::gamepad_axisRightXSetter(double value)
 {
     jz = value;
-    setZ((kz_TRight+kz_TLeft)+jz);
+    setZ((kz_TRight + kz_TLeft) + jz);
 }
-
 
 /**
  * @brief Sets ky calulation for up translate, combining gamepad control
  * and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_WSetter(bool value)
 {
-    if(value) { ky_Up = 1.0; } else { ky_Up = 0.0; }
-    setY((ky_Up+ky_Down)+jy);
+    if (value) {
+        ky_Up = 1.0;
+    } else {
+        ky_Up = 0.0;
+    }
+    setY((ky_Up + ky_Down) + jy);
 }
-
 
 /**
  * @brief Sets ky calulation for down translate, combining gamepad control
  * and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_SSetter(bool value)
 {
-    if(value) { ky_Down = -1.0; } else { ky_Down = 0.0; }
-    setY((ky_Up+ky_Down)+jy);
+    if (value) {
+        ky_Down = -1.0;
+    } else {
+        ky_Down = 0.0;
+    }
+    setY((ky_Up + ky_Down) + jy);
 }
-
 
 /**
  * @brief Sets kx calulation for left translate, combining gamepad control
  * and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_ASetter(bool value)
 {
-    if(value) { kx_Left = -1.0; } else { kx_Left = 0.0; }
-    setX((kx_Right+kx_Left)+jx);
+    if (value) {
+        kx_Left = -1.0;
+    } else {
+        kx_Left = 0.0;
+    }
+    setX((kx_Right + kx_Left) + jx);
 }
-
 
 /**
  * @brief Sets kx calulation for right translate, combining gamepad control
  * and keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_DSetter(bool value)
 {
-    if(value) { kx_Right = 1.0; } else { kx_Right = 0.0; }
-    setX((kx_Right+kx_Left)+jx);
+    if (value) {
+        kx_Right = 1.0;
+    } else {
+        kx_Right = 0.0;
+    }
+    setX((kx_Right + kx_Left) + jx);
 }
-
 
 /**
  * @brief Sets kz calulation for right turn, combining gamepad control and
  * keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_ESetter(bool value)
 {
-    if(value) { kz_TRight = 1.0; } else { kz_TRight = 0.0; }
-    setZ((kz_TRight+kz_TLeft)+jz);
+    if (value) {
+        kz_TRight = 1.0;
+    } else {
+        kz_TRight = 0.0;
+    }
+    setZ((kz_TRight + kz_TLeft) + jz);
 }
-
 
 /**
  * @brief Sets kz calulation for left turn, combining gamepad control and
  * keyboard control so they work together.
- * @param bool value
+ * @param Value.
  */
 void InputHandler::keyboard_QSetter(bool value)
 {
-    if(value) { kz_TLeft = -1.0; } else { kz_TLeft = 0.0; }
-    setZ((kz_TRight+kz_TLeft)+jz);
+    if (value) {
+        kz_TLeft = -1.0;
+    } else {
+        kz_TLeft = 0.0;
+    }
+    setZ((kz_TRight + kz_TLeft) + jz);
 }
 
-
 /**
- * @brief Sets current x value and clamps x between min and max
- * @return double x value
+ * @brief Sets current x value and clamps x between min and max.
+ * @return X value.
  */
 void InputHandler::setX(double value)
 {
@@ -234,10 +245,9 @@ void InputHandler::setX(double value)
     updateSliders();
 }
 
-
 /**
- * @brief Sets current y value and clamps x between min and max
- * @return double y value
+ * @brief Sets current y value and clamps x between min and max.
+ * @return Y value.
  */
 void InputHandler::setY(double value)
 {
@@ -245,10 +255,9 @@ void InputHandler::setY(double value)
     updateSliders();
 }
 
-
 /**
- * @brief Sets current z value and clamps x between min and max
- * @return double z value
+ * @brief Sets current z value and clamps x between min and max.
+ * @return Z value.
  */
 void InputHandler::setZ(double value)
 {
@@ -256,31 +265,28 @@ void InputHandler::setZ(double value)
     updateSliders();
 }
 
-
 // Getters
 /**
- * @brief Gets current x value
- * @return double x value
+ * @brief Gets current x value.
+ * @return X value.
  */
 double InputHandler::getX()
 {
     return x;
 }
 
-
 /**
- * @brief Gets current y value
- * @return double y value
+ * @brief Gets current y value.
+ * @return Y value.
  */
 double InputHandler::getY()
 {
     return y;
 }
 
-
 /**
- * @brief Gets current z value
- * @return double z value
+ * @brief Gets current z value.
+ * @return Z value.
  */
 double InputHandler::getZ()
 {

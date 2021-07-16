@@ -2,18 +2,14 @@
 
 /**
  * @brief Maps a input from one range to another range linearly
- * @param double input
- * @param double source input mininum range
- * @param double source input maximum range
- * @param double destination input minimum range
- * @param double destination input maximum range
- * @return double mapped input
+ * @param Input
+ * @param Source input mininum range
+ * @param Source input maximum range
+ * @param Destination input minimum range
+ * @param Destination input maximum range
+ * @return Mapped input
  */
-double linearMap(double input,
-                 double srcMin,
-                 double srcMax,
-                 double dstMin,
-                 double dstMax)
+double linearMap(double input, double srcMin, double srcMax, double dstMin, double dstMax)
 {
-    return (((input-srcMin) / (srcMax-srcMin)) * (dstMax-dstMin) + dstMin);
+    return (((input - srcMin) / (srcMax - srcMin)) * (dstMax - dstMin) + dstMin);
 }

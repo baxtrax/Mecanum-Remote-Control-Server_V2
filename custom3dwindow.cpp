@@ -1,20 +1,19 @@
 #include "custom3dwindow.h"
 
-Custom3DWindow::Custom3DWindow(QScreen *screen):Qt3DExtras::Qt3DWindow(screen)
-{
+Custom3DWindow::Custom3DWindow(QScreen *screen)
+    : Qt3DExtras::Qt3DWindow(screen)
+{}
+Custom3DWindow::~Custom3DWindow() {}
 
-}
-Custom3DWindow::~Custom3DWindow()
-{
-
-}
-
+/**
+ * @brief Is called when any key is pressed down and emits signals for each
+ * key pressed.
+ * @param A key pressed event.
+ */
 void Custom3DWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->isAutoRepeat() == false)
-    {
-        switch(event->key())
-        {
+    if (event->isAutoRepeat() == false) {
+        switch (event->key()) {
         case Qt::Key_W:
             emit passKeyboard_WChanged(true);
             break;
@@ -37,12 +36,15 @@ void Custom3DWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
+/**
+ * @brief Is called when any key is released and emits signals for each
+ * key pressed.
+ * @param A key release event.
+ */
 void Custom3DWindow::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->isAutoRepeat() == false)
-    {
-        switch(event->key())
-        {
+    if (event->isAutoRepeat() == false) {
+        switch (event->key()) {
         case Qt::Key_W:
             emit passKeyboard_WChanged(false);
             break;

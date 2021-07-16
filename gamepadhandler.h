@@ -3,21 +3,17 @@
 
 #include "loggerhandler.h"
 
-#include <QObject>
-#include <QtDebug>
 #include <QGamepad>
 #include <QGamepadManager>
+#include <QObject>
+#include <QtDebug>
 
 class GamepadHandler : public QObject
 {
     Q_OBJECT
 public:
     GamepadHandler(LoggerHandler *loggerRef);
-
-    //Setters
     bool setCurrentGamepad(int deviceIDPos);
-
-    //Getters
     QGamepad *getCurrentGamepad();
     int getTotalConnected();
 

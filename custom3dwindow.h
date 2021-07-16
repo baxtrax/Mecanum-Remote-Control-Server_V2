@@ -1,9 +1,9 @@
 #ifndef CUSTOM3DWINDOW_H
 #define CUSTOM3DWINDOW_H
 
-#include <Qt3DExtras/Qt3DWindow>
 #include <QDebug>
 #include <QKeyEvent>
+#include <Qt3DExtras/Qt3DWindow>
 
 class Custom3DWindow : public Qt3DExtras::Qt3DWindow
 {
@@ -18,9 +18,10 @@ signals:
     void passKeyboard_DChanged(bool);
     void passKeyboard_QChanged(bool);
     void passKeyboard_EChanged(bool);
+
 protected:
     void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // CUSTOM3DWINDOW_H

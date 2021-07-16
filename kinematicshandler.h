@@ -4,11 +4,11 @@
 #include "constants.h"
 #include "loggerhandler.h"
 
-#include <QObject>
-#include <QDebug>
 #include <math.h>
+#include <QDebug>
+#include <QObject>
 
-class KinematicsHandler :  public QObject
+class KinematicsHandler : public QObject
 {
     Q_OBJECT
 public:
