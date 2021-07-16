@@ -2,6 +2,7 @@
 #define SIMULATIONHANDLER_H
 
 #include "constants.h"
+#include "custom3dwindow.h"
 #include "helper.h"
 #include "loggerhandler.h"
 
@@ -15,20 +16,19 @@
 #include <QVariantAnimation>
 #include <QWidget>
 
-#include "custom3dwindow.h"
 #include <Qt3DCore/QAspectEngine>
 #include <Qt3DCore/QEntity>
 #include <Qt3DCore/QTransform>
-#include <Qt3DRender/QDirectionalLight>
 #include <Qt3DExtras/QDiffuseSpecularMaterial>
 #include <Qt3DExtras/QForwardRenderer>
+#include <Qt3DExtras/QOrbitCameraController>
 #include <Qt3DRender/QCamera>
 #include <Qt3DRender/QCameraLens>
-#include <Qt3DExtras/QOrbitCameraController>
+#include <Qt3DRender/QDirectionalLight>
 #include <Qt3DRender/QSortPolicy>
 
-#include <Qt3DExtras/QExtrudedTextMesh>
 #include <Qt3DExtras/QCylinderMesh>
+#include <Qt3DExtras/QExtrudedTextMesh>
 #include <Qt3DExtras/QPlaneMesh>
 #include <Qt3DExtras/QSphereMesh>
 #include <Qt3DRender/QMesh>
@@ -108,9 +108,9 @@ private:
     void alignMeshes();
 
     void generateMeshes(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
-                       Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
-                       Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
-                       Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
+                        Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
+                        Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                        Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial);
 
     void generateGrid(double size, Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
     void generateGridLabels(double size, Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial);
@@ -128,7 +128,6 @@ private:
                                      double frameThickness,
                                      bool invert,
                                      Qt3DExtras::QDiffuseSpecularMaterial *wheelMaterial);
-
 
     void updateFRAnimation(double FRSpeed, int FRmappedDuration);
     void updateBLAnimation(double BLSpeed, int BLmappedDuration);

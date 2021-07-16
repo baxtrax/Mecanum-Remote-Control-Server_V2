@@ -20,12 +20,10 @@ SimulationHandler::SimulationHandler(LoggerHandler *loggerRef, QSettings *settin
     simulationWidget = NULL; // Start as Null (Error checking this way could be entirely wrong?)
     root = new Qt3DCore::QEntity();
     view = new Custom3DWindow();
-    if (view)
-    {
+    if (view) {
         simulationWidget = QWidget::createWindowContainer(view);
 
         simulationWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
 
         setup3DView();
         setupConnections();
@@ -216,7 +214,7 @@ void SimulationHandler::updateBRAnimation(double BRSpeed, int BRmappedDuration)
  */
 void SimulationHandler::setup3DView()
 {
-    view->defaultFrameGraph()->setClearColor(QColor(5,5,15));
+    view->defaultFrameGraph()->setClearColor(QColor(5, 5, 15));
 
     // Setup sorting for better transparency handling
     Qt3DRender::QFrameGraphNode *framegraph = view->activeFrameGraph();
@@ -248,7 +246,6 @@ void SimulationHandler::setup3DView()
 
     Qt3DCore::QEntity *lightEntity = new Qt3DCore::QEntity(root);
     lightEntity->addComponent(light);
-
 }
 
 /**
@@ -383,9 +380,9 @@ void SimulationHandler::alignMeshes()
  * @param Material for the arrow and turning arrows.
  */
 void SimulationHandler::generateMeshes(Qt3DExtras::QDiffuseSpecularMaterial *gridMaterial,
-                                      Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
-                                      Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
-                                      Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial)
+                                       Qt3DExtras::QDiffuseSpecularMaterial *innerBaseMaterial,
+                                       Qt3DExtras::QDiffuseSpecularMaterial *frameMaterial,
+                                       Qt3DExtras::QDiffuseSpecularMaterial *arrowMaterial)
 {
     FRWheel = generateWheel(9,
                             SimulationConstants::WHEEL_WIDTH,
@@ -441,10 +438,7 @@ Qt3DCore::QEntity *SimulationHandler::generateArrow(
     Qt3DCore::QEntity *arrowEntity = new Qt3DCore::QEntity(root);
     Qt3DRender::QMesh *arrowMesh = new Qt3DRender::QMesh();
 
-    connect(arrowMesh,
-            &Qt3DRender::QMesh::statusChanged,
-            this,
-            &SimulationHandler::checkLoaded);
+    connect(arrowMesh, &Qt3DRender::QMesh::statusChanged, this, &SimulationHandler::checkLoaded);
 
     if (curved && !mirrorCurve) {
         arrowMesh->setSource(QUrl("qrc:/obj/resources/Arrow-Right-Curved.obj"));
@@ -781,12 +775,13 @@ Qt3DCore::QEntity *SimulationHandler::generateWheel(int partCount,
 void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
-    if (view)
-    {
+    if (view) {
         view->defaultFrameGraph()->setShowDebugOverlay(true);
         view->defaultFrameGraph()->setShowDebugOverlay(
-            settings->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
-                            SettingsConstants::D_RENDER_VIEW_DEBUG_EN).toBool());
+            settings
+                ->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
+                        SettingsConstants::D_RENDER_VIEW_DEBUG_EN)
+                .toBool());
     }
 }
 
