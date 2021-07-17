@@ -49,7 +49,7 @@ inline constexpr auto RENDER_VIEW_DEBUG_EN = "render/view/debug_en";
 
 inline constexpr auto APPEAR_THEME_DARK_EN = "appear/theme/dark_en";
 
-//Defaults
+// Defaults for settings
 inline constexpr auto D_CONN_CAM_ADDRESS = "123.123.123.123";
 inline constexpr auto D_CONN_CAM_PORT = "12345";
 inline constexpr bool D_CONN_CAM_EN = false;
