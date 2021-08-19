@@ -36,9 +36,7 @@ void SettingsHandler::resetSettings()
     emit signalGraph_PerformQualCombo(SettingsConstants::D_GRAPH_PERF_QUAL);
     emit signalGraph_PerformPointsSlider(SettingsConstants::D_GRAPH_PERF_POINTS);
     emit signalGraph_PerformAccelEnButton(SettingsConstants::D_GRAPH_PERF_ACCEL);
-    emit signalRender_PerformQualCombo(SettingsConstants::D_RENDER_PERF_QUAL);
     emit signalRender_ViewEnButton(SettingsConstants::D_RENDER_VIEW_EN);
-    emit signalRender_ViewCountEnButton(SettingsConstants::D_RENDER_VIEW_COUNT_EN);
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
     // Test
@@ -58,9 +56,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     int graph_PerformQualCombo,
                                     int graph_PerformPointsSlider,
                                     bool graph_PerformAccel,
-                                    int render_PerformQualCombo,
                                     bool render_ViewEnButton,
-                                    bool render_ViewCountEnButton,
                                     bool render_ViewDebugEnButton,
                                     bool appear_ThemeDarkEnButton)
 {
@@ -74,9 +70,7 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                  graph_PerformQualCombo,
                  graph_PerformPointsSlider,
                  graph_PerformAccel,
-                 render_PerformQualCombo,
                  render_ViewEnButton,
-                 render_ViewCountEnButton,
                  render_ViewDebugEnButton,
                  appear_ThemeDarkEnButton);
     emit settingsUpdated();
@@ -122,16 +116,9 @@ void SettingsHandler::displaySettings()
             .toBool());
 
     // Render
-    emit signalRender_PerformQualCombo(
-        settings->value(SettingsConstants::RENDER_PERF_QUAL, SettingsConstants::D_RENDER_PERF_QUAL)
-            .toInt());
     emit signalRender_ViewEnButton(
         settings->value(SettingsConstants::RENDER_VIEW_EN, SettingsConstants::D_RENDER_VIEW_EN)
             .toBool());
-    emit signalRender_ViewCountEnButton(settings
-                                            ->value(SettingsConstants::RENDER_VIEW_COUNT_EN,
-                                                    SettingsConstants::D_RENDER_VIEW_COUNT_EN)
-                                            .toBool());
     emit signalRender_ViewDebugEnButton(settings
                                             ->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
                                                     SettingsConstants::D_RENDER_VIEW_DEBUG_EN)
@@ -157,9 +144,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    int graph_PerformQualCombo,
                                    int graph_PerformPointsSlider,
                                    bool graph_PerformAccel,
-                                   int render_PerformQualCombo,
                                    bool render_ViewEnButton,
-                                   bool render_ViewCountEnButton,
                                    bool render_ViewDebugEnButton,
                                    bool appear_ThemeDarkEnButton)
 {
@@ -180,9 +165,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
     settings->setValue(SettingsConstants::GRAPH_PERF_ACCEL, graph_PerformAccel);
 
     // Render
-    settings->setValue(SettingsConstants::RENDER_PERF_QUAL, render_PerformQualCombo);
     settings->setValue(SettingsConstants::RENDER_VIEW_EN, render_ViewEnButton);
-    settings->setValue(SettingsConstants::RENDER_VIEW_COUNT_EN, render_ViewCountEnButton);
     settings->setValue(SettingsConstants::RENDER_VIEW_DEBUG_EN, render_ViewDebugEnButton);
 
     // Appearance

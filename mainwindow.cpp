@@ -275,9 +275,7 @@ void MainWindow::configureConnections()
                                        ui->graph_PerformQualCombo->currentIndex(),
                                        ui->graph_PerformPointsSlider->value(),
                                        ui->graph_PerformAccelEnButton->isChecked(),
-                                       ui->render_PerformQualCombo->currentIndex(),
                                        ui->render_ViewEnButton->isChecked(),
-                                       ui->render_ViewCountEnButton->isChecked(),
                                        ui->render_ViewDebugEnButton->isChecked(),
                                        ui->appear_ThemeDarkEnButton->isChecked());
     });
@@ -331,17 +329,8 @@ void MainWindow::configureConnections()
             &QRadioButton::setChecked);
 
     connect(settingsHandler,
-            &SettingsHandler::signalRender_PerformQualCombo,
-            ui->render_PerformQualCombo,
-            &QComboBox::setCurrentIndex);
-
-    connect(settingsHandler,
             &SettingsHandler::signalRender_ViewEnButton,
             ui->render_ViewEnButton,
-            &QRadioButton::setChecked);
-    connect(settingsHandler,
-            &SettingsHandler::signalRender_ViewCountEnButton,
-            ui->render_ViewCountEnButton,
             &QRadioButton::setChecked);
     connect(settingsHandler,
             &SettingsHandler::signalRender_ViewDebugEnButton,

@@ -225,7 +225,7 @@ QToolButton:checked {
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2584,7 +2584,7 @@ border-radius: 16px;</string>
           <x>310</x>
           <y>280</y>
           <width>272</width>
-          <height>292</height>
+          <height>181</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_42">
@@ -2841,206 +2841,6 @@ QRadioButton::indicator::checked {
                    <bool>false</bool>
                   </property>
                  </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,0,0">
-                <property name="spacing">
-                 <number>16</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_44">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QLabel { 
-color: white; 
-font: 12pt  'Open Sans'; }</string>
-                  </property>
-                  <property name="text">
-                   <string>FPS Counter</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QRadioButton" name="render_ViewCountEnButton">
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">/*background: qlineargradient(
-		spread:pad, x1:0, y1:1, x2:0, y2:0,
-		stop:0 rgba(117, 23, 248, 255), 
-		stop:1 rgba(227, 35, 255, 255));*/
-QRadioButton {
-    width: 30px;
-    height: 30px;
-	background-color: rgb(5, 5, 15);
-	border-radius: 15px;
-}
-QRadioButton::indicator {
-    width: 30px;
-    height: 30px;
-	background-color: rgb(5, 5, 15);
-	border-radius: 15px;
-}
-QRadioButton::indicator::checked {
-	width: 12px;
-	height: 12px;
-	background: qlineargradient(
-		spread:pad, x1:0, y1:0, x2:1, y2:0,
-		stop:0 rgba(117, 23, 248, 255), 
-		stop:1 rgba(227, 35, 255, 255));
-	border-radius: 6px;
-	margin: 9px 9px 9px 9px;
-
-}</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="checked">
-                   <bool>false</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_24">
-                <property name="spacing">
-                 <number>16</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_50">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QLabel { 
-color: white; 
-font: 12pt  'Open Sans'; }</string>
-                  </property>
-                  <property name="text">
-                   <string>Shadows</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="render_PerformQualCombo">
-                  <property name="minimumSize">
-                   <size>
-                    <width>150</width>
-                    <height>39</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QComboBox {
-	color: rgb(155,155,159); 
-	font: 12pt  'Open Sans';
-	
-	background-color: rgb(5, 5, 15);
-	
-	padding: 0 0 0 16;
-	border-radius: 19px;
- }
-
-QComboBox::down-arrow {
-    image: url(:/svg/resources/Arrow-Down.svg);
-	width: 20px;
-	
-}
-QComboBox::drop-down {
-	width: 20px;
-	padding: 0 16 0 0;
-	border-radius: 19px;
-}
-
-QComboBox QAbstractItemView {
-    selection-background-color: rgb(25, 25, 50);
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 19px;
-	border-bottom-left-radius: 19px;
-	color: rgb(155,155,159); 
-	font: 12pt  'Open Sans';
-	padding: 6 16 16 16
-}</string>
-                  </property>
-                  <property name="editable">
-                   <bool>false</bool>
-                  </property>
-                  <property name="maxVisibleItems">
-                   <number>3</number>
-                  </property>
-                  <property name="maxCount">
-                   <number>3</number>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>20</width>
-                    <height>14</height>
-                   </size>
-                  </property>
-                  <property name="frame">
-                   <bool>true</bool>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>Low</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Medium</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>High</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_7">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </item>

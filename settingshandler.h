@@ -29,9 +29,7 @@ public:
                        int graph_PerformQualCombo,
                        int graph_PerformPointsSlider,
                        bool graph_PerformAccel,
-                       int render_PerformQualCombo,
                        bool render_ViewEnButton,
-                       bool render_ViewCountEnButton,
                        bool render_ViewDebugEnButton,
                        bool appear_ThemeDarkEnButton);
     void checkStatus();
@@ -52,11 +50,7 @@ signals:
     void signalGraph_PerformQualCombo(int);
     void signalGraph_PerformPointsSlider(int);
     void signalGraph_PerformAccelEnButton(bool);
-    void signalRender_PerformFPSLimEnButton(bool);
-    void signalRender_PerformQualCombo(int);
-    void signalRender_PerformFPSSlider(int);
     void signalRender_ViewEnButton(bool);
-    void signalRender_ViewCountEnButton(bool);
     void signalRender_ViewDebugEnButton(bool);
     void signalAppear_ThemeDarkEnButton(bool);
     void settingsUpdated();
@@ -75,9 +69,7 @@ private:
                       int graph_PerformQualCombo,
                       int graph_PerformPointsSlider,
                       bool graph_PerformAccel,
-                      int render_PerformQualCombo,
                       bool render_ViewEnButton,
-                      bool render_ViewCountEnButton,
                       bool render_ViewDebugEnButton,
                       bool appear_ThemeDarkEnButton);
 };
