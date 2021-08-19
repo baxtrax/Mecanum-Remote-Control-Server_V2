@@ -41,6 +41,7 @@ void SettingsHandler::resetSettings()
     emit signalRender_ViewCountEnButton(SettingsConstants::D_RENDER_VIEW_COUNT_EN);
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
+    // Test
 }
 
 /**
