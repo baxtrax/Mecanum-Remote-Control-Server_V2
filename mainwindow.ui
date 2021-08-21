@@ -240,12 +240,12 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
-       <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0,0">
+       <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0,0,0">
         <property name="spacing">
-         <number>16</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
-         <number>16</number>
+         <number>0</number>
         </property>
         <property name="topMargin">
          <number>16</number>
@@ -256,6 +256,19 @@ QToolButton:checked {
         <property name="bottomMargin">
          <number>16</number>
         </property>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QFrame" name="Left_Frame_2">
           <layout class="QVBoxLayout" name="Left_Frame">
@@ -293,13 +306,13 @@ QToolButton:checked {
              </property>
              <layout class="QGridLayout" name="Control_gridLayout" rowstretch="0,0">
               <property name="leftMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="topMargin">
                <number>0</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="bottomMargin">
                <number>0</number>
@@ -2028,13 +2041,13 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
                <number>16</number>
               </property>
               <property name="leftMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="topMargin">
                <number>0</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="bottomMargin">
                <number>0</number>
@@ -2416,7 +2429,7 @@ font: 12pt  'Open Sans'; }</string>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_5">
+         <spacer name="horizontalSpacer_9">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -2467,7 +2480,7 @@ border-radius: 16px;</string>
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>16</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
