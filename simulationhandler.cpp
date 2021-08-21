@@ -776,7 +776,14 @@ void SimulationHandler::updateWithSettings()
 {
     qDebug() << "simulation handler update";
     if (view) {
-        view->defaultFrameGraph()->setShowDebugOverlay(true);
+        if (settings->value(SettingsConstants::RENDER_VIEW_EN, SettingsConstants::D_RENDER_VIEW_EN)
+                .toBool()) {
+            simulationWidget->show();
+            simulationWidget->parentWidget()->show();
+        } else {
+            simulationWidget->hide();
+            simulationWidget->parentWidget()->hide();
+        }
         view->defaultFrameGraph()->setShowDebugOverlay(
             settings
                 ->value(SettingsConstants::RENDER_VIEW_DEBUG_EN,
