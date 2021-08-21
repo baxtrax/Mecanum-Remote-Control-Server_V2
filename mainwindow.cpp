@@ -52,6 +52,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->simulation_Frame->layout()->replaceWidget(ui->render_placeholder,
                                                   simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
+
+    int x = settingsHandler->getSettings()
+                ->value(SettingsConstants::WINDOW_SIZE_X, SettingsConstants::D_WINDOW_SIZE_X)
+                .toInt();
+
+    int y = settingsHandler->getSettings()
+                ->value(SettingsConstants::WINDOW_SIZE_Y, SettingsConstants::D_WINDOW_SIZE_Y)
+                .toInt();
+    qDebug() << x;
+    qDebug() << y;
+    resize(QSize(x, y));
 }
 
 /**
@@ -144,6 +155,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
             break;
         }
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    settingsHandler->storeWinSize(this->size());
 }
 
 /**

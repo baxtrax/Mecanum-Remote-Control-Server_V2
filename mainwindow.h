@@ -40,6 +40,7 @@ private slots:
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    void closeEvent(QCloseEvent *event);
     bool event(QEvent *event);
 };
 #endif // MAINWINDOW_H NICWOLE CUTEST

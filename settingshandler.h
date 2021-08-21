@@ -38,6 +38,7 @@ public:
 public slots:
     void resetSettings();
     void displaySettings();
+    void storeWinSize(QSize);
 
 signals:
     void signalConn_CamAddressText(QString);

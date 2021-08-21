@@ -192,6 +192,12 @@ void SettingsHandler::checkStatus()
     }
 }
 
+void SettingsHandler::storeWinSize(QSize size)
+{
+    settings->setValue(SettingsConstants::WINDOW_SIZE_X, size.width());
+    settings->setValue(SettingsConstants::WINDOW_SIZE_Y, size.height());
+}
+
 // Getters
 /**
  * @brief Gets the current instance of settings for other programs to grab from.
