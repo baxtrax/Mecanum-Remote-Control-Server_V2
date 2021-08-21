@@ -49,6 +49,9 @@ inline constexpr auto RENDER_VIEW_DEBUG_EN = "render/view/debug_en";
 
 inline constexpr auto APPEAR_THEME_DARK_EN = "appear/theme/dark_en";
 
+inline constexpr bool WINDOW_SIZE_X = "window/x";
+inline constexpr bool WINDOW_SIZE_Y = "window/y";
+
 // Defaults for settings, may change in the future
 inline constexpr auto D_CONN_CAM_ADDRESS = "123.123.123.123";
 inline constexpr auto D_CONN_CAM_PORT = "12345";
@@ -70,6 +73,9 @@ inline constexpr bool D_RENDER_VIEW_COUNT_EN = false;
 inline constexpr bool D_RENDER_VIEW_DEBUG_EN = true;
 
 inline constexpr bool D_APPEAR_THEME_DARK_EN = true;
+
+inline constexpr bool D_WINDOW_SIZE_X = 1920;
+inline constexpr bool D_WINDOW_SIZE_Y = 1080;
 } // namespace SettingsConstants
 
 namespace LoggerConstants {
