@@ -237,15 +237,15 @@ QToolButton:checked {
        <number>1</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Control_Page">
-       <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0,0,0">
+       <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
         <property name="spacing">
-         <number>0</number>
+         <number>16</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>16</number>
         </property>
         <property name="topMargin">
          <number>16</number>
@@ -256,20 +256,7 @@ QToolButton:checked {
         <property name="bottomMargin">
          <number>16</number>
         </property>
-        <item>
-         <spacer name="horizontalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QFrame" name="Left_Frame_2">
           <layout class="QVBoxLayout" name="Left_Frame">
            <property name="spacing">
@@ -277,6 +264,18 @@ QToolButton:checked {
            </property>
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item>
             <widget class="QFrame" name="Control_Frame">
@@ -306,13 +305,13 @@ QToolButton:checked {
              </property>
              <layout class="QGridLayout" name="Control_gridLayout" rowstretch="0,0">
               <property name="leftMargin">
-               <number>16</number>
+               <number>0</number>
               </property>
               <property name="topMargin">
                <number>0</number>
               </property>
               <property name="rightMargin">
-               <number>16</number>
+               <number>0</number>
               </property>
               <property name="bottomMargin">
                <number>0</number>
@@ -339,7 +338,22 @@ QToolButton:checked {
 border-radius: 16px;</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_43">
-                 <item>
+                 <property name="spacing">
+                  <number>10</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>10</number>
+                 </property>
+                 <item alignment="Qt::AlignVCenter">
                   <widget class="QLabel" name="label_10">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1330,7 +1344,7 @@ border-radius: 16px;</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_10">
                  <property name="spacing">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="leftMargin">
                   <number>10</number>
@@ -2041,13 +2055,13 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
                <number>16</number>
               </property>
               <property name="leftMargin">
-               <number>16</number>
+               <number>0</number>
               </property>
               <property name="topMargin">
                <number>0</number>
               </property>
               <property name="rightMargin">
-               <number>16</number>
+               <number>0</number>
               </property>
               <property name="bottomMargin">
                <number>0</number>
@@ -2090,7 +2104,7 @@ border-radius: 16px;</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout">
                  <property name="spacing">
-                  <number>0</number>
+                  <number>10</number>
                  </property>
                  <property name="leftMargin">
                   <number>10</number>
@@ -2104,7 +2118,7 @@ border-radius: 16px;</string>
                  <property name="bottomMargin">
                   <number>10</number>
                  </property>
-                 <item>
+                 <item alignment="Qt::AlignVCenter">
                   <widget class="QLabel" name="label_9">
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
@@ -2429,19 +2443,6 @@ font: 12pt  'Open Sans'; }</string>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
          <widget class="QFrame" name="simulation_Frame">
           <property name="enabled">
            <bool>false</bool>
@@ -2480,7 +2481,7 @@ border-radius: 16px;</string>
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>16</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
@@ -2636,7 +2637,7 @@ border-radius: 16px;</string>
           <x>310</x>
           <y>280</y>
           <width>272</width>
-          <height>191</height>
+          <height>197</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_42">
@@ -2690,7 +2691,7 @@ border-radius: 16px;</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_36">
             <property name="spacing">
-             <number>0</number>
+             <number>10</number>
             </property>
             <property name="leftMargin">
              <number>10</number>
@@ -2969,7 +2970,7 @@ border-radius: 16px;</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_33">
             <property name="spacing">
-             <number>0</number>
+             <number>10</number>
             </property>
             <property name="leftMargin">
              <number>10</number>
@@ -3102,7 +3103,7 @@ QRadioButton::indicator::checked {
           <x>20</x>
           <y>280</y>
           <width>272</width>
-          <height>311</height>
+          <height>315</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_44">
@@ -3156,7 +3157,7 @@ border-radius: 16px;</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_47">
             <property name="spacing">
-             <number>0</number>
+             <number>10</number>
             </property>
             <property name="leftMargin">
              <number>10</number>
@@ -3680,7 +3681,7 @@ QRadioButton::indicator::checked {
           <x>0</x>
           <y>0</y>
           <width>1116</width>
-          <height>255</height>
+          <height>265</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_40">
@@ -3739,7 +3740,7 @@ border-radius: 16px;</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_28">
               <property name="spacing">
-               <number>0</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>10</number>
@@ -4077,7 +4078,7 @@ border-radius: 16px;</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_29">
               <property name="spacing">
-               <number>0</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
                <number>10</number>
