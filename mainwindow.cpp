@@ -60,8 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     int y = settingsHandler->getSettings()
                 ->value(SettingsConstants::WINDOW_SIZE_Y, SettingsConstants::D_WINDOW_SIZE_Y)
                 .toInt();
-    qDebug() << x;
-    qDebug() << y;
     resize(QSize(x, y));
 }
 
