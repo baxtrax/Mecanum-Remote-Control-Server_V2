@@ -155,7 +155,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *)
 {
     settingsHandler->storeWinSize(this->size());
 }
@@ -291,7 +291,8 @@ void MainWindow::configureConnections()
                                        ui->graph_PerformAccelEnButton->isChecked(),
                                        ui->render_ViewEnButton->isChecked(),
                                        ui->render_ViewDebugEnButton->isChecked(),
-                                       ui->appear_ThemeDarkEnButton->isChecked());
+                                       ui->appear_ThemeDarkEnButton->isChecked(),
+                                       ui->appear_ThemeCLogsEnButton->isChecked());
     });
     connect(ui->settings_CancelButton, SIGNAL(clicked()), settingsHandler, SLOT(displaySettings()));
 
@@ -361,6 +362,7 @@ void MainWindow::configureConnections()
             simulationHandler,
             SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), outputHandler, SLOT(updateWithSettings()));
+    connect(settingsHandler, SIGNAL(settingsUpdated()), loggerHandler, SLOT(updateWithSettings()));
 
     connect(simulationHandler,
             &SimulationHandler::passKeyboard_WChanged,

@@ -31,7 +31,8 @@ public:
                        bool graph_PerformAccel,
                        bool render_ViewEnButton,
                        bool render_ViewDebugEnButton,
-                       bool appear_ThemeDarkEnButton);
+                       bool appear_ThemeDarkEnButton,
+                       bool appear_ThemeCLogsEnButton);
     void checkStatus();
     void initSettings();
 
@@ -54,6 +55,7 @@ signals:
     void signalRender_ViewEnButton(bool);
     void signalRender_ViewDebugEnButton(bool);
     void signalAppear_ThemeDarkEnButton(bool);
+    void signalAppear_ThemeCLogsEnButton(bool);
     void settingsUpdated();
 
 private:
@@ -72,7 +74,8 @@ private:
                       bool graph_PerformAccel,
                       bool render_ViewEnButton,
                       bool render_ViewDebugEnButton,
-                      bool appear_ThemeDarkEnButton);
+                      bool appear_ThemeDarkEnButton,
+                      bool appear_ThemeCLogsEnButton);
 };
 
 #endif // SETTINGSHANDLER_H

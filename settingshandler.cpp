@@ -39,7 +39,7 @@ void SettingsHandler::resetSettings()
     emit signalRender_ViewEnButton(SettingsConstants::D_RENDER_VIEW_EN);
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
-    // Test
+    emit signalAppear_ThemeCLogsEnButton(SettingsConstants::D_APPEAR_THEME_CLOGS_EN);
 }
 
 /**
@@ -58,7 +58,8 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     bool graph_PerformAccel,
                                     bool render_ViewEnButton,
                                     bool render_ViewDebugEnButton,
-                                    bool appear_ThemeDarkEnButton)
+                                    bool appear_ThemeDarkEnButton,
+                                    bool appear_ThemeCLogsEnButton)
 {
     saveSettings(conn_CamAddressText,
                  conn_CamPortText,
@@ -72,7 +73,8 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                  graph_PerformAccel,
                  render_ViewEnButton,
                  render_ViewDebugEnButton,
-                 appear_ThemeDarkEnButton);
+                 appear_ThemeDarkEnButton,
+                 appear_ThemeCLogsEnButton);
     emit settingsUpdated();
 }
 
@@ -129,6 +131,10 @@ void SettingsHandler::displaySettings()
                                             ->value(SettingsConstants::APPEAR_THEME_DARK_EN,
                                                     SettingsConstants::D_APPEAR_THEME_DARK_EN)
                                             .toBool());
+    emit signalAppear_ThemeCLogsEnButton(settings
+                                             ->value(SettingsConstants::APPEAR_THEME_CLOGS_EN,
+                                                     SettingsConstants::D_APPEAR_THEME_DARK_EN)
+                                             .toBool());
 }
 
 /**
@@ -146,7 +152,8 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool graph_PerformAccel,
                                    bool render_ViewEnButton,
                                    bool render_ViewDebugEnButton,
-                                   bool appear_ThemeDarkEnButton)
+                                   bool appear_ThemeDarkEnButton,
+                                   bool appear_ThemeCLogsEnButton)
 {
     // Camera Socket
     settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText);
@@ -170,6 +177,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
 
     // Appearance
     settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, appear_ThemeDarkEnButton);
+    settings->setValue(SettingsConstants::APPEAR_THEME_CLOGS_EN, appear_ThemeCLogsEnButton);
 }
 
 /**
@@ -192,6 +200,11 @@ void SettingsHandler::checkStatus()
     }
 }
 
+/**
+ * @brief Stores the current window size into the settings. Used when program is started up to
+ * retain sizing.
+ * @param size
+ */
 void SettingsHandler::storeWinSize(QSize size)
 {
     settings->setValue(SettingsConstants::WINDOW_SIZE_X, size.width());

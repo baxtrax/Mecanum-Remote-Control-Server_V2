@@ -1,8 +1,9 @@
 #include "loggerhandler.h"
 
 // Constructor
-LoggerHandler::LoggerHandler()
+LoggerHandler::LoggerHandler(QSettings *settingsRef)
 {
+    settings = settingsRef;
     currentLevel = LoggerConstants::DEBUG;
     showTime = true;
 }
@@ -90,6 +91,17 @@ void LoggerHandler::clear()
 {
     emit clearingText();
 }
+
+/**
+ * @brief Updates logger with current settings.
+ */
+void LoggerHandler::updateWithSettings()
+{
+    enableColorify(settings
+                       ->value(SettingsConstants::APPEAR_THEME_CLOGS_EN,
+                               SettingsConstants::D_APPEAR_THEME_CLOGS_EN)
+                       .toBool());
+};
 
 // Setters
 /**

@@ -4,6 +4,7 @@
 #include "constants.h"
 
 #include <QDateTime>
+#include <QSettings>
 #include <QString>
 #include <QTextEdit>
 
@@ -11,7 +12,7 @@ class LoggerHandler : public QObject
 {
     Q_OBJECT
 public:
-    LoggerHandler();
+    LoggerHandler(QSettings *settingsRef);
     void write(int level, QString text);
     void write(QString text);
 
@@ -25,12 +26,14 @@ public:
 
 public slots:
     void clear();
+    void updateWithSettings();
 
 signals:
     void appendingText(QString);
     void clearingText();
 
 private:
+    QSettings *settings;
     int currentLevel;
     bool showTime;
     bool colorify;

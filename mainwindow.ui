@@ -2910,7 +2910,7 @@ QRadioButton::indicator::checked {
           <x>10</x>
           <y>540</y>
           <width>321</width>
-          <height>176</height>
+          <height>197</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_41">
@@ -3028,6 +3028,19 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QRadioButton" name="appear_ThemeDarkEnButton">
                   <property name="maximumSize">
                    <size>
@@ -3075,8 +3088,33 @@ QRadioButton::indicator::checked {
                   </property>
                  </widget>
                 </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="0,0,0">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
                 <item>
-                 <spacer name="horizontalSpacer_3">
+                 <widget class="QLabel" name="label_47">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                  </property>
+                  <property name="text">
+                   <string>Colored Logs</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_7">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -3087,6 +3125,54 @@ QRadioButton::indicator::checked {
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="appear_ThemeCLogsEnButton">
+                  <property name="maximumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">/*background: qlineargradient(
+		spread:pad, x1:0, y1:1, x2:0, y2:0,
+		stop:0 rgba(117, 23, 248, 255), 
+		stop:1 rgba(227, 35, 255, 255));*/
+QRadioButton {
+    width: 30px;
+    height: 30px;
+	background-color: rgb(5, 5, 15);
+	border-radius: 15px;
+}
+QRadioButton::indicator {
+    width: 30px;
+    height: 30px;
+	background-color: rgb(5, 5, 15);
+	border-radius: 15px;
+}
+QRadioButton::indicator::checked {
+	width: 12px;
+	height: 12px;
+	background: qlineargradient(
+		spread:pad, x1:0, y1:0, x2:1, y2:0,
+		stop:0 rgba(117, 23, 248, 255), 
+		stop:1 rgba(227, 35, 255, 255));
+	border-radius: 6px;
+	margin: 9px 9px 9px 9px;
+
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                  <property name="autoExclusive">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -3215,6 +3301,19 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QRadioButton" name="graph_PerformEnButton">
                   <property name="maximumSize">
                    <size>
@@ -3261,19 +3360,6 @@ QRadioButton::indicator::checked {
                    <bool>false</bool>
                   </property>
                  </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_12">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </item>
@@ -3606,6 +3692,19 @@ font: 12pt  'Open Sans'; }</string>
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QRadioButton" name="graph_PerformAccelEnButton">
                   <property name="maximumSize">
                    <size>
@@ -3652,19 +3751,6 @@ QRadioButton::indicator::checked {
                    <bool>false</bool>
                   </property>
                  </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_17">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </item>
