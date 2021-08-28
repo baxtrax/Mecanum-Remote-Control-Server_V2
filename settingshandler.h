@@ -17,7 +17,7 @@ class SettingsHandler : public QObject
     Q_OBJECT
 public:
     // Functions
-    SettingsHandler(LoggerHandler *loggerRef);
+    SettingsHandler();
     QSettings *getSettings();
     void applySettings(QString conn_CamAddressText,
                        QString conn_CamPortText,
@@ -35,6 +35,7 @@ public:
                        bool appear_ThemeCLogsEnButton);
     void checkStatus();
     void initSettings();
+    void setLogger(LoggerHandler *loggerRef);
 
 public slots:
     void resetSettings();

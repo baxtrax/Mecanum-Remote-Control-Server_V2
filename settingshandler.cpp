@@ -1,9 +1,8 @@
 #include "settingshandler.h"
 
 // Constructor
-SettingsHandler::SettingsHandler(LoggerHandler *loggerRef)
+SettingsHandler::SettingsHandler()
 {
-    logger = loggerRef;
     settings = new QSettings(QSettings::IniFormat,
                              QSettings::UserScope,
                              "MechanumRemoteControl",
@@ -19,6 +18,15 @@ void SettingsHandler::initSettings()
     settings->sync();
     displaySettings();
     emit settingsUpdated();
+}
+
+/**
+ * @brief Sets up an inital logger to help notify user.
+ * @param logger reference
+ */
+void SettingsHandler::setLogger(LoggerHandler *loggerRef)
+{
+    logger = loggerRef;
 }
 
 /**

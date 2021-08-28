@@ -27,8 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    loggerHandler = new LoggerHandler();
-    settingsHandler = new SettingsHandler(loggerHandler);
+    //Passing in no actual logger below, need to repass in
+    settingsHandler = new SettingsHandler();
+    loggerHandler = new LoggerHandler(settingsHandler->getSettings());
+    settingsHandler->setLogger(loggerHandler); // Need to pass in logger for later use
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(loggerHandler);
     kinematicsHandler = new KinematicsHandler(loggerHandler);
