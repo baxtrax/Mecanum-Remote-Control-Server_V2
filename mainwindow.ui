@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>675</width>
+    <width>667</width>
     <height>0</height>
    </size>
   </property>
@@ -2589,10 +2589,13 @@ border-radius: 16px;</string>
 </string>
           </property>
           <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
           </property>
           <property name="lineWidth">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAsNeeded</enum>
@@ -2608,8 +2611,8 @@ border-radius: 16px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1828</width>
-             <height>1048</height>
+             <width>1826</width>
+             <height>1046</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_38">

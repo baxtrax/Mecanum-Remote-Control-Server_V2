@@ -105,6 +105,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         swapLayout->addWidget(ui->MainSettingsWidget1);
         swapLayout->addWidget(ui->MainSettingsWidget2);
         swapLayout->insertSpacing(1, 16);
+        swapLayout->setContentsMargins(0, 0, 0, 0);
         delete ui->scrollAreaWidgetContents->layout();
         ui->scrollAreaWidgetContents->setLayout(swapLayout);
     } else {
@@ -112,6 +113,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         swapLayout->addWidget(ui->MainSettingsWidget1);
         swapLayout->addWidget(ui->MainSettingsWidget2);
         swapLayout->insertSpacing(1, 16);
+        swapLayout->setContentsMargins(0, 0, 0, 0);
         delete ui->scrollAreaWidgetContents->layout();
         ui->scrollAreaWidgetContents->setLayout(swapLayout);
     }
