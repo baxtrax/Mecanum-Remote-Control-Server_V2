@@ -95,6 +95,28 @@ bool MainWindow::event(QEvent *event)
     return returnV;
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    qDebug() << this->size().width();
+    if (this->size().width() < 1214) {
+        qDebug() << "YES";
+        QBoxLayout *swapLayout = new QBoxLayout(QBoxLayout::Direction::TopToBottom);
+        swapLayout->addWidget(ui->MainSettingsWidget1);
+        swapLayout->addWidget(ui->MainSettingsWidget2);
+        swapLayout->insertSpacing(1, 16);
+        delete ui->scrollAreaWidgetContents->layout();
+        ui->scrollAreaWidgetContents->setLayout(swapLayout);
+    } else {
+        QBoxLayout *swapLayout = new QBoxLayout(QBoxLayout::Direction::LeftToRight);
+        swapLayout->addWidget(ui->MainSettingsWidget1);
+        swapLayout->addWidget(ui->MainSettingsWidget2);
+        swapLayout->insertSpacing(1, 16);
+        delete ui->scrollAreaWidgetContents->layout();
+        ui->scrollAreaWidgetContents->setLayout(swapLayout);
+    }
+}
+
 /**
  * @brief Is called when any key is pressed down and emits signals for each
  * key pressed.

@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QMainWindow>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -41,6 +43,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void closeEvent(QCloseEvent *);
+    void resizeEvent(QResizeEvent *event);
     bool event(QEvent *event);
 };
 #endif // MAINWINDOW_H NICWOLE CUTEST
