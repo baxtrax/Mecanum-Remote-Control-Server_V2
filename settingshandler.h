@@ -32,7 +32,8 @@ public:
                        bool render_ViewEnButton,
                        bool render_ViewDebugEnButton,
                        bool appear_ThemeDarkEnButton,
-                       bool appear_ThemeCLogsEnButton);
+                       bool appear_ThemeCLogsEnButton,
+                       bool appear_ThemeCTimeEnButton);
     void checkStatus();
     void initSettings();
     void setLogger(LoggerHandler *loggerRef);
@@ -57,8 +58,9 @@ signals:
     void signalRender_ViewDebugEnButton(bool);
     void signalAppear_ThemeDarkEnButton(bool);
     void signalAppear_ThemeCLogsEnButton(bool);
+    void signalAppear_ThemeTLogsEnButton(bool);
     void settingsUpdated();
-    void updateMinWResize(bool);
+    void updateMinWResize(bool, bool);
 
 private:
     QSettings *settings;
@@ -77,7 +79,8 @@ private:
                       bool render_ViewEnButton,
                       bool render_ViewDebugEnButton,
                       bool appear_ThemeDarkEnButton,
-                      bool appear_ThemeCLogsEnButton);
+                      bool appear_ThemeCLogsEnButton,
+                      bool appear_ThemeCTimeEnButton);
 };
 
 #endif // SETTINGSHANDLER_H

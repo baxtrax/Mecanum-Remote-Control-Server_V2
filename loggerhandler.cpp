@@ -101,6 +101,10 @@ void LoggerHandler::updateWithSettings()
                        ->value(SettingsConstants::APPEAR_THEME_CLOGS_EN,
                                SettingsConstants::D_APPEAR_THEME_CLOGS_EN)
                        .toBool());
+    enableShowTime(settings
+                       ->value(SettingsConstants::APPEAR_THEME_TLOGS_EN,
+                               SettingsConstants::D_APPEAR_THEME_TLOGS_EN)
+                       .toBool());
 };
 
 // Setters

@@ -4310,7 +4310,7 @@ font: 12pt  'Open Sans'; }</string>
                          </spacer>
                         </item>
                         <item>
-                         <widget class="QRadioButton" name="appear_ThemeDarkEnButton_3">
+                         <widget class="QRadioButton" name="appear_ThemeTLogsEnButton">
                           <property name="maximumSize">
                            <size>
                             <width>30</width>

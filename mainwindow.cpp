@@ -99,7 +99,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
 
-    qDebug() << this->size().width();
     //Scale settings
     if (this->size().width() < 1214) {
         QBoxLayout *swapLayout = new QBoxLayout(QBoxLayout::Direction::TopToBottom);
@@ -319,7 +318,8 @@ void MainWindow::configureConnections()
                                        ui->render_ViewEnButton->isChecked(),
                                        ui->render_ViewDebugEnButton->isChecked(),
                                        ui->appear_ThemeDarkEnButton->isChecked(),
-                                       ui->appear_ThemeCLogsEnButton->isChecked());
+                                       ui->appear_ThemeCLogsEnButton->isChecked(),
+                                       ui->appear_ThemeTLogsEnButton->isChecked());
     });
     connect(ui->settings_CancelButton, SIGNAL(clicked()), settingsHandler, SLOT(displaySettings()));
 
@@ -385,20 +385,35 @@ void MainWindow::configureConnections()
             &QRadioButton::setChecked);
 
     connect(settingsHandler,
+            &SettingsHandler::signalAppear_ThemeCLogsEnButton,
+            ui->appear_ThemeCLogsEnButton,
+            &QRadioButton::setChecked);
+
+    connect(settingsHandler,
+            &SettingsHandler::signalAppear_ThemeTLogsEnButton,
+            ui->appear_ThemeTLogsEnButton,
+            &QRadioButton::setChecked);
+
+    connect(settingsHandler,
             SIGNAL(settingsUpdated()),
             simulationHandler,
             SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), outputHandler, SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), loggerHandler, SLOT(updateWithSettings()));
 
-    connect(settingsHandler, &SettingsHandler::updateMinWResize, this, [this](bool value) {
-        qDebug() << "ye update";
-        if (value) {
-            this->setMinimumWidth(852);
-        } else {
-            this->setMinimumWidth(674);
-        }
-    });
+    connect(settingsHandler,
+            &SettingsHandler::updateMinWResize,
+            this,
+            [this](bool graphEn, bool renderEn) {
+                //This is not a GOOD exmaple on how to control scaling (im just lazy)
+                if (renderEn) {
+                    this->setMinimumWidth(1625);
+                } else if (graphEn) {
+                    this->setMinimumWidth(852);
+                } else {
+                    this->setMinimumWidth(674);
+                }
+            });
 
     connect(simulationHandler,
             &SimulationHandler::passKeyboard_WChanged,

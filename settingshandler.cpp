@@ -17,9 +17,14 @@ void SettingsHandler::initSettings()
 {
     settings->sync();
     displaySettings();
-    emit updateMinWResize(
-        settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN)
-            .toBool());
+    emit updateMinWResize(settings
+                              ->value(SettingsConstants::GRAPH_PERF_EN,
+                                      SettingsConstants::D_GRAPH_PERF_EN)
+                              .toBool(),
+                          settings
+                              ->value(SettingsConstants::RENDER_VIEW_EN,
+                                      SettingsConstants::D_RENDER_VIEW_EN)
+                              .toBool());
     emit settingsUpdated();
 }
 
@@ -51,6 +56,7 @@ void SettingsHandler::resetSettings()
     emit signalRender_ViewDebugEnButton(SettingsConstants::D_RENDER_VIEW_DEBUG_EN);
     emit signalAppear_ThemeDarkEnButton(SettingsConstants::D_APPEAR_THEME_DARK_EN);
     emit signalAppear_ThemeCLogsEnButton(SettingsConstants::D_APPEAR_THEME_CLOGS_EN);
+    emit signalAppear_ThemeTLogsEnButton(SettingsConstants::D_APPEAR_THEME_TLOGS_EN);
 }
 
 /**
@@ -70,7 +76,8 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     bool render_ViewEnButton,
                                     bool render_ViewDebugEnButton,
                                     bool appear_ThemeDarkEnButton,
-                                    bool appear_ThemeCLogsEnButton)
+                                    bool appear_ThemeCLogsEnButton,
+                                    bool appear_ThemeTLogsEnButton)
 {
     saveSettings(conn_CamAddressText,
                  conn_CamPortText,
@@ -85,7 +92,8 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                  render_ViewEnButton,
                  render_ViewDebugEnButton,
                  appear_ThemeDarkEnButton,
-                 appear_ThemeCLogsEnButton);
+                 appear_ThemeCLogsEnButton,
+                 appear_ThemeTLogsEnButton);
     emit settingsUpdated();
 }
 
@@ -146,6 +154,10 @@ void SettingsHandler::displaySettings()
                                              ->value(SettingsConstants::APPEAR_THEME_CLOGS_EN,
                                                      SettingsConstants::D_APPEAR_THEME_DARK_EN)
                                              .toBool());
+    emit signalAppear_ThemeTLogsEnButton(settings
+                                             ->value(SettingsConstants::APPEAR_THEME_TLOGS_EN,
+                                                     SettingsConstants::D_APPEAR_THEME_TLOGS_EN)
+                                             .toBool());
 }
 
 /**
@@ -164,9 +176,10 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool render_ViewEnButton,
                                    bool render_ViewDebugEnButton,
                                    bool appear_ThemeDarkEnButton,
-                                   bool appear_ThemeCLogsEnButton)
+                                   bool appear_ThemeCLogsEnButton,
+                                   bool appear_ThemeTLogsEnButton)
 {
-    emit updateMinWResize(graph_PerformEnButton);
+    emit updateMinWResize(graph_PerformEnButton, render_ViewEnButton);
     // Camera Socket
     settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText);
     settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText);
@@ -190,6 +203,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
     // Appearance
     settings->setValue(SettingsConstants::APPEAR_THEME_DARK_EN, appear_ThemeDarkEnButton);
     settings->setValue(SettingsConstants::APPEAR_THEME_CLOGS_EN, appear_ThemeCLogsEnButton);
+    settings->setValue(SettingsConstants::APPEAR_THEME_TLOGS_EN, appear_ThemeTLogsEnButton);
 }
 
 /**
