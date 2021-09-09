@@ -58,6 +58,7 @@ signals:
     void signalAppear_ThemeDarkEnButton(bool);
     void signalAppear_ThemeCLogsEnButton(bool);
     void settingsUpdated();
+    void updateMinWResize(bool);
 
 private:
     QSettings *settings;

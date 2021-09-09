@@ -17,6 +17,9 @@ void SettingsHandler::initSettings()
 {
     settings->sync();
     displaySettings();
+    emit updateMinWResize(
+        settings->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN)
+            .toBool());
     emit settingsUpdated();
 }
 
@@ -163,6 +166,7 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
                                    bool appear_ThemeDarkEnButton,
                                    bool appear_ThemeCLogsEnButton)
 {
+    emit updateMinWResize(graph_PerformEnButton);
     // Camera Socket
     settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText);
     settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText);

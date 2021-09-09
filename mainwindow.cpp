@@ -98,9 +98,10 @@ bool MainWindow::event(QEvent *event)
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
+
     qDebug() << this->size().width();
+    //Scale settings
     if (this->size().width() < 1214) {
-        qDebug() << "YES";
         QBoxLayout *swapLayout = new QBoxLayout(QBoxLayout::Direction::TopToBottom);
         swapLayout->addWidget(ui->MainSettingsWidget1);
         swapLayout->addWidget(ui->MainSettingsWidget2);
@@ -389,6 +390,15 @@ void MainWindow::configureConnections()
             SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), outputHandler, SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), loggerHandler, SLOT(updateWithSettings()));
+
+    connect(settingsHandler, &SettingsHandler::updateMinWResize, this, [this](bool value) {
+        qDebug() << "ye update";
+        if (value) {
+            this->setMinimumWidth(831);
+        } else {
+            this->setMinimumWidth(674);
+        }
+    });
 
     connect(simulationHandler,
             &SimulationHandler::passKeyboard_WChanged,
