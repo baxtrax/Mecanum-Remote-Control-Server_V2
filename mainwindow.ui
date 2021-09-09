@@ -2610,13 +2610,13 @@ border-radius: 16px;</string>
 </string>
           </property>
           <property name="frameShape">
-           <enum>QFrame::Box</enum>
+           <enum>QFrame::NoFrame</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
           <property name="lineWidth">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="verticalScrollBarPolicy">
            <enum>Qt::ScrollBarAsNeeded</enum>
@@ -2632,8 +2632,8 @@ border-radius: 16px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1826</width>
-             <height>1046</height>
+             <width>1828</width>
+             <height>1048</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_38">
@@ -3525,9 +3525,27 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1">
+                 <item row="3" column="0" colspan="2">
                   <widget class="QFrame" name="horizontalFrame">
+                   <property name="lineWidth">
+                    <number>0</number>
+                   </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item alignment="Qt::AlignRight|Qt::AlignVCenter">
                      <widget class="QWidget" name="Connection_Widget_2" native="true">
                       <property name="maximumSize">
@@ -3653,7 +3671,7 @@ border-radius: 16px;</string>
                       <property name="sizeHint" stdset="0">
                        <size>
                         <width>16</width>
-                        <height>16</height>
+                        <height>0</height>
                        </size>
                       </property>
                      </spacer>

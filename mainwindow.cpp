@@ -394,7 +394,7 @@ void MainWindow::configureConnections()
     connect(settingsHandler, &SettingsHandler::updateMinWResize, this, [this](bool value) {
         qDebug() << "ye update";
         if (value) {
-            this->setMinimumWidth(831);
+            this->setMinimumWidth(852);
         } else {
             this->setMinimumWidth(674);
         }
