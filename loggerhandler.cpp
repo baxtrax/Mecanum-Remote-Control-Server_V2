@@ -6,6 +6,7 @@ LoggerHandler::LoggerHandler(QSettings *settingsRef)
     settings = settingsRef;
     currentLevel = LoggerConstants::DEBUG;
     showTime = true;
+    colorify = true;
 }
 
 /**
