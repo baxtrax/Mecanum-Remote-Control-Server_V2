@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2291,13 +2291,13 @@ font: 16pt  'Open Sans'; }</string>
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>490</width>
+                  <width>520</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>490</width>
+                  <width>520</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -2323,6 +2323,15 @@ border-radius: 16px;</string>
                  </property>
                  <item>
                   <widget class="QLabel" name="label_15">
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                     <pointsize>16</pointsize>
+                     <weight>50</weight>
+                     <italic>false</italic>
+                     <bold>false</bold>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
 color: white; 
@@ -2374,6 +2383,15 @@ font: 16pt  'Open Sans'; }</string>
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Open Sans</family>
+                       <pointsize>12</pointsize>
+                       <weight>50</weight>
+                       <italic>false</italic>
+                       <bold>false</bold>
+                      </font>
                      </property>
                      <property name="tabletTracking">
                       <bool>true</bool>
@@ -2671,8 +2689,8 @@ border-radius: 16px;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1828</width>
-             <height>1048</height>
+             <width>1163</width>
+             <height>749</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_38">
@@ -4903,8 +4921,8 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
          <rect>
           <x>808</x>
           <y>16</y>
-          <width>243</width>
-          <height>392</height>
+          <width>301</width>
+          <height>441</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -4929,7 +4947,7 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
+         <item alignment="Qt::AlignHCenter">
           <widget class="QLabel" name="label_19">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -4956,7 +4974,7 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
            </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignHCenter">
           <widget class="QWidget" name="widget_2" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -5008,7 +5026,7 @@ font: 16pt  'Open Sans'; }</string>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_12">
               <property name="spacing">
-               <number>16</number>
+               <number>10</number>
               </property>
               <item>
                <widget class="QLabel" name="label_22">
@@ -5051,7 +5069,7 @@ font: 12pt  'Open Sans'; }</string>
            </layout>
           </widget>
          </item>
-         <item alignment="Qt::AlignTop">
+         <item alignment="Qt::AlignHCenter|Qt::AlignTop">
           <widget class="QLabel" name="label_20">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -5078,7 +5096,7 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
            </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignHCenter">
           <widget class="QWidget" name="widget_3" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
