@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2384,6 +2384,12 @@ font: 12pt  'Open Sans'; }</string>
                    </item>
                    <item>
                     <widget class="QPushButton" name="pushButton">
+                     <property name="maximumSize">
+                      <size>
+                       <width>114</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"> QPushButton {
 	border-radius: 15px;
@@ -2434,6 +2440,12 @@ font: 12pt  'Open Sans'; }</string>
                    </item>
                    <item>
                     <widget class="QPushButton" name="pushButton_2">
+                     <property name="maximumSize">
+                      <size>
+                       <width>114</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"> QPushButton {
 	border-radius: 15px;
@@ -2874,6 +2886,19 @@ font: 12pt  'Open Sans'; }</string>
                          </widget>
                         </item>
                         <item>
+                         <spacer name="horizontalSpacer_13">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item>
                          <widget class="QComboBox" name="graph_PerformQualCombo">
                           <property name="minimumSize">
                            <size>
@@ -2951,19 +2976,6 @@ QComboBox QAbstractItemView {
                            </property>
                           </item>
                          </widget>
-                        </item>
-                        <item>
-                         <spacer name="horizontalSpacer_13">
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>40</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                         </spacer>
                         </item>
                        </layout>
                       </item>
@@ -3773,23 +3785,14 @@ font: 16pt  'Open Sans'; }</string>
                        <number>16</number>
                       </property>
                       <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_2">
-                        <property name="spacing">
+                       <layout class="QGridLayout" name="gridLayout_2">
+                        <property name="horizontalSpacing">
+                         <number>10</number>
+                        </property>
+                        <property name="verticalSpacing">
                          <number>16</number>
                         </property>
-                        <item>
-                         <widget class="QLabel" name="label_32">
-                          <property name="styleSheet">
-                           <string notr="true">QLabel { 
-color: white; 
-font: 12pt  'Open Sans'; }</string>
-                          </property>
-                          <property name="text">
-                           <string>Server Address</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
+                        <item row="0" column="1">
                          <widget class="QFrame" name="frame_2">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -3868,14 +3871,19 @@ font: 12pt  'Open Sans'; }</string>
                           </layout>
                          </widget>
                         </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_9">
-                        <property name="spacing">
-                         <number>44</number>
-                        </property>
-                        <item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_32">
+                          <property name="styleSheet">
+                           <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>Server Address</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
                          <widget class="QLabel" name="label_33">
                           <property name="styleSheet">
                            <string notr="true">QLabel { 
@@ -3887,7 +3895,7 @@ font: 12pt  'Open Sans'; }</string>
                           </property>
                          </widget>
                         </item>
-                        <item>
+                        <item row="1" column="1">
                          <widget class="QFrame" name="frame_3">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -4517,23 +4525,14 @@ font: 16pt  'Open Sans'; }</string>
                        <number>16</number>
                       </property>
                       <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_11">
-                        <property name="spacing">
+                       <layout class="QGridLayout" name="gridLayout">
+                        <property name="horizontalSpacing">
+                         <number>10</number>
+                        </property>
+                        <property name="verticalSpacing">
                          <number>16</number>
                         </property>
-                        <item>
-                         <widget class="QLabel" name="label_36">
-                          <property name="styleSheet">
-                           <string notr="true">QLabel { 
-color: white; 
-font: 12pt  'Open Sans'; }</string>
-                          </property>
-                          <property name="text">
-                           <string>Server Address</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
+                        <item row="0" column="1">
                          <widget class="QFrame" name="frame_4">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -4612,14 +4611,19 @@ font: 12pt  'Open Sans'; }</string>
                           </layout>
                          </widget>
                         </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_12">
-                        <property name="spacing">
-                         <number>44</number>
-                        </property>
-                        <item>
+                        <item row="0" column="0">
+                         <widget class="QLabel" name="label_36">
+                          <property name="styleSheet">
+                           <string notr="true">QLabel { 
+color: white; 
+font: 12pt  'Open Sans'; }</string>
+                          </property>
+                          <property name="text">
+                           <string>Server Address</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
                          <widget class="QLabel" name="label_37">
                           <property name="styleSheet">
                            <string notr="true">QLabel { 
@@ -4631,7 +4635,7 @@ font: 12pt  'Open Sans'; }</string>
                           </property>
                          </widget>
                         </item>
-                        <item>
+                        <item row="1" column="1">
                          <widget class="QFrame" name="frame_5">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
