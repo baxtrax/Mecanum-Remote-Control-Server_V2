@@ -13,6 +13,7 @@ Custom3DWindow::~Custom3DWindow() {}
 void Custom3DWindow::keyPressEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat() == false) {
+        qDebug() << "test1";
         switch (event->key()) {
         case Qt::Key_W:
             emit passKeyboard_WChanged(true);
