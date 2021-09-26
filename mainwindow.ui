@@ -2173,6 +2173,9 @@ font: 16pt  'Open Sans'; }</string>
                        <pointsize>12</pointsize>
                       </font>
                      </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">QTextEdit {
 	border: 0px;
@@ -2280,15 +2283,21 @@ font: 16pt  'Open Sans'; }</string>
               </item>
               <item>
                <widget class="QWidget" name="Connection_Widget" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>481</width>
+                  <width>490</width>
                   <height>0</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>481</width>
+                  <width>490</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -2384,11 +2393,20 @@ font: 12pt  'Open Sans'; }</string>
                    </item>
                    <item>
                     <widget class="QPushButton" name="pushButton">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="maximumSize">
                       <size>
                        <width>114</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
                      </property>
                      <property name="styleSheet">
                       <string notr="true"> QPushButton {
@@ -2440,11 +2458,20 @@ font: 12pt  'Open Sans'; }</string>
                    </item>
                    <item>
                     <widget class="QPushButton" name="pushButton_2">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="maximumSize">
                       <size>
                        <width>114</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::TabFocus</enum>
                      </property>
                      <property name="styleSheet">
                       <string notr="true"> QPushButton {
