@@ -4,6 +4,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
 
+#include "communicationhandler.h"
 #include "gamepadhandler.h"
 #include "inputhandler.h"
 #include "kinematicshandler.h"
@@ -19,6 +20,7 @@ OutputHandler *outputHandler;
 LoggerHandler *loggerHandler;
 SimulationHandler *simulationHandler;
 SettingsHandler *settingsHandler;
+CommunicationHandler *communicationHandler;
 
 // Constructor
 MainWindow::MainWindow(QWidget *parent)
@@ -31,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     settingsHandler = new SettingsHandler();
     loggerHandler = new LoggerHandler(settingsHandler->getSettings());
     settingsHandler->setLogger(loggerHandler); // Need to pass in logger for later use
+    communicationHandler = new CommunicationHandler();
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(loggerHandler);
     kinematicsHandler = new KinematicsHandler(loggerHandler);
@@ -302,6 +305,11 @@ void MainWindow::configureConnections()
             SIGNAL(functionChanged(double, double, double, double)),
             simulationHandler,
             SLOT(updateArrow(double, double, double)));
+
+    connect(kinematicsHandler,
+            SIGNAL(speedsChanged(double, double, double, double)),
+            communicationHandler,
+            SLOT(sendMovementData(double, double, double, double)));
 
     connect(ui->settings_ResetButton, SIGNAL(clicked()), settingsHandler, SLOT(resetSettings()));
     connect(ui->settings_ApplyButton, &QRadioButton::clicked, this, [this]() {

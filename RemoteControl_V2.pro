@@ -10,6 +10,7 @@ CONFIG += c++17 resources_big
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    communicationhandler.cpp \
     custom3dwindow.cpp \
     gamepadhandler.cpp \
     helper.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     simulationhandler.cpp
 
 HEADERS += \
+    communicationhandler.h \
     constants.h \
     custom3dwindow.h \
     gamepadhandler.h \
