@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     settingsHandler = new SettingsHandler();
     loggerHandler = new LoggerHandler(settingsHandler->getSettings());
     settingsHandler->setLogger(loggerHandler); // Need to pass in logger for later use
-    communicationHandler = new CommunicationHandler();
+    communicationHandler = new CommunicationHandler(loggerHandler, settingsHandler->getSettings());
     gamepadHandler = new GamepadHandler(loggerHandler);
     inputHandler = new InputHandler(loggerHandler);
     kinematicsHandler = new KinematicsHandler(loggerHandler);
@@ -402,12 +402,10 @@ void MainWindow::configureConnections()
             ui->appear_ThemeTLogsEnButton,
             &QRadioButton::setChecked);
 
-    connect(settingsHandler,
-            SIGNAL(settingsUpdated()),
-            simulationHandler,
-            SLOT(updateWithSettings()));
+    connect(settingsHandler, SIGNAL(settingsUpdated()), simulationHandler, SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), outputHandler, SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), loggerHandler, SLOT(updateWithSettings()));
+    connect(settingsHandler, SIGNAL(settingsUpdated()), communicationHandler, SLOT(updateWithSettings()));
 
     connect(settingsHandler,
             &SettingsHandler::updateMinWResize,

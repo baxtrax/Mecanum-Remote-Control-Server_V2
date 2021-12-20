@@ -3897,7 +3897,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>000.000.000.000;x</string>
+                              <string>000.000.000.000;_</string>
                              </property>
                              <property name="text">
                               <string>...</string>
@@ -3994,7 +3994,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>00000;x</string>
+                              <string>00000</string>
                              </property>
                              <property name="text">
                               <string/>
@@ -4637,7 +4637,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>000.000.000.000;x</string>
+                              <string>000.000.000.000;_</string>
                              </property>
                              <property name="text">
                               <string>...</string>
@@ -4734,7 +4734,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>00000;x</string>
+                              <string>00000</string>
                              </property>
                              <property name="text">
                               <string/>
