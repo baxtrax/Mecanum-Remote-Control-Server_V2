@@ -449,6 +449,18 @@ void MainWindow::configureConnections()
     connect(simulationHandler, &SimulationHandler::meshesLoaded, this, [] {
         loggerHandler->write(LoggerConstants::INFO, "Loaded all 3D meshes");
     });
+
+    connect(communicationHandler, &CommunicationHandler::connectionStatus, this, [this](bool status) {
+        if (status) {
+            ui->communicationStatus->setDown(true);
+            ui->communicationStatus->setText("Connected");
+        } else {
+            ui->communicationStatus->setDown(false);
+            ui->communicationStatus->setText("Disconnected");
+        }
+    });
+
+    connect(ui->refreshConnections, &QToolButton::pressed, communicationHandler, &CommunicationHandler::refreshConnection);
 }
 
 // TODO deal with focus and disabling input to robot while other pages

@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QSettings>
+#include <QTimer>
 
 class CommunicationHandler : public QObject
 {
@@ -17,18 +18,23 @@ public:
 public slots:
     void sendMovementData(double FL, double BR, double FR, double BL);
     void updateWithSettings();
+    void refreshConnection();
 signals:
+    void connectionStatus(bool);
 
 private:
     LoggerHandler *logger;
     QSettings *settings;
 
     void initSocket();
+    void initTimer();
     void readPendingDatagrams();
     void processDatagrams(QNetworkDatagram datagram);
 
     QUdpSocket *commSocket;
+    QTimer *timeoutTimer;
     int lastConnectedPort;
+    bool enabled;
 };
 
 #endif // COMMUNICATIONHANDLER_H

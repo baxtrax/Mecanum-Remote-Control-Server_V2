@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2351,7 +2351,7 @@ font: 16pt  'Open Sans'; }</string>
                     <number>4</number>
                    </property>
                    <item>
-                    <widget class="QToolButton" name="toolButton">
+                    <widget class="QToolButton" name="refreshConnections">
                      <property name="minimumSize">
                       <size>
                        <width>31</width>
@@ -2410,7 +2410,10 @@ font: 12pt  'Open Sans'; }</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton">
+                    <widget class="QPushButton" name="communicationStatus">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                        <horstretch>0</horstretch>
@@ -2448,6 +2451,12 @@ font: 12pt  'Open Sans'; }</string>
                      <property name="text">
                       <string>Disconnected</string>
                      </property>
+                     <property name="checkable">
+                      <bool>false</bool>
+                     </property>
+                     <property name="checked">
+                      <bool>false</bool>
+                     </property>
                     </widget>
                    </item>
                    <item>
@@ -2475,7 +2484,7 @@ font: 12pt  'Open Sans'; }</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="pushButton_2">
+                    <widget class="QPushButton" name="cameraStatus">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                        <horstretch>0</horstretch>
