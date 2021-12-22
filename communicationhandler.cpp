@@ -16,7 +16,7 @@ void CommunicationHandler::sendMovementData(double FL, double BR, double FR, dou
 {
     if (!(lastConnectedPort == 0) && enabled) {
         qDebug() << "sending movements";
-        QString concatData = 'm' + QString::number(FL) + ',' + QString::number(BR) + ','
+        QString concatData = QString("m,") + QString::number(FL) + ',' + QString::number(BR) + ','
                              + QString::number(FR) + ',' + QString::number(BL);
         commSocket->writeDatagram(QByteArray(concatData.toUtf8()),
                                   QHostAddress::LocalHost,
