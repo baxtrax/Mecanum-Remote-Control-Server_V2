@@ -85,7 +85,7 @@ void CommunicationHandler::updateWithSettings()
         if (commSocket->bind(csavedAddress, savedPort)) {
             logger->write(LoggerConstants::INFO, QString("Communication binded to: ") + QString(savedAddress) + QString(":") + QString::number(savedPort));
         } else {
-            logger->write(LoggerConstants::WARNING, QString("Communication failed to bind to: ") + QString(savedAddress) + QString(":") + QString::number(savedPort));
+            logger->write(LoggerConstants::WARNING, QString("Communication failed to bind to: ") + QString(savedAddress) + QString(":") + QString::number(savedPort) + ": " + commSocket->errorString() + ".");
         }
     }
 }
