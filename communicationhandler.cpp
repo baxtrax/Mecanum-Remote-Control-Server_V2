@@ -6,6 +6,7 @@ CommunicationHandler::CommunicationHandler(LoggerHandler *loggerRef, QSettings *
     settings = settingsRef;
 
     lastConnectedPort = 0;
+    sendAddress = QHostAddress::LocalHost;
     enabled = false;
 
     initSocket();
@@ -15,12 +16,12 @@ CommunicationHandler::CommunicationHandler(LoggerHandler *loggerRef, QSettings *
 void CommunicationHandler::sendMovementData(double FL, double BR, double FR, double BL)
 {
     if (!(lastConnectedPort == 0) && enabled) {
-        qDebug() << "sending movements";
         QString concatData = QString("m,") + QString::number(FL) + ',' + QString::number(BR) + ','
                              + QString::number(FR) + ',' + QString::number(BL);
         commSocket->writeDatagram(QByteArray(concatData.toUtf8()),
-                                  QHostAddress::LocalHost,
+                                  sendAddress,
                                   lastConnectedPort);
+        qDebug() << "S" << sendAddress.toString() << QString::number(lastConnectedPort) << "<-" << concatData;
     }
 }
 
@@ -66,7 +67,7 @@ void CommunicationHandler::processDatagrams(QNetworkDatagram datagram)
         emit connectionStatus(true);
         timeoutTimer->start(500);
     }
-    qDebug() << datagram.data() << '|' << datagram.senderAddress() << datagram.senderPort();
+    qDebug() << "R" << datagram.senderAddress() << datagram.senderPort() << "->" << datagram.data();
 }
 
 void CommunicationHandler::updateWithSettings()
@@ -74,18 +75,21 @@ void CommunicationHandler::updateWithSettings()
 
     enabled = settings->value(SettingsConstants::CONN_COMM_EN, SettingsConstants::D_CONN_COMM_EN).toBool();
 
-    QString savedAddress = settings->value(SettingsConstants::CONN_COMM_ADDRESS, SettingsConstants::D_CONN_COMM_ADDRESS).toString();
-    int savedPort = settings->value(SettingsConstants::CONN_COMM_PORT, SettingsConstants::D_CONN_COMM_PORT).toInt();
-    QHostAddress csavedAddress = QHostAddress(savedAddress);
+    //Update sending address and port
+    lastConnectedPort = settings->value(SettingsConstants::CONN_COMM_PORT, SettingsConstants::D_CONN_COMM_PORT).toInt();
+    sendAddress = QHostAddress(settings->value(SettingsConstants::CONN_COMM_ADDRESS, SettingsConstants::D_CONN_COMM_ADDRESS).toString());
+
+
     // Make sure closed before rebinding.
     if (!(commSocket->state() == QUdpSocket::UnconnectedState)) {
         commSocket->close();
     }
+    //Bind to local ip to see if any data is being sent over.
     if (enabled) {
-        if (commSocket->bind(csavedAddress, savedPort)) {
-            logger->write(LoggerConstants::INFO, QString("Communication binded to: ") + QString(savedAddress) + QString(":") + QString::number(savedPort));
+        if (commSocket->bind(QHostAddress::LocalHost, lastConnectedPort)) {
+            logger->write(LoggerConstants::INFO, QString("Communication listening on: ") + QString("LocalHost") + QString(":") + QString::number(lastConnectedPort));
         } else {
-            logger->write(LoggerConstants::WARNING, QString("Communication failed to bind to: ") + QString(savedAddress) + QString(":") + QString::number(savedPort) + ": " + commSocket->errorString() + ".");
+            logger->write(LoggerConstants::WARNING, QString("Communication failed to bind to: ") + QString("LocalHost") + QString(":") + QString::number(lastConnectedPort) + ": " + commSocket->errorString() + ".");
         }
     }
 }

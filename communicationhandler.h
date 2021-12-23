@@ -26,6 +26,8 @@ private:
     LoggerHandler *logger;
     QSettings *settings;
 
+    QHostAddress sendAddress;
+
     void initSocket();
     void initTimer();
     void readPendingDatagrams();
