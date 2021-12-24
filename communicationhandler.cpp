@@ -91,5 +91,6 @@ void CommunicationHandler::updateWithSettings()
         } else {
             logger->write(LoggerConstants::WARNING, QString("Communication failed to bind to: ") + QString("LocalHost") + QString(":") + QString::number(lastConnectedPort) + ": " + commSocket->errorString() + ".");
         }
+        logger->write(LoggerConstants::INFO, QString("Communication sending on: ") + sendAddress.toString() + QString(":") + QString::number(lastConnectedPort));
     }
 }
