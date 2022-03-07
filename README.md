@@ -9,14 +9,14 @@ This section will show current features of the GUI and up to date pictures of th
 ### Pictures of Current state of GUI
 Main GUI (3D Render is still a work in progress):
 
-![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/Showcase.gif)
+![alt text](https://github.com/baxtrax/QT-Remote-Control-Server_V2/blob/master/GUI-PIC/Showcase.gif)
 Settings GUI:
 
-![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/RemoteControlV2_2.PNG)
+![alt text](https://github.com/baxtrax/QT-Remote-Control-Server_V2/blob/master/GUI-PIC/RemoteControlV2_2.PNG)
 
 Info GUI:
 
-![alt text](https://github.com/baxtrax/QT-Remote-Control-Client_V2/blob/master/GUI-PIC/RemoteControlV2_3.PNG)
+![alt text](https://github.com/baxtrax/QT-Remote-Control-Server_V2/blob/master/GUI-PIC/RemoteControlV2_3.PNG)
 
 ### Features
 * Has retainable settings between launches.
