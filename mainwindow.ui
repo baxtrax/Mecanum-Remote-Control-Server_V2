@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">

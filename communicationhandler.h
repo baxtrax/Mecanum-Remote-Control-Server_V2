@@ -5,9 +5,9 @@
 
 #include <QNetworkDatagram>
 #include <QObject>
-#include <QUdpSocket>
 #include <QSettings>
 #include <QTimer>
+#include <QUdpSocket>
 
 class CommunicationHandler : public QObject
 {
