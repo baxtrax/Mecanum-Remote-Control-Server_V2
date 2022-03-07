@@ -402,10 +402,16 @@ void MainWindow::configureConnections()
             ui->appear_ThemeTLogsEnButton,
             &QRadioButton::setChecked);
 
-    connect(settingsHandler, SIGNAL(settingsUpdated()), simulationHandler, SLOT(updateWithSettings()));
+    connect(settingsHandler,
+            SIGNAL(settingsUpdated()),
+            simulationHandler,
+            SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), outputHandler, SLOT(updateWithSettings()));
     connect(settingsHandler, SIGNAL(settingsUpdated()), loggerHandler, SLOT(updateWithSettings()));
-    connect(settingsHandler, SIGNAL(settingsUpdated()), communicationHandler, SLOT(updateWithSettings()));
+    connect(settingsHandler,
+            SIGNAL(settingsUpdated()),
+            communicationHandler,
+            SLOT(updateWithSettings()));
 
     connect(settingsHandler,
             &SettingsHandler::updateMinWResize,
@@ -460,7 +466,10 @@ void MainWindow::configureConnections()
         }
     });
 
-    connect(ui->refreshConnections, &QToolButton::pressed, communicationHandler, &CommunicationHandler::refreshConnection);
+    connect(ui->refreshConnections,
+            &QToolButton::pressed,
+            communicationHandler,
+            &CommunicationHandler::refreshConnection);
 }
 
 // TODO deal with focus and disabling input to robot while other pages
