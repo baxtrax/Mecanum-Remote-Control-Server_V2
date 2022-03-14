@@ -4,6 +4,7 @@
 #include "loggerhandler.h"
 
 #include <QNetworkDatagram>
+#include <QNetworkInterface>
 #include <QObject>
 #include <QSettings>
 #include <QTimer>

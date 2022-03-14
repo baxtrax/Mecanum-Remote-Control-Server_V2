@@ -86,14 +86,18 @@ void CommunicationHandler::updateWithSettings()
     }
     //Bind to local ip to see if any data is being sent over.
     if (enabled) {
+        // TODO: FIX THIS TO BE MORE DYNAMIC
+        // Just assume first address is what we are looking for.
+        QHostAddress recvaddress = QNetworkInterface::allAddresses().at(0);
+
         //if (commSocket->bind(QHostAddress::LocalHost, lastConnectedPort)) {
         if (commSocket->bind(QHostAddress("192.168.1.140"), lastConnectedPort)) {
             logger->write(LoggerConstants::INFO,
-                          QString("Communication listening on: ") + QString("LocalHost")
+                          QString("Communication listening on: ") + recvaddress.toString()
                               + QString(":") + QString::number(lastConnectedPort));
         } else {
             logger->write(LoggerConstants::WARNING,
-                          QString("Communication failed to bind to: ") + QString("LocalHost")
+                          QString("Communication failed to bind to: ") + recvaddress.toString()
                               + QString(":") + QString::number(lastConnectedPort) + ": "
                               + commSocket->errorString() + ".");
         }
