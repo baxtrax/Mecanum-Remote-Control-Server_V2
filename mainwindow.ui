@@ -2874,6 +2874,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>30</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>Enables graph display.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
 		spread:pad, x1:0, y1:1, x2:0, y2:0,
@@ -2959,6 +2962,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>150</width>
                             <height>39</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Sets quality of graph, higher looks nice but requires higher performance.</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">QComboBox {
@@ -3147,6 +3153,9 @@ font: 12pt  'Open Sans'; }</string>
                               <height>16</height>
                              </size>
                             </property>
+                            <property name="toolTip">
+                             <string>Sets the ammount of data points to calculate on the graph.</string>
+                            </property>
                             <property name="styleSheet">
                              <string notr="true">QSlider::groove:horizontal {
 	background:  rgb(5, 5, 15);
@@ -3264,6 +3273,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>30</width>
                             <height>30</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Enables hardware acceleration on the graph (HIGHLY RECOMMENDED).</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
@@ -3437,6 +3449,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>30</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>Enables render display.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
 		spread:pad, x1:0, y1:1, x2:0, y2:0,
@@ -3522,6 +3537,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>30</width>
                             <height>30</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Enables debug info display of render view.</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
@@ -3866,6 +3884,9 @@ font: 16pt  'Open Sans'; }</string>
                             <height>39</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>The address that the camera server is on.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">background-color: rgb(5, 5, 15);
 border-radius: 19px;</string>
@@ -3969,6 +3990,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>39</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>The port that the camera server is on.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">background-color: rgb(5, 5, 15);
 border-radius: 19px;</string>
@@ -4051,6 +4075,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>30</width>
                             <height>30</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Enables the camera connection.</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
@@ -4222,6 +4249,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>30</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>Enables dark theme.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
 		spread:pad, x1:0, y1:1, x2:0, y2:0,
@@ -4379,6 +4409,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>30</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>Enables timestamps on logger logs.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
 		spread:pad, x1:0, y1:1, x2:0, y2:0,
@@ -4464,6 +4497,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>30</width>
                             <height>30</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Enables color coding of the log levels.</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
@@ -4606,6 +4642,12 @@ font: 16pt  'Open Sans'; }</string>
                             <height>39</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>The address the application sends movement data to.</string>
+                          </property>
+                          <property name="whatsThis">
+                           <string/>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">background-color: rgb(5, 5, 15);
 border-radius: 19px;</string>
@@ -4709,6 +4751,9 @@ font: 12pt  'Open Sans'; }</string>
                             <height>39</height>
                            </size>
                           </property>
+                          <property name="toolTip">
+                           <string>The port the application sends AND receives movement data.</string>
+                          </property>
                           <property name="styleSheet">
                            <string notr="true">background-color: rgb(5, 5, 15);
 border-radius: 19px;</string>
@@ -4791,6 +4836,9 @@ font: 12pt  'Open Sans'; }</string>
                             <width>30</width>
                             <height>30</height>
                            </size>
+                          </property>
+                          <property name="toolTip">
+                           <string>Enables communication between client and server</string>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">/*background: qlineargradient(
