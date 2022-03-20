@@ -4673,7 +4673,7 @@ color: white;
 font: 12pt  'Open Sans'; }</string>
                           </property>
                           <property name="text">
-                           <string>Server Address</string>
+                           <string>Client Address</string>
                           </property>
                          </widget>
                         </item>
@@ -4685,7 +4685,7 @@ color: white;
 font: 12pt  'Open Sans'; }</string>
                           </property>
                           <property name="text">
-                           <string>Server Port</string>
+                           <string>Client Port</string>
                           </property>
                          </widget>
                         </item>
