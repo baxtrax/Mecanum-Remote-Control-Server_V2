@@ -85,7 +85,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,0,0">
        <property name="spacing">
-        <number>16</number>
+        <number>36</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
