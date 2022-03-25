@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -2036,15 +2036,16 @@ QSlider::sub-page:vertical {
                  <font>
                   <family>Open Sans ExtraBold</family>
                   <pointsize>26</pointsize>
-                  <weight>50</weight>
+                  <weight>75</weight>
                   <italic>false</italic>
-                  <bold>false</bold>
+                  <bold>true</bold>
                  </font>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold'; 
+font-weight: bold;}</string>
                 </property>
                 <property name="text">
                  <string>Control</string>
@@ -2105,15 +2106,16 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
                  <font>
                   <family>Open Sans ExtraBold</family>
                   <pointsize>26</pointsize>
-                  <weight>50</weight>
+                  <weight>75</weight>
                   <italic>false</italic>
-                  <bold>false</bold>
+                  <bold>true</bold>
                  </font>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold';
+font-weight: bold; }</string>
                 </property>
                 <property name="text">
                  <string>Information</string>
@@ -3335,7 +3337,8 @@ QRadioButton::indicator::checked {
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold'; 
+font-weight: bold;}</string>
                    </property>
                    <property name="text">
                     <string>Render Settings</string>
@@ -3599,7 +3602,8 @@ QRadioButton::indicator::checked {
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold';
+font-weight: bold; }</string>
                    </property>
                    <property name="text">
                     <string>Graph Settings</string>
@@ -4911,7 +4915,8 @@ QRadioButton::indicator::checked {
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold';
+font-weight: bold; }</string>
                    </property>
                    <property name="text">
                     <string>Appearence Settings</string>
@@ -4945,7 +4950,8 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
                    <property name="styleSheet">
                     <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold';
+font-weight: bold; }</string>
                    </property>
                    <property name="text">
                     <string>Connection Settings</string>
@@ -5021,7 +5027,8 @@ font: 26pt  'Open Sans ExtraBold'; }</string>
            <property name="styleSheet">
             <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold';
+font-weight: bold; }</string>
            </property>
            <property name="text">
             <string>Software Info</string>
@@ -5143,7 +5150,8 @@ font: 12pt  'Open Sans'; }</string>
            <property name="styleSheet">
             <string notr="true">QLabel { 
 color: white; 
-font: 26pt  'Open Sans ExtraBold'; }</string>
+font: 26pt  'Open Sans ExtraBold'; 
+font-weight: bold;}</string>
            </property>
            <property name="text">
             <string>Creator Info</string>
