@@ -2,6 +2,7 @@
     <qresource prefix="/fonts">
         <file>resources/OpenSans-ExtraBold.ttf</file>
         <file>resources/OpenSans-Regular.ttf</file>
+        <file>resources/OpenSans-Light.ttf</file>
     </qresource>
     <qresource prefix="/img">
         <file>resources/placeholder.png</file>
