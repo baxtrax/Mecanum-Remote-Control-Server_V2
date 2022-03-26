@@ -418,7 +418,7 @@ letter-spacing: 0.44px;}</string>
                            <property name="font">
                             <font>
                              <family>Open Sans</family>
-                             <pointsize>12</pointsize>
+                             <pointsize>10</pointsize>
                              <weight>50</weight>
                              <italic>false</italic>
                              <bold>false</bold>
@@ -427,7 +427,7 @@ letter-spacing: 0.44px;}</string>
                            <property name="styleSheet">
                             <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 12pt  'Open Sans'; }</string>
+font: 10pt  'Open Sans'; }</string>
                            </property>
                            <property name="text">
                             <string>+</string>
@@ -448,7 +448,7 @@ font: 12pt  'Open Sans'; }</string>
                            <property name="font">
                             <font>
                              <family>Open Sans</family>
-                             <pointsize>14</pointsize>
+                             <pointsize>12</pointsize>
                              <weight>50</weight>
                              <italic>false</italic>
                              <bold>false</bold>
@@ -457,7 +457,7 @@ font: 12pt  'Open Sans'; }</string>
                            <property name="styleSheet">
                             <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 14pt  'Open Sans'; }</string>
+font: 12pt  'Open Sans'; }</string>
                            </property>
                            <property name="text">
                             <string>-</string>
@@ -864,7 +864,7 @@ QSlider::sub-page:vertical {
                            <property name="font">
                             <font>
                              <family>Open Sans</family>
-                             <pointsize>12</pointsize>
+                             <pointsize>10</pointsize>
                              <weight>50</weight>
                              <italic>false</italic>
                              <bold>false</bold>
@@ -873,7 +873,7 @@ QSlider::sub-page:vertical {
                            <property name="styleSheet">
                             <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 12pt  'Open Sans'; }</string>
+font: 10pt  'Open Sans'; }</string>
                            </property>
                            <property name="text">
                             <string>+</string>
@@ -894,7 +894,7 @@ font: 12pt  'Open Sans'; }</string>
                            <property name="font">
                             <font>
                              <family>Open Sans</family>
-                             <pointsize>14</pointsize>
+                             <pointsize>12</pointsize>
                              <weight>50</weight>
                              <italic>false</italic>
                              <bold>false</bold>
@@ -903,7 +903,7 @@ font: 12pt  'Open Sans'; }</string>
                            <property name="styleSheet">
                             <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 14pt  'Open Sans'; }</string>
+font: 12pt  'Open Sans'; }</string>
                            </property>
                            <property name="text">
                             <string>-</string>
@@ -1442,7 +1442,7 @@ letter-spacing: 0.44px;}</string>
                        <property name="font">
                         <font>
                          <family>Open Sans</family>
-                         <pointsize>12</pointsize>
+                         <pointsize>10</pointsize>
                          <weight>50</weight>
                          <italic>false</italic>
                          <bold>false</bold>
@@ -1451,7 +1451,7 @@ letter-spacing: 0.44px;}</string>
                        <property name="styleSheet">
                         <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 12pt  'Open Sans'; }</string>
+font: 10pt  'Open Sans'; }</string>
                        </property>
                        <property name="text">
                         <string>+</string>
@@ -1472,7 +1472,7 @@ font: 12pt  'Open Sans'; }</string>
                        <property name="font">
                         <font>
                          <family>Open Sans</family>
-                         <pointsize>14</pointsize>
+                         <pointsize>12</pointsize>
                          <weight>50</weight>
                          <italic>false</italic>
                          <bold>false</bold>
@@ -1481,7 +1481,7 @@ font: 12pt  'Open Sans'; }</string>
                        <property name="styleSheet">
                         <string notr="true">QLabel { 
 color: rgba(255, 255, 255, 153); 
-font: 14pt  'Open Sans'; }</string>
+font: 12pt  'Open Sans'; }</string>
                        </property>
                        <property name="text">
                         <string>-</string>
