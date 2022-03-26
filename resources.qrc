@@ -20,6 +20,8 @@
         <file>resources/Info-Active.svg</file>
         <file>resources/Home-Active.svg</file>
         <file>resources/Arrow-Down.svg</file>
+        <file>resources/3D.svg</file>
+        <file>resources/Camera.svg</file>
     </qresource>
     <qresource prefix="/obj">
         <file>resources/Arrow-Right.obj</file>
