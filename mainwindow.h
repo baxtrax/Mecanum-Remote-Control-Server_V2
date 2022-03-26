@@ -38,6 +38,8 @@ private slots:
     void on_home_toolButton_clicked();
     void on_settings_toolButton_clicked();
     void on_info_toolButton_clicked();
+    void on_swapViewsButton_clicked();
+    void swapControl(bool sim, bool cam);
 
 protected:
     void keyPressEvent(QKeyEvent *event);

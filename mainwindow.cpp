@@ -413,6 +413,16 @@ void MainWindow::configureConnections()
             communicationHandler,
             SLOT(updateWithSettings()));
 
+    connect(settingsHandler, &SettingsHandler::settingsUpdated, this, [this]() {
+        swapControl(settingsHandler->getSettings()
+                        ->value(SettingsConstants::RENDER_VIEW_EN,
+                                SettingsConstants::D_RENDER_VIEW_EN)
+                        .toBool(),
+                    settingsHandler->getSettings()
+                        ->value(SettingsConstants::CONN_CAM_EN, SettingsConstants::D_CONN_CAM_EN)
+                        .toBool());
+    });
+
     connect(settingsHandler,
             &SettingsHandler::updateMinWResize,
             this,
@@ -472,6 +482,15 @@ void MainWindow::configureConnections()
             &CommunicationHandler::refreshConnection);
 }
 
+void MainWindow::swapControl(bool sim, bool cam)
+{
+    if (sim && cam) {
+        ui->swapWidget->show();
+    } else {
+        ui->swapWidget->hide();
+    }
+}
+
 // TODO deal with focus and disabling input to robot while other pages
 // are open
 /**
@@ -505,6 +524,15 @@ void MainWindow::on_info_toolButton_clicked()
     ui->home_toolButton->setChecked(false);
     ui->settings_toolButton->setChecked(false);
     ui->info_toolButton->setChecked(true);
+}
+
+void MainWindow::on_swapViewsButton_clicked()
+{
+    if (ui->Viewport_Frame->currentIndex() == 0) {
+        ui->Viewport_Frame->setCurrentIndex(1);
+    } else {
+        ui->Viewport_Frame->setCurrentIndex(0);
+    }
 }
 
 // Deconstructor
