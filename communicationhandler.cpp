@@ -88,7 +88,19 @@ void CommunicationHandler::updateWithSettings()
     if (enabled) {
         // TODO: FIX THIS TO BE MORE DYNAMIC
         // Just assume first address is what we are looking for.
-        QHostAddress recvaddress = QNetworkInterface::allAddresses().at(0);
+        QHostAddress recvaddress = QHostAddress(QHostAddress::LocalHost);
+        const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
+        for (auto &address: QNetworkInterface::allAddresses()) {
+            if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost) {
+                qDebug() << address.toString();
+                recvaddress = address;
+                break; // Will break after the first IPv4 found.
+            }
+        }
+
+        if (recvaddress == localhost) {
+            logger->write(LoggerConstants::WARNING, "Could not find other IPv4 Addresses! Using Local Host instead.");
+        }
 
         //if (commSocket->bind(QHostAddress::LocalHost, lastConnectedPort)) {
         if (commSocket->bind(QHostAddress("192.168.1.140"), lastConnectedPort)) {
