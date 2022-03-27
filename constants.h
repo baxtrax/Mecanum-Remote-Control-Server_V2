@@ -27,7 +27,6 @@ inline constexpr int ADVANCED_INFO = 3; // Mag scale and z - 4 speed lines
 
 //strings are not literal types so need to use char array
 inline constexpr auto CONN_CAM_ADDRESS = "connection/camera/address";
-inline constexpr auto CONN_CAM_PORT = "connection/camera/port";
 inline constexpr auto CONN_CAM_EN = "connection/camera/en";
 
 inline constexpr auto CONN_COMM_ADDRESS = "connection/communication/address";
@@ -56,7 +55,6 @@ inline constexpr auto WINDOW_SIZE_Y = "window/y";
 
 // Defaults for settings, may change in the future
 inline constexpr auto D_CONN_CAM_ADDRESS = "123.123.123.123";
-inline constexpr auto D_CONN_CAM_PORT = "12345";
 inline constexpr bool D_CONN_CAM_EN = false;
 
 inline constexpr auto D_CONN_COMM_ADDRESS = "123.123.123.123";

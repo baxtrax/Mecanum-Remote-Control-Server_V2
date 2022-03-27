@@ -43,7 +43,6 @@ void SettingsHandler::setLogger(LoggerHandler *loggerRef)
 void SettingsHandler::resetSettings()
 {
     emit signalConn_CamAddressText(SettingsConstants::D_CONN_CAM_ADDRESS);
-    emit signalConn_CamPortText(SettingsConstants::D_CONN_CAM_PORT);
     emit signalConn_CamEnButton(SettingsConstants::D_CONN_CAM_EN);
     emit signalConn_CommAddressText(SettingsConstants::D_CONN_COMM_ADDRESS);
     emit signalConn_CommPortText(SettingsConstants::D_CONN_COMM_PORT);
@@ -64,7 +63,6 @@ void SettingsHandler::resetSettings()
  * throughout the program.
  */
 void SettingsHandler::applySettings(QString conn_CamAddressText,
-                                    QString conn_CamPortText,
                                     bool conn_CamEnButton,
                                     QString conn_CommAddressText,
                                     QString conn_CommPortText,
@@ -80,7 +78,6 @@ void SettingsHandler::applySettings(QString conn_CamAddressText,
                                     bool appear_ThemeTLogsEnButton)
 {
     saveSettings(conn_CamAddressText,
-                 conn_CamPortText,
                  conn_CamEnButton,
                  conn_CommAddressText,
                  conn_CommPortText,
@@ -105,9 +102,6 @@ void SettingsHandler::displaySettings()
     // Camera Socket
     emit signalConn_CamAddressText(
         settings->value(SettingsConstants::CONN_CAM_ADDRESS, SettingsConstants::D_CONN_CAM_ADDRESS)
-            .toString());
-    emit signalConn_CamPortText(
-        settings->value(SettingsConstants::CONN_CAM_PORT, SettingsConstants::D_CONN_CAM_PORT)
             .toString());
     emit signalConn_CamEnButton(
         settings->value(SettingsConstants::CONN_CAM_EN, SettingsConstants::D_CONN_CAM_EN).toBool());
@@ -164,7 +158,6 @@ void SettingsHandler::displaySettings()
  * @brief Grabs current user entered settings and saves them to file.
  */
 void SettingsHandler::saveSettings(QString conn_CamAddressText,
-                                   QString conn_CamPortText,
                                    bool conn_CamEnButton,
                                    QString conn_CommAddressText,
                                    QString conn_CommPortText,
@@ -182,7 +175,6 @@ void SettingsHandler::saveSettings(QString conn_CamAddressText,
     emit updateMinWResize(graph_PerformEnButton, render_ViewEnButton);
     // Camera Socket
     settings->setValue(SettingsConstants::CONN_CAM_ADDRESS, conn_CamAddressText);
-    settings->setValue(SettingsConstants::CONN_CAM_PORT, conn_CamPortText);
     settings->setValue(SettingsConstants::CONN_CAM_EN, conn_CamEnButton);
 
     // Communication Socket

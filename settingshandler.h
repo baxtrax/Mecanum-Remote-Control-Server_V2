@@ -20,7 +20,6 @@ public:
     SettingsHandler();
     QSettings *getSettings();
     void applySettings(QString conn_CamAddressText,
-                       QString conn_CamPortText,
                        bool conn_CamEnButton,
                        QString conn_CommAddressText,
                        QString conn_CommPortText,
@@ -45,7 +44,6 @@ public slots:
 
 signals:
     void signalConn_CamAddressText(QString);
-    void signalConn_CamPortText(QString);
     void signalConn_CamEnButton(bool);
     void signalConn_CommAddressText(QString);
     void signalConn_CommPortText(QString);
@@ -67,7 +65,6 @@ private:
     LoggerHandler *logger;
 
     void saveSettings(QString conn_CamAddressText,
-                      QString conn_CamPortText,
                       bool conn_CamEnButton,
                       QString conn_CommAddressText,
                       QString conn_CommPortText,

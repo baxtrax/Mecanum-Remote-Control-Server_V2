@@ -298,7 +298,6 @@ void MainWindow::configureConnections()
             &OutputHandler::setChartVisibility,
             ui->kinematicsGraphView,
             &QChartView::setVisible);
-
     connect(kinematicsHandler,
             SIGNAL(speedsChanged(double, double, double, double)),
             outputHandler,
@@ -324,7 +323,6 @@ void MainWindow::configureConnections()
     connect(ui->settings_ResetButton, SIGNAL(clicked()), settingsHandler, SLOT(resetSettings()));
     connect(ui->settings_ApplyButton, &QRadioButton::clicked, this, [this]() {
         settingsHandler->applySettings(ui->conn_CamAddressText->text(),
-                                       ui->conn_CamPortText->text(),
                                        ui->conn_CamEnButton->isChecked(),
                                        ui->conn_CommAddressText->text(),
                                        ui->conn_CommPortText->text(),
@@ -348,10 +346,6 @@ void MainWindow::configureConnections()
     connect(settingsHandler,
             &SettingsHandler::signalConn_CamAddressText,
             ui->conn_CamAddressText,
-            &QLineEdit::setText);
-    connect(settingsHandler,
-            &SettingsHandler::signalConn_CamPortText,
-            ui->conn_CamPortText,
             &QLineEdit::setText);
     connect(settingsHandler,
             &SettingsHandler::signalConn_CamEnButton,
@@ -495,16 +489,21 @@ void MainWindow::configureConnections()
 
 void MainWindow::swapControl(bool sim, bool cam)
 {
-    if (sim && cam) {
-        ui->swapWidget->show();
-    } else {
+    // Dont like how there are so many if statments
+    if (sim && !cam) {
+        ui->Viewport_Frame->setCurrentIndex(0);
         ui->swapWidget->hide();
-    }
-
-    if (!sim && !cam) {
-        ui->Viewport_Frame->hide();
-    } else {
         ui->Viewport_Frame->show();
+    } else if (!sim && cam) {
+        ui->Viewport_Frame->setCurrentIndex(1);
+        ui->swapWidget->hide();
+        ui->Viewport_Frame->show();
+    } else if (sim && cam) {
+        ui->swapWidget->show();
+        ui->Viewport_Frame->show();
+    } else if (!sim && !cam) {
+        ui->swapWidget->hide();
+        ui->Viewport_Frame->hide();
     }
 }
 

@@ -18,6 +18,7 @@ public:
 
 public slots:
     void updateWithSettings();
+    void reportErrors(QMediaPlayer::Error e);
 
 private:
     LoggerHandler *logger;
