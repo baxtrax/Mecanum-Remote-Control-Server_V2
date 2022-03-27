@@ -2724,7 +2724,38 @@ border-radius: 16px;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="camera_Frame"/>
+          <widget class="QWidget" name="camera_Frame">
+           <layout class="QVBoxLayout" name="verticalLayout_39">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="camera_placeholder">
+              <property name="styleSheet">
+               <string notr="true">border-image: url(:/img/resources/placeholder.png);</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
