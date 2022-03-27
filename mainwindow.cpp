@@ -12,6 +12,7 @@
 #include "outputhandler.h"
 #include "settingshandler.h"
 #include "simulationhandler.h"
+#include "camerahandler.h"
 
 GamepadHandler *gamepadHandler;
 InputHandler *inputHandler;
@@ -21,6 +22,7 @@ LoggerHandler *loggerHandler;
 SimulationHandler *simulationHandler;
 SettingsHandler *settingsHandler;
 CommunicationHandler *communicationHandler;
+CameraHandler *cameraHandler;
 
 // Constructor
 MainWindow::MainWindow(QWidget *parent)
@@ -40,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     outputHandler = new OutputHandler(loggerHandler, settingsHandler->getSettings());
     outputHandler->configureChartView(ui->kinematicsGraphView);
     simulationHandler = new SimulationHandler(loggerHandler, settingsHandler->getSettings());
+    cameraHandler = new CameraHandler(loggerHandler, settingsHandler->getSettings());
 
     configureConnections();
 
@@ -57,6 +60,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->simulation_Frame->layout()->replaceWidget(ui->render_placeholder,
                                                   simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
+
+
+    // Add Camera widget
+    ui->camera_placeholder->setStyleSheet(NULL);
+    ui->camera_Frame->layout()->replaceWidget(ui->camera_placeholder,
+                                              cameraHandler->getWidget());
+    ui->camera_placeholder->deleteLater();
 
     int x = settingsHandler->getSettings()
                 ->value(SettingsConstants::WINDOW_SIZE_X, SettingsConstants::D_WINDOW_SIZE_X)
@@ -412,6 +422,7 @@ void MainWindow::configureConnections()
             SIGNAL(settingsUpdated()),
             communicationHandler,
             SLOT(updateWithSettings()));
+    connect(settingsHandler, SIGNAL(settingsUpdated()), cameraHandler, SLOT(updateWithSettings()));
 
     connect(settingsHandler, &SettingsHandler::settingsUpdated, this, [this]() {
         swapControl(settingsHandler->getSettings()
@@ -488,6 +499,12 @@ void MainWindow::swapControl(bool sim, bool cam)
         ui->swapWidget->show();
     } else {
         ui->swapWidget->hide();
+    }
+
+    if (!sim && !cam) {
+        ui->Viewport_Frame->hide();
+    } else {
+        ui->Viewport_Frame->show();
     }
 }
 

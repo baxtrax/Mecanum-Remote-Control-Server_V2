@@ -243,7 +243,7 @@ QToolButton:checked {
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Control_Page">
        <layout class="QHBoxLayout" name="Main_Layout" stretch="0,0">
@@ -4096,11 +4096,8 @@ border-radius: 19px;</string>
 color: rgb(155,155,159); 
 font: 12pt  'Open Sans'; }</string>
                              </property>
-                             <property name="inputMask">
-                              <string>000.000.000.000;_</string>
-                             </property>
                              <property name="text">
-                              <string>...</string>
+                              <string/>
                              </property>
                              <property name="alignment">
                               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -4199,7 +4196,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>00000</string>
+                              <string/>
                              </property>
                              <property name="text">
                               <string/>
@@ -4969,7 +4966,7 @@ color: rgb(155,155,159);
 font: 12pt  'Open Sans'; }</string>
                              </property>
                              <property name="inputMask">
-                              <string>00000</string>
+                              <string/>
                              </property>
                              <property name="text">
                               <string/>

@@ -449,7 +449,6 @@ void OutputHandler::useHardwareAcceleration(bool status)
  */
 void OutputHandler::updateWithSettings()
 {
-    qDebug() << "output handler update";
     bool enStatus = settings
                         ->value(SettingsConstants::GRAPH_PERF_EN, SettingsConstants::D_GRAPH_PERF_EN)
                         .toBool();

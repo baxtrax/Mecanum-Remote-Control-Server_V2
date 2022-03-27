@@ -774,27 +774,12 @@ Qt3DCore::QEntity *SimulationHandler::generateWheel(int partCount,
  */
 void SimulationHandler::updateWithSettings()
 {
-    qDebug() << "simulation handler update";
-    qDebug() << simulationWidget;
-    qDebug() << simulationWidget->parentWidget();
-    qDebug() << simulationWidget->parentWidget()->parentWidget();
     if (view) {
         if (settings->value(SettingsConstants::RENDER_VIEW_EN, SettingsConstants::D_RENDER_VIEW_EN)
                 .toBool()) {
             simulationWidget->show();
-            simulationWidget->parentWidget()->show();
         } else {
             simulationWidget->hide();
-            simulationWidget->parentWidget()->hide();
-        }
-
-        if (!settings->value(SettingsConstants::RENDER_VIEW_EN, SettingsConstants::D_RENDER_VIEW_EN)
-                 .toBool()
-            && !settings->value(SettingsConstants::CONN_CAM_EN, SettingsConstants::D_CONN_CAM_EN)
-                    .toBool()) {
-            simulationWidget->parentWidget()->parentWidget()->hide();
-        } else {
-            simulationWidget->parentWidget()->parentWidget()->show();
         }
 
         view->defaultFrameGraph()->setShowDebugOverlay(
