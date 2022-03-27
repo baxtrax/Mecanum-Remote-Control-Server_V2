@@ -4,6 +4,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
 
+#include "camerahandler.h"
 #include "communicationhandler.h"
 #include "gamepadhandler.h"
 #include "inputhandler.h"
@@ -12,7 +13,6 @@
 #include "outputhandler.h"
 #include "settingshandler.h"
 #include "simulationhandler.h"
-#include "camerahandler.h"
 
 GamepadHandler *gamepadHandler;
 InputHandler *inputHandler;
@@ -61,11 +61,9 @@ MainWindow::MainWindow(QWidget *parent)
                                                   simulationHandler->getWidget());
     ui->render_placeholder->deleteLater();
 
-
     // Add Camera widget
     ui->camera_placeholder->setStyleSheet(NULL);
-    ui->camera_Frame->layout()->replaceWidget(ui->camera_placeholder,
-                                              cameraHandler->getWidget());
+    ui->camera_Frame->layout()->replaceWidget(ui->camera_placeholder, cameraHandler->getWidget());
     ui->camera_placeholder->deleteLater();
 
     int x = settingsHandler->getSettings()

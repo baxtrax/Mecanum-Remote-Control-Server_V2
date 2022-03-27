@@ -90,7 +90,7 @@ void CommunicationHandler::updateWithSettings()
         // Just assume first address is what we are looking for.
         QHostAddress recvaddress = QHostAddress(QHostAddress::LocalHost);
         const QHostAddress &localhost = QHostAddress(QHostAddress::LocalHost);
-        for (auto &address: QNetworkInterface::allAddresses()) {
+        for (auto &address : QNetworkInterface::allAddresses()) {
             if (address.protocol() == QAbstractSocket::IPv4Protocol && address != localhost) {
                 qDebug() << address.toString();
                 recvaddress = address;
@@ -99,7 +99,8 @@ void CommunicationHandler::updateWithSettings()
         }
 
         if (recvaddress == localhost) {
-            logger->write(LoggerConstants::WARNING, "Could not find other IPv4 Addresses! Using Local Host instead.");
+            logger->write(LoggerConstants::WARNING,
+                          "Could not find other IPv4 Addresses! Using Local Host instead.");
         }
 
         //if (commSocket->bind(QHostAddress::LocalHost, lastConnectedPort)) {

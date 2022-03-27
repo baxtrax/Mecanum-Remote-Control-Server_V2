@@ -3,11 +3,11 @@
 
 #include "loggerhandler.h"
 
+#include <QMediaPlayer>
+#include <QNetworkRequest>
 #include <QObject>
 #include <QSettings>
 #include <QVideoWidget>
-#include <QMediaPlayer>
-#include <QNetworkRequest>
 
 class CameraHandler : public QObject
 {
@@ -27,7 +27,6 @@ private:
     QMediaPlayer *mp;
 
     void connectCamera(QNetworkRequest networkRequest);
-
 };
 
 #endif // CAMERAHANDLER_H
