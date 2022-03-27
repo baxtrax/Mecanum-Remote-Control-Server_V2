@@ -9,10 +9,19 @@ CameraHandler::CameraHandler(LoggerHandler *loggerRef, QSettings *settingsRef)
     mp->setVideoOutput(vw);
 
     connect(mp, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(reportErrors(QMediaPlayer::Error)));
+    connect(mp, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus s) {
+        if (s == QMediaPlayer::MediaStatus::LoadingMedia) {
+            logger->write(LoggerConstants::INFO, "Loading camera content...");
+        }
+        if (s == QMediaPlayer::MediaStatus::BufferedMedia && mp->isVideoAvailable()) {
+            logger->write(LoggerConstants::INFO, "Loaded camera!");
+        }
+    });
 }
 
 void CameraHandler::connectCamera(QNetworkRequest networkRequest)
 {
+    logger->write(LoggerConstants::INFO, "Attempting to set Camera Address...");
     mp->stop();
     mp->setMedia(networkRequest);
     mp->play();

@@ -18,7 +18,6 @@ public:
 
 public slots:
     void updateWithSettings();
-    void reportErrors(QMediaPlayer::Error e);
 
 private:
     LoggerHandler *logger;
@@ -27,6 +26,9 @@ private:
     QMediaPlayer *mp;
 
     void connectCamera(QNetworkRequest networkRequest);
+
+private slots:
+    void reportErrors(QMediaPlayer::Error e);
 };
 
 #endif // CAMERAHANDLER_H
