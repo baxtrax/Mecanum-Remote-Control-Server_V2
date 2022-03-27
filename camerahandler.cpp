@@ -40,8 +40,10 @@ void CameraHandler::reportErrors(QMediaPlayer::Error e)
         break;
     case QMediaPlayer::Error::ServiceMissingError:
         logger->write("Camera Error: Playback service was not found.");
+        break;
     case QMediaPlayer::Error::MediaIsPlaylist:
         logger->write("Camera Error: Media is a playlist not a single source.");
+        break;
     }
 
     logger->setLevel(lastLevel);
