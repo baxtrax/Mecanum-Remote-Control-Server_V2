@@ -22,7 +22,7 @@ Info GUI:
 * Has retainable settings between launches.
 * Easy to understand input sliders.
 * Keyboard and Joystick compatable (Can even combine them together!).
-* Connection status and other detailed info displayed.
+* Connection status and other detailed info displayed. (Camera and Communication now!)
 * Simulation of movements in 3D
 * A Kinematics graph to show how outputs are calculated.
 * and much more to come!
