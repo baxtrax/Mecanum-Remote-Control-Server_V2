@@ -1,4 +1,4 @@
-# QT Remote Control Server V2
+# Mecanum Remote Control Server V2
 
 This is a QT Gui / Application that was made in QT Creator to be used as a bridge between a computer and a robot. This is the second iteration of this software and has greatly improved in look, functionality, and performance over the previous iteration. This is the "brains" of the remote control for a remote control mecanum car. The client-side counterpart to this application can be found [here](https://github.com/baxtrax/QT-Remote-Control-Client_V2). The client will connect to the server's broadcast port and listen for commands to follow. Some parts of the redesign are heavily inspired off of Mithi's Hexapod Simulation 2, which can be found [here](https://github.com/mithi/hexapod).
 
